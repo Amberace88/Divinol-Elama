@@ -9,6 +9,7 @@ import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { usePricing } from "@/components/providers/PriceProvider";
 import { createClient } from "@/lib/supabase/client";
+import { notifyBusinessSignup } from "@/lib/email/actions";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { cn } from "@/lib/utils";
 import { MIN_PASSWORD, authErrorKey, callbackUrl, resolveNext } from "./authClient";
@@ -84,6 +85,7 @@ export function RegisterForm({ initialType = "private", next }: { initialType?: 
       }
       if (data.session) {
         // E-mail confirmation disabled → already signed in.
+        if (business) void notifyBusinessSignup().catch(() => {});
         router.replace(target);
         router.refresh();
         return;

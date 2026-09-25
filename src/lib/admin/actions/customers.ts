@@ -3,6 +3,8 @@
 import { z } from "zod";
 import { issuesToFieldErrors } from "../schemas";
 import { ActionError, adminAction, must, revalidateAdmin, UUID_RE } from "../server";
+import { deferEmail } from "@/lib/email/send";
+import { notifyB2BDecision } from "@/lib/email/notify";
 
 const id = z.string().regex(UUID_RE, "Nederīgs ID");
 const txt = (max: number) =>
@@ -39,8 +41,11 @@ export async function updateCustomer(customerId: string, patch: CustomerPatch) {
     const data = Object.fromEntries(Object.entries(parsed.data).filter(([, v]) => v !== undefined));
     if (customerId === user.id && data.role && data.role !== "admin") throw new ActionError("Nevar noņemt administratora tiesības pašam sev.");
     if (!Object.keys(data).length) return null;
+    const decided = data.b2b_status === "approved" || data.b2b_status === "rejected" ? (data.b2b_status as "approved" | "rejected") : null;
+    const prev = decided ? (must(await supabase.from("profiles").select("b2b_status").eq("id", customerId).maybeSingle()) as { b2b_status: string } | null) : null;
     const res = must(await supabase.from("profiles").update(data).eq("id", customerId).select("id")) as { id: string }[] | null;
     if (!res?.length) throw new ActionError("Klients nav atrasts vai nav tiesību to labot");
+    if (decided && prev && prev.b2b_status !== decided) deferEmail("b2b decision", () => notifyB2BDecision(supabase, customerId, decided));
     revalidateAdmin();
     return null;
   }, "Klienta dati saglabāti");
@@ -56,7 +61,9 @@ export async function decideB2B(customerId: string, decision: "approved" | "reje
       if (discount != null) patch.discount_percent = z.number().min(0).max(90).parse(discount);
       if (termsDays != null) patch.payment_terms_days = z.number().int().min(0).max(120).parse(termsDays);
     }
+    const prev = must(await supabase.from("profiles").select("b2b_status").eq("id", customerId).maybeSingle()) as { b2b_status: string } | null;
     must(await supabase.from("profiles").update(patch).eq("id", customerId));
+    if (prev?.b2b_status !== decision) deferEmail("b2b decision", () => notifyB2BDecision(supabase, customerId, decision));
     revalidateAdmin();
     return null;
   }, decision === "approved" ? "B2B statuss apstiprināts" : "B2B pieteikums noraidīts");

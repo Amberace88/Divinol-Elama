@@ -24,6 +24,8 @@ import {
 import { SHIPMENT_STATUSES, type Carrier, type ShipmentStatus } from "@/lib/shipping/types";
 import { SHIPMENT_STATUS_LABEL } from "@/lib/shipping/tracking";
 import { ActionError, adminAction, must, revalidateAdmin, UUID_RE } from "../server";
+import { deferEmail } from "@/lib/email/send";
+import { notifyOrderShipped } from "@/lib/email/notify";
 
 type Ctx = Parameters<Parameters<typeof adminAction>[0]>[0];
 
@@ -218,6 +220,8 @@ async function setOrderShipped(ctx: Ctx, orderId: string, current: string) {
       created_by: ctx.user.id,
     }),
   );
+  // "Your order has been shipped" → customer (only on this transition; runs after the response)
+  deferEmail("order shipped", () => notifyOrderShipped(ctx.supabase, orderId));
 }
 
 export async function createShipmentAction(payload: CreateShipmentPayload) {

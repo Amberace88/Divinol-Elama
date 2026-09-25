@@ -3,6 +3,8 @@
 import { z } from "zod";
 import { ORDER_STATUS, ORDER_STATUSES, PAYMENT_STATUS, PAYMENT_STATUSES } from "../labels";
 import { ActionError, adminAction, must, revalidateAdmin, UUID_RE } from "../server";
+import { deferEmail } from "@/lib/email/send";
+import { notifyInvoiceIssued, notifyOrderCancelled, notifyOrderShipped } from "@/lib/email/notify";
 
 const id = z.string().regex(UUID_RE, "Nederīgs ID");
 
@@ -22,6 +24,9 @@ export async function updateOrderStatus(orderId: string, status: string) {
         created_by: user.id,
       }),
     );
+    // customer e-mails only on the transition into shipped / cancelled
+    if (status === "shipped" && ["new", "confirmed", "processing"].includes(before.status)) deferEmail("order shipped", () => notifyOrderShipped(supabase, orderId));
+    if (status === "cancelled") deferEmail("order cancelled", () => notifyOrderCancelled(supabase, orderId));
     revalidateAdmin();
     return null;
   }, `Statuss nomainīts: ${ORDER_STATUS[status]?.label ?? status}`);
@@ -94,6 +99,7 @@ export async function createInvoice(orderId: string, type: "invoice" | "proforma
     if (!INVOICE_LABEL[type]) throw new ActionError("Nederīgs rēķina veids");
     const days = Math.max(0, Math.min(120, Math.round(Number(dueDays) || 0)));
     const number = must(await supabase.rpc("admin_create_invoice", { p_order: orderId, p_type: type, p_due_days: days })) as string;
+    deferEmail("invoice issued", () => notifyInvoiceIssued(supabase, number));
     revalidateAdmin();
     return { number };
   }, (d) => `${INVOICE_LABEL[type] ?? "Rēķins"} ${d.number} izrakstīts`);

@@ -1,0 +1,144 @@
+{
+  "emails": {
+    "common": {
+      "greeting": "Hello {name},",
+      "greetingAnon": "Hello,",
+      "orderNumber": "Order no.",
+      "date": "Date",
+      "customer": "Customer",
+      "regNo": "Reg. No.",
+      "vatNo": "VAT No.",
+      "viewOrder": "View order",
+      "questions": "Questions? Reply to this e-mail, write to {email} or call {phone}.",
+      "footerAuto": "Automatic notification about your order",
+      "logoAlt": "ELAMA — Divinol oils and lubricants"
+    },
+    "items": {
+      "title": "Items",
+      "qtyPrice": "{qty} × {price}",
+      "sku": "SKU {sku}"
+    },
+    "totals": {
+      "subtotal": "Items",
+      "subtotalNet": "Items (excl. VAT)",
+      "shipping": "Delivery",
+      "shippingNet": "Delivery (excl. VAT)",
+      "free": "Free",
+      "onRequest": "On request",
+      "vat": "VAT {rate}%",
+      "vatIncluded": "Includes VAT {rate}%: {amount}",
+      "reverseCharge": "VAT 0% — reverse charge (Article 196 of Directive 2006/112/EC)",
+      "total": "Total to pay"
+    },
+    "shipping": {
+      "title": "Delivery",
+      "methods": {
+        "pickup": "Pickup at the warehouse",
+        "parcel_locker": "Parcel locker",
+        "courier": "Courier to your door",
+        "freight": "Freight delivery"
+      },
+      "pickupAddress": "Warehouse: {address}",
+      "freightNote": "Our manager will agree the freight price and delivery time with you separately."
+    },
+    "payment": {
+      "title": "Payment",
+      "methods": {
+        "bank_transfer": "Bank transfer",
+        "card": "Bank card",
+        "invoice": "Invoice (deferred payment)",
+        "cash_on_pickup": "Pay on pickup"
+      },
+      "bankIntro": "Please pay for the order by bank transfer using these details:",
+      "recipient": "Beneficiary",
+      "bank": "Bank",
+      "iban": "Account (IBAN)",
+      "swift": "SWIFT/BIC",
+      "reference": "Payment reference",
+      "amount": "Amount",
+      "afterPayment": "We ship within 1–3 business days after receiving the payment.",
+      "invoiceFollows": "We will send the invoice with payment details in a separate e-mail. Please use the order number {number} as the payment reference.",
+      "proformaAttached": "Attached: proforma invoice {invoice} (PDF).",
+      "invoiceIssued": "Invoice {invoice} has been issued — please pay it by the due date shown on it.",
+      "invoiceLater": "We will send the invoice with the payment term in a separate e-mail.",
+      "invoiceAttached": "The invoice is attached (PDF).",
+      "cashOnPickup": "Pay when collecting the order at the warehouse: {address}. We will let you know when it is ready.",
+      "card": "Once the payment is confirmed, we will prepare your order for shipping."
+    },
+    "orderConfirmation": {
+      "subject": "Order {number} received",
+      "preheader": "Thank you! Order {number}, total {total}.",
+      "title": "Thank you for your order!",
+      "intro": "We have received your order {number}. Here is a summary and what happens next.",
+      "notes": "Your note",
+      "next": "When the order is shipped, you will receive an e-mail with a tracking link.",
+      "cta": "View order in your account",
+      "guestNote": "Create an account with this e-mail address to keep track of your orders and invoices in one place.",
+      "register": "Create account"
+    },
+    "orderShipped": {
+      "subject": "Order {number} has been shipped",
+      "preheader": "Your order {number} is on its way.",
+      "title": "Your order is on its way!",
+      "intro": "Order {number} has been handed over to the carrier.",
+      "carrier": "Carrier",
+      "tracking": "Tracking number",
+      "track": "Track shipment",
+      "toLocker": "Parcel locker",
+      "toAddress": "Delivery address",
+      "lockerNote": "When the parcel arrives at the locker, the carrier will send you an SMS or e-mail with the pickup code.",
+      "noTracking": "If you have any questions about the delivery, just reply to this e-mail."
+    },
+    "orderCancelled": {
+      "subject": "Order {number} has been cancelled",
+      "preheader": "Order {number} has been cancelled.",
+      "title": "Order cancelled",
+      "intro": "We would like to let you know that order {number} has been cancelled.",
+      "amount": "Amount",
+      "refund": "As the order had already been paid, we will refund the money to the account the payment was made from within 5 business days.",
+      "unpaid": "If an invoice was issued for this order, it no longer needs to be paid.",
+      "mistake": "If the cancellation is a mistake or you would like to restore the order, reply to this e-mail — we are happy to help.",
+      "cta": "Continue shopping"
+    },
+    "invoiceIssued": {
+      "subject": "{type} {number}",
+      "preheader": "{type} {number} — {total}",
+      "types": {
+        "invoice": "Invoice",
+        "proforma": "Proforma invoice",
+        "credit_note": "Credit note"
+      },
+      "intro": "Please find “{type} {number}” for order {order}.",
+      "introNoOrder": "Please find “{type} {number}”.",
+      "document": "Document",
+      "issued": "Issued",
+      "due": "Due date",
+      "amount": "Amount",
+      "payWith": "Payment details:",
+      "creditNote": "The credit note reduces the amount of a previously issued invoice — no further action is needed.",
+      "attached": "The document is attached (PDF).",
+      "noAttachment": "We could not attach the PDF this time — you will find the document in your account, or we can send it on request.",
+      "cta": "My invoices"
+    },
+    "b2b": {
+      "yourCompany": "your company"
+    },
+    "b2bApproved": {
+      "subject": "Your business account is approved",
+      "title": "Welcome to B2B!",
+      "intro": "The B2B application for {company} has been approved.",
+      "prices": "When signed in, you will see your prices excluding VAT in the catalogue.",
+      "discount": "Your discount: {percent}% on all prices.",
+      "terms": "Payment by invoice — {days} days payment term.",
+      "reverse": "For deliveries to Estonia and Lithuania with a valid EU VAT number, the reverse charge applies.",
+      "cta": "Go to catalogue"
+    },
+    "b2bRejected": {
+      "subject": "About your B2B application",
+      "title": "B2B application not approved",
+      "intro": "Thank you for your interest! Unfortunately, we cannot approve the B2B application for {company} at this time.",
+      "text": "You can still shop as a private customer. If you would like to update your company details or learn more, reply to this e-mail or contact us.",
+      "cta": "Contact us"
+    }
+  }
+}

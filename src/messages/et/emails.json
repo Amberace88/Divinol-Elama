@@ -1,0 +1,144 @@
+{
+  "emails": {
+    "common": {
+      "greeting": "Tere, {name}!",
+      "greetingAnon": "Tere!",
+      "orderNumber": "Tellimuse nr",
+      "date": "Kuupäev",
+      "customer": "Ostja",
+      "regNo": "Reg. nr",
+      "vatNo": "KMKR nr",
+      "viewOrder": "Vaata tellimust",
+      "questions": "Küsimusi? Vasta sellele kirjale, kirjuta {email} või helista {phone}.",
+      "footerAuto": "Automaatne teavitus sinu tellimuse kohta",
+      "logoAlt": "ELAMA — Divinoli õlid ja määrdeained"
+    },
+    "items": {
+      "title": "Tooted",
+      "qtyPrice": "{qty} × {price}",
+      "sku": "Kood {sku}"
+    },
+    "totals": {
+      "subtotal": "Tooted",
+      "subtotalNet": "Tooted (km-ta)",
+      "shipping": "Tarne",
+      "shippingNet": "Tarne (km-ta)",
+      "free": "Tasuta",
+      "onRequest": "Kokkuleppel",
+      "vat": "KM {rate}%",
+      "vatIncluded": "Summa sisaldab käibemaksu {rate}%: {amount}",
+      "reverseCharge": "KM 0% — pöördmaksustamine (direktiivi 2006/112/EÜ artikkel 196)",
+      "total": "Tasumisele kokku"
+    },
+    "shipping": {
+      "title": "Tarne",
+      "methods": {
+        "pickup": "Kättesaamine laost",
+        "parcel_locker": "Pakiautomaat",
+        "courier": "Kuller ukseni",
+        "freight": "Kaubavedu"
+      },
+      "pickupAddress": "Ladu: {address}",
+      "freightNote": "Kaubaveo hinna ja aja lepib meie müügijuht sinuga eraldi kokku."
+    },
+    "payment": {
+      "title": "Makse",
+      "methods": {
+        "bank_transfer": "Pangaülekanne",
+        "card": "Pangakaart",
+        "invoice": "Arve järelmaksuga",
+        "cash_on_pickup": "Tasumine kättesaamisel"
+      },
+      "bankIntro": "Palun tasu tellimuse eest pangaülekandega järgmistel rekvisiitidel:",
+      "recipient": "Saaja",
+      "bank": "Pank",
+      "iban": "Konto nr (IBAN)",
+      "swift": "SWIFT/BIC",
+      "reference": "Selgitus",
+      "amount": "Summa",
+      "afterPayment": "Saadame tellimuse teele 1–3 tööpäeva jooksul pärast makse laekumist.",
+      "invoiceFollows": "Saadame arve koos makserekvisiitidega eraldi e-kirjaga. Palun märgi selgitusse tellimuse number {number}.",
+      "proformaAttached": "Manuses — ettemaksuarve {invoice} (PDF).",
+      "invoiceIssued": "Arve {invoice} on väljastatud — palun tasu see arvel märgitud tähtajaks.",
+      "invoiceLater": "Saadame maksetähtajaga arve eraldi e-kirjaga.",
+      "invoiceAttached": "Arve on manuses (PDF).",
+      "cashOnPickup": "Tasu tellimuse eest laost kätte saades: {address}. Anname teada, kui tellimus on valmis.",
+      "card": "Pärast makse kinnitamist valmistame tellimuse saatmiseks ette."
+    },
+    "orderConfirmation": {
+      "subject": "Tellimus {number} on vastu võetud",
+      "preheader": "Aitäh! Tellimus {number}, summa {total}.",
+      "title": "Aitäh tellimuse eest!",
+      "intro": "Oleme sinu tellimuse {number} kätte saanud. Allpool on kokkuvõte ja edasised sammud.",
+      "notes": "Sinu märkus",
+      "next": "Kui tellimus on teele saadetud, saad e-kirja jälgimislingiga.",
+      "cta": "Vaata tellimust kontol",
+      "guestNote": "Loo selle e-posti aadressiga konto, et hoida tellimused ja arved ühes kohas.",
+      "register": "Loo konto"
+    },
+    "orderShipped": {
+      "subject": "Tellimus {number} on teele saadetud",
+      "preheader": "Sinu tellimus {number} on teel.",
+      "title": "Sinu tellimus on teel!",
+      "intro": "Tellimus {number} on üle antud vedajale.",
+      "carrier": "Vedaja",
+      "tracking": "Saadetise number",
+      "track": "Jälgi saadetist",
+      "toLocker": "Pakiautomaat",
+      "toAddress": "Tarneaadress",
+      "lockerNote": "Kui saadetis jõuab pakiautomaati, saadab vedaja sulle SMS-i või e-kirja avamiskoodiga.",
+      "noTracking": "Kui sul on tarne kohta küsimusi, vasta lihtsalt sellele kirjale."
+    },
+    "orderCancelled": {
+      "subject": "Tellimus {number} on tühistatud",
+      "preheader": "Tellimus {number} on tühistatud.",
+      "title": "Tellimus tühistatud",
+      "intro": "Anname teada, et tellimus {number} on tühistatud.",
+      "amount": "Summa",
+      "refund": "Kuna tellimus oli juba tasutud, kanname raha 5 tööpäeva jooksul tagasi kontole, millelt makse tehti.",
+      "unpaid": "Kui tellimusele oli väljastatud arve, ei ole seda enam vaja tasuda.",
+      "mistake": "Kui tühistamine on eksitus või soovid tellimuse taastada, vasta sellele kirjale — aitame hea meelega.",
+      "cta": "Jätka ostlemist"
+    },
+    "invoiceIssued": {
+      "subject": "{type} {number}",
+      "preheader": "{type} {number} — {total}",
+      "types": {
+        "invoice": "Arve",
+        "proforma": "Ettemaksuarve",
+        "credit_note": "Kreeditarve"
+      },
+      "intro": "Saadame dokumendi „{type} {number}” tellimuse {order} kohta.",
+      "introNoOrder": "Saadame dokumendi „{type} {number}”.",
+      "document": "Dokument",
+      "issued": "Väljastatud",
+      "due": "Maksetähtaeg",
+      "amount": "Summa",
+      "payWith": "Makserekvisiidid:",
+      "creditNote": "Kreeditarve vähendab varem väljastatud arve summat — lisatoiminguid pole vaja.",
+      "attached": "Dokument on manuses (PDF).",
+      "noAttachment": "PDF-i ei õnnestunud seekord lisada — dokumendi leiad oma kontolt või saadame selle soovi korral.",
+      "cta": "Minu arved"
+    },
+    "b2b": {
+      "yourCompany": "sinu ettevõtte"
+    },
+    "b2bApproved": {
+      "subject": "Ärikonto on kinnitatud",
+      "title": "Tere tulemast B2B-sse!",
+      "intro": "{company} B2B-taotlus on kinnitatud.",
+      "prices": "Sisse logides näed kataloogis oma hindu ilma käibemaksuta.",
+      "discount": "Sinu allahindlus: {percent}% kõikidelt hindadelt.",
+      "terms": "Tasumine arvega — maksetähtaeg {days} päeva.",
+      "reverse": "Tarnetele Eestisse ja Leetu kehtiva EL KMKR numbriga rakendame pöördmaksustamist.",
+      "cta": "Kataloogi"
+    },
+    "b2bRejected": {
+      "subject": "Sinu B2B-taotlusest",
+      "title": "B2B-taotlust ei kinnitatud",
+      "intro": "Aitäh huvi eest! Kahjuks ei saa me praegu {company} B2B-taotlust kinnitada.",
+      "text": "Saad jätkuvalt osta eraisikuna. Kui soovid rekvisiite täpsustada või rohkem teada saada, vasta sellele kirjale või võta meiega ühendust.",
+      "cta": "Võta ühendust"
+    }
+  }
+}

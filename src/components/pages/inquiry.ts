@@ -1,6 +1,6 @@
 "use client";
 
-import { createClient } from "@/lib/supabase/client";
+import { submitInquiryAction } from "@/lib/email/actions";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 
 export type InquiryType = "contact" | "b2b" | "quote" | "oil_finder";
@@ -22,17 +22,14 @@ export class InquiryError extends Error {
   }
 }
 
-/** Sends an inquiry through the `submit_inquiry` RPC (security definer, callable by anon). */
+/** Sends an inquiry through a Server Action (`submit_inquiry` RPC + shop e-mail notification). */
 export async function submitInquiry(payload: InquiryPayload) {
   if (!isSupabaseConfigured) throw new InquiryError("unavailable");
   const clean = Object.fromEntries(
     Object.entries(payload).map(([k, v]) => [k, typeof v === "string" ? v.trim() : v]),
   ) as InquiryPayload;
-  const { error } = await createClient().rpc("submit_inquiry", { payload: clean });
-  if (error) {
-    if (/invalid_email/.test(error.message)) throw new InquiryError("invalid_email");
-    throw new InquiryError("failed");
-  }
+  const res = await submitInquiryAction(clean as Parameters<typeof submitInquiryAction>[0]).catch(() => ({ ok: false as const, code: "failed" as const }));
+  if (!res.ok) throw new InquiryError(res.code);
 }
 
 /** Reads a FormData entry as trimmed string. */

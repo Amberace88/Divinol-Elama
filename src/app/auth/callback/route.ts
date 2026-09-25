@@ -3,6 +3,8 @@ import type { EmailOtpType } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { safeNextPath } from "@/components/account/format";
+import { deferEmail } from "@/lib/email/send";
+import { notifyBusinessSignupIfNew } from "@/lib/email/notify";
 
 export const dynamic = "force-dynamic";
 
@@ -46,6 +48,8 @@ export async function GET(request: NextRequest) {
     } else {
       return fail();
     }
+    // Confirmed business sign-up → B2B application notification to the shop (once, after the response).
+    if (type !== "recovery") deferEmail("b2b signup", () => notifyBusinessSignupIfNew(supabase));
   } catch {
     return fail();
   }

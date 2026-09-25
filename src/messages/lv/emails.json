@@ -1,0 +1,144 @@
+{
+  "emails": {
+    "common": {
+      "greeting": "Labdien, {name}!",
+      "greetingAnon": "Labdien!",
+      "orderNumber": "Pasūtījuma Nr.",
+      "date": "Datums",
+      "customer": "Pircējs",
+      "regNo": "Reģ. Nr.",
+      "vatNo": "PVN Nr.",
+      "viewOrder": "Skatīt pasūtījumu",
+      "questions": "Jautājumi? Atbildi uz šo e-pastu, raksti {email} vai zvani {phone}.",
+      "footerAuto": "Automātisks paziņojums par tavu pasūtījumu",
+      "logoAlt": "ELAMA — Divinol eļļas un smērvielas"
+    },
+    "items": {
+      "title": "Preces",
+      "qtyPrice": "{qty} × {price}",
+      "sku": "Art. {sku}"
+    },
+    "totals": {
+      "subtotal": "Preces",
+      "subtotalNet": "Preces (bez PVN)",
+      "shipping": "Piegāde",
+      "shippingNet": "Piegāde (bez PVN)",
+      "free": "Bezmaksas",
+      "onRequest": "Pēc vienošanās",
+      "vat": "PVN {rate}%",
+      "vatIncluded": "Summā iekļauts PVN {rate}%: {amount}",
+      "reverseCharge": "PVN 0% — apgrieztā maksāšanas kārtība (Direktīvas 2006/112/EK 196. pants)",
+      "total": "Kopā apmaksai"
+    },
+    "shipping": {
+      "title": "Piegāde",
+      "methods": {
+        "pickup": "Saņemšana noliktavā",
+        "parcel_locker": "Pakomāts",
+        "courier": "Kurjers līdz durvīm",
+        "freight": "Kravas piegāde"
+      },
+      "pickupAddress": "Noliktava: {address}",
+      "freightNote": "Kravas piegādes cenu un laiku menedžeris saskaņos ar tevi atsevišķi."
+    },
+    "payment": {
+      "title": "Apmaksa",
+      "methods": {
+        "bank_transfer": "Bankas pārskaitījums",
+        "card": "Bankas karte",
+        "invoice": "Rēķins ar pēcapmaksu",
+        "cash_on_pickup": "Apmaksa saņemot"
+      },
+      "bankIntro": "Lūdzam apmaksāt pasūtījumu ar bankas pārskaitījumu uz šiem rekvizītiem:",
+      "recipient": "Saņēmējs",
+      "bank": "Banka",
+      "iban": "Konta Nr. (IBAN)",
+      "swift": "SWIFT/BIC",
+      "reference": "Maksājuma mērķis",
+      "amount": "Summa",
+      "afterPayment": "Pasūtījumu nosūtīsim 1–3 darba dienu laikā pēc maksājuma saņemšanas.",
+      "invoiceFollows": "Rēķinu ar maksājuma rekvizītiem nosūtīsim atsevišķā e-pastā. Maksājuma mērķī lūdzam norādīt pasūtījuma numuru {number}.",
+      "proformaAttached": "Pielikumā — priekšapmaksas rēķins {invoice} (PDF).",
+      "invoiceIssued": "Rēķins {invoice} ir izrakstīts — apmaksā to līdz tajā norādītajam termiņam.",
+      "invoiceLater": "Rēķinu ar apmaksas termiņu nosūtīsim atsevišķā e-pastā.",
+      "invoiceAttached": "Rēķins pievienots pielikumā (PDF).",
+      "cashOnPickup": "Pasūtījumu apmaksā, saņemot to noliktavā: {address}. Paziņosim, kad tas būs gatavs saņemšanai.",
+      "card": "Pēc maksājuma apstiprināšanas pasūtījumu sagatavosim nosūtīšanai."
+    },
+    "orderConfirmation": {
+      "subject": "Pasūtījums {number} saņemts",
+      "preheader": "Paldies! Pasūtījums {number}, summa {total}.",
+      "title": "Paldies par pasūtījumu!",
+      "intro": "Esam saņēmuši tavu pasūtījumu {number}. Zemāk — tā kopsavilkums un nākamie soļi.",
+      "notes": "Tava piezīme",
+      "next": "Kad pasūtījums tiks nosūtīts, saņemsi e-pastu ar sūtījuma izsekošanas saiti.",
+      "cta": "Skatīt pasūtījumu kontā",
+      "guestNote": "Izveido kontu ar šo e-pasta adresi, lai sekotu pasūtījumiem un rēķiniem vienuviet.",
+      "register": "Izveidot kontu"
+    },
+    "orderShipped": {
+      "subject": "Pasūtījums {number} ir nosūtīts",
+      "preheader": "Tavs pasūtījums {number} ir ceļā.",
+      "title": "Tavs pasūtījums ir ceļā!",
+      "intro": "Pasūtījums {number} ir nodots pārvadātājam.",
+      "carrier": "Pārvadātājs",
+      "tracking": "Sūtījuma numurs",
+      "track": "Sekot sūtījumam",
+      "toLocker": "Pakomāts",
+      "toAddress": "Piegādes adrese",
+      "lockerNote": "Kad sūtījums būs pakomātā, pārvadātājs atsūtīs SMS vai e-pastu ar durvju kodu.",
+      "noTracking": "Ja rodas jautājumi par piegādi, atbildi uz šo e-pastu."
+    },
+    "orderCancelled": {
+      "subject": "Pasūtījums {number} ir atcelts",
+      "preheader": "Pasūtījums {number} ir atcelts.",
+      "title": "Pasūtījums atcelts",
+      "intro": "Informējam, ka pasūtījums {number} ir atcelts.",
+      "amount": "Summa",
+      "refund": "Tā kā pasūtījums jau bija apmaksāts, naudu atmaksāsim uz kontu, no kura tika veikts maksājums, 5 darba dienu laikā.",
+      "unpaid": "Ja pasūtījumam bija izrakstīts rēķins, tas vairs nav jāapmaksā.",
+      "mistake": "Ja atcelšana ir kļūda vai vēlies pasūtījumu atjaunot, atbildi uz šo e-pastu — labprāt palīdzēsim.",
+      "cta": "Turpināt iepirkties"
+    },
+    "invoiceIssued": {
+      "subject": "{type} {number}",
+      "preheader": "{type} {number} — {total}",
+      "types": {
+        "invoice": "Rēķins",
+        "proforma": "Avansa rēķins",
+        "credit_note": "Kredītrēķins"
+      },
+      "intro": "Nosūtām dokumentu „{type} {number}” par pasūtījumu {order}.",
+      "introNoOrder": "Nosūtām dokumentu „{type} {number}”.",
+      "document": "Dokuments",
+      "issued": "Izrakstīts",
+      "due": "Apmaksas termiņš",
+      "amount": "Summa",
+      "payWith": "Maksājuma rekvizīti:",
+      "creditNote": "Kredītrēķins samazina iepriekš izrakstītā rēķina summu — papildu darbības nav nepieciešamas.",
+      "attached": "Dokuments pievienots pielikumā (PDF).",
+      "noAttachment": "PDF šoreiz neizdevās pievienot — dokumentu atradīsi savā kontā vai nosūtīsim pēc pieprasījuma.",
+      "cta": "Mani rēķini"
+    },
+    "b2b": {
+      "yourCompany": "tava uzņēmuma"
+    },
+    "b2bApproved": {
+      "subject": "B2B konts apstiprināts",
+      "title": "Laipni lūgti B2B!",
+      "intro": "{company} B2B pieteikums ir apstiprināts.",
+      "prices": "Pieslēdzoties kontam, katalogā redzēsi savas cenas bez PVN.",
+      "discount": "Tava atlaide: {percent}% no visām cenām.",
+      "terms": "Apmaksa ar rēķinu — termiņš {days} dienas.",
+      "reverse": "Piegādēm uz Igauniju un Lietuvu ar derīgu ES PVN numuru piemērojam apgriezto PVN.",
+      "cta": "Uz katalogu"
+    },
+    "b2bRejected": {
+      "subject": "Par tavu B2B pieteikumu",
+      "title": "B2B pieteikums nav apstiprināts",
+      "intro": "Paldies par interesi! Diemžēl pašlaik nevaram apstiprināt {company} B2B pieteikumu.",
+      "text": "Tu joprojām vari iepirkties kā privātpersona. Ja vēlies precizēt rekvizītus vai uzzināt vairāk, atbildi uz šo e-pastu vai sazinies ar mums.",
+      "cta": "Sazināties"
+    }
+  }
+}

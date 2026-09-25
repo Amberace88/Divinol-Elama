@@ -4,8 +4,7 @@ import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { CircleCheck, LoaderCircle, MessageCircle, Send } from "lucide-react";
 import { toast } from "sonner";
-import { createClient } from "@/lib/supabase/client";
-import { isSupabaseConfigured } from "@/lib/supabase/env";
+import { submitInquiry } from "@/components/pages/inquiry";
 import { usePricing } from "@/components/providers/PriceProvider";
 
 export function AskExpertForm({ slug, productName }: { slug: string; productName: string }) {
@@ -27,21 +26,17 @@ export function AskExpertForm({ slug, productName }: { slug: string; productName
     }
     setBusy(true);
     try {
-      if (!isSupabaseConfigured) throw new Error("not_configured");
       const car = String(fd.get("car") ?? "").trim();
       const question = String(fd.get("message") ?? "").trim();
-      const { error } = await createClient().rpc("submit_inquiry", {
-        payload: {
-          type: "oil_finder",
-          name: String(fd.get("name") ?? "").trim(),
-          email,
-          phone: String(fd.get("phone") ?? "").trim(),
-          message: [car && `${t("expertCar")}: ${car}`, question].filter(Boolean).join("\n\n") || productName,
-          locale,
-          extra: { product: slug, product_name: productName, car },
-        },
+      await submitInquiry({
+        type: "oil_finder",
+        name: String(fd.get("name") ?? "").trim(),
+        email,
+        phone: String(fd.get("phone") ?? "").trim(),
+        message: [car && `${t("expertCar")}: ${car}`, question].filter(Boolean).join("\n\n") || productName,
+        locale,
+        extra: { product: slug, product_name: productName, car },
       });
-      if (error) throw error;
       setSent(true);
       toast.success(t("expertSent"));
     } catch {

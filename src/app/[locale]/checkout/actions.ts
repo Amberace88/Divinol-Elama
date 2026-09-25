@@ -3,6 +3,8 @@
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
+import { deferEmail } from "@/lib/email/send";
+import { notifyOrderPlaced, type PlacedOrderRpc } from "@/lib/email/notify";
 
 const address = z
   .object({
@@ -91,13 +93,9 @@ export async function placeOrder(input: PlaceOrderPayload): Promise<PlaceOrderRe
       const code = [...KNOWN].find((k) => msg.includes(k));
       return { ok: false, code: code ?? "generic" };
     }
-    const r = data as {
-      number: string;
-      total_gross: number | string;
-      payment_method: string;
-      invoice_number: string | null;
-      reverse_charge: boolean;
-    };
+    const r = data as PlacedOrderRpc;
+    // Confirmation → customer + new-order notification → shop, sent after the response (never blocks checkout).
+    deferEmail("order placed", () => notifyOrderPlaced(supabase, parsed.data, r));
     return {
       ok: true,
       number: r.number,

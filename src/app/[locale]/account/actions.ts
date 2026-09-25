@@ -5,6 +5,8 @@ import { z } from "zod";
 import { locales } from "@/i18n/routing";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
+import { deferEmail } from "@/lib/email/send";
+import { notifyBusinessApplication } from "@/lib/email/notify";
 import type { ActionResult } from "@/components/account/types";
 
 const trimmed = (max: number) => z.string().trim().max(max);
@@ -165,5 +167,7 @@ export async function submitBusiness(input: z.input<typeof businessSchema>): Pro
     })
     .eq("id", s.user.id);
   if (error) return { ok: false, error: "generic" };
+  // new application → notify the shop (after the response)
+  if (current.b2b_status !== "pending") deferEmail("b2b application", () => notifyBusinessApplication(s.supabase, s.user.id, "account"));
   return done();
 }

@@ -1,0 +1,144 @@
+{
+  "emails": {
+    "common": {
+      "greeting": "Laba diena, {name},",
+      "greetingAnon": "Laba diena,",
+      "orderNumber": "Užsakymo Nr.",
+      "date": "Data",
+      "customer": "Pirkėjas",
+      "regNo": "Įm. kodas",
+      "vatNo": "PVM kodas",
+      "viewOrder": "Peržiūrėti užsakymą",
+      "questions": "Klausimų? Atsakykite į šį laišką, rašykite {email} arba skambinkite {phone}.",
+      "footerAuto": "Automatinis pranešimas apie jūsų užsakymą",
+      "logoAlt": "ELAMA — Divinol alyvos ir tepalai"
+    },
+    "items": {
+      "title": "Prekės",
+      "qtyPrice": "{qty} × {price}",
+      "sku": "Kodas {sku}"
+    },
+    "totals": {
+      "subtotal": "Prekės",
+      "subtotalNet": "Prekės (be PVM)",
+      "shipping": "Pristatymas",
+      "shippingNet": "Pristatymas (be PVM)",
+      "free": "Nemokamai",
+      "onRequest": "Pagal susitarimą",
+      "vat": "PVM {rate}%",
+      "vatIncluded": "Į sumą įskaičiuotas PVM {rate}%: {amount}",
+      "reverseCharge": "PVM 0% — atvirkštinis apmokestinimas (Direktyvos 2006/112/EB 196 straipsnis)",
+      "total": "Iš viso mokėti"
+    },
+    "shipping": {
+      "title": "Pristatymas",
+      "methods": {
+        "pickup": "Atsiėmimas sandėlyje",
+        "parcel_locker": "Paštomatas",
+        "courier": "Kurjeris iki durų",
+        "freight": "Krovinių pristatymas"
+      },
+      "pickupAddress": "Sandėlis: {address}",
+      "freightNote": "Krovinio pristatymo kainą ir laiką vadybininkas suderins su jumis atskirai."
+    },
+    "payment": {
+      "title": "Apmokėjimas",
+      "methods": {
+        "bank_transfer": "Banko pavedimas",
+        "card": "Banko kortelė",
+        "invoice": "Sąskaita su atidėtu mokėjimu",
+        "cash_on_pickup": "Apmokėjimas atsiimant"
+      },
+      "bankIntro": "Prašome apmokėti užsakymą banko pavedimu šiais rekvizitais:",
+      "recipient": "Gavėjas",
+      "bank": "Bankas",
+      "iban": "Sąskaitos Nr. (IBAN)",
+      "swift": "SWIFT/BIC",
+      "reference": "Mokėjimo paskirtis",
+      "amount": "Suma",
+      "afterPayment": "Užsakymą išsiųsime per 1–3 darbo dienas nuo mokėjimo gavimo.",
+      "invoiceFollows": "Sąskaitą su mokėjimo rekvizitais atsiųsime atskiru laišku. Mokėjimo paskirtyje nurodykite užsakymo numerį {number}.",
+      "proformaAttached": "Prisegta išankstinė sąskaita {invoice} (PDF).",
+      "invoiceIssued": "Sąskaita {invoice} išrašyta — apmokėkite ją iki joje nurodyto termino.",
+      "invoiceLater": "Sąskaitą su apmokėjimo terminu atsiųsime atskiru laišku.",
+      "invoiceAttached": "Sąskaita prisegta (PDF).",
+      "cashOnPickup": "Užsakymą apmokėsite atsiimdami sandėlyje: {address}. Pranešime, kai jis bus paruoštas.",
+      "card": "Patvirtinus mokėjimą, užsakymą paruošime išsiuntimui."
+    },
+    "orderConfirmation": {
+      "subject": "Užsakymas {number} gautas",
+      "preheader": "Ačiū! Užsakymas {number}, suma {total}.",
+      "title": "Ačiū už užsakymą!",
+      "intro": "Gavome jūsų užsakymą {number}. Žemiau — jo santrauka ir tolesni žingsniai.",
+      "notes": "Jūsų pastaba",
+      "next": "Kai užsakymas bus išsiųstas, gausite laišką su siuntos sekimo nuoroda.",
+      "cta": "Peržiūrėti užsakymą paskyroje",
+      "guestNote": "Susikurkite paskyrą su šiuo el. pašto adresu ir sekite užsakymus bei sąskaitas vienoje vietoje.",
+      "register": "Sukurti paskyrą"
+    },
+    "orderShipped": {
+      "subject": "Užsakymas {number} išsiųstas",
+      "preheader": "Jūsų užsakymas {number} jau kelyje.",
+      "title": "Jūsų užsakymas jau kelyje!",
+      "intro": "Užsakymas {number} perduotas vežėjui.",
+      "carrier": "Vežėjas",
+      "tracking": "Siuntos numeris",
+      "track": "Sekti siuntą",
+      "toLocker": "Paštomatas",
+      "toAddress": "Pristatymo adresas",
+      "lockerNote": "Kai siunta pasieks paštomatą, vežėjas atsiųs SMS arba el. laišką su atsiėmimo kodu.",
+      "noTracking": "Jei turite klausimų dėl pristatymo, tiesiog atsakykite į šį laišką."
+    },
+    "orderCancelled": {
+      "subject": "Užsakymas {number} atšauktas",
+      "preheader": "Užsakymas {number} atšauktas.",
+      "title": "Užsakymas atšauktas",
+      "intro": "Informuojame, kad užsakymas {number} atšauktas.",
+      "amount": "Suma",
+      "refund": "Kadangi užsakymas jau buvo apmokėtas, pinigus grąžinsime į sąskaitą, iš kurios buvo atliktas mokėjimas, per 5 darbo dienas.",
+      "unpaid": "Jei užsakymui buvo išrašyta sąskaita, jos apmokėti nebereikia.",
+      "mistake": "Jei atšaukimas yra klaida arba norite užsakymą atnaujinti, atsakykite į šį laišką — mielai padėsime.",
+      "cta": "Tęsti apsipirkimą"
+    },
+    "invoiceIssued": {
+      "subject": "{type} {number}",
+      "preheader": "{type} {number} — {total}",
+      "types": {
+        "invoice": "Sąskaita faktūra",
+        "proforma": "Išankstinė sąskaita",
+        "credit_note": "Kreditinė sąskaita"
+      },
+      "intro": "Siunčiame dokumentą „{type} {number}“ užsakymui {order}.",
+      "introNoOrder": "Siunčiame dokumentą „{type} {number}“.",
+      "document": "Dokumentas",
+      "issued": "Išrašyta",
+      "due": "Apmokėti iki",
+      "amount": "Suma",
+      "payWith": "Mokėjimo rekvizitai:",
+      "creditNote": "Kreditinė sąskaita sumažina anksčiau išrašytos sąskaitos sumą — papildomų veiksmų nereikia.",
+      "attached": "Dokumentas prisegtas (PDF).",
+      "noAttachment": "Šį kartą PDF prisegti nepavyko — dokumentą rasite savo paskyroje arba atsiųsime jį paprašius.",
+      "cta": "Mano sąskaitos"
+    },
+    "b2b": {
+      "yourCompany": "jūsų įmonės"
+    },
+    "b2bApproved": {
+      "subject": "Verslo paskyra patvirtinta",
+      "title": "Sveiki atvykę į B2B!",
+      "intro": "{company} B2B paraiška patvirtinta.",
+      "prices": "Prisijungę kataloge matysite savo kainas be PVM.",
+      "discount": "Jūsų nuolaida: {percent}% visoms kainoms.",
+      "terms": "Apmokėjimas pagal sąskaitą — {days} d. terminas.",
+      "reverse": "Pristatymams į Estiją ir Lietuvą su galiojančiu ES PVM kodu taikomas atvirkštinis apmokestinimas.",
+      "cta": "Į katalogą"
+    },
+    "b2bRejected": {
+      "subject": "Dėl jūsų B2B paraiškos",
+      "title": "B2B paraiška nepatvirtinta",
+      "intro": "Ačiū už susidomėjimą! Deja, šiuo metu negalime patvirtinti {company} B2B paraiškos.",
+      "text": "Jūs vis dar galite pirkti kaip privatus asmuo. Jei norite patikslinti rekvizitus ar sužinoti daugiau, atsakykite į šį laišką arba susisiekite su mumis.",
+      "cta": "Susisiekti"
+    }
+  }
+}
