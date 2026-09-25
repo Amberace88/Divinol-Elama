@@ -13,8 +13,17 @@ git push -u origin main || echo "⚠ GitHub push neizdevās (turpinu ar Netlify)
 echo "▶ 2/3  Instalēju atkarības (pirmo reizi ~1–2 min)…"
 npm ci --no-audit --no-fund || npm install --no-audit --no-fund || exit 1
 
-echo "▶ 3/3  Būvēju un izvietoju Netlify (~3 min)…"
-npx -y netlify-cli@latest deploy --build --prod --site "$SITE_ID" || { echo "❌ Izvietošana neizdevās — nosūti ekrānuzņēmumu Claude."; read -n 1 -s -r; exit 1; }
+echo "▶ 3/3  Pārbaudu Netlify pieslēgumu…"
+if ! npx -y netlify-cli@latest status >/tmp/netlify-status.txt 2>&1 || grep -qi "not logged in" /tmp/netlify-status.txt; then
+  echo "   Netlify prasīs pieslēgties — pārlūkā nospied \"Authorize\"."
+  npx -y netlify-cli@latest login || exit 1
+fi
+echo "▶ Būvēju un izvietoju Netlify (~3 min)…"
+if ! npx -y netlify-cli@latest deploy --build --prod --site "$SITE_ID"; then
+  echo "   Netlify pieslēgums nav derīgs šim projektam — pieslēdzies vēlreiz (pārlūkā \"Authorize\")…"
+  npx -y netlify-cli@latest login --new || exit 1
+  npx -y netlify-cli@latest deploy --build --prod --site "$SITE_ID" || { echo "❌ Izvietošana neizdevās — nosūti ekrānuzņēmumu Claude."; read -n 1 -s -r; exit 1; }
+fi
 
 echo "✅ Gatavs: https://divinol-elama.netlify.app"
 read -n 1 -s -r -p "Nospied jebkuru taustiņu, lai aizvērtu…"
