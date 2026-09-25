@@ -26,7 +26,7 @@ export function QtyStepper({
   return (
     <div
       className={cn(
-        "inline-flex items-center rounded-xl border border-line bg-white shadow-[inset_0_1px_1px_rgb(16_24_40/0.04)]",
+        "inline-flex items-center rounded-xl border border-line bg-surface shadow-[inset_0_1px_1px_rgb(16_24_40/0.04)]",
         h,
         className,
       )}

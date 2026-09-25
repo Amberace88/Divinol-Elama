@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { MARKETS } from "@/lib/commerce";
 import { usePricing } from "@/components/providers/PriceProvider";
 import { cn } from "@/lib/utils";
+import { Flag } from "@/components/ui/Flag";
 
 /** Segmented control for the delivery country (affects VAT and shipping). */
 export function MarketSwitcherInline({ className }: { className?: string }) {
@@ -21,10 +22,11 @@ export function MarketSwitcherInline({ className }: { className?: string }) {
             aria-checked={m === market}
             onClick={() => setMarket(m)}
             className={cn(
-              "h-9 rounded-lg text-[13px] font-bold transition",
-              m === market ? "bg-white text-navy-700 shadow-card ring-1 ring-line" : "text-muted hover:text-ink",
+              "inline-flex h-9 items-center justify-center gap-2 rounded-lg text-[13px] font-bold transition",
+              m === market ? "bg-surface text-navy-700 shadow-card ring-1 ring-line" : "text-muted hover:text-ink",
             )}
           >
+            <Flag code={m} />
             {t(m)}
           </button>
         ))}

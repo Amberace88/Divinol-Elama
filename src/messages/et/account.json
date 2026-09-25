@@ -158,7 +158,8 @@
       "logout": "Logi välja",
       "loggingOut": "Väljalogimine…",
       "loggedOut": "Oled kontost välja loginud",
-      "pending": "Menetluses"
+      "pending": "Menetluses",
+      "admin": "Halduspaneel"
     },
     "header": {
       "eyebrow": "Minu konto",
@@ -168,7 +169,10 @@
       "b2bApproved": "B2B klient",
       "b2bPending": "B2B taotlus menetluses",
       "discount": "Allahindlus {value}%",
-      "terms": "Maksetähtaeg {days} päeva"
+      "terms": "Maksetähtaeg {days} päeva",
+      "admin": "Administraator",
+      "adminPanel": "Halduspaneel",
+      "adminPanelText": "Halda tooteid, tellimusi ja arveid"
     },
     "common": {
       "loadError": "Kõiki andmeid ei õnnestunud laadida. Palun värskenda lehte või proovi hiljem uuesti."

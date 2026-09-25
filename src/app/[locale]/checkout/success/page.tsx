@@ -48,29 +48,29 @@ export default async function CheckoutSuccessPage({ params, searchParams }: Prop
         <div className="absolute inset-0 grid-bg" />
       </div>
       <div className="container-x relative pb-20 pt-12 sm:pt-16">
-        <div className="mx-auto max-w-2xl rounded-[2rem] border border-line bg-white p-6 text-center shadow-lift sm:p-10">
+        <div className="mx-auto max-w-2xl rounded-[2rem] border border-line bg-surface p-6 text-center shadow-lift sm:p-10">
           <SuccessBadge />
           <h1 className="h-display mt-6 text-3xl text-ink sm:text-4xl">{t("title")}</h1>
           <p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-muted">{t("text")}</p>
 
           <dl className="mt-8 grid gap-px overflow-hidden rounded-2xl bg-line text-left ring-1 ring-line sm:grid-cols-3">
-            <div className="bg-white p-4">
+            <div className="bg-surface p-4">
               <dt className="text-[11px] font-bold uppercase tracking-wider text-muted">{t("orderNumber")}</dt>
               <dd className="mt-1 flex items-center justify-between gap-2 font-mono text-[15px] font-bold text-ink">
                 {number ?? "—"}
                 {number && <CopyValue value={number} />}
               </dd>
             </div>
-            <div className="bg-white p-4">
+            <div className="bg-surface p-4">
               <dt className="text-[11px] font-bold uppercase tracking-wider text-muted">{t("total")}</dt>
               <dd className="mt-1 text-[17px] font-extrabold tabular-nums text-navy-700">{total != null ? formatMoney(total, locale) : "—"}</dd>
             </div>
-            <div className="bg-white p-4">
+            <div className="bg-surface p-4">
               <dt className="text-[11px] font-bold uppercase tracking-wider text-muted">{t("payment")}</dt>
               <dd className="mt-1 text-[14px] font-bold text-ink">{payment ? tp(payment) : "—"}</dd>
             </div>
             {invoice && (
-              <div className="bg-white p-4 sm:col-span-3">
+              <div className="bg-surface p-4 sm:col-span-3">
                 <dt className="text-[11px] font-bold uppercase tracking-wider text-muted">{t("invoice")}</dt>
                 <dd className="mt-1 font-mono text-[14px] font-bold text-ink">{invoice}</dd>
               </div>

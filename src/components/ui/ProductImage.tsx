@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Droplets } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-/** Product packshot on a soft white stage — product photos have white backgrounds, so we lean into it. */
+/** Product packshot on a soft white stage (a spot-lit navy stage in night mode). Packshots are transparent cut-outs. */
 export function ProductImage({
   src,
   alt,
@@ -19,7 +19,7 @@ export function ProductImage({
   imgClassName?: string;
 }) {
   return (
-    <div className={cn("relative overflow-hidden bg-white", className)}>
+    <div className={cn("relative overflow-hidden bg-surface dark:bg-(image:--night-well)", className)}>
       {src ? (
         <Image
           src={src}
@@ -27,10 +27,10 @@ export function ProductImage({
           fill
           sizes={sizes}
           priority={priority}
-          className={cn("object-contain mix-blend-multiply", imgClassName)}
+          className={cn("object-contain mix-blend-multiply dark:mix-blend-normal", imgClassName)}
         />
       ) : (
-        <div className="grid h-full w-full place-items-center text-navy-200">
+        <div className="grid h-full w-full place-items-center text-navy-200 dark:text-navy-300">
           <Droplets className="size-12" aria-hidden />
         </div>
       )}

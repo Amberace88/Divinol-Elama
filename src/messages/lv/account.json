@@ -158,7 +158,8 @@
       "logout": "Iziet",
       "loggingOut": "Iziet…",
       "loggedOut": "Esi izgājis no konta",
-      "pending": "Izskatīšanā"
+      "pending": "Izskatīšanā",
+      "admin": "Admin panelis"
     },
     "header": {
       "eyebrow": "Mans konts",
@@ -168,7 +169,10 @@
       "b2bApproved": "B2B klients",
       "b2bPending": "B2B pieteikums izskatīšanā",
       "discount": "Atlaide {value}%",
-      "terms": "Apmaksa {days} dienu laikā"
+      "terms": "Apmaksa {days} dienu laikā",
+      "admin": "Administrators",
+      "adminPanel": "Admin panelis",
+      "adminPanelText": "Pārvaldi produktus, pasūtījumus un rēķinus"
     },
     "common": {
       "loadError": "Neizdevās ielādēt visus datus. Lūdzu, atsvaidzini lapu vai mēģini vēlāk."

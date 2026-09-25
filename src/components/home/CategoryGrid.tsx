@@ -29,16 +29,16 @@ export async function CategoryGrid({ categories }: { categories: HomeCategory[] 
           <Reveal as="li" key={c.slug} delay={(i % 5) * 0.05} y={18}>
             <Link
               href={{ pathname: "/catalog/[category]", params: { category: c.slug } }}
-              className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-card transition duration-200 hover:border-navy-200 hover:shadow-lift"
+              className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-card transition duration-200 hover:border-navy-200 hover:shadow-lift"
             >
-              <div className="relative aspect-[4/3] overflow-hidden bg-[radial-gradient(120%_90%_at_50%_0%,#ffffff_40%,#e9eef7_100%)]">
+              <div className="relative aspect-[4/3] overflow-hidden bg-[radial-gradient(120%_90%_at_50%_0%,#ffffff_40%,#e9eef7_100%)] dark:bg-(image:--night-well)">
                 {c.image && (
                   <Image
                     src={c.image}
                     alt=""
                     fill
                     sizes="(min-width:1280px) 240px, (min-width:768px) 30vw, 45vw"
-                    className="object-contain p-5 mix-blend-multiply transition-transform duration-300 group-hover:scale-[1.03]"
+                    className="object-contain p-5 mix-blend-multiply dark:mix-blend-normal transition-transform duration-300 group-hover:scale-[1.03]"
                   />
                 )}
                 <span className="absolute left-3 top-3 grid size-10 place-items-center rounded-xl bg-navy-700 text-brand-400 shadow-card transition-colors duration-200 group-hover:bg-brand-400 group-hover:text-navy-900">

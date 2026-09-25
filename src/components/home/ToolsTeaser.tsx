@@ -31,7 +31,7 @@ export async function ToolsTeaser() {
           <Reveal as="li" key={title} delay={i * 0.06} y={18}>
             <Link
               href="/calculators"
-              className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white p-6 shadow-card transition duration-200 hover:border-navy-200 hover:shadow-lift"
+              className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface p-6 shadow-card transition duration-200 hover:border-navy-200 hover:shadow-lift"
             >
               <span className="absolute right-4 top-4 text-[40px] font-extrabold leading-none tracking-tighter text-navy-50 transition group-hover:text-brand-100">
                 0{i + 1}

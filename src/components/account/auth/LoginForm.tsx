@@ -102,7 +102,7 @@ export function LoginForm({ next, initialError }: { next?: string; initialError?
             {mode === m && (
               <motion.span
                 layoutId="login-mode"
-                className="absolute inset-0 rounded-lg bg-white shadow-card"
+                className="absolute inset-0 rounded-lg bg-surface shadow-card"
                 transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 500, damping: 40 }}
               />
             )}

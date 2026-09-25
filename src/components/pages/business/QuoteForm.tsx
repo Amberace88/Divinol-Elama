@@ -69,7 +69,7 @@ export function QuoteForm() {
               {VOLUMES.map((v) => (
                 <label key={v} className="relative cursor-pointer">
                   <input type="radio" name="volume" value={v} className="peer sr-only" />
-                  <span className="flex h-11 items-center justify-center rounded-xl border border-line bg-white px-3 text-sm font-bold text-navy-700 transition peer-checked:border-navy-700 peer-checked:bg-navy-700 peer-checked:text-white peer-focus-visible:ring-4 peer-focus-visible:ring-navy-100 hover:border-navy-300">
+                  <span className="flex h-11 items-center justify-center rounded-xl border border-line bg-surface px-3 text-sm font-bold text-navy-700 transition peer-checked:border-navy-700 peer-checked:bg-navy-700 peer-checked:text-white peer-focus-visible:ring-4 peer-focus-visible:ring-navy-100 hover:border-navy-300">
                     {t(`volumes.${v}`)}
                   </span>
                 </label>

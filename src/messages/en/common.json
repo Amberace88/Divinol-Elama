@@ -55,7 +55,9 @@
     "finderPromoText": "We match the oil to your car maker's approval — no guesswork.",
     "toolsText": "Calculators, oil finder and PDF catalogues",
     "needHelp": "Need help?",
-    "account": "Account"
+    "account": "Account",
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode"
   },
   "market": {
     "label": "Delivery country",
@@ -130,7 +132,7 @@
     "notFoundCatalog": "Browse catalogue"
   },
   "cookies": {
-    "text": "We only use necessary cookies (cart, sign-in and country choice). Analytics is enabled only with your consent.",
+    "text": "We only use essential cookies (cart, sign-in and country selection). Visit statistics are collected anonymously — without cookies or personal data.",
     "accept": "Accept",
     "decline": "Necessary only",
     "title": "Cookies",

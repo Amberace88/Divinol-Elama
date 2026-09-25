@@ -36,7 +36,7 @@ export async function FinderTeaser() {
               </div>
             </div>
             <div aria-hidden className="relative mx-auto w-full max-w-md">
-              <div className="rounded-2xl bg-white p-5 text-ink shadow-lift sm:p-6">
+              <div className="rounded-2xl bg-surface p-5 text-ink shadow-lift sm:p-6">
                 <div className="flex gap-1.5">
                   {steps.map((s) => (
                     <span key={s.label} className="h-1.5 flex-1 rounded-full bg-brand-400" />

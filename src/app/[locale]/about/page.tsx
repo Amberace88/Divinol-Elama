@@ -98,7 +98,7 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
               <Image src="/media/brand/f2.webp" alt="" fill sizes="(min-width:1024px) 45vw, 90vw" className="object-cover" />
             </div>
             <div aria-hidden className="absolute -top-4 -right-4 -z-10 h-full w-full -skew-x-3 rounded-3xl bg-brand-400/30" />
-            <div className="absolute right-4 bottom-4 flex items-center gap-2 rounded-xl bg-white/95 px-3.5 py-2.5 text-[13px] font-bold text-navy-700 shadow-card backdrop-blur">
+            <div className="absolute right-4 bottom-4 flex items-center gap-2 rounded-xl bg-surface/95 px-3.5 py-2.5 text-[13px] font-bold text-navy-700 shadow-card backdrop-blur">
               <MapPin className="size-4 text-brand-600" aria-hidden />
               {settings.company.warehouse}
             </div>
@@ -157,7 +157,7 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
           <ul className="flex flex-wrap gap-3 lg:justify-end">
             {PARTNERS.map((p, i) => (
               <Reveal as="li" key={p} delay={i * 0.05}>
-                <span className="flex h-14 items-center rounded-2xl border border-line bg-white px-6 text-lg font-extrabold tracking-tight text-navy-700 shadow-card transition hover:-translate-y-0.5 hover:border-navy-200 hover:shadow-lift">
+                <span className="flex h-14 items-center rounded-2xl border border-line bg-surface px-6 text-lg font-extrabold tracking-tight text-navy-700 shadow-card transition hover:-translate-y-0.5 hover:border-navy-200 hover:shadow-lift">
                   {p}
                 </span>
               </Reveal>
@@ -173,7 +173,7 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
           <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {VALUES.map(({ n, icon: Icon }, i) => (
               <Reveal as="li" key={n} delay={i * 0.06}>
-                <div className="group h-full rounded-2xl border border-line bg-white p-6 shadow-card transition duration-300 hover:shadow-lift">
+                <div className="group h-full rounded-2xl border border-line bg-surface p-6 shadow-card transition duration-300 hover:shadow-lift">
                   <span className="grid size-12 place-items-center rounded-xl bg-brand-400 text-navy-900 transition-transform duration-300 group-hover:rotate-6">
                     <Icon className="size-6" aria-hidden />
                   </span>

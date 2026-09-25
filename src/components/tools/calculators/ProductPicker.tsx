@@ -89,7 +89,7 @@ export function ProductPicker({
           setActive(Math.max(0, items.findIndex((i) => i.slug === value)));
           setOpen((o) => !o);
         }}
-        className="flex w-full items-center gap-3 rounded-xl border border-line bg-white p-2 pr-3.5 text-left shadow-[inset_0_1px_1px_rgb(16_24_40/0.04)] transition hover:border-navy-300 focus-visible:border-navy-400 focus-visible:ring-4 focus-visible:ring-navy-100 focus-visible:outline-none"
+        className="flex w-full items-center gap-3 rounded-xl border border-line bg-surface p-2 pr-3.5 text-left shadow-[inset_0_1px_1px_rgb(16_24_40/0.04)] transition hover:border-navy-300 focus-visible:border-navy-400 focus-visible:ring-4 focus-visible:ring-navy-100 focus-visible:outline-none"
       >
         <ProductImage src={selected?.image ?? null} alt="" sizes="48px" className="size-12 shrink-0 rounded-lg ring-1 ring-line" imgClassName="p-1" />
         <span id={`${id}-value`} className="min-w-0 flex-1">
@@ -106,7 +106,7 @@ export function ProductPicker({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.18 }}
-            className="absolute inset-x-0 top-full z-30 mt-2 overflow-hidden rounded-xl border border-line bg-white shadow-lift"
+            className="absolute inset-x-0 top-full z-30 mt-2 overflow-hidden rounded-xl border border-line bg-surface shadow-lift"
           >
             <div className="flex items-center gap-2 border-b border-line px-3">
               <Search className="size-4 text-muted" aria-hidden />

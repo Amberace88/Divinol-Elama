@@ -11,7 +11,7 @@ export function Faq({ items, className }: { items: { q: string; a: string }[]; c
   const reduce = useReducedMotion();
   const baseId = useId();
   return (
-    <div className={cn("divide-y divide-line overflow-hidden rounded-2xl border border-line bg-white shadow-card", className)}>
+    <div className={cn("divide-y divide-line overflow-hidden rounded-2xl border border-line bg-surface shadow-card", className)}>
       {items.map((it, i) => {
         const isOpen = open === i;
         const btnId = `${baseId}-q-${i}`;

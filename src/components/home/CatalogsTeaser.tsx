@@ -10,13 +10,13 @@ export async function CatalogsTeaser() {
       <Reveal>
         <Link
           href="/downloads"
-          className="group relative flex flex-col gap-6 overflow-hidden rounded-[2rem] border border-line bg-gradient-to-br from-white to-canvas p-6 shadow-card transition hover:shadow-lift sm:flex-row sm:items-center sm:p-10"
+          className="group relative flex flex-col gap-6 overflow-hidden rounded-[2rem] border border-line bg-gradient-to-br from-surface to-canvas p-6 shadow-card transition hover:shadow-lift sm:flex-row sm:items-center sm:p-10"
         >
           <div aria-hidden className="relative h-28 w-24 shrink-0">
             {[0, 1, 2].map((i) => (
               <span
                 key={i}
-                className="absolute inset-0 rounded-xl border border-line bg-white shadow-card "
+                className="absolute inset-0 rounded-xl border border-line bg-surface shadow-card "
                 style={{ transform: `translate(${(i - 1) * 6}px, ${(i - 1) * 6}px)` }}
               >
                 <span className="absolute inset-x-2 top-2 h-8 rounded-md bg-navy-700" />

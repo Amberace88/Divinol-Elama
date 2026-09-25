@@ -135,7 +135,7 @@ export function RegisterForm({ initialType = "private", next }: { initialType?: 
             {type === k && (
               <motion.span
                 layoutId="register-type"
-                className="absolute inset-0 rounded-lg bg-white shadow-card"
+                className="absolute inset-0 rounded-lg bg-surface shadow-card"
                 transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 500, damping: 40 }}
               />
             )}

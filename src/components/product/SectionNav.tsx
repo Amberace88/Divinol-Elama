@@ -19,7 +19,7 @@ export function SectionNav({ items }: { items: { id: string; label: string }[] }
     return () => io.disconnect();
   }, [items]);
   return (
-    <nav className="sticky top-14 z-30 -mx-4 border-b border-line bg-white/90 px-4 backdrop-blur-lg sm:-mx-6 sm:px-6 lg:top-16 lg:mx-0 lg:rounded-2xl lg:border lg:px-2">
+    <nav className="sticky top-14 z-30 -mx-4 border-b border-line bg-surface/90 px-4 backdrop-blur-lg sm:-mx-6 sm:px-6 lg:top-16 lg:mx-0 lg:rounded-2xl lg:border lg:px-2">
       <ul className="no-scrollbar flex gap-1 overflow-x-auto py-2">
         {items.map((i) => (
           <li key={i.id} className="shrink-0">

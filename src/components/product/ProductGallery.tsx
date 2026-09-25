@@ -31,7 +31,7 @@ export function ProductGallery({
   return (
     <div className="lg:sticky lg:top-24">
       <div
-        className="group relative aspect-square cursor-zoom-in overflow-hidden rounded-3xl border border-line bg-[radial-gradient(110%_80%_at_50%_15%,#ffffff_50%,#eef2f9_100%)]"
+        className="group relative aspect-square cursor-zoom-in overflow-hidden rounded-3xl border border-line bg-[radial-gradient(110%_80%_at_50%_15%,#ffffff_50%,#eef2f9_100%)] dark:bg-(image:--night-well)"
         onMouseMove={(e) => {
           const r = e.currentTarget.getBoundingClientRect();
           setZoom({ x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 });
@@ -55,7 +55,7 @@ export function ProductGallery({
                 fill
                 priority={index === 0}
                 sizes="(min-width:1024px) 560px, 100vw"
-                className="object-contain p-8 mix-blend-multiply transition-transform duration-200 ease-out sm:p-12"
+                className="object-contain p-8 mix-blend-multiply dark:mix-blend-normal transition-transform duration-200 ease-out sm:p-12"
                 style={
                   zoom
                     ? { transform: "scale(1.9)", transformOrigin: `${zoom.x}% ${zoom.y}%` }
@@ -73,7 +73,7 @@ export function ProductGallery({
             setLightbox(true);
           }}
           aria-label={t("zoom")}
-          className="absolute bottom-4 right-4 z-10 grid size-10 place-items-center rounded-xl bg-white/90 text-navy-700 shadow-card ring-1 ring-line backdrop-blur transition hover:bg-white"
+          className="absolute bottom-4 right-4 z-10 grid size-10 place-items-center rounded-xl bg-surface/90 text-navy-700 shadow-card ring-1 ring-line backdrop-blur transition hover:bg-surface"
         >
           <ZoomIn className="size-5" aria-hidden />
         </button>
@@ -86,7 +86,7 @@ export function ProductGallery({
                 go(-1);
               }}
               aria-label={ta("previous")}
-              className="absolute left-3 top-1/2 z-10 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-navy-700 opacity-0 shadow-card ring-1 ring-line transition group-hover:opacity-100 focus-visible:opacity-100"
+              className="absolute left-3 top-1/2 z-10 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-surface/90 text-navy-700 opacity-0 shadow-card ring-1 ring-line transition group-hover:opacity-100 focus-visible:opacity-100"
             >
               <ChevronLeft className="size-5" aria-hidden />
             </button>
@@ -97,7 +97,7 @@ export function ProductGallery({
                 go(1);
               }}
               aria-label={ta("next")}
-              className="absolute right-3 top-1/2 z-10 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-navy-700 opacity-0 shadow-card ring-1 ring-line transition group-hover:opacity-100 focus-visible:opacity-100"
+              className="absolute right-3 top-1/2 z-10 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-surface/90 text-navy-700 opacity-0 shadow-card ring-1 ring-line transition group-hover:opacity-100 focus-visible:opacity-100"
             >
               <ChevronRight className="size-5" aria-hidden />
             </button>
@@ -115,11 +115,11 @@ export function ProductGallery({
                 aria-current={i === index || undefined}
                 aria-label={img.alt}
                 className={cn(
-                  "relative block size-[72px] overflow-hidden rounded-xl border-2 bg-white transition sm:size-20",
+                  "relative block size-[72px] overflow-hidden rounded-xl border-2 bg-surface transition dark:bg-(image:--night-well) sm:size-20",
                   i === index ? "border-navy-600 shadow-card" : "border-line hover:border-navy-200",
                 )}
               >
-                <Image src={img.src} alt="" fill sizes="80px" className="object-contain p-1.5 mix-blend-multiply" />
+                <Image src={img.src} alt="" fill sizes="80px" className="object-contain p-1.5 mix-blend-multiply dark:mix-blend-normal" />
               </button>
             </li>
           ))}
@@ -171,7 +171,7 @@ function Lightbox({
           role="dialog"
           aria-modal="true"
           aria-label={img.alt}
-          className="fixed inset-0 z-[95] flex items-center justify-center bg-white/95 backdrop-blur"
+          className="fixed inset-0 z-[95] flex items-center justify-center bg-surface/95 backdrop-blur"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -185,7 +185,7 @@ function Lightbox({
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             onClick={(e) => e.stopPropagation()}
           >
-            <Image src={img.src} alt={img.alt} fill sizes="92vw" className="object-contain mix-blend-multiply" />
+            <Image src={img.src} alt={img.alt} fill sizes="92vw" className="object-contain mix-blend-multiply dark:mix-blend-normal" />
           </motion.div>
           <button
             ref={closeRef}
@@ -205,7 +205,7 @@ function Lightbox({
                   onIndex((index - 1 + n) % n);
                 }}
                 aria-label={ta("previous")}
-                className="absolute left-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white text-navy-700 shadow-lift ring-1 ring-line"
+                className="absolute left-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-surface text-navy-700 shadow-lift ring-1 ring-line"
               >
                 <ChevronLeft className="size-6" aria-hidden />
               </button>
@@ -216,7 +216,7 @@ function Lightbox({
                   onIndex((index + 1) % n);
                 }}
                 aria-label={ta("next")}
-                className="absolute right-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white text-navy-700 shadow-lift ring-1 ring-line"
+                className="absolute right-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-surface text-navy-700 shadow-lift ring-1 ring-line"
               >
                 <ChevronRight className="size-6" aria-hidden />
               </button>

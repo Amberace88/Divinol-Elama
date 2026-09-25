@@ -58,7 +58,7 @@ export function LegalToc({ items, label, updated }: { items: { id: string; title
         {updated}
       </p>
       {/* mobile: collapsible */}
-      <div className="rounded-2xl border border-line bg-white lg:hidden">
+      <div className="rounded-2xl border border-line bg-surface lg:hidden">
         <button
           type="button"
           aria-expanded={open}

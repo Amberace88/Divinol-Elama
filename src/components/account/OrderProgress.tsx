@@ -84,7 +84,7 @@ export async function OrderEvents({ events, locale }: { events: OrderEvent[]; lo
           <li key={e.id} className="relative flex gap-3.5">
             <span
               className={cn(
-                "relative z-10 grid h-8 w-8 shrink-0 place-items-center rounded-full ring-4 ring-white",
+                "relative z-10 grid h-8 w-8 shrink-0 place-items-center rounded-full ring-4 ring-surface",
                 last ? "bg-navy-700 text-white" : "bg-navy-50 text-navy-600",
               )}
             >

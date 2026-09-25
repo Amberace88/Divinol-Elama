@@ -179,7 +179,7 @@ export function OilFinder({ products }: { products: ProductSummary[] }) {
 
   return (
     <div className="grid gap-10">
-      <div ref={topRef} className="scroll-mt-28 overflow-hidden rounded-3xl border border-line bg-white shadow-lift">
+      <div ref={topRef} className="scroll-mt-28 overflow-hidden rounded-3xl border border-line bg-surface shadow-lift">
         {/* progress header */}
         <div className="border-b border-line bg-canvas/60 px-5 pt-5 pb-4 sm:px-8">
           <div className="flex items-center justify-between gap-4">
@@ -267,7 +267,7 @@ export function OilFinder({ products }: { products: ProductSummary[] }) {
                           whileTap={{ scale: 0.98 }}
                           className={cn(
                             "group relative flex flex-col items-start gap-3 overflow-hidden rounded-2xl border p-4 text-left transition-colors sm:p-6",
-                            active ? "border-navy-700 bg-navy-700 text-white shadow-lift" : "border-line bg-white hover:border-navy-300 hover:shadow-card",
+                            active ? "border-navy-700 bg-navy-700 text-white shadow-lift" : "border-line bg-surface hover:border-navy-300 hover:shadow-card",
                           )}
                         >
                           <span
@@ -320,7 +320,7 @@ export function OilFinder({ products }: { products: ProductSummary[] }) {
                             transition={{ delay: i * 0.025, duration: 0.3 }}
                             className={cn(
                               "group flex items-center gap-3 rounded-xl border px-3.5 py-3 text-left transition",
-                              active ? "border-navy-700 bg-navy-700 text-white" : "border-line bg-white hover:-translate-y-0.5 hover:border-navy-300 hover:shadow-card",
+                              active ? "border-navy-700 bg-navy-700 text-white" : "border-line bg-surface hover:-translate-y-0.5 hover:border-navy-300 hover:shadow-card",
                             )}
                           >
                             <span
@@ -357,7 +357,7 @@ export function OilFinder({ products }: { products: ProductSummary[] }) {
                             transition={{ delay: i * 0.04, duration: 0.35 }}
                             className={cn(
                               "group flex items-start gap-4 rounded-2xl border p-4 text-left transition sm:p-5",
-                              active ? "border-navy-700 bg-navy-700 text-white" : "border-line bg-white hover:-translate-y-0.5 hover:border-navy-300 hover:shadow-card",
+                              active ? "border-navy-700 bg-navy-700 text-white" : "border-line bg-surface hover:-translate-y-0.5 hover:border-navy-300 hover:shadow-card",
                             )}
                           >
                             <span
@@ -432,7 +432,7 @@ export function OilFinder({ products }: { products: ProductSummary[] }) {
                         type="button"
                         onClick={() => go(s.step)}
                         title={t("edit")}
-                        className="rounded-full border border-line bg-canvas px-3 py-1 text-[13px] font-semibold text-navy-700 transition hover:border-navy-300 hover:bg-white"
+                        className="rounded-full border border-line bg-canvas px-3 py-1 text-[13px] font-semibold text-navy-700 transition hover:border-navy-300 hover:bg-surface"
                       >
                         {s.label}
                       </button>
@@ -508,7 +508,7 @@ function Choice({ active, onClick, children }: { active: boolean; onClick: () =>
       onClick={onClick}
       className={cn(
         "relative inline-flex h-11 items-center gap-2 rounded-xl border px-4 text-sm font-bold transition",
-        active ? "border-navy-700 bg-navy-700 text-white shadow-card" : "border-line bg-white text-navy-700 hover:border-navy-300",
+        active ? "border-navy-700 bg-navy-700 text-white shadow-card" : "border-line bg-surface text-navy-700 hover:border-navy-300",
       )}
     >
       {children}

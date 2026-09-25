@@ -158,7 +158,8 @@
       "logout": "Atsijungti",
       "loggingOut": "Atsijungiama…",
       "loggedOut": "Sėkmingai atsijungei",
-      "pending": "Nagrinėjama"
+      "pending": "Nagrinėjama",
+      "admin": "Administravimo skydelis"
     },
     "header": {
       "eyebrow": "Mano paskyra",
@@ -168,7 +169,10 @@
       "b2bApproved": "B2B klientas",
       "b2bPending": "B2B paraiška nagrinėjama",
       "discount": "Nuolaida {value}%",
-      "terms": "Apmokėjimas per {days} d."
+      "terms": "Apmokėjimas per {days} d.",
+      "admin": "Administratorius",
+      "adminPanel": "Administravimo skydelis",
+      "adminPanelText": "Tvarkykite produktus, užsakymus ir sąskaitas"
     },
     "common": {
       "loadError": "Nepavyko įkelti visų duomenų. Atnaujink puslapį arba bandyk vėliau."

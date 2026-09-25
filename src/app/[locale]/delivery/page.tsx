@@ -87,7 +87,7 @@ export default async function DeliveryPage({ params }: PageProps<"/[locale]/deli
               const Icon = METHOD_ICON[m.id] ?? Truck;
               return (
                 <Reveal as="li" key={m.id} delay={i * 0.06}>
-                  <article className="group flex h-full flex-col rounded-2xl border border-line bg-white p-6 shadow-card transition duration-300 hover:shadow-lift">
+                  <article className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-6 shadow-card transition duration-300 hover:shadow-lift">
                     <span className="grid size-12 place-items-center rounded-xl bg-navy-700 text-brand-400 transition-transform duration-300">
                       <Icon className="size-6" aria-hidden />
                     </span>
@@ -136,7 +136,7 @@ export default async function DeliveryPage({ params }: PageProps<"/[locale]/deli
             <ul className="mt-8 grid gap-4 sm:grid-cols-3">
               {payments.map(({ key, icon: Icon }, i) => (
                 <Reveal as="li" key={key} delay={i * 0.06}>
-                  <div className="h-full rounded-2xl border border-line bg-white p-5 shadow-card">
+                  <div className="h-full rounded-2xl border border-line bg-surface p-5 shadow-card">
                     <Icon className="size-7 text-navy-600" aria-hidden />
                     <h3 className="mt-4 font-extrabold text-navy-700">{t(key)}</h3>
                     <p className="mt-1.5 text-[13.5px] leading-6 text-muted">{t(`${key}Text`)}</p>

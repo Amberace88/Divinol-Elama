@@ -35,7 +35,7 @@ export function ChoiceCard({
           ? "cursor-not-allowed border-line bg-canvas/60 opacity-60"
           : checked
             ? "cursor-pointer border-navy-700 bg-navy-50/50 shadow-[0_10px_24px_-14px_rgb(30_45_81/0.55)]"
-            : "cursor-pointer border-line bg-white hover:border-navy-200",
+            : "cursor-pointer border-line bg-surface hover:border-navy-200",
       )}
     >
       <input

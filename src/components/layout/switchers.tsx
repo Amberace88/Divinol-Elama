@@ -3,13 +3,14 @@
 import { useTransition } from "react";
 import { useParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { Check, Globe, MapPin } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { localeNames, routing, type Locale } from "@/i18n/routing";
 import { MARKETS } from "@/lib/commerce";
 import type { Market } from "@/lib/types";
 import { usePricing } from "@/components/providers/PriceProvider";
 import { cn } from "@/lib/utils";
+import { Flag } from "@/components/ui/Flag";
 import { Popover, PopoverItem } from "./Popover";
 
 /** Switch language while staying on the same page (keeps dynamic params and the query string). */
@@ -46,10 +47,11 @@ export function LocaleSwitcher({ variant = "popover" }: { variant?: "popover" | 
             onClick={() => change(l)}
             aria-current={l === locale || undefined}
             className={cn(
-              "h-9 rounded-lg px-3 text-[13px] font-bold uppercase tracking-wide transition",
+              "inline-flex h-9 items-center gap-2 rounded-lg px-3 text-[13px] font-bold uppercase tracking-wide transition",
               l === locale ? "bg-brand-400 text-navy-900" : "bg-white/10 text-white/80 hover:bg-white/20",
             )}
           >
+            <Flag code={l} />
             {l}
           </button>
         ))}
@@ -61,7 +63,7 @@ export function LocaleSwitcher({ variant = "popover" }: { variant?: "popover" | 
       label={t("language")}
       button={
         <>
-          <Globe className={cn("size-3.5", pending && "animate-spin")} aria-hidden />
+          {pending ? <Loader2 className="size-3.5 animate-spin" aria-hidden /> : <Flag code={locale} />}
           <span className="uppercase">{locale}</span>
         </>
       }
@@ -76,7 +78,7 @@ export function LocaleSwitcher({ variant = "popover" }: { variant?: "popover" | 
               if (l !== locale) change(l);
             }}
           >
-            <span className="w-6 text-[11px] font-extrabold uppercase text-muted">{l}</span>
+            <Flag code={l} />
             <span lang={l} className="flex-1">
               {localeNames[l]}
             </span>
@@ -101,10 +103,11 @@ export function MarketSwitcher({ variant = "popover" }: { variant?: "popover" | 
             onClick={() => setMarket(m)}
             aria-pressed={m === market}
             className={cn(
-              "h-9 rounded-lg px-3 text-[13px] font-bold transition",
+              "inline-flex h-9 items-center gap-2 rounded-lg px-3 text-[13px] font-bold transition",
               m === market ? "bg-brand-400 text-navy-900" : "bg-white/10 text-white/80 hover:bg-white/20",
             )}
           >
+            <Flag code={m} />
             {t(m)}
           </button>
         ))}
@@ -116,7 +119,7 @@ export function MarketSwitcher({ variant = "popover" }: { variant?: "popover" | 
       label={t("label")}
       button={
         <>
-          <MapPin className="size-3.5" aria-hidden />
+          <Flag code={market} />
           <span>{market}</span>
           <span className="hidden text-white/45 sm:inline">· {b2b ? t("vatExcl") : t("vatIncl")}</span>
         </>
@@ -134,7 +137,7 @@ export function MarketSwitcher({ variant = "popover" }: { variant?: "popover" | 
                 close();
               }}
             >
-              <span className="w-6 text-[11px] font-extrabold text-muted">{m}</span>
+              <Flag code={m} />
               <span className="flex-1">{t(m)}</span>
               {m === market && <Check className="size-4 text-navy-600" aria-hidden />}
             </PopoverItem>

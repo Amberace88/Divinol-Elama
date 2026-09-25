@@ -158,7 +158,7 @@ function Browser({ products, categories, activeCategory, qs }: Props & { qs: str
           <button
             type="button"
             onClick={() => setDrawer(true)}
-            className="inline-flex h-11 items-center gap-2 rounded-xl border border-line bg-white px-4 text-[14px] font-bold text-navy-700 shadow-card lg:hidden"
+            className="inline-flex h-11 items-center gap-2 rounded-xl border border-line bg-surface px-4 text-[14px] font-bold text-navy-700 shadow-card lg:hidden"
           >
             <SlidersHorizontal className="size-4" aria-hidden />
             {t("filters")}
@@ -171,7 +171,7 @@ function Browser({ products, categories, activeCategory, qs }: Props & { qs: str
             <select
               value={filters.sort}
               onChange={(e) => update({ sort: e.target.value as SortKey })}
-              className="h-11 appearance-none rounded-xl border border-line bg-white pl-3.5 pr-9 text-[14px] font-semibold text-ink shadow-card outline-none focus:border-navy-400 focus:ring-4 focus:ring-navy-100"
+              className="h-11 appearance-none rounded-xl border border-line bg-surface pl-3.5 pr-9 text-[14px] font-semibold text-ink shadow-card outline-none focus:border-navy-400 focus:ring-4 focus:ring-navy-100"
             >
               {SORTS.map((s) => (
                 <option key={s} value={s}>
@@ -217,7 +217,7 @@ function Browser({ products, categories, activeCategory, qs }: Props & { qs: str
             animate={{ opacity: 1, y: 0 }}
             className="mt-6 flex flex-col items-center rounded-3xl border border-dashed border-navy-200 bg-canvas px-6 py-16 text-center"
           >
-            <span className="mb-4 grid size-14 place-items-center rounded-2xl bg-white text-navy-400 shadow-card">
+            <span className="mb-4 grid size-14 place-items-center rounded-2xl bg-surface text-navy-400 shadow-card">
               <Search className="size-6" aria-hidden />
             </span>
             <p className="text-lg font-extrabold text-ink">{t("noResults")}</p>
@@ -270,7 +270,7 @@ function Browser({ products, categories, activeCategory, qs }: Props & { qs: str
               role="dialog"
               aria-modal="true"
               aria-label={t("filters")}
-              className="absolute inset-x-0 bottom-0 flex max-h-[88vh] flex-col rounded-t-3xl bg-white"
+              className="absolute inset-x-0 bottom-0 flex max-h-[88vh] flex-col rounded-t-3xl bg-surface"
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               exit={{ y: "100%" }}

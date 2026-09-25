@@ -50,7 +50,7 @@ export function PackCalculator({ product }: { product: ProductSummary }) {
   const leftover = combo ? round2(combo.total - amount) : 0;
 
   return (
-    <section aria-labelledby="pack-calc" className="rounded-3xl border border-line bg-white p-5 shadow-card sm:p-6">
+    <section aria-labelledby="pack-calc" className="rounded-3xl border border-line bg-surface p-5 shadow-card sm:p-6">
       <div className="flex items-center gap-3">
         <span className="grid size-10 place-items-center rounded-xl bg-navy-700 text-brand-400">
           <Calculator className="size-5" aria-hidden />

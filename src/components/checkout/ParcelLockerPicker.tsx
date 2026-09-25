@@ -107,7 +107,7 @@ export function ParcelLockerPicker({
         <button
           type="button"
           onClick={() => onChange(null)}
-          className="inline-flex h-9 items-center gap-1.5 rounded-lg px-3 text-[13px] font-bold text-navy-600 ring-1 ring-navy-200 transition hover:bg-white"
+          className="inline-flex h-9 items-center gap-1.5 rounded-lg px-3 text-[13px] font-bold text-navy-600 ring-1 ring-navy-200 transition hover:bg-surface"
         >
           <Pencil className="size-3.5" aria-hidden />
           {t("change")}
@@ -175,7 +175,7 @@ export function ParcelLockerPicker({
         <ul
           id={listId}
           role="listbox"
-          className="absolute inset-x-0 top-full z-20 mt-1.5 max-h-80 overflow-y-auto rounded-xl border border-line bg-white p-1.5 shadow-lift"
+          className="absolute inset-x-0 top-full z-20 mt-1.5 max-h-80 overflow-y-auto rounded-xl border border-line bg-surface p-1.5 shadow-lift"
         >
           {options.length === 0 && !custom && <li className="px-3 py-3 text-[13px] text-muted">{failed ? t("error") : t("noResults")}</li>}
           {options.map((o, i) => (

@@ -234,7 +234,7 @@ export default async function ProductPage({ params }: Props) {
         ])}
       />
 
-      <div className="bg-gradient-to-b from-canvas to-white">
+      <div className="bg-gradient-to-b from-canvas to-page">
         <div className="container-x pb-12 pt-6 sm:pt-8">
           <Breadcrumbs
             label={a11y("breadcrumbs")}
@@ -252,7 +252,7 @@ export default async function ProductPage({ params }: Props) {
             header={header}
             badge={
               category ? (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2.5 py-1 text-[11.5px] font-bold text-navy-700 shadow-sm ring-1 ring-line backdrop-blur">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-surface/90 px-2.5 py-1 text-[11.5px] font-bold text-navy-700 shadow-sm ring-1 ring-line backdrop-blur">
                   <CategoryIcon name={category.icon} className="size-3.5" aria-hidden />
                   {catName}
                 </span>
@@ -326,7 +326,7 @@ export default async function ProductPage({ params }: Props) {
                           href={d.url}
                           target="_blank"
                           rel="noopener"
-                          className="group flex items-center gap-3.5 rounded-2xl border border-line bg-white p-4 shadow-card transition hover:-translate-y-0.5 hover:border-navy-200 hover:shadow-lift"
+                          className="group flex items-center gap-3.5 rounded-2xl border border-line bg-surface p-4 shadow-card transition hover:-translate-y-0.5 hover:border-navy-200 hover:shadow-lift"
                         >
                           <span className="grid size-11 place-items-center rounded-xl bg-red-50 text-red-600">
                             <FileText className="size-5" aria-hidden />
@@ -342,7 +342,7 @@ export default async function ProductPage({ params }: Props) {
                 </ul>
               ) : (
                 <div className="mt-5 flex flex-col gap-4 rounded-2xl border border-dashed border-navy-200 bg-canvas p-5 sm:flex-row sm:items-center">
-                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-white text-navy-500 shadow-card">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-surface text-navy-500 shadow-card">
                     <FileText className="size-5" aria-hidden />
                   </span>
                   <p className="flex-1 text-[14px] text-ink/75">{t("docsOnRequest")}</p>

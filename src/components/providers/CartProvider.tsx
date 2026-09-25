@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { track } from "@/lib/analytics";
 
 export type CartItem = {
   slug: string;
@@ -56,6 +57,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [items, ready]);
 
   const add = useCallback((item: Omit<CartItem, "qty">, qty = 1) => {
+    track("add_to_cart", { slug: item.slug, qty, value: Math.round(item.price_net * qty * 100) / 100 });
     setItems((prev) => {
       const i = prev.findIndex((p) => p.slug === item.slug && p.key === item.key);
       if (i >= 0) {

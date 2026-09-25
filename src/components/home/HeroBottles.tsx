@@ -31,16 +31,16 @@ export function HeroBottles({
           <li key={b.slug}>
             <Link
               href={{ pathname: "/product/[slug]", params: { slug: b.slug } }}
-              className="group flex h-full flex-col rounded-2xl bg-white p-3 ring-1 ring-black/5 transition-colors hover:ring-brand-400"
+              className="group flex h-full flex-col rounded-2xl bg-surface p-3 ring-1 ring-black/5 transition-colors hover:ring-brand-400"
             >
-              <span className="relative block aspect-square overflow-hidden rounded-xl bg-canvas">
+              <span className="relative block aspect-square overflow-hidden rounded-xl bg-canvas dark:bg-(image:--night-well)">
                 <Image
                   src={b.image}
                   alt={b.name}
                   fill
                   priority={i < 2}
                   sizes="(min-width:1024px) 220px, 45vw"
-                  className="object-contain p-3 mix-blend-multiply"
+                  className="object-contain p-3 mix-blend-multiply dark:mix-blend-normal"
                 />
               </span>
               <span className="mt-3 flex items-start justify-between gap-2 px-0.5">

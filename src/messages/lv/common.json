@@ -55,7 +55,9 @@
     "finderPromoText": "Atlasīsim eļļu pēc tava auto ražotāja apstiprinājuma — bez minēšanas.",
     "toolsText": "Kalkulatori, eļļas izvēle un katalogi PDF formātā",
     "needHelp": "Nepieciešama palīdzība?",
-    "account": "Konts"
+    "account": "Konts",
+    "darkMode": "Tumšais režīms",
+    "lightMode": "Gaišais režīms"
   },
   "market": {
     "label": "Piegādes valsts",
@@ -130,7 +132,7 @@
     "notFoundCatalog": "Uz katalogu"
   },
   "cookies": {
-    "text": "Mēs izmantojam tikai nepieciešamās sīkdatnes (grozs, pieslēgšanās un valsts izvēle). Analītika tiek ieslēgta tikai ar tavu piekrišanu.",
+    "text": "Mēs izmantojam tikai nepieciešamās sīkdatnes (grozs, pieslēgšanās un valsts izvēle). Apmeklējuma statistiku apkopojam anonīmi — bez sīkdatnēm un bez personas datiem.",
     "accept": "Piekrītu",
     "decline": "Tikai nepieciešamās",
     "title": "Sīkdatnes",

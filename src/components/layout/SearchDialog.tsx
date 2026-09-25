@@ -101,7 +101,7 @@ function SearchPanel({ onClose, categories }: { onClose: () => void; categories:
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: -10, scale: 0.98 }}
         transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
-        className="relative flex max-h-[80vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-[0_40px_80px_-20px_rgb(0_0_0/0.5)] ring-1 ring-black/5"
+        className="relative flex max-h-[80vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-surface shadow-[0_40px_80px_-20px_rgb(0_0_0/0.5)] ring-1 ring-black/5"
       >
         <div className="flex items-center gap-3 border-b border-line px-4 sm:px-5">
           {loading ? (
@@ -153,7 +153,7 @@ function SearchPanel({ onClose, categories }: { onClose: () => void; categories:
                         setActive(0);
                         inputRef.current?.focus();
                       }}
-                      className="rounded-full border border-line bg-canvas px-3 py-1.5 text-[13px] font-semibold text-navy-700 transition hover:border-navy-300 hover:bg-white"
+                      className="rounded-full border border-line bg-canvas px-3 py-1.5 text-[13px] font-semibold text-navy-700 transition hover:border-navy-300 hover:bg-surface"
                     >
                       {s}
                     </button>
@@ -245,16 +245,16 @@ function SearchPanel({ onClose, categories }: { onClose: () => void; categories:
 
         <div className="hidden items-center gap-4 border-t border-line bg-canvas px-5 py-2.5 text-[11px] font-semibold text-muted sm:flex">
           <span className="flex items-center gap-1.5">
-            <kbd className="rounded border border-line bg-white px-1.5 py-0.5 font-sans">↑</kbd>
-            <kbd className="rounded border border-line bg-white px-1.5 py-0.5 font-sans">↓</kbd>
+            <kbd className="rounded border border-line bg-surface px-1.5 py-0.5 font-sans">↑</kbd>
+            <kbd className="rounded border border-line bg-surface px-1.5 py-0.5 font-sans">↓</kbd>
             {t("searchNavigate")}
           </span>
           <span className="flex items-center gap-1.5">
-            <kbd className="rounded border border-line bg-white px-1.5 py-0.5 font-sans">Enter</kbd>
+            <kbd className="rounded border border-line bg-surface px-1.5 py-0.5 font-sans">Enter</kbd>
             {t("searchOpen")}
           </span>
           <span className="flex items-center gap-1.5">
-            <kbd className="rounded border border-line bg-white px-1.5 py-0.5 font-sans">Esc</kbd>
+            <kbd className="rounded border border-line bg-surface px-1.5 py-0.5 font-sans">Esc</kbd>
             {t("searchClose")}
           </span>
           <span className="ml-auto truncate">{t("searchHint")}</span>

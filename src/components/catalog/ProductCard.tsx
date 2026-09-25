@@ -52,17 +52,17 @@ export function ProductCard({
   return (
     <article
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-card transition duration-300 hover:border-navy-200 hover:shadow-lift",
+        "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-card transition duration-300 hover:border-navy-200 hover:shadow-lift",
         className,
       )}
     >
-      <div className="relative aspect-[5/4] overflow-hidden bg-[radial-gradient(120%_90%_at_50%_10%,#ffffff_45%,#eef2f9_100%)]">
+      <div className="relative aspect-[5/4] overflow-hidden bg-[radial-gradient(120%_90%_at_50%_10%,#ffffff_45%,#eef2f9_100%)] dark:bg-(image:--night-well)">
         <ProductImage
           src={p.image}
           alt={p.name}
           sizes="(min-width:1280px) 300px, (min-width:768px) 33vw, 50vw"
           priority={priority}
-          className="absolute inset-0 bg-transparent"
+          className="absolute inset-0 bg-transparent dark:bg-none"
           imgClassName="p-5 transition-transform duration-500 ease-out group-hover:scale-[1.06]"
         />
         <div className="absolute left-3 top-3 flex flex-col items-start gap-1.5">
@@ -74,7 +74,7 @@ export function ProductCard({
         </div>
         <span
           className={cn(
-            "absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-white/90 px-2 py-0.5 text-[10.5px] font-bold ring-1 backdrop-blur",
+            "absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-surface/90 px-2 py-0.5 text-[10.5px] font-bold ring-1 backdrop-blur",
             inStock ? "text-emerald-700 ring-emerald-200" : "text-amber-700 ring-amber-200",
           )}
         >

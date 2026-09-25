@@ -40,7 +40,7 @@ export function RangeField({
         <label htmlFor={id} className="text-[13px] font-semibold text-ink/80">
           {label}
         </label>
-        <div className="flex items-center gap-1.5 rounded-lg border border-line bg-white pr-2.5 shadow-[inset_0_1px_1px_rgb(16_24_40/0.04)] focus-within:border-navy-400 focus-within:ring-4 focus-within:ring-navy-100">
+        <div className="flex items-center gap-1.5 rounded-lg border border-line bg-surface pr-2.5 shadow-[inset_0_1px_1px_rgb(16_24_40/0.04)] focus-within:border-navy-400 focus-within:ring-4 focus-within:ring-navy-100">
           <input
             id={id}
             type="number"

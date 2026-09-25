@@ -3,7 +3,6 @@ import "@fontsource-variable/manrope/wght.css";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
-import { Toaster } from "sonner";
 import { routing, type Locale } from "@/i18n/routing";
 import { PriceProvider } from "@/components/providers/PriceProvider";
 import { CartProvider } from "@/components/providers/CartProvider";
@@ -11,6 +10,10 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { CookieBanner } from "@/components/layout/CookieBanner";
+import { Tracker } from "@/components/analytics/Tracker";
+import { ThemedToaster } from "@/components/layout/ThemeToggle";
+import { InlineScript } from "@/components/layout/InlineScript";
+import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import { getCategories } from "@/lib/catalog";
 import { getStoreSettings } from "@/lib/settings";
 import { SettingsProvider } from "@/components/providers/SettingsProvider";
@@ -51,7 +54,11 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   const cats = categories.map((c) => ({ slug: c.slug, icon: c.icon, name: c.i18n[locale]?.name ?? c.i18n.lv?.name ?? c.slug }));
 
   return (
-    <html lang={locale} className="h-full">
+    // suppressHydrationWarning: the inline script below may add `dark` to <html> before React hydrates.
+    <html lang={locale} className="h-full" suppressHydrationWarning>
+      <head>
+        <InlineScript html={THEME_INIT_SCRIPT} />
+      </head>
       <body className="flex min-h-full flex-col antialiased">
         <script
           type="application/ld+json"
@@ -68,7 +75,8 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
                 <Footer categories={cats} />
                 <CartDrawer />
                 <CookieBanner />
-                <Toaster position="top-center" richColors closeButton />
+                <Tracker />
+                <ThemedToaster />
               </CartProvider>
             </PriceProvider>
           </SettingsProvider>

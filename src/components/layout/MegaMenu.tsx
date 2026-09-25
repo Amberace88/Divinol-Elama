@@ -32,7 +32,7 @@ export function MegaMenu({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -6, transition: { duration: 0.12 } }}
       transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-      className="absolute inset-x-0 top-full border-t border-white/10 bg-white text-ink shadow-[0_30px_60px_-20px_rgb(10_17_34/0.45)]"
+      className="absolute inset-x-0 top-full border-t border-white/10 bg-surface text-ink shadow-[0_30px_60px_-20px_rgb(10_17_34/0.45)]"
     >
       <div className="container-x grid gap-8 py-8 lg:grid-cols-12">
         <div className="lg:col-span-8">

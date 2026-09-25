@@ -49,7 +49,7 @@ export function CookieBanner() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 24 }}
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-x-3 bottom-3 z-[65] rounded-2xl border border-line bg-white p-4 shadow-lift sm:inset-x-auto sm:left-5 sm:bottom-5 sm:max-w-sm"
+          className="fixed inset-x-3 bottom-3 z-[65] rounded-2xl border border-line bg-surface p-4 shadow-lift sm:inset-x-auto sm:left-5 sm:bottom-5 sm:max-w-sm"
         >
           <div className="flex gap-3">
             <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-600">

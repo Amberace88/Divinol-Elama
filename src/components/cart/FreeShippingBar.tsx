@@ -20,7 +20,7 @@ export function FreeShippingBar({ left, progress, className }: { left: number | 
           : t.rich("freeShippingLeft", { amount: money(left), b: (c) => <b>{c}</b> })}
       </p>
       <div
-        className="mt-2.5 h-2 overflow-hidden rounded-full bg-white ring-1 ring-inset ring-black/5"
+        className="mt-2.5 h-2 overflow-hidden rounded-full bg-surface ring-1 ring-inset ring-black/5"
         role="progressbar"
         aria-valuemin={0}
         aria-valuemax={100}

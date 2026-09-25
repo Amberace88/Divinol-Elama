@@ -13,6 +13,7 @@ import {
   UserPlus,
 } from "lucide-react";
 import { requireAdmin } from "@/lib/admin/auth";
+import { loadTraffic } from "@/lib/admin/analytics";
 import { deltaPct, fmtMoney, fmtNumber, fmtRelative } from "@/lib/admin/format";
 import { labelOf, MARKET, ORDER_STATUS, PAYMENT_STATUS } from "@/lib/admin/labels";
 import { sp, type SP } from "@/lib/admin/params";
@@ -20,6 +21,7 @@ import { customerName, ORDER_LIST_SELECT, type OrderRow } from "@/lib/admin/quer
 import { errorMessage } from "@/lib/admin/server";
 import { MarketDonut, RevenueChart } from "@/components/admin/Charts";
 import { ActionTile, KpiCard } from "@/components/admin/Kpi";
+import { TrafficStrip } from "@/components/admin/analytics/TrafficStrip";
 import { EmptyState, ErrorNote, PageHeader, Panel, Pill, Segmented, td, th, trHover } from "@/components/admin/ui";
 
 export const metadata = { title: "Pārskats" };
@@ -63,7 +65,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
   const { curStart, prevStart } = periodBounds(days);
 
-  const [statsRes, recentRes, custPrevRes] = await Promise.all([
+  const [statsRes, recentRes, custPrevRes, trafficRes] = await Promise.all([
     supabase.rpc("admin_stats", { p_days: days }),
     supabase.from("orders").select(ORDER_LIST_SELECT).order("created_at", { ascending: false }).limit(8),
     supabase
@@ -71,6 +73,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       .select("id", { count: "exact", head: true })
       .gte("created_at", prevStart.toISOString())
       .lt("created_at", curStart.toISOString()),
+    loadTraffic(supabase, days).catch(() => ({ traffic: null })),
   ]);
 
   const stats = (statsRes.data ?? null) as Stats | null;
@@ -121,6 +124,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         <ActionTile label="B2B pieteikumi" value={fmtNumber(stats?.b2b_pending)} href="/admin/customers?b2b=pending" icon={Building2} tone={n(stats?.b2b_pending) ? "warn" : "default"} />
         <ActionTile label="Jauni pieprasījumi" value={fmtNumber(stats?.inquiries_new)} href="/admin/inquiries?status=new" icon={Inbox} tone={n(stats?.inquiries_new) ? "warn" : "default"} />
       </div>
+
+      <TrafficStrip traffic={trafficRes.traffic} days={days} periodLabel={periodLabel} />
 
       <div className="mt-6 grid gap-6 lg:grid-cols-3">
         <Panel

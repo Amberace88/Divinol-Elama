@@ -81,7 +81,7 @@ export function FinderResultCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.07, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-2xl border bg-white shadow-card transition-shadow duration-300 hover:shadow-lift",
+        "group relative flex flex-col overflow-hidden rounded-2xl border bg-surface shadow-card transition-shadow duration-300 hover:shadow-lift",
         index === 0 ? "border-brand-400 ring-4 ring-brand-400/15" : "border-line",
       )}
     >
@@ -114,7 +114,7 @@ export function FinderResultCard({
           )}
         </div>
         {grade && (
-          <span className="absolute top-3 right-3 rounded-lg bg-white/95 px-2.5 py-1 text-[13px] font-extrabold text-navy-700 shadow-card ring-1 ring-line">
+          <span className="absolute top-3 right-3 rounded-lg bg-surface/95 px-2.5 py-1 text-[13px] font-extrabold text-navy-700 shadow-card ring-1 ring-line">
             {grade}
           </span>
         )}
@@ -179,7 +179,7 @@ export function FinderResultCard({
                   onClick={() => setKey(x.key)}
                   className={cn(
                     "h-8 rounded-lg border px-2.5 text-[12.5px] font-bold transition",
-                    x.key === v?.key ? "border-navy-700 bg-navy-700 text-white" : "border-line bg-white text-navy-700 hover:border-navy-300",
+                    x.key === v?.key ? "border-navy-700 bg-navy-700 text-white" : "border-line bg-surface text-navy-700 hover:border-navy-300",
                   )}
                 >
                   {packLabel(x) || "1"}

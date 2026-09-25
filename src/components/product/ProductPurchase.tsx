@@ -105,7 +105,7 @@ export function ProductPurchase({
       <div className="lg:col-span-6 xl:col-span-5">
         {header}
 
-        <div className="mt-6 rounded-3xl border border-line bg-white p-5 shadow-card sm:p-6">
+        <div className="mt-6 rounded-3xl border border-line bg-surface p-5 shadow-card sm:p-6">
           {/* price */}
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
@@ -166,7 +166,7 @@ export function ProductPurchase({
                         "relative flex cursor-pointer flex-col rounded-2xl border-2 px-3 pb-2.5 pt-3 transition",
                         active
                           ? "border-navy-700 bg-navy-50/60 shadow-[0_8px_20px_-12px_rgb(30_45_81/0.5)]"
-                          : "border-line bg-white hover:border-navy-200",
+                          : "border-line bg-surface hover:border-navy-200",
                       )}
                     >
                       <input
@@ -287,7 +287,7 @@ export function ProductPurchase({
       <AnimatePresence>
         {showSticky && selected && (
           <motion.div
-            className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-12px_30px_-12px_rgb(16_24_40/0.25)] backdrop-blur lg:hidden"
+            className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-12px_30px_-12px_rgb(16_24_40/0.25)] backdrop-blur lg:hidden"
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}

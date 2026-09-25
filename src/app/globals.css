@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Night mode is class-based: <html class="dark"> (set before paint by the inline script in [locale]/layout). */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-navy-50: #eef2f9;
   --color-navy-100: #d9e0ee;
@@ -26,6 +29,10 @@
   --color-muted: #5b6475;
   --color-line: #e3e7ef;
   --color-canvas: #f5f7fb;
+  /* Semantic surfaces: page background, cards/panels, raised surfaces. White by day, deep navy by night. */
+  --color-page: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-2: #f8fafc;
   --color-success: #15803d;
   --color-danger: #c2410c;
 
@@ -63,8 +70,249 @@
   }
 }
 
+/* ------------------------------------------------------------------------------------------------
+ * Night mode palette
+ * Semantic tokens (ink, muted, line, canvas, surface…), the light navy/brand tints and the status
+ * tints are redefined so components adapt automatically. Navy shades flip into light accents
+ * (text-navy-700 → pale blue-grey) — so every *dark* surface (navy panels, yellow buttons, solid
+ * status fills) re-establishes the day palette for itself and its children (it looks the same in both
+ * modes), and every light surface nested inside one switches back to the night palette.
+ * ---------------------------------------------------------------------------------------------- */
+.dark,
+.dark :where(
+  .bg-page, .bg-surface, [class*="bg-surface/"], .bg-surface-2, .bg-canvas, [class*="bg-canvas/"],
+  .bg-navy-50, [class*="bg-navy-50/"], .card, .input
+) {
+  --color-page: #0b1220;
+  --color-surface: #121b2e;
+  --color-surface-2: #18233a;
+  --color-canvas: #0e1728;
+  --color-line: #243150;
+  --color-ink: #e8edf7;
+  --color-muted: #9aa6bd;
+  --color-success: #4ade80;
+  --color-danger: #fb923c;
+  --color-navy-50: #172238;
+  --color-navy-100: #1d2a45;
+  --color-navy-200: #2b3b5f;
+  --color-navy-300: #43578a;
+  --color-navy-400: #8195c2;
+  --color-navy-500: #a3b1d2;
+  --color-navy-600: #b8c4df;
+  --color-navy-700: #cdd6ea;
+  --color-navy-800: #dce3f1;
+  --color-navy-900: #e8edf7;
+  --color-navy-950: #f3f6fb;
+  --color-brand-50: rgb(255 193 14 / 0.08);
+  --color-brand-100: rgb(255 193 14 / 0.14);
+  --color-brand-200: rgb(255 193 14 / 0.3);
+  --color-brand-600: #f5b400;
+  --color-brand-700: #ffcf45;
+  --color-red-50: rgb(239 68 68 / 0.12);
+  --color-red-100: rgb(239 68 68 / 0.2);
+  --color-red-200: rgb(239 68 68 / 0.32);
+  --color-red-600: oklch(70.4% 0.191 22.216);
+  --color-red-700: oklch(80.8% 0.114 19.571);
+  --color-red-800: oklch(88.5% 0.062 18.334);
+  --color-emerald-50: rgb(16 185 129 / 0.12);
+  --color-emerald-100: rgb(16 185 129 / 0.2);
+  --color-emerald-200: rgb(16 185 129 / 0.32);
+  --color-emerald-600: oklch(76.5% 0.177 163.223);
+  --color-emerald-700: oklch(84.5% 0.143 164.978);
+  --color-emerald-800: oklch(90.5% 0.093 164.15);
+  --color-amber-50: rgb(245 158 11 / 0.12);
+  --color-amber-100: rgb(245 158 11 / 0.2);
+  --color-amber-200: rgb(245 158 11 / 0.32);
+  --color-amber-600: oklch(82.8% 0.189 84.429);
+  --color-amber-700: oklch(87.9% 0.169 91.605);
+  --color-amber-800: oklch(92.4% 0.12 95.746);
+  --color-sky-50: rgb(14 165 233 / 0.12);
+  --color-sky-100: rgb(14 165 233 / 0.2);
+  --color-sky-600: oklch(74.6% 0.16 232.661);
+  --color-sky-700: oklch(82.8% 0.111 230.318);
+  --color-sky-800: oklch(90.1% 0.058 230.902);
+  --color-indigo-50: rgb(99 102 241 / 0.12);
+  --color-indigo-100: rgb(99 102 241 / 0.2);
+  --color-indigo-200: rgb(99 102 241 / 0.32);
+  --color-indigo-600: oklch(67.3% 0.182 276.935);
+  --color-indigo-700: oklch(78.5% 0.115 274.713);
+  --color-indigo-800: oklch(87% 0.065 274.039);
+  --color-violet-50: rgb(139 92 246 / 0.12);
+  --color-violet-100: rgb(139 92 246 / 0.2);
+  --color-violet-200: rgb(139 92 246 / 0.32);
+  --color-violet-600: oklch(70.2% 0.183 293.541);
+  --color-violet-700: oklch(81.1% 0.111 293.571);
+  --color-violet-800: oklch(89.4% 0.057 293.283);
+  --color-orange-50: rgb(249 115 22 / 0.12);
+  --color-orange-100: rgb(249 115 22 / 0.2);
+  --color-orange-200: rgb(249 115 22 / 0.32);
+  --color-orange-600: oklch(75% 0.183 55.934);
+  --color-orange-700: oklch(83.7% 0.128 66.29);
+  --color-orange-800: oklch(90.1% 0.076 70.697);
+  --color-green-50: rgb(34 197 94 / 0.12);
+  --color-green-100: rgb(34 197 94 / 0.2);
+  --color-green-200: rgb(34 197 94 / 0.32);
+  --color-green-600: oklch(79.2% 0.209 151.711);
+  --color-green-700: oklch(87.1% 0.15 154.449);
+  --color-green-800: oklch(92.5% 0.084 155.995);
+  --color-blue-50: rgb(59 130 246 / 0.12);
+  --color-blue-100: rgb(59 130 246 / 0.2);
+  --color-blue-200: rgb(59 130 246 / 0.32);
+  --color-blue-600: oklch(70.7% 0.165 254.624);
+  --color-blue-700: oklch(80.9% 0.105 251.813);
+  --color-blue-800: oklch(88.2% 0.059 254.128);
+  --color-rose-50: rgb(244 63 94 / 0.12);
+  --color-rose-100: rgb(244 63 94 / 0.2);
+  --color-rose-200: rgb(244 63 94 / 0.32);
+  --color-rose-600: oklch(71.2% 0.194 13.428);
+  --color-rose-700: oklch(81% 0.117 11.638);
+  --color-rose-800: oklch(89.2% 0.058 10.001);
+  --color-zinc-100: rgb(255 255 255 / 0.06);
+  --color-zinc-200: rgb(255 255 255 / 0.12);
+  --color-zinc-600: oklch(70.5% 0.015 286.067);
+  --color-zinc-700: oklch(87.1% 0.006 286.286);
+  --color-slate-100: rgb(255 255 255 / 0.06);
+  --color-slate-200: rgb(255 255 255 / 0.12);
+  --color-slate-600: oklch(70.4% 0.04 256.788);
+  --color-slate-700: oklch(86.9% 0.022 252.894);
+}
+
+.dark :where(
+  .bg-navy-600, .bg-navy-700, .bg-navy-800, .bg-navy-900, .bg-navy-950,
+  [class*="bg-navy-700/"], [class*="bg-navy-800/"], [class*="bg-navy-900/"], [class*="bg-navy-950/"],
+  [class*="from-navy-7"], [class*="from-navy-8"], [class*="from-navy-9"],
+  .bg-brand-300, .bg-brand-400, .bg-brand-500, [class*="bg-brand-400/8"], [class*="bg-brand-400/9"],
+  .from-brand-400, .from-brand-500,
+  .bg-danger, .bg-success, .bg-emerald-500, .bg-emerald-600, .bg-black, .day-palette
+),
+.dark :where(
+  [class~="hover:bg-navy-600"], [class~="hover:bg-navy-700"], [class~="hover:bg-navy-800"],
+  [class~="hover:bg-brand-300"], [class~="hover:bg-brand-400"]
+):hover,
+.dark .group:hover :where(
+  [class~="group-hover:bg-brand-300"], [class~="group-hover:bg-brand-400"],
+  [class~="group-hover:bg-navy-600"], [class~="group-hover:bg-navy-700"]
+),
+.dark .peer:checked ~ :where([class~="peer-checked:bg-navy-700"]) {
+  --color-navy-50: #eef2f9;
+  --color-navy-100: #d9e0ee;
+  --color-navy-200: #b3c0dc;
+  --color-navy-300: #8095c1;
+  --color-navy-400: #52689f;
+  --color-navy-500: #34497e;
+  --color-navy-600: #283b69;
+  --color-navy-700: #1e2d51;
+  --color-navy-800: #172340;
+  --color-navy-900: #111a31;
+  --color-navy-950: #0a1122;
+  --color-brand-50: #fff9e6;
+  --color-brand-100: #fff0bf;
+  --color-brand-200: #ffe38a;
+  --color-brand-600: #c98b00;
+  --color-brand-700: #9c6a00;
+  --color-ink: #1b1f2a;
+  --color-muted: #5b6475;
+  --color-success: #15803d;
+  --color-danger: #c2410c;
+  --color-red-50: oklch(97.1% 0.013 17.38);
+  --color-red-100: oklch(93.6% 0.032 17.717);
+  --color-red-200: oklch(88.5% 0.062 18.334);
+  --color-red-600: oklch(57.7% 0.245 27.325);
+  --color-red-700: oklch(50.5% 0.213 27.518);
+  --color-red-800: oklch(44.4% 0.177 26.899);
+  --color-emerald-50: oklch(97.9% 0.021 166.113);
+  --color-emerald-100: oklch(95% 0.052 163.051);
+  --color-emerald-200: oklch(90.5% 0.093 164.15);
+  --color-emerald-600: oklch(59.6% 0.145 163.225);
+  --color-emerald-700: oklch(50.8% 0.118 165.612);
+  --color-emerald-800: oklch(43.2% 0.095 166.913);
+  --color-amber-50: oklch(98.7% 0.022 95.277);
+  --color-amber-100: oklch(96.2% 0.059 95.617);
+  --color-amber-200: oklch(92.4% 0.12 95.746);
+  --color-amber-600: oklch(66.6% 0.179 58.318);
+  --color-amber-700: oklch(55.5% 0.163 48.998);
+  --color-amber-800: oklch(47.3% 0.137 46.201);
+  --color-sky-50: oklch(97.7% 0.013 236.62);
+  --color-sky-100: oklch(95.1% 0.026 236.824);
+  --color-sky-600: oklch(58.8% 0.158 241.966);
+  --color-sky-700: oklch(50% 0.134 242.749);
+  --color-sky-800: oklch(44.3% 0.11 240.79);
+  --color-indigo-50: oklch(96.2% 0.018 272.314);
+  --color-indigo-100: oklch(93% 0.034 272.788);
+  --color-indigo-200: oklch(87% 0.065 274.039);
+  --color-indigo-600: oklch(51.1% 0.262 276.966);
+  --color-indigo-700: oklch(45.7% 0.24 277.023);
+  --color-indigo-800: oklch(39.8% 0.195 277.366);
+  --color-violet-50: oklch(96.9% 0.016 293.756);
+  --color-violet-100: oklch(94.3% 0.029 294.588);
+  --color-violet-200: oklch(89.4% 0.057 293.283);
+  --color-violet-600: oklch(54.1% 0.281 293.009);
+  --color-violet-700: oklch(49.1% 0.27 292.581);
+  --color-violet-800: oklch(43.2% 0.232 292.759);
+  --color-orange-50: oklch(98% 0.016 73.684);
+  --color-orange-100: oklch(95.4% 0.038 75.164);
+  --color-orange-200: oklch(90.1% 0.076 70.697);
+  --color-orange-600: oklch(64.6% 0.222 41.116);
+  --color-orange-700: oklch(55.3% 0.195 38.402);
+  --color-orange-800: oklch(47% 0.157 37.304);
+  --color-green-50: oklch(98.2% 0.018 155.826);
+  --color-green-100: oklch(96.2% 0.044 156.743);
+  --color-green-200: oklch(92.5% 0.084 155.995);
+  --color-green-600: oklch(62.7% 0.194 149.214);
+  --color-green-700: oklch(52.7% 0.154 150.069);
+  --color-green-800: oklch(44.8% 0.119 151.328);
+  --color-blue-50: oklch(97% 0.014 254.604);
+  --color-blue-100: oklch(93.2% 0.032 255.585);
+  --color-blue-200: oklch(88.2% 0.059 254.128);
+  --color-blue-600: oklch(54.6% 0.245 262.881);
+  --color-blue-700: oklch(48.8% 0.243 264.376);
+  --color-blue-800: oklch(42.4% 0.199 265.638);
+  --color-rose-50: oklch(96.9% 0.015 12.422);
+  --color-rose-100: oklch(94.1% 0.03 12.58);
+  --color-rose-200: oklch(89.2% 0.058 10.001);
+  --color-rose-600: oklch(58.6% 0.253 17.585);
+  --color-rose-700: oklch(51.4% 0.222 16.935);
+  --color-rose-800: oklch(45.5% 0.188 13.697);
+  --color-zinc-100: oklch(96.7% 0.001 286.375);
+  --color-zinc-200: oklch(92% 0.004 286.32);
+  --color-zinc-600: oklch(44.2% 0.017 285.786);
+  --color-zinc-700: oklch(37% 0.013 285.805);
+  --color-slate-100: oklch(96.8% 0.007 247.896);
+  --color-slate-200: oklch(92.9% 0.013 255.508);
+  --color-slate-600: oklch(44.6% 0.043 257.281);
+  --color-slate-700: oklch(37.2% 0.044 257.287);
+}
+
+/* Navy controls sitting on night surfaces (primary buttons, selected chips, tags, step dots) are
+   lifted a notch so they still read as navy against the near-black page. Navy panels and bands
+   (header, hero, footer, result panels — block elements) keep the brand navy. */
+.dark :where(.bg-page, .bg-surface, [class*="bg-surface/"], .bg-canvas, .card, [class*="from-surface"])
+  :where(a, button, span, label, li, p, kbd):where(.bg-navy-700, .bg-navy-800, [class*="bg-navy-700/"]),
+.dark :where(.bg-page, .bg-surface, [class*="bg-surface/"], .bg-canvas, .card, [class*="from-surface"])
+  :where([class~="hover:bg-navy-700"]):hover,
+.dark .peer:checked ~ :where([class~="peer-checked:bg-navy-700"]) {
+  --color-navy-600: #3d5591;
+  --color-navy-700: #2f4478;
+  --color-navy-800: #283b69;
+}
+
+:root.dark {
+  color-scheme: dark;
+}
+
+/* Suppress colour transitions for the one frame in which the theme flips. */
+.theme-switching,
+.theme-switching *:not([data-theme-anim]),
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: none !important;
+}
+
 :root {
   color-scheme: light;
+  /* Night-mode product image stage (packshots are transparent cut-outs): a soft spotlight on navy.
+     Used as `dark:bg-(image:--night-well)` next to the day-mode white/radial stage. */
+  --night-well: radial-gradient(120% 100% at 50% 18%, #25355a 0%, #1b2844 50%, #141d32 100%);
   --font-manrope: "Manrope Variable", "Manrope";
 }
 
@@ -74,7 +322,7 @@ html {
 }
 
 body {
-  background: #ffffff;
+  background: var(--color-page);
   color: var(--color-ink);
   font-family: var(--font-sans);
   font-feature-settings: "ss01", "cv11";
@@ -129,13 +377,13 @@ body {
     @apply font-bold text-ink;
   }
   .input {
-    @apply h-11 w-full rounded-xl border border-line bg-white px-3.5 text-[15px] text-ink shadow-[inset_0_1px_1px_rgb(16_24_40/0.04)] outline-none transition placeholder:text-muted/70 focus:border-navy-400 focus:ring-4 focus:ring-navy-100;
+    @apply h-11 w-full rounded-xl border border-line bg-surface px-3.5 text-[15px] text-ink shadow-[inset_0_1px_1px_rgb(16_24_40/0.04)] outline-none transition placeholder:text-muted/70 focus:border-navy-400 focus:ring-4 focus:ring-navy-100;
   }
   .label {
     @apply mb-1.5 block text-[13px] font-semibold text-ink/80;
   }
   .card {
-    @apply rounded-2xl border border-line bg-white shadow-card;
+    @apply rounded-2xl border border-line bg-surface shadow-card;
   }
   .grid-bg {
     background-image: linear-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1px),

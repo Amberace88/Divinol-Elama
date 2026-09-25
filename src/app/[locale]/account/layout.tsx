@@ -21,7 +21,7 @@ export default async function AccountLayout({ children, params }: LayoutProps<"/
         <AccountHeader profile={profile} locale={locale} />
         <div className="mt-5 grid gap-5 lg:mt-8 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-8">
           <aside>
-            <AccountNav b2bStatus={profile.b2b_status} />
+            <AccountNav b2bStatus={profile.b2b_status} isAdmin={profile.role === "admin"} />
           </aside>
           <div className="min-w-0">{children}</div>
         </div>

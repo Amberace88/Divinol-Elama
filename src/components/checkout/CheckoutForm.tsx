@@ -105,7 +105,7 @@ const PAY_ICON: Record<PaymentId, React.ReactNode> = {
 
 function Step({ n, title, done, children }: { n: number; title: string; done: boolean; children: React.ReactNode }) {
   return (
-    <section className="rounded-3xl border border-line bg-white p-5 shadow-card sm:p-7" aria-labelledby={`step-${n}`}>
+    <section className="rounded-3xl border border-line bg-surface p-5 shadow-card sm:p-7" aria-labelledby={`step-${n}`}>
       <h2 id={`step-${n}`} className="mb-5 flex items-center gap-3 text-lg font-extrabold tracking-tight text-ink">
         <span
           className={cn(
@@ -346,7 +346,7 @@ export function CheckoutForm() {
     <form onSubmit={submit} noValidate className="grid items-start gap-8 lg:grid-cols-12">
       <div className="grid gap-5 lg:col-span-7 xl:col-span-8">
         {/* mobile summary toggle */}
-        <div className="rounded-3xl border border-line bg-white shadow-card lg:hidden">
+        <div className="rounded-3xl border border-line bg-surface shadow-card lg:hidden">
           <button
             type="button"
             onClick={() => setSummaryOpen((o) => !o)}
@@ -653,7 +653,7 @@ export function CheckoutForm() {
       </div>
 
       <aside className="hidden lg:sticky lg:top-24 lg:col-span-5 lg:block xl:col-span-4">
-        <div className="rounded-3xl border border-line bg-white p-6 shadow-card">
+        <div className="rounded-3xl border border-line bg-surface p-6 shadow-card">
           <OrderSummary lines={s.lines} totals={summaryTotals} />
         </div>
         <p className="mt-4 flex items-center justify-center gap-1.5 text-[12px] font-semibold text-muted">

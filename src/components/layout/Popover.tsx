@@ -57,7 +57,7 @@ export function Popover({
             exit={{ opacity: 0, y: -4, scale: 0.98 }}
             transition={{ duration: 0.16, ease: "easeOut" }}
             className={cn(
-              "absolute top-full z-[70] mt-2 min-w-44 origin-top overflow-hidden rounded-xl border border-line bg-white p-1.5 text-ink shadow-lift",
+              "absolute top-full z-[70] mt-2 min-w-44 origin-top overflow-hidden rounded-xl border border-line bg-surface p-1.5 text-ink shadow-lift",
               align === "right" ? "right-0" : "left-0",
             )}
           >

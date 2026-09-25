@@ -12,6 +12,7 @@ import { MegaMenu } from "./MegaMenu";
 import { SearchDialog } from "./SearchDialog";
 import { MobileMenu } from "./MobileMenu";
 import { AccountButton, CartButton } from "./HeaderActions";
+import { ThemeToggle } from "./ThemeToggle";
 import { useSearchIndex } from "./useSearchIndex";
 import { NAV_LINKS, type HeaderCategory } from "./nav";
 
@@ -205,6 +206,7 @@ export function Header({ categories }: { categories: HeaderCategory[] }) {
             >
               <Search className="size-[21px]" aria-hidden />
             </button>
+            <ThemeToggle className="hidden sm:grid" />
             <AccountButton />
             <CartButton />
             <button

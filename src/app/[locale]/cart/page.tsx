@@ -22,7 +22,7 @@ export default async function CartPage({ params }: Props) {
   setRequestLocale(locale as Locale);
   const [t, tc, a11y] = await Promise.all([getTranslations("cart"), getTranslations("catalog"), getTranslations("a11y")]);
   return (
-    <div className="bg-gradient-to-b from-canvas to-white">
+    <div className="bg-gradient-to-b from-canvas to-page">
       <div className="container-x pb-20 pt-6 sm:pt-8">
         <Breadcrumbs label={a11y("breadcrumbs")} items={[{ name: tc("breadcrumbHome"), href: "/" }, { name: t("title") }]} />
         <h1 className="h-display mb-8 mt-4 text-3xl text-ink sm:text-4xl">{t("title")}</h1>

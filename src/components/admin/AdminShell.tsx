@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
+  Activity,
   ChevronsLeft,
   ExternalLink,
   FolderTree,
@@ -33,6 +34,7 @@ type NavItem = { href: string; label: string; icon: LucideIcon; badge?: keyof Ad
 
 const NAV: NavItem[] = [
   { href: "/admin", label: "Pārskats", icon: LayoutDashboard, exact: true },
+  { href: "/admin/analytics", label: "Apmeklējums", icon: Activity },
   { href: "/admin/orders", label: "Pasūtījumi", icon: ShoppingBag, badge: "openOrders" },
   { href: "/admin/invoices", label: "Rēķini", icon: ReceiptText },
   { href: "/admin/products", label: "Produkti", icon: Package },
@@ -70,6 +72,15 @@ export function AdminShell({
   const [drawer, setDrawer] = useState(false);
   const [lastPath, setLastPath] = useState(pathname);
   const reduce = useReducedMotion();
+
+  // Exclude admins' own storefront visits from the website analytics on this browser.
+  useEffect(() => {
+    try {
+      localStorage.setItem("dv_notrack", "1");
+    } catch {
+      /* storage unavailable */
+    }
+  }, []);
 
   // Close the mobile drawer on navigation (state derived during render, no effect needed).
   if (lastPath !== pathname) {

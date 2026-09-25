@@ -12,6 +12,7 @@ import { CategoryIcon } from "@/components/ui/CategoryIcon";
 import { Logo } from "@/components/ui/Logo";
 import { cn } from "@/lib/utils";
 import { LocaleSwitcher, MarketSwitcher } from "./switchers";
+import { ThemeSwitch } from "./ThemeToggle";
 import { NAV_LINKS, telHref, type HeaderCategory } from "./nav";
 
 const list = { hidden: {}, show: { transition: { staggerChildren: 0.04, delayChildren: 0.08 } } };
@@ -183,6 +184,7 @@ export function MobileMenu({
             </motion.div>
 
             <motion.div variants={item} className="mt-8 grid gap-5">
+              <ThemeSwitch />
               <div>
                 <p className="mb-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-white/45">{tm("label")}</p>
                 <MarketSwitcher variant="list" />

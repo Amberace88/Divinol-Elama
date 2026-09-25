@@ -57,7 +57,7 @@ export function TwoStrokeCalculator({ products }: { products: LinkProduct[] }) {
                   }}
                   className={cn(
                     "h-11 rounded-xl border px-4 text-sm font-extrabold tabular-nums transition",
-                    !custom && ratio === r ? "border-navy-700 bg-navy-700 text-white shadow-card" : "border-line bg-white text-navy-700 hover:border-navy-300",
+                    !custom && ratio === r ? "border-navy-700 bg-navy-700 text-white shadow-card" : "border-line bg-surface text-navy-700 hover:border-navy-300",
                   )}
                 >
                   1:{r}
@@ -69,7 +69,7 @@ export function TwoStrokeCalculator({ products }: { products: LinkProduct[] }) {
                 onClick={() => setCustom(true)}
                 className={cn(
                   "h-11 rounded-xl border px-4 text-sm font-bold transition",
-                  custom ? "border-navy-700 bg-navy-700 text-white shadow-card" : "border-line bg-white text-navy-700 hover:border-navy-300",
+                  custom ? "border-navy-700 bg-navy-700 text-white shadow-card" : "border-line bg-surface text-navy-700 hover:border-navy-300",
                 )}
               >
                 {t("twoT.custom")}

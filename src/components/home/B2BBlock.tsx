@@ -18,7 +18,7 @@ export async function B2BBlock() {
           <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-muted sm:text-base">{t("b2bText")}</p>
           <ul className="mt-7 grid gap-3 sm:grid-cols-2">
             {points.map((p) => (
-              <li key={p} className="flex items-start gap-3 rounded-2xl bg-white p-4 text-[14px] font-semibold text-ink shadow-card ring-1 ring-line">
+              <li key={p} className="flex items-start gap-3 rounded-2xl bg-surface p-4 text-[14px] font-semibold text-ink shadow-card ring-1 ring-line">
                 <span className="grid size-6 shrink-0 place-items-center rounded-lg bg-brand-400 text-navy-900">
                   <Check className="size-4" strokeWidth={3} aria-hidden />
                 </span>

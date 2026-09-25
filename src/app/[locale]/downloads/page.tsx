@@ -74,7 +74,7 @@ export default async function DownloadsPage({ params }: PageProps<"/[locale]/dow
             const title = t(`items.${it.key}`);
             return (
               <Reveal as="li" key={it.key} delay={(i % 4) * 0.06}>
-                <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-card transition duration-300 hover:shadow-lift">
+                <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-card transition duration-300 hover:shadow-lift">
                   <a
                     href={it.href}
                     target="_blank"
@@ -132,7 +132,7 @@ export default async function DownloadsPage({ params }: PageProps<"/[locale]/dow
         </ul>
 
         <div className="container-x mt-12">
-          <div className="flex flex-col items-start justify-between gap-5 rounded-2xl border border-dashed border-navy-200 bg-white p-6 sm:flex-row sm:items-center sm:p-8">
+          <div className="flex flex-col items-start justify-between gap-5 rounded-2xl border border-dashed border-navy-200 bg-surface p-6 sm:flex-row sm:items-center sm:p-8">
             <div>
               <h2 className="text-xl font-extrabold text-navy-700">{t("helpTitle")}</h2>
               <p className="mt-1.5 max-w-2xl text-[14.5px] leading-6 text-muted">{t("helpText")}</p>

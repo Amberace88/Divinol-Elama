@@ -55,7 +55,9 @@
     "finderPromoText": "Valime õli sinu auto tootja heakskiidu järgi — ilma arvamata.",
     "toolsText": "Kalkulaatorid, õlivalik ja PDF kataloogid",
     "needHelp": "Vajad abi?",
-    "account": "Konto"
+    "account": "Konto",
+    "darkMode": "Tume režiim",
+    "lightMode": "Hele režiim"
   },
   "market": {
     "label": "Tarneriik",
@@ -130,7 +132,7 @@
     "notFoundCatalog": "Kataloogi"
   },
   "cookies": {
-    "text": "Kasutame ainult vajalikke küpsiseid (ostukorv, sisselogimine ja riigi valik). Analüütika lülitatakse sisse ainult sinu nõusolekul.",
+    "text": "Kasutame ainult vajalikke küpsiseid (ostukorv, sisselogimine ja riigi valik). Külastusstatistikat kogume anonüümselt — ilma küpsiste ja isikuandmeteta.",
     "accept": "Nõustun",
     "decline": "Ainult vajalikud",
     "title": "Küpsised",

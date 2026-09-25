@@ -25,7 +25,7 @@ export function CalcNav({ items, label }: { items: { id: string; label: string }
   }, [items]);
 
   return (
-    <nav aria-label={label} className="sticky top-14 z-20 -mx-4 border-b border-line/70 bg-canvas/85 px-4 py-3 backdrop-blur-md sm:top-[4.25rem] lg:top-[4.75rem] sm:mx-0 sm:rounded-2xl sm:border sm:bg-white/85 sm:px-2 sm:py-2 sm:shadow-card">
+    <nav aria-label={label} className="sticky top-14 z-20 -mx-4 border-b border-line/70 bg-canvas/85 px-4 py-3 backdrop-blur-md sm:top-[4.25rem] lg:top-[4.75rem] sm:mx-0 sm:rounded-2xl sm:border sm:bg-surface/85 sm:px-2 sm:py-2 sm:shadow-card">
       <ul className="no-scrollbar flex gap-1.5 overflow-x-auto">
         {items.map((it) => {
           const Icon = ICONS[it.id] ?? Droplets;

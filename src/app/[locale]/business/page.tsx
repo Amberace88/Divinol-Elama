@@ -105,7 +105,7 @@ export default async function BusinessPage({ params }: PageProps<"/[locale]/busi
               <Image src="/media/brand/f2.webp" alt="" fill priority sizes="(min-width:1024px) 40vw, 90vw" className="object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-navy-950/70 via-navy-900/10 to-transparent" />
             </div>
-            <div className="absolute -bottom-6 -left-4 flex max-w-[16rem] animate-float items-center gap-3 rounded-2xl bg-white p-4 text-ink shadow-lift sm:-left-8">
+            <div className="absolute -bottom-6 -left-4 flex max-w-[16rem] animate-float items-center gap-3 rounded-2xl bg-surface p-4 text-ink shadow-lift sm:-left-8">
               <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-brand-400 text-navy-900">
                 <BadgePercent className="size-5" aria-hidden />
               </span>
@@ -138,7 +138,7 @@ export default async function BusinessPage({ params }: PageProps<"/[locale]/busi
               const Icon = SEGMENT_ICON[s];
               return (
                 <Reveal as="li" key={s} delay={i * 0.05}>
-                  <div className="group relative h-full overflow-hidden rounded-2xl border border-line bg-white p-6 shadow-card transition duration-300 hover:border-navy-200 hover:shadow-lift">
+                  <div className="group relative h-full overflow-hidden rounded-2xl border border-line bg-surface p-6 shadow-card transition duration-300 hover:border-navy-200 hover:shadow-lift">
                     <div aria-hidden className="absolute -top-10 -right-10 size-32 rounded-full bg-brand-400/0 transition-colors duration-500 group-hover:bg-brand-400/15" />
                     <span className="relative grid size-12 place-items-center rounded-xl bg-navy-700 text-brand-400 transition-transform duration-300">
                       <Icon className="size-6" aria-hidden />
@@ -174,7 +174,7 @@ export default async function BusinessPage({ params }: PageProps<"/[locale]/busi
       </section>
 
       {/* stats */}
-      <section aria-label={t("statsTitle")} className="border-b border-line bg-white py-14">
+      <section aria-label={t("statsTitle")} className="border-b border-line bg-page py-14">
         <dl className="container-x grid grid-cols-2 gap-8 lg:grid-cols-4">
           {stats.map((s) => (
             <div key={s.label} className="relative flex flex-col-reverse pl-5">

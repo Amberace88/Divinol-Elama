@@ -18,8 +18,8 @@ export function CartView() {
   if (!s.ready) {
     return (
       <div className="grid gap-4 lg:grid-cols-12" aria-busy="true">
-        <div className="h-64 animate-pulse rounded-3xl bg-canvas lg:col-span-8" />
-        <div className="h-64 animate-pulse rounded-3xl bg-canvas lg:col-span-4" />
+        <div className="h-64 animate-pulse rounded-3xl bg-canvas dark:bg-surface lg:col-span-8" />
+        <div className="h-64 animate-pulse rounded-3xl bg-canvas dark:bg-surface lg:col-span-4" />
       </div>
     );
   }
@@ -27,7 +27,7 @@ export function CartView() {
   if (s.items.length === 0) {
     return (
       <div className="mx-auto flex max-w-lg flex-col items-center rounded-3xl border border-dashed border-navy-200 bg-canvas px-6 py-16 text-center">
-        <span className="relative mb-5 grid size-20 place-items-center rounded-3xl bg-white shadow-card">
+        <span className="relative mb-5 grid size-20 place-items-center rounded-3xl bg-surface shadow-card">
           <ShoppingBag className="size-9 text-navy-300" aria-hidden />
           <span aria-hidden className="absolute -right-2 -top-2 h-6 w-3 -skew-x-[20deg] rounded-sm bg-brand-400" />
         </span>
@@ -50,7 +50,7 @@ export function CartView() {
   return (
     <div className="grid items-start gap-8 lg:grid-cols-12">
       <div className="lg:col-span-7 xl:col-span-8">
-        <div className="rounded-3xl border border-line bg-white px-4 shadow-card sm:px-6">
+        <div className="rounded-3xl border border-line bg-surface px-4 shadow-card sm:px-6">
           <div className="flex items-center justify-between border-b border-line py-4">
             <p className="text-[14px] font-bold text-ink">{t("items", { count: s.count })}</p>
             <button
@@ -89,7 +89,7 @@ export function CartView() {
       </div>
 
       <aside className="lg:sticky lg:top-24 lg:col-span-5 xl:col-span-4">
-        <div className="rounded-3xl border border-line bg-white p-5 shadow-card sm:p-6">
+        <div className="rounded-3xl border border-line bg-surface p-5 shadow-card sm:p-6">
           <h2 className="text-lg font-extrabold tracking-tight text-ink">{t("summary")}</h2>
           <MarketSwitcherInline className="mt-4" />
           <FreeShippingBar left={s.left} progress={s.progress} className="mt-4" />

@@ -60,7 +60,7 @@ export function CartDrawer() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="cart-drawer-title"
-            className="absolute inset-y-0 right-0 flex w-full max-w-[440px] flex-col bg-white shadow-[-30px_0_60px_-20px_rgb(10_17_34/0.4)]"
+            className="absolute inset-y-0 right-0 flex w-full max-w-[440px] flex-col bg-surface shadow-[-30px_0_60px_-20px_rgb(10_17_34/0.4)]"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}

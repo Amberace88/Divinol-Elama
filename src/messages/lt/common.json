@@ -55,7 +55,9 @@
     "finderPromoText": "Parinksime alyvą pagal tavo automobilio gamintojo patvirtinimą — be spėliojimų.",
     "toolsText": "Skaičiuoklės, alyvos parinkimas ir katalogai PDF formatu",
     "needHelp": "Reikia pagalbos?",
-    "account": "Paskyra"
+    "account": "Paskyra",
+    "darkMode": "Tamsus režimas",
+    "lightMode": "Šviesus režimas"
   },
   "market": {
     "label": "Pristatymo šalis",
@@ -130,7 +132,7 @@
     "notFoundCatalog": "Į katalogą"
   },
   "cookies": {
-    "text": "Naudojame tik būtinuosius slapukus (krepšelis, prisijungimas ir šalies pasirinkimas). Analitikos slapukai įjungiami tik gavus tavo sutikimą.",
+    "text": "Naudojame tik būtinuosius slapukus (krepšelis, prisijungimas ir šalies pasirinkimas). Lankomumo statistiką renkame anonimiškai — be slapukų ir be asmens duomenų.",
     "accept": "Sutinku",
     "decline": "Tik būtinieji",
     "title": "Slapukai",

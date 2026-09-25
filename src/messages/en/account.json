@@ -158,7 +158,8 @@
       "logout": "Sign out",
       "loggingOut": "Signing out…",
       "loggedOut": "You have signed out",
-      "pending": "In review"
+      "pending": "In review",
+      "admin": "Admin panel"
     },
     "header": {
       "eyebrow": "My account",
@@ -168,7 +169,10 @@
       "b2bApproved": "B2B customer",
       "b2bPending": "B2B application in review",
       "discount": "{value}% discount",
-      "terms": "Payment within {days} days"
+      "terms": "Payment within {days} days",
+      "admin": "Administrator",
+      "adminPanel": "Admin panel",
+      "adminPanelText": "Manage products, orders and invoices"
     },
     "common": {
       "loadError": "Some data couldn't be loaded. Please refresh the page or try again later."

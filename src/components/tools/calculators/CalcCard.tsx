@@ -24,7 +24,7 @@ export function CalcCard({
 }) {
   return (
     <Reveal>
-      <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-32 rounded-3xl border border-line bg-white shadow-card">
+      <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-32 rounded-3xl border border-line bg-surface shadow-card">
         <div className="grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
           <div className="p-6 sm:p-8 lg:p-10">
             <div className="flex items-start gap-4">

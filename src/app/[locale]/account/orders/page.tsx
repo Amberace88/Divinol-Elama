@@ -61,7 +61,7 @@ export default async function OrdersPage({ params, searchParams }: PageProps<"/[
                 scroll={false}
                 className={cn(
                   "flex h-9 shrink-0 items-center gap-2 rounded-full px-3.5 text-[13px] font-bold ring-1 transition",
-                  active ? "bg-navy-700 text-white ring-navy-700" : "bg-white text-ink/75 ring-line hover:text-navy-700 hover:ring-navy-300",
+                  active ? "bg-navy-700 text-white ring-navy-700" : "bg-surface text-ink/75 ring-line hover:text-navy-700 hover:ring-navy-300",
                 )}
               >
                 {s ? t(`status.${s}`) : t("orders.filterAll")}

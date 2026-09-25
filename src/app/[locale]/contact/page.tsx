@@ -106,7 +106,7 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
         <div className="container-x grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {cards.map(({ icon: Icon, title, value, href, copy }, i) => (
             <Reveal key={title} delay={i * 0.05}>
-              <div className="group flex h-full flex-col rounded-2xl border border-line bg-white p-5 shadow-card transition duration-300 hover:shadow-lift">
+              <div className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-5 shadow-card transition duration-300 hover:shadow-lift">
                 <div className="flex items-center justify-between">
                   <span className="grid size-11 place-items-center rounded-xl bg-navy-700 text-brand-400 transition-transform duration-300">
                     <Icon className="size-5" aria-hidden />
@@ -142,14 +142,14 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
           </div>
 
           <div className="grid content-start gap-6">
-            <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-card">
+            <div className="overflow-hidden rounded-2xl border border-line bg-surface shadow-card">
               <div className="relative aspect-[4/3] bg-navy-50 sm:aspect-[16/10] lg:aspect-[4/3]">
                 <iframe
                   title={t("mapTitle")}
                   src={MAP_EMBED}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  className="absolute inset-0 size-full border-0 grayscale-[20%]"
+                  className="absolute inset-0 size-full border-0 grayscale-[20%] dark:invert-[0.92] dark:hue-rotate-180 dark:contrast-[0.9]"
                 />
               </div>
               <div className="flex flex-wrap items-center justify-between gap-3 p-4">

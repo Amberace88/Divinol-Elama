@@ -101,7 +101,7 @@ export default async function CategoryPage({ params }: Props) {
             <li key={c.slug}>
               <Link
                 href={{ pathname: "/catalog/[category]", params: { category: c.slug } }}
-                className="group inline-flex items-center gap-2 rounded-full border border-line bg-white px-3.5 py-2 text-[13px] font-bold text-ink/80 transition hover:border-navy-300 hover:text-navy-700"
+                className="group inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3.5 py-2 text-[13px] font-bold text-ink/80 transition hover:border-navy-300 hover:text-navy-700"
               >
                 <CategoryIcon name={c.icon} className="size-4 text-navy-400" aria-hidden />
                 {c.name}

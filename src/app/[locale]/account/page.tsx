@@ -140,7 +140,7 @@ export default async function AccountOverviewPage({ params }: PageProps<"/[local
             <li key={key}>
               <Link
                 href={href}
-                className="group flex h-full items-center gap-3 rounded-xl border border-line bg-white p-3.5 text-sm font-semibold text-ink/80 transition hover:border-navy-200 hover:bg-navy-50/50 hover:text-navy-800"
+                className="group flex h-full items-center gap-3 rounded-xl border border-line bg-surface p-3.5 text-sm font-semibold text-ink/80 transition hover:border-navy-200 hover:bg-navy-50/50 hover:text-navy-800"
               >
                 <span className="grid h-9 w-9 shrink-0 -skew-x-6 place-items-center rounded-lg bg-canvas text-navy-600 transition group-hover:bg-brand-400 group-hover:text-navy-900">
                   <Icon className="h-4 w-4 skew-x-6" />

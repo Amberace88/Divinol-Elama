@@ -10,6 +10,7 @@ export function KpiCard({
   icon: Icon,
   hint,
   accent,
+  invertDelta,
 }: {
   label: string;
   value: string;
@@ -17,9 +18,13 @@ export function KpiCard({
   icon: LucideIcon;
   hint?: string;
   accent?: boolean;
+  /** Lower is better (e.g. bounce rate): a decrease is shown green, an increase red. */
+  invertDelta?: boolean;
 }) {
-  const up = delta != null && delta > 0.05;
-  const down = delta != null && delta < -0.05;
+  const rising = delta != null && delta > 0.05;
+  const falling = delta != null && delta < -0.05;
+  const up = invertDelta ? falling : rising;
+  const down = invertDelta ? rising : falling;
   return (
     <div
       className={cn(
@@ -52,8 +57,8 @@ export function KpiCard({
               !up && !down && (accent ? "bg-white/10 text-white/70" : "bg-slate-100 text-muted"),
             )}
           >
-            {up && <ArrowUpRight className="h-3 w-3" aria-hidden />}
-            {down && <ArrowDownRight className="h-3 w-3" aria-hidden />}
+            {rising && <ArrowUpRight className="h-3 w-3" aria-hidden />}
+            {falling && <ArrowDownRight className="h-3 w-3" aria-hidden />}
             {delta == null ? "jauns" : `${delta > 0 ? "+" : ""}${fmtPct(delta)}`}
           </span>
         )}

@@ -51,7 +51,7 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
         "inline-flex items-center gap-1 rounded-lg border px-2.5 py-1.5 text-[12.5px] font-bold transition",
         active
           ? "border-navy-700 bg-navy-700 text-white shadow-sm"
-          : "border-line bg-white text-ink/80 hover:border-navy-300 hover:text-navy-700",
+          : "border-line bg-surface text-ink/80 hover:border-navy-300 hover:text-navy-700",
       )}
     >
       {active && <Check className="size-3.5 text-brand-300" strokeWidth={3} aria-hidden />}
