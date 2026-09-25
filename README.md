@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Divinol / SIA Elama — e-komercijas platforma
 
-## Getting Started
+Next.js 16 + Supabase + Netlify. Valodas: lv, et, lt, en, ru. Domēni: divinol.lv (lv/lt/en/ru), divinol.ee (et).
 
-First, run the development server:
+## Struktūra
+- `src/app/[locale]/` — publiskais veikals (sākums, katalogs, produkti, eļļas izvēle, kalkulatori, B2B, grozs, kase, klienta konts)
+- `src/app/admin/` — administrācijas panelis (/admin): statistika, pasūtījumi, rēķini (PDF), produkti, kategorijas, klienti, pieprasījumi, iestatījumi
+- `src/messages/<valoda>/*.json` — visi teksti
+- `src/data/products.seed.json` — sākotnējais katalogs (82 produkti / 175 iepakojumi, importēts no divinol.lv)
+- `supabase/migrations/` — datubāzes shēma un funkcijas (jau uzliktas Supabase projektā "Divinol-Elama")
 
+## Lokāli
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev   # http://localhost:3000
 ```
+`.env.local` jau satur Supabase URL un publisko atslēgu.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Vides mainīgie (Netlify)
+| Mainīgais | Vērtība |
+|---|---|
+| NEXT_PUBLIC_SUPABASE_URL | https://sfrcnefjlvsrmkicuqdk.supabase.co |
+| NEXT_PUBLIC_SUPABASE_ANON_KEY | publiskā atslēga |
+| NEXT_PUBLIC_SITE_URL | galvenā adrese (pagaidām https://divinol-elama.netlify.app) |
+| NEXT_PUBLIC_SITE_URL_LV / _EE | https://divinol.lv / https://divinol.ee (kad domēni pieslēgti) |
+| NEXT_PUBLIC_NOINDEX | `true` testa versijai (Google neindeksē). Izņemt, kad pieslēgti īstie domēni |
+| NEXT_PUBLIC_STRIPE_ENABLED | `true`, kad pieslēgta karšu apmaksa |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Pirmais admins
+Reģistrējies lapā → datubāzē: `update profiles set role='admin' where email='...';`
+Tad /admin → Produkti → "Importēt sākotnējo katalogu".

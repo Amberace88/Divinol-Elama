@@ -52,7 +52,13 @@
       "noResults": "Sąraše nerasta — gali įrašyti paštomato pavadinimą arba adresą",
       "useCustom": "Naudoti „{value}“",
       "change": "Keisti",
-      "hint": "Paštomatų sąrašas nuolat pildomas. Jei savojo nerandi, įrašyk jo adresą."
+      "hint": "Ieškokite pagal miestą, gatvę arba paštomato pavadinimą.",
+      "loading": "Įkeliami Omniva paštomatai…",
+      "error": "Nepavyko įkelti paštomatų sąrašo. Įrašykite paštomato pavadinimą arba adresą.",
+      "nearest": "Arčiausiai manęs",
+      "locating": "Nustatoma vieta…",
+      "count": "{count} Omniva paštomatai",
+      "km": "{km} km"
     },
     "address": {
       "title": "Pristatymo adresas",

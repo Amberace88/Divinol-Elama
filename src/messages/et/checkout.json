@@ -52,7 +52,13 @@
       "noResults": "Loendist ei leitud — võid sisestada pakiautomaadi nime või aadressi",
       "useCustom": "Kasuta “{value}”",
       "change": "Muuda",
-      "hint": "Pakiautomaatide loendit täiendatakse. Kui sinu oma ei leia, sisesta selle aadress."
+      "hint": "Otsi linna, tänava või pakiautomaadi nime järgi.",
+      "loading": "Omniva pakiautomaatide laadimine…",
+      "error": "Pakiautomaatide nimekirja ei õnnestunud laadida. Sisesta pakiautomaadi nimi või aadress.",
+      "nearest": "Minu lähimad",
+      "locating": "Asukoha määramine…",
+      "count": "{count} Omniva pakiautomaati",
+      "km": "{km} km"
     },
     "address": {
       "title": "Tarneaadress",

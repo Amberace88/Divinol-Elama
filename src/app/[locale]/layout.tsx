@@ -39,6 +39,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
     twitter: { card: "summary_large_image" },
     icons: { icon: "/icon.png", apple: "/apple-icon.png" },
     formatDetection: { telephone: true },
+    ...(process.env.NEXT_PUBLIC_NOINDEX === "true" ? { robots: { index: false, follow: false } } : {}),
   };
 }
 

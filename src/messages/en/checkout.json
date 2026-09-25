@@ -52,7 +52,13 @@
       "noResults": "Not in the list — you can type the locker name or address",
       "useCustom": "Use “{value}”",
       "change": "Change",
-      "hint": "The locker list is being extended. If yours is missing, type its address."
+      "hint": "Search by city, street or parcel machine name.",
+      "loading": "Loading Omniva parcel machines…",
+      "error": "Could not load the parcel machine list. Type the parcel machine name or address.",
+      "nearest": "Nearest to me",
+      "locating": "Locating…",
+      "count": "{count} Omniva parcel machines",
+      "km": "{km} km"
     },
     "address": {
       "title": "Delivery address",

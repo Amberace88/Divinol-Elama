@@ -8,6 +8,8 @@ import { UUID_RE } from "@/lib/admin/server";
 import { AddressBlock } from "@/components/admin/Address";
 import { CommentForm, InvoiceButtons, NotesForm, PaymentControl, StatusControl, TrackingForm } from "@/components/admin/orders/OrderControls";
 import { btn } from "@/components/admin/styles";
+import { OmnivaShipment } from "@/components/admin/orders/OmnivaShipment";
+import { omnivaConfigured, omnivaTrackingUrl } from "@/lib/shipping/omniva";
 import { Thumb } from "@/components/admin/Thumb";
 import { EmptyState, KeyValue, PageHeader, Panel, Pill, td, th } from "@/components/admin/ui";
 
@@ -74,6 +76,14 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
   const profile = profileRes.data as { id: string; full_name: string | null; b2b_status: string; discount_percent: number; payment_terms_days: number } | null;
   const dueDefault = Number(profile?.payment_terms_days) || Number((settingsRes.data?.value as { due_days_default?: number } | null)?.due_days_default) || 14;
 
+  const estWeight = Math.max(
+    0.5,
+    items.reduce((sum, it) => {
+      const m = (it.pack_label ?? "").match(/([\d.,]+)\s*(L|kg)/i);
+      const size = m ? Number(m[1].replace(",", ".")) : 0.5;
+      return sum + (m && m[2].toLowerCase() === "kg" ? size * 1.08 : size * 0.95) * it.qty;
+    }, 0),
+  );
   const st = labelOf(ORDER_STATUS, order.status);
   const pay = labelOf(PAYMENT_STATUS, order.payment_status);
   const c = order.customer ?? {};
@@ -174,7 +184,7 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
                 <Truck className="h-4 w-4 text-navy-500" /> Sūtījums
               </h2>
               <span className="rounded-full bg-navy-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.08em] text-navy-600">
-                Omniva integrācija — drīzumā
+                Omniva
               </span>
             </header>
             <div className="grid gap-5 p-5 md:grid-cols-2">
@@ -198,9 +208,16 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
               <div>
                 <p className="mb-1.5 text-[12px] font-bold uppercase tracking-[0.08em] text-muted">Sūtījuma izsekošanas kods</p>
                 <TrackingForm orderId={order.id} code={order.tracking_code} />
-                <p className="mt-2 text-[12px] text-muted">
-                  Šeit vēlāk varēs izveidot Omniva sūtījumu un izdrukāt uzlīmi. Pagaidām ievadiet kodu manuāli.
-                </p>
+                <div className="mt-4">
+                  <OmnivaShipment
+                    orderId={order.id}
+                    trackingCode={order.tracking_code}
+                    eligible={order.shipping_method === "parcel_locker" || order.shipping_method === "courier"}
+                    configured={omnivaConfigured()}
+                    defaultWeight={estWeight}
+                    trackingUrl={order.tracking_code ? omnivaTrackingUrl(order.tracking_code) : null}
+                  />
+                </div>
               </div>
             </div>
           </section>

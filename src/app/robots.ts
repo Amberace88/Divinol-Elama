@@ -4,6 +4,10 @@ import { getPathname } from "@/i18n/navigation";
 import { siteUrl } from "@/lib/seo";
 
 export default function robots(): MetadataRoute.Robots {
+  // Preview/staging deployments (e.g. *.netlify.app) must not be indexed before the real domains go live.
+  if (process.env.NEXT_PUBLIC_NOINDEX === "true") {
+    return { rules: [{ userAgent: "*", disallow: "/" }] };
+  }
   const privatePaths = new Set<string>(["/admin", "/account", "/api/", "/auth/", "/login", "/register", "/forgot-password", "/reset-password"]);
   for (const locale of routing.locales) {
     for (const href of ["/cart", "/checkout", "/account", "/login", "/register"] as const) {

@@ -40,5 +40,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# local deploy helper (contains deploy token)
-IZVIETOT.command
+.netlify

@@ -52,7 +52,13 @@
       "noResults": "Nav atrasts sarakstā — vari ierakstīt pakomāta nosaukumu vai adresi",
       "useCustom": "Izmantot “{value}”",
       "change": "Mainīt",
-      "hint": "Pakomātu saraksts tiek papildināts. Ja savu neatrodi, ieraksti tā adresi."
+      "hint": "Meklē pēc pilsētas, ielas vai pakomāta nosaukuma.",
+      "loading": "Ielādē Omniva pakomātus…",
+      "error": "Pakomātu sarakstu neizdevās ielādēt. Ieraksti pakomāta nosaukumu vai adresi.",
+      "nearest": "Tuvākie man",
+      "locating": "Nosaka atrašanās vietu…",
+      "count": "{count} Omniva pakomāti",
+      "km": "{km} km"
     },
     "address": {
       "title": "Piegādes adrese",

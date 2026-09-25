@@ -324,7 +324,20 @@ export default async function OrderDetailPage({ params }: PageProps<"/[locale]/a
               {order.tracking_code && (
                 <div>
                   <dt className="text-xs font-bold tracking-wider text-muted uppercase">{t("order.tracking")}</dt>
-                  <dd className="mt-0.5 font-mono text-[13px] font-semibold break-all">{order.tracking_code}</dd>
+                  <dd className="mt-0.5 font-mono text-[13px] font-semibold break-all">
+                    {/^[A-Z]{2}\d{9}[A-Z]{2}$/.test(order.tracking_code) ? (
+                      <a
+                        href={`https://www.omniva.lv/en/track-and-receive-parcels/?barcode=${encodeURIComponent(order.tracking_code)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-navy-600 underline decoration-brand-400 decoration-2 underline-offset-4 hover:text-navy-800"
+                      >
+                        {order.tracking_code} ↗
+                      </a>
+                    ) : (
+                      order.tracking_code
+                    )}
+                  </dd>
                 </div>
               )}
             </dl>
