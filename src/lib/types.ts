@@ -27,7 +27,11 @@ export type Variant = {
   unit: "l" | "kg" | "pcs" | string;
   /** Net price (excl. VAT) in EUR */
   price_net: number;
+  /** Derived in DB from `availability` (true only for "in_stock"). Storefront badge: true → “Noliktavā”, false → “Pēc pasūtījuma”. */
   in_stock: boolean;
+  availability?: "in_stock" | "on_order" | "out_of_stock" | "discontinued";
+  /** Delivery lead time in days for on-order items (optional). */
+  lead_time_days?: number | null;
   stock?: number | null;
   image: string | null;
 };

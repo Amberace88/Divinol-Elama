@@ -2,6 +2,7 @@ import "server-only";
 import type { ProductFormInit, ProductText } from "@/components/admin/products/ProductEditor";
 import type { VariantState } from "@/components/admin/products/VariantsEditor";
 import { BASE_VAT } from "@/lib/commerce";
+import { isAvailability } from "./inventory";
 import { LANGS } from "./labels";
 
 type DbVariant = {
@@ -12,7 +13,9 @@ type DbVariant = {
   price_net: number | string;
   cost_net: number | string | null;
   stock: number | null;
-  in_stock: boolean;
+  availability: string;
+  lead_time_days: number | null;
+  low_stock_threshold: number | null;
   is_active: boolean;
   image: string | null;
   weight_kg: number | string | null;
@@ -70,7 +73,9 @@ export function dbToForm(p: DbProduct): ProductFormInit {
         net: dec(net, 4),
         cost: v.cost_net == null ? "" : dec(Number(v.cost_net), 4),
         stock: v.stock == null ? "" : String(v.stock),
-        in_stock: v.in_stock,
+        availability: isAvailability(v.availability) ? v.availability : "in_stock",
+        lead: v.lead_time_days == null ? "" : String(v.lead_time_days),
+        threshold: String(v.low_stock_threshold ?? 3),
         is_active: v.is_active,
         image: v.image,
         weight_kg: v.weight_kg == null ? null : Number(v.weight_kg),
@@ -117,11 +122,11 @@ export function emptyForm(): ProductFormInit {
     is_featured: false,
     sort: 0,
     variants: [
-      { key: "v-new-1", id: null, sku: "", size: "", unit: "l", gross: "", net: "", cost: "", stock: "", in_stock: true, is_active: true, image: null, weight_kg: null },
+      { key: "v-new-1", id: null, sku: "", size: "", unit: "l", gross: "", net: "", cost: "", stock: "", availability: "in_stock", lead: "", threshold: "3", is_active: true, image: null, weight_kg: null },
     ],
     legacy_slugs: [],
   };
 }
 
 export const PRODUCT_SELECT =
-  "id, slug, base_sku, category_id, sae, iso_vg, specs, oem_approvals, performance, images, i18n, legacy_slugs, tds_url, sds_url, is_active, is_featured, sort, updated_at, product_variants(id, sku, size, unit, price_net, cost_net, stock, in_stock, is_active, image, weight_kg, sort)";
+  "id, slug, base_sku, category_id, sae, iso_vg, specs, oem_approvals, performance, images, i18n, legacy_slugs, tds_url, sds_url, is_active, is_featured, sort, updated_at, product_variants(id, sku, size, unit, price_net, cost_net, stock, availability, lead_time_days, low_stock_threshold, is_active, image, weight_kg, sort)";

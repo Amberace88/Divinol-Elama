@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown, ChevronUp, Copy, ImageOff, Plus, Trash2 } from "lucide-react";
+import { AVAILABILITIES, STOCK_LEVEL, type Availability } from "@/lib/admin/inventory";
 import { cn } from "@/lib/utils";
 import { Switch } from "../client-ui";
 import { btn, inputCls } from "../styles";
@@ -19,7 +20,11 @@ export type VariantState = {
   net: string;
   cost: string;
   stock: string;
-  in_stock: boolean;
+  availability: Availability;
+  /** Delivery lead time in days (on order / out of stock) */
+  lead: string;
+  /** Low-stock threshold */
+  threshold: string;
   is_active: boolean;
   image: string | null;
   weight_kg: number | null;
@@ -45,7 +50,7 @@ export function newVariantKey() {
 }
 
 export function emptyVariant(): VariantState {
-  return { key: newVariantKey(), id: null, sku: "", size: "", unit: "l", gross: "", net: "", cost: "", stock: "", in_stock: true, is_active: true, image: null, weight_kg: null };
+  return { key: newVariantKey(), id: null, sku: "", size: "", unit: "l", gross: "", net: "", cost: "", stock: "", availability: "in_stock", lead: "", threshold: "3", is_active: true, image: null, weight_kg: null };
 }
 
 const small = cn(inputCls, "h-9 px-2.5 text-[13px]");
@@ -126,12 +131,22 @@ export function VariantsEditor({
                       <option value="pcs">gab.</option>
                     </select>
                   </Mini>
-                  <div className="col-span-2 flex items-end gap-4 pb-1.5 sm:col-span-4 lg:col-span-1">
-                    <label className="flex items-center gap-2 text-[12px] font-semibold text-muted">
-                      <Switch size="sm" checked={v.in_stock} onChange={(x) => update(i, { in_stock: x })} label="Pieejams pasūtīšanai" />
-                      Pieejams
-                    </label>
-                    <label className="flex items-center gap-2 text-[12px] font-semibold text-muted">
+                  <div className="col-span-2 flex items-end gap-3 pb-0.5 sm:col-span-4 lg:col-span-1">
+                    <Mini label="Pieejamība" error={err("availability")} className="min-w-[150px]">
+                      <select
+                        className={small}
+                        value={v.availability}
+                        title={STOCK_LEVEL[v.availability].hint}
+                        onChange={(e) => update(i, { availability: e.target.value as Availability })}
+                      >
+                        {AVAILABILITIES.map((a) => (
+                          <option key={a} value={a}>
+                            {STOCK_LEVEL[a].label}
+                          </option>
+                        ))}
+                      </select>
+                    </Mini>
+                    <label className="flex items-center gap-2 pb-1.5 text-[12px] font-semibold text-muted">
                       <Switch size="sm" checked={v.is_active} onChange={(x) => update(i, { is_active: x })} label="Aktīvs variants" />
                       Aktīvs
                     </label>
@@ -159,7 +174,7 @@ export function VariantsEditor({
                 </div>
               </div>
 
-              <div className="mt-3 grid grid-cols-2 gap-2.5 border-t border-dashed border-line pt-3 sm:grid-cols-3 lg:grid-cols-5 sm:pl-[92px]">
+              <div className="mt-3 grid grid-cols-2 gap-2.5 border-t border-dashed border-line pt-3 sm:grid-cols-4 lg:grid-cols-7 sm:pl-[92px]">
                 <Mini label={`Cena ar PVN ${vat}%`} error={err("price_net")}>
                   <PriceInput
                     value={v.gross}
@@ -208,6 +223,27 @@ export function VariantsEditor({
                     aria-invalid={Boolean(err("stock"))}
                   />
                 </Mini>
+                <Mini label="Zems atlikums ≤" error={err("low_stock_threshold")}>
+                  <input
+                    className={small}
+                    inputMode="numeric"
+                    value={v.threshold}
+                    onChange={(e) => update(i, { threshold: e.target.value.replace(/[^\d]/g, "") })}
+                    placeholder="3"
+                    aria-invalid={Boolean(err("low_stock_threshold"))}
+                  />
+                </Mini>
+                <Mini label="Piegāde, dienas" error={err("lead_time_days")}>
+                  <input
+                    className={small}
+                    inputMode="numeric"
+                    value={v.lead}
+                    disabled={v.availability !== "on_order" && v.availability !== "out_of_stock"}
+                    onChange={(e) => update(i, { lead: e.target.value.replace(/[^\d]/g, "") })}
+                    placeholder={v.availability === "on_order" || v.availability === "out_of_stock" ? "piem. 7" : "—"}
+                    aria-invalid={Boolean(err("lead_time_days"))}
+                  />
+                </Mini>
               </div>
             </motion.div>
           );
@@ -218,7 +254,8 @@ export function VariantsEditor({
       </button>
       <p className="text-[12px] text-muted">
         Ievadiet cenu ar {vat}% PVN — cena bez PVN tiek aprēķināta automātiski (÷ {fmtDec(k, 2, 2)}) un saglabāta ar 4 zīmēm aiz komata. Varat ievadīt arī cenu bez PVN. Tukšs
-        atlikums = netiek uzskaitīts.
+        atlikums = netiek uzskaitīts. Kad uzskaitītais atlikums sasniedz 0, statuss “Noliktavā” automātiski mainās uz “Nav noliktavā” (“Pēc pasūtījuma”
+        paliek nemainīgs), un pasūtījumi atlikumu samazina automātiski.
       </p>
     </div>
   );

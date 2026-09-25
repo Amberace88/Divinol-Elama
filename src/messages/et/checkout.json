@@ -53,11 +53,11 @@
       "useCustom": "Kasuta “{value}”",
       "change": "Muuda",
       "hint": "Otsi linna, tänava või pakiautomaadi nime järgi.",
-      "loading": "Omniva pakiautomaatide laadimine…",
+      "loading": "{provider} pakiautomaatide laadimine…",
       "error": "Pakiautomaatide nimekirja ei õnnestunud laadida. Sisesta pakiautomaadi nimi või aadress.",
       "nearest": "Minu lähimad",
       "locating": "Asukoha määramine…",
-      "count": "{count} Omniva pakiautomaati",
+      "count": "{count} {provider} pakiautomaati",
       "km": "{km} km"
     },
     "address": {

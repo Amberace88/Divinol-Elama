@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { Moon, Sun } from "lucide-react";
 import { Toaster } from "sonner";
@@ -119,5 +119,14 @@ export function ThemeSwitch({ className }: { className?: string }) {
 /** Sonner toaster that follows the site theme. */
 export function ThemedToaster() {
   const { theme } = useTheme();
+  // Error/404 renders can re-create <html> without the class the head script added — restore it.
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(THEME_STORAGE_KEY) === "dark";
+      if (stored !== document.documentElement.classList.contains("dark")) applyTheme(stored ? "dark" : "light", false);
+    } catch {
+      /* storage unavailable */
+    }
+  }, []);
   return <Toaster position="top-center" richColors closeButton theme={theme} />;
 }

@@ -530,7 +530,13 @@ export function CheckoutForm() {
           <AnimatePresence initial={false} mode="wait">
             {method === "parcel_locker" && (
               <motion.div key="locker" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="mt-5">
-                <ParcelLockerPicker market={market} value={form.locker} onChange={(v) => set("locker", v)} invalid={Boolean(err("locker"))} />
+                <ParcelLockerPicker
+                  market={market}
+                  value={form.locker}
+                  onChange={(v) => set("locker", v)}
+                  invalid={Boolean(err("locker"))}
+                  priceLabel={quote?.id === "parcel_locker" ? shipText(quote) : undefined}
+                />
               </motion.div>
             )}
             {needsAddress && (

@@ -1,12 +1,31 @@
 import "server-only";
 import type { Market } from "@/lib/types";
+import {
+  CarrierError,
+  envSet,
+  extractEvents,
+  fetchWithTimeout,
+  normalizePhone,
+  postcodeDigits,
+  type CarrierAdapter,
+  type CreateShipmentInput,
+  type ShipmentRef,
+} from "./adapter";
+import { statusFromText } from "./tracking";
+import type { PickupPoint } from "./types";
 
 /**
  * Omniva integration
  *  - Parcel machine list: public feed https://www.omniva.ee/locations.json (no credentials).
- *  - Shipments & labels: OMX API (https://omx.omniva.eu/api/v01/omx/) with HTTP Basic auth.
- *    Credentials come from the Omniva account manager and are set as Netlify env vars:
- *    OMNIVA_USERNAME, OMNIVA_PASSWORD, OMNIVA_CUSTOMER_CODE (optional OMNIVA_API_URL for the test system).
+ *  - Shipments, labels, tracking: OMX API with HTTP Basic auth.
+ *    Docs: "OMX API manual for customers" https://www.omniva.ee/wp-content/uploads/sites/7/2025/08/OMX-API-Manual-for-Customers_nov.pdf
+ *      POST shipments/business-to-client   (mainService PARCEL, deliveryChannel PARCEL_MACHINE | COURIER | POST_OFFICE,
+ *                                           measurement.weight kg, length/width/height in metres)
+ *      POST shipments/package-labels       (sendAddressCardTo RESPONSE → base64 PDF per barcode)
+ *      GET  shipments/{barcode}            (all tracking events of a parcel; rate limit 5 queries / 5 min)
+ *    No price-quote and no shipment-cancel endpoint is documented.
+ *    Env (Netlify): OMNIVA_USERNAME, OMNIVA_PASSWORD, OMNIVA_CUSTOMER_CODE, optional OMNIVA_API_URL
+ *    (test system https://test-omx.omniva.eu/api/v01/omx/), optional OMNIVA_INTEGRATION_AGENT_ID.
  */
 
 export type OmnivaLocker = {
@@ -59,10 +78,11 @@ export async function getOmnivaLockers(country: Market): Promise<OmnivaLocker[]>
 
 // ───────────────────────── OMX API ─────────────────────────
 
-const API = (process.env.OMNIVA_API_URL || "https://omx.omniva.eu/api/v01/omx/").replace(/\/?$/, "/");
+const API = () => (process.env.OMNIVA_API_URL || "https://omx.omniva.eu/api/v01/omx/").replace(/\/?$/, "/");
+const ENV = ["OMNIVA_USERNAME", "OMNIVA_PASSWORD", "OMNIVA_CUSTOMER_CODE"];
 
 export function omnivaConfigured() {
-  return Boolean(process.env.OMNIVA_USERNAME && process.env.OMNIVA_PASSWORD && process.env.OMNIVA_CUSTOMER_CODE);
+  return envSet(ENV).length === ENV.length;
 }
 
 function authHeaders() {
@@ -75,114 +95,125 @@ function authHeaders() {
   };
 }
 
-export type OmnivaSender = {
-  name: string;
-  phone: string;
-  email?: string;
-  street: string;
-  city: string;
-  postcode: string;
-  country: Market;
-};
+/** @deprecated kept for backward compatibility — prefer the adapter. */
+export class OmnivaError extends CarrierError {}
 
-export type OmnivaShipmentInput = {
-  orderNumber: string;
-  channel: "PARCEL_MACHINE" | "COURIER";
-  weightKg: number;
-  receiver: {
-    name: string;
-    phone?: string | null;
-    email?: string | null;
-    country: Market;
-    lockerZip?: string | null;
-    street?: string | null;
-    city?: string | null;
-    postcode?: string | null;
-  };
-  sender: OmnivaSender;
-};
-
-export class OmnivaError extends Error {}
-
-function normalizePhone(p: string | null | undefined, country: Market) {
-  if (!p) return undefined;
-  const digits = p.replace(/[^\d+]/g, "");
-  if (digits.startsWith("+")) return digits;
-  if (digits.startsWith("00")) return `+${digits.slice(2)}`;
-  const prefix = country === "EE" ? "+372" : country === "LT" ? "+370" : "+371";
-  return `${prefix}${digits}`;
-}
-
-function postcodeDigits(p: string | null | undefined) {
-  return (p ?? "").replace(/\D/g, "");
-}
-
-export async function createOmnivaShipment(input: OmnivaShipmentInput): Promise<string> {
+function requireConfig() {
   if (!omnivaConfigured()) throw new OmnivaError("Omniva API nav konfigurēts (OMNIVA_USERNAME / OMNIVA_PASSWORD / OMNIVA_CUSTOMER_CODE).");
+}
+
+async function createShipments(input: CreateShipmentInput): Promise<string[]> {
+  requireConfig();
   const r = input.receiver;
+  const channel = input.serviceType === "locker" ? "PARCEL_MACHINE" : "COURIER";
+  if (channel === "PARCEL_MACHINE" && !input.pickupPoint?.id) throw new OmnivaError("Nav norādīts Omniva pakomāts.");
   const address =
-    input.channel === "PARCEL_MACHINE"
-      ? { offloadPostcode: r.lockerZip, country: r.country }
+    channel === "PARCEL_MACHINE"
+      ? { offloadPostcode: input.pickupPoint!.id, country: r.country }
       : { street: r.street, deliverypoint: r.city, postcode: postcodeDigits(r.postcode), country: r.country };
+  const s = input.sender;
+  const many = input.parcels.length > 1;
   const body = {
     customerCode: process.env.OMNIVA_CUSTOMER_CODE,
-    fileId: `${input.orderNumber}-${Date.now()}`,
-    shipments: [
-      {
-        partnerShipmentId: input.orderNumber,
-        mainService: "PARCEL",
-        deliveryChannel: input.channel,
-        measurement: { weight: Math.max(0.1, Math.round(input.weightKg * 1000) / 1000) },
-        receiverAddressee: {
-          personName: r.name,
-          contactMobile: normalizePhone(r.phone, r.country),
-          contactEmail: r.email || undefined,
-          address,
-        },
-        senderAddressee: {
-          personName: input.sender.name,
-          contactMobile: normalizePhone(input.sender.phone, input.sender.country),
-          contactEmail: input.sender.email,
-          address: {
-            street: input.sender.street,
-            deliverypoint: input.sender.city,
-            postcode: postcodeDigits(input.sender.postcode),
-            country: input.sender.country,
-          },
-        },
+    fileId: `${input.reference}-${Date.now()}`,
+    // One OMX shipment per parcel: parcel machines accept single parcels only (consolidation is courier-only).
+    shipments: input.parcels.map((p, i) => ({
+      partnerShipmentId: many ? `${input.reference}-${i + 1}` : input.reference,
+      mainService: "PARCEL",
+      deliveryChannel: channel,
+      measurement: {
+        weight: Math.max(0.1, Math.round(p.weightKg * 1000) / 1000),
+        ...(p.l && p.w && p.h ? { length: p.l / 100, width: p.w / 100, height: p.h / 100 } : {}),
       },
-    ],
+      receiverAddressee: {
+        personName: r.company ? `${r.company} (${r.name})` : r.name,
+        contactMobile: normalizePhone(r.phone, r.country),
+        contactEmail: r.email || undefined,
+        address,
+      },
+      senderAddressee: {
+        personName: s.name,
+        contactMobile: normalizePhone(s.phone, s.country),
+        contactEmail: s.email || undefined,
+        address: { street: s.street, deliverypoint: s.city, postcode: postcodeDigits(s.postcode), country: s.country },
+      },
+    })),
   };
-  const res = await fetch(`${API}shipments/business-to-client`, { method: "POST", headers: authHeaders(), body: JSON.stringify(body), cache: "no-store" });
+  const res = await fetchWithTimeout(`${API()}shipments/business-to-client`, { method: "POST", headers: authHeaders(), body: JSON.stringify(body), cache: "no-store" });
   const json = (await res.json().catch(() => null)) as {
-    resultCode?: string;
-    savedShipments?: { barcode: string }[];
+    savedShipments?: { barcode: string; partnerShipmentId?: string }[];
     failedShipments?: unknown[];
     message?: string;
   } | null;
-  if (!res.ok || !json?.savedShipments?.[0]?.barcode) {
+  const barcodes = (json?.savedShipments ?? []).map((x) => x.barcode).filter(Boolean);
+  if (!res.ok || barcodes.length === 0) {
     const detail = json?.failedShipments?.length ? JSON.stringify(json.failedShipments).slice(0, 400) : json?.message ?? `HTTP ${res.status}`;
     throw new OmnivaError(`Omniva atteica sūtījumu: ${detail}`);
   }
-  return json.savedShipments[0].barcode;
+  return barcodes;
 }
 
-export async function getOmnivaLabel(barcode: string): Promise<Buffer> {
-  if (!omnivaConfigured()) throw new OmnivaError("Omniva API nav konfigurēts.");
-  const res = await fetch(`${API}shipments/package-labels`, {
+async function labels(barcodes: string[]): Promise<Buffer[]> {
+  requireConfig();
+  const res = await fetchWithTimeout(`${API()}shipments/package-labels`, {
     method: "POST",
     headers: authHeaders(),
-    body: JSON.stringify({ customerCode: process.env.OMNIVA_CUSTOMER_CODE, barcodes: [barcode], sendAddressCardTo: "RESPONSE" }),
+    body: JSON.stringify({ customerCode: process.env.OMNIVA_CUSTOMER_CODE, barcodes, sendAddressCardTo: "RESPONSE" }),
     cache: "no-store",
   });
   const json = (await res.json().catch(() => null)) as { successAddressCards?: { barcode: string; fileData?: string; filedata?: string }[] } | null;
-  const card = json?.successAddressCards?.[0];
-  const data = card?.fileData ?? card?.filedata;
-  if (!res.ok || !data) throw new OmnivaError(`Neizdevās saņemt uzlīmi (HTTP ${res.status}).`);
-  return Buffer.from(data, "base64");
+  const files = (json?.successAddressCards ?? []).map((c) => c.fileData ?? c.filedata).filter((x): x is string => Boolean(x));
+  if (!res.ok || files.length === 0) throw new OmnivaError(`Neizdevās saņemt Omniva uzlīmi (HTTP ${res.status}).`);
+  return files.map((f) => Buffer.from(f, "base64"));
+}
+
+/** Backward compatible single-parcel helpers. */
+export async function getOmnivaLabel(barcode: string): Promise<Buffer> {
+  return (await labels([barcode]))[0];
 }
 
 export function omnivaTrackingUrl(barcode: string, locale = "lv") {
   const host = locale === "et" ? "www.omniva.ee" : locale === "lt" ? "www.omniva.lt" : "www.omniva.lv";
   return `https://${host}/en/track-and-receive-parcels/?barcode=${encodeURIComponent(barcode)}`;
 }
+
+export const omnivaAdapter: CarrierAdapter = {
+  code: "omniva",
+  name: "Omniva",
+  capabilities() {
+    const api = omnivaConfigured();
+    return {
+      code: "omniva",
+      api,
+      envVars: ENV,
+      envSet: envSet(ENV),
+      pickupPoints: true,
+      tracking: api,
+      docs: ["https://www.omniva.ee/wp-content/uploads/sites/7/2025/08/OMX-API-Manual-for-Customers_nov.pdf", LOCATIONS_URL],
+    };
+  },
+  async listPickupPoints(country) {
+    const list = await getOmnivaLockers(country);
+    return list.map((l): PickupPoint => ({ ...l }));
+  },
+  async createShipment(input) {
+    return { trackingNumbers: await createShipments(input), carrierRef: null };
+  },
+  async getLabel(ref: ShipmentRef) {
+    return labels(ref.trackingNumbers);
+  },
+  async track(ref: ShipmentRef) {
+    requireConfig();
+    const events = [];
+    // rate limit: 5 queries / 5 minutes → only the first 3 parcels are refreshed
+    for (const code of ref.trackingNumbers.slice(0, 3)) {
+      const res = await fetchWithTimeout(`${API()}shipments/${encodeURIComponent(code)}`, { headers: authHeaders(), cache: "no-store" });
+      if (res.status === 429) throw new OmnivaError("Omniva izsekošanas limits (5 pieprasījumi / 5 min). Mēģiniet vēlāk.");
+      if (!res.ok) throw new OmnivaError(`Omniva izsekošana: HTTP ${res.status}`);
+      events.push(...extractEvents(await res.json().catch(() => null)));
+    }
+    events.sort((a, b) => a.at.localeCompare(b.at));
+    const last = events[events.length - 1];
+    return { status: last ? statusFromText(last.text) : null, events };
+  },
+};

@@ -53,11 +53,11 @@
       "useCustom": "Naudoti „{value}“",
       "change": "Keisti",
       "hint": "Ieškokite pagal miestą, gatvę arba paštomato pavadinimą.",
-      "loading": "Įkeliami Omniva paštomatai…",
+      "loading": "Įkeliami {provider} paštomatai…",
       "error": "Nepavyko įkelti paštomatų sąrašo. Įrašykite paštomato pavadinimą arba adresą.",
       "nearest": "Arčiausiai manęs",
       "locating": "Nustatoma vieta…",
-      "count": "{count} Omniva paštomatai",
+      "count": "{count} {provider} paštomatai",
       "km": "{km} km"
     },
     "address": {

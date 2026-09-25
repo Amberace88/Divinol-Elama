@@ -5,25 +5,41 @@ import { useTranslations } from "next-intl";
 import { Check, LocateFixed, Loader2, MapPin, Package, Pencil } from "lucide-react";
 import type { Market } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { distanceKm, searchLockerOptions, type LockerOption, type ParcelLocker } from "./lockers";
+import { distanceKm, searchLockerOptions, type LockerOption, type LockerProvider, type LockerProviderOption, type ParcelLocker } from "./lockers";
 
-const cache = new Map<Market, Promise<LockerOption[]>>();
+const cache = new Map<string, Promise<LockerOption[]>>();
+const providerCache = new Map<Market, Promise<LockerProviderOption[]>>();
+const FALLBACK: LockerProviderOption[] = [{ id: "omniva", name: "Omniva", count: 0 }];
 
-function loadLockers(market: Market) {
-  if (!cache.has(market)) {
+function loadLockers(market: Market, provider: LockerProvider) {
+  const key = `${market}:${provider}`;
+  if (!cache.has(key)) {
     cache.set(
-      market,
-      fetch(`/api/parcel-lockers?country=${market}`)
+      key,
+      fetch(`/api/parcel-lockers?country=${market}&provider=${encodeURIComponent(provider)}`)
         .then((r) => r.json())
         .then((j: { lockers?: LockerOption[] }) => j.lockers ?? [])
         .catch(() => []),
     );
   }
-  return cache.get(market)!;
+  return cache.get(key)!;
+}
+
+function loadProviders(market: Market) {
+  if (!providerCache.has(market)) {
+    providerCache.set(
+      market,
+      fetch(`/api/parcel-lockers/providers?country=${market}`)
+        .then((r) => r.json())
+        .then((j: { providers?: LockerProviderOption[] }) => (j.providers?.length ? j.providers : FALLBACK))
+        .catch(() => FALLBACK),
+    );
+  }
+  return providerCache.get(market)!;
 }
 
 /**
- * Omniva parcel-machine selector backed by the live Omniva location feed.
+ * Parcel-locker selector backed by live pickup-point feeds (Omniva and any provider enabled in the admin).
  * The rest of the checkout only relies on `value` / `onChange` with the `ParcelLocker` shape.
  */
 export function ParcelLockerPicker({
@@ -31,13 +47,18 @@ export function ParcelLockerPicker({
   value,
   onChange,
   invalid,
+  priceLabel,
 }: {
   market: Market;
   value: ParcelLocker | null;
   onChange: (v: ParcelLocker | null) => void;
   invalid?: boolean;
+  /** customer price of the parcel-locker delivery (same for every provider) */
+  priceLabel?: string;
 }) {
   const t = useTranslations("checkout.locker");
+  const [providers, setProviders] = useState<LockerProviderOption[]>(FALLBACK);
+  const [provider, setProvider] = useState<LockerProvider>(value?.provider ?? "omniva");
   const [lockers, setLockers] = useState<LockerOption[] | null>(null);
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
@@ -49,11 +70,33 @@ export function ParcelLockerPicker({
 
   useEffect(() => {
     let alive = true;
-    loadLockers(market).then((l) => alive && setLockers(l));
+    loadProviders(market).then((list) => {
+      if (!alive) return;
+      setProviders(list);
+      setProvider((p) => (list.some((x) => x.id === p) ? p : list[0].id));
+    });
     return () => {
       alive = false;
     };
   }, [market]);
+
+  useEffect(() => {
+    let alive = true;
+    loadLockers(market, provider).then((l) => alive && setLockers(l));
+    return () => {
+      alive = false;
+    };
+  }, [market, provider]);
+
+  const providerName = providers.find((p) => p.id === provider)?.name ?? "Omniva";
+  const switchProvider = (id: LockerProvider) => {
+    if (id === provider) return;
+    setLockers(null);
+    setProvider(id);
+    setQuery("");
+    setOrigin(null);
+    setActive(0);
+  };
 
   const loading = lockers === null;
   const failed = lockers !== null && lockers.length === 0;
@@ -73,7 +116,7 @@ export function ParcelLockerPicker({
   const custom = failed && query.trim().length >= 3;
 
   const pick = (l: LockerOption) => {
-    onChange({ provider: "omniva", id: l.id, name: l.name, city: l.city, address: l.address });
+    onChange({ provider, id: l.id, name: l.name, city: l.city, address: l.address });
     setOpen(false);
     setQuery("");
   };
@@ -100,7 +143,7 @@ export function ParcelLockerPicker({
           <Package className="size-5" aria-hidden />
         </span>
         <div className="min-w-0 flex-1">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-muted">Omniva</p>
+          <p className="text-[11px] font-bold uppercase tracking-wider text-muted">{providers.find((p) => p.id === value.provider)?.name ?? value.provider}</p>
           <p className="truncate text-[15px] font-bold text-ink">{value.name}</p>
           {value.address && <p className="truncate text-[12.5px] text-muted">{value.address}</p>}
         </div>
@@ -118,6 +161,26 @@ export function ParcelLockerPicker({
 
   return (
     <div className="relative grid gap-2">
+      {providers.length > 1 && (
+        <div role="radiogroup" aria-label={t("provider")} className="mb-1 flex flex-wrap gap-2">
+          {providers.map((p) => (
+            <button
+              key={p.id}
+              type="button"
+              role="radio"
+              aria-checked={p.id === provider}
+              onClick={() => switchProvider(p.id)}
+              className={cn(
+                "inline-flex h-10 items-center gap-2 rounded-xl border-2 px-3.5 text-[13.5px] font-bold transition",
+                p.id === provider ? "border-navy-700 bg-navy-50/60 text-navy-700" : "border-line text-ink/75 hover:border-navy-200",
+              )}
+            >
+              {p.name}
+              {priceLabel && <span className="text-[12px] font-semibold text-muted">{priceLabel}</span>}
+            </button>
+          ))}
+        </div>
+      )}
       <div className="flex items-end justify-between gap-3">
         <label htmlFor={inputId} className="label mb-0">
           {t("search")}
@@ -156,7 +219,7 @@ export function ParcelLockerPicker({
             } else if (e.key === "Enter") {
               e.preventDefault();
               if (options[active]) pick(options[active]);
-              else if (custom) onChange({ provider: "omniva", id: null, name: query.trim() });
+              else if (custom) onChange({ provider, id: null, name: query.trim() });
             } else if (e.key === "Escape") setOpen(false);
           }}
           role="combobox"
@@ -165,7 +228,7 @@ export function ParcelLockerPicker({
           aria-autocomplete="list"
           aria-invalid={invalid || undefined}
           aria-activedescendant={open && options[active] ? `${listId}-${active}` : undefined}
-          placeholder={loading ? t("loading") : t("placeholder")}
+          placeholder={loading ? t("loading", { provider: providerName }) : t("placeholder")}
           autoComplete="off"
           className={cn("input pl-10", invalid && "border-danger ring-4 ring-red-100")}
         />
@@ -211,7 +274,7 @@ export function ParcelLockerPicker({
               aria-selected={active === options.length}
               onMouseDown={(e) => {
                 e.preventDefault();
-                onChange({ provider: "omniva", id: null, name: query.trim() });
+                onChange({ provider, id: null, name: query.trim() });
               }}
               className="flex cursor-pointer items-center gap-2.5 rounded-lg border-t border-line px-3 py-2.5 text-[14px] text-ink/85"
             >
@@ -222,7 +285,7 @@ export function ParcelLockerPicker({
         </ul>
       )}
       <p className="text-[12px] text-muted">
-        {lockers && lockers.length > 0 ? `${t("count", { count: lockers.length })} · ${t("hint")}` : failed ? t("error") : t("hint")}
+        {lockers && lockers.length > 0 ? `${t("count", { count: lockers.length, provider: providerName })} · ${t("hint")}` : failed ? t("error") : t("hint")}
       </p>
     </div>
   );

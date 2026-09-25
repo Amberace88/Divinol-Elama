@@ -1,13 +1,16 @@
-import type { Market } from "@/lib/types";
+/**
+ * Parcel lockers: live pickup-point feeds via /api/parcel-lockers?provider=… . Which providers are offered is set in the
+ * admin (Sūtījumi → Tarifi → Pārvadātāji → "Piedāvāt klientiem") and served by /api/parcel-lockers/providers.
+ * The customer price is the same for every provider (settings → parcel_locker), so place_order is unchanged.
+ */
+export type LockerProvider = "omniva" | "dpd" | "venipak" | "smartposti" | (string & {});
 
-/** Parcel lockers: live Omniva feed via /api/parcel-lockers (Omniva covers LV, EE and LT). */
-export type LockerProvider = "omniva";
+export type LockerProviderOption = { id: LockerProvider; name: string; count: number };
 
-export const LOCKER_PROVIDERS: { id: LockerProvider; name: string; markets: Market[] }[] = [
-  { id: "omniva", name: "Omniva", markets: ["LV", "EE", "LT"] },
-];
-
-/** Shape stored on the order (orders.shipping_point). `id` is the Omniva ZIP used by the OMX API. */
+/**
+ * Shape stored on the order (orders.shipping_point) — unchanged, `provider` tells which network the `id` belongs to
+ * (Omniva ZIP for the OMX API, DPD pudoId, Venipak / SmartPosti point id).
+ */
 export type ParcelLocker = {
   provider: LockerProvider;
   id: string | null;

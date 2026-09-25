@@ -1,6 +1,5 @@
 import Link from "next/link";
 import {
-  AlertTriangle,
   BarChart3,
   Building2,
   Euro,
@@ -22,6 +21,7 @@ import { errorMessage } from "@/lib/admin/server";
 import { MarketDonut, RevenueChart } from "@/components/admin/Charts";
 import { ActionTile, KpiCard } from "@/components/admin/Kpi";
 import { TrafficStrip } from "@/components/admin/analytics/TrafficStrip";
+import { InventoryPanel, loadInventorySummary } from "@/components/admin/products/InventoryPanel";
 import { EmptyState, ErrorNote, PageHeader, Panel, Pill, Segmented, td, th, trHover } from "@/components/admin/ui";
 
 export const metadata = { title: "Pārskats" };
@@ -65,7 +65,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
   const { curStart, prevStart } = periodBounds(days);
 
-  const [statsRes, recentRes, custPrevRes, trafficRes] = await Promise.all([
+  const [statsRes, recentRes, custPrevRes, trafficRes, inventory] = await Promise.all([
     supabase.rpc("admin_stats", { p_days: days }),
     supabase.from("orders").select(ORDER_LIST_SELECT).order("created_at", { ascending: false }).limit(8),
     supabase
@@ -74,6 +74,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       .gte("created_at", prevStart.toISOString())
       .lt("created_at", curStart.toISOString()),
     loadTraffic(supabase, days).catch(() => ({ traffic: null })),
+    loadInventorySummary(supabase).catch(() => null),
   ]);
 
   const stats = (statsRes.data ?? null) as Stats | null;
@@ -91,7 +92,6 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   const series = stats?.series ?? [];
   const hasSales = series.some((s) => n(s.orders) > 0);
   const top = stats?.top_products ?? [];
-  const low = stats?.low_stock ?? [];
   const periodLabel = PERIODS.find((p) => p.days === days)?.label ?? "";
   const hello = profile.full_name?.split(" ")[0];
 
@@ -181,33 +181,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             </div>
           )}
         </Panel>
-        <Panel
-          title="Zems atlikums"
-          description="Aktīvi varianti ar atlikumu ≤ 3"
-          bodyClassName="p-0"
-          actions={
-            <Link href="/admin/products" className="text-[12px] font-bold text-navy-600 hover:underline">
-              Produkti →
-            </Link>
-          }
-        >
-          {low.length === 0 ? (
-            <EmptyState icon={PackageOpen} title="Viss kārtībā" description="Nav variantu ar zemu atlikumu (vai atlikums netiek uzskaitīts)." />
-          ) : (
-            <ul className="divide-y divide-line/70">
-              {low.map((v, i) => (
-                <li key={(v.sku ?? "") + i} className="flex items-center gap-3 px-5 py-3 text-[13px]">
-                  <AlertTriangle className={v.stock <= 0 ? "h-4 w-4 text-red-500" : "h-4 w-4 text-brand-600"} aria-hidden />
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate font-semibold text-ink">{v.name ?? "—"}</p>
-                    <p className="font-mono text-[11px] text-muted">{v.sku ?? "bez SKU"}</p>
-                  </div>
-                  <Pill tone={v.stock <= 0 ? "red" : "yellow"}>{v.stock} gab.</Pill>
-                </li>
-              ))}
-            </ul>
-          )}
-        </Panel>
+        <InventoryPanel data={inventory} />
       </div>
 
       <Panel

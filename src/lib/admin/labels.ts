@@ -81,6 +81,7 @@ export const ORDER_EVENT: Record<string, string> = {
   tracking: "Sūtījuma kods",
   note: "Piezīme",
   shipping: "Piegāde",
+  shipment: "Sūtījums",
 };
 
 export const LANGS = ["lv", "et", "lt", "en", "ru"] as const;

@@ -53,11 +53,11 @@
       "useCustom": "Izmantot “{value}”",
       "change": "Mainīt",
       "hint": "Meklē pēc pilsētas, ielas vai pakomāta nosaukuma.",
-      "loading": "Ielādē Omniva pakomātus…",
+      "loading": "Ielādē {provider} pakomātus…",
       "error": "Pakomātu sarakstu neizdevās ielādēt. Ieraksti pakomāta nosaukumu vai adresi.",
       "nearest": "Tuvākie man",
       "locating": "Nosaka atrašanās vietu…",
-      "count": "{count} Omniva pakomāti",
+      "count": "{count} {provider} pakomāti",
       "km": "{km} km"
     },
     "address": {

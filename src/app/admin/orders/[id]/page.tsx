@@ -6,10 +6,11 @@ import { fmtDate, fmtDateTime, fmtMoney, fmtNumber, fmtRelative } from "@/lib/ad
 import { B2B_STATUS, INVOICE_STATUS, INVOICE_TYPE, labelOf, MARKET, ORDER_EVENT, ORDER_STATUS, PAYMENT_METHOD, PAYMENT_STATUS, SHIPPING_METHOD } from "@/lib/admin/labels";
 import { UUID_RE } from "@/lib/admin/server";
 import { AddressBlock } from "@/components/admin/Address";
-import { CommentForm, InvoiceButtons, NotesForm, PaymentControl, StatusControl, TrackingForm } from "@/components/admin/orders/OrderControls";
+import { CommentForm, InvoiceButtons, NotesForm, PaymentControl, StatusControl } from "@/components/admin/orders/OrderControls";
 import { btn } from "@/components/admin/styles";
-import { OmnivaShipment } from "@/components/admin/orders/OmnivaShipment";
-import { omnivaConfigured, omnivaTrackingUrl } from "@/lib/shipping/omniva";
+import { OrderShipping } from "@/components/admin/shipping/OrderShipping";
+import { allCapabilities } from "@/lib/shipping/registry";
+import { compareForOrder, loadCarriers, loadRates, SHIPMENT_COLS, type OrderForShipping, type ShipmentRow } from "@/lib/shipping/service";
 import { Thumb } from "@/components/admin/Thumb";
 import { EmptyState, KeyValue, PageHeader, Panel, Pill, td, th } from "@/components/admin/ui";
 
@@ -76,14 +77,17 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
   const profile = profileRes.data as { id: string; full_name: string | null; b2b_status: string; discount_percent: number; payment_terms_days: number } | null;
   const dueDefault = Number(profile?.payment_terms_days) || Number((settingsRes.data?.value as { due_days_default?: number } | null)?.due_days_default) || 14;
 
-  const estWeight = Math.max(
-    0.5,
-    items.reduce((sum, it) => {
-      const m = (it.pack_label ?? "").match(/([\d.,]+)\s*(L|kg)/i);
-      const size = m ? Number(m[1].replace(",", ".")) : 0.5;
-      return sum + (m && m[2].toLowerCase() === "kg" ? size * 1.08 : size * 0.95) * it.qty;
-    }, 0),
-  );
+  const [shipmentsRes, carriers, rates] = await Promise.all([
+    supabase.from("shipments").select(SHIPMENT_COLS).eq("order_id", id).order("created_at", { ascending: false }),
+    loadCarriers(supabase),
+    loadRates(supabase, { activeOnly: true }),
+  ]);
+  const shipments = (shipmentsRes.data ?? []) as ShipmentRow[];
+  const caps = allCapabilities(carriers.map((c) => c.code));
+  const carrierInfo = carriers.map((c) => ({ code: c.code, name: c.name, tracking_url_template: c.tracking_url_template, api: caps[c.code]?.api ?? false, tracking: caps[c.code]?.tracking ?? false }));
+  const apiCarriers = carrierInfo.filter((c) => c.api).map((c) => c.code);
+  const shipOptions = compareForOrder(order as unknown as OrderForShipping, items, rates, carriers);
+  const carrierName = (code: string) => carriers.find((c) => c.code === code)?.name ?? code;
   const st = labelOf(ORDER_STATUS, order.status);
   const pay = labelOf(PAYMENT_STATUS, order.payment_status);
   const c = order.customer ?? {};
@@ -176,49 +180,49 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
             </div>
           </Panel>
 
-          {/* Shipment card — reserved for the Omniva integration. */}
-          <section className="relative overflow-hidden rounded-2xl border-2 border-dashed border-navy-200 bg-white shadow-card">
+          <section className="relative overflow-hidden rounded-2xl border border-line bg-white shadow-card" id="piegade">
             <div className="absolute inset-x-0 top-0 h-1 bg-[repeating-linear-gradient(-45deg,var(--color-brand-400)_0_10px,var(--color-navy-700)_10px_20px)]" aria-hidden />
             <header className="flex flex-wrap items-center justify-between gap-2 border-b border-line/80 px-5 py-4">
               <h2 className="flex items-center gap-2 text-[15px] font-bold text-ink">
-                <Truck className="h-4 w-4 text-navy-500" /> Sūtījums
+                <Truck className="h-4 w-4 text-navy-500" /> Piegāde
               </h2>
-              <span className="rounded-full bg-navy-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.08em] text-navy-600">
-                Omniva
-              </span>
+              <Link href="/admin/shipping" className="text-[12px] font-bold text-navy-600 hover:underline">
+                Visi sūtījumi →
+              </Link>
             </header>
-            <div className="grid gap-5 p-5 md:grid-cols-2">
+            <div className="grid gap-4 border-b border-line/80 px-5 py-4 text-[13px] sm:grid-cols-3">
               <div>
-                <p className="mb-1 text-[12px] font-bold uppercase tracking-[0.08em] text-muted">Piegādes veids</p>
-                <p className="text-[14px] font-bold text-ink">{SHIPPING_METHOD[order.shipping_method] ?? order.shipping_method}</p>
-                {order.shipping_method === "freight" && <p className="mt-1 text-[12px] text-muted">Kravas piegādes cenu saskaņo menedžeris.</p>}
-                {order.shipping_point && (
-                  <div className="mt-3">
-                    <p className="mb-1 text-[12px] font-bold uppercase tracking-[0.08em] text-muted">Pakomāts / punkts</p>
-                    <AddressBlock value={order.shipping_point} />
-                  </div>
-                )}
-                {order.shipping_address && order.shipping_method !== "pickup" && (
-                  <div className="mt-3">
-                    <p className="mb-1 text-[12px] font-bold uppercase tracking-[0.08em] text-muted">Piegādes adrese</p>
-                    <AddressBlock value={order.shipping_address} />
-                  </div>
-                )}
+                <p className="mb-1 text-[12px] font-bold uppercase tracking-[0.08em] text-muted">Klienta izvēle</p>
+                <p className="font-bold text-ink">{SHIPPING_METHOD[order.shipping_method] ?? order.shipping_method}</p>
+                <p className="text-[12px] text-muted">
+                  Klients samaksāja {fmtMoney(order.shipping_net)} bez PVN
+                  {order.shipping_method === "freight" && " · kravas cenu saskaņo menedžeris"}
+                </p>
               </div>
-              <div>
-                <p className="mb-1.5 text-[12px] font-bold uppercase tracking-[0.08em] text-muted">Sūtījuma izsekošanas kods</p>
-                <TrackingForm orderId={order.id} code={order.tracking_code} />
-                <div className="mt-4">
-                  <OmnivaShipment
-                    orderId={order.id}
-                    trackingCode={order.tracking_code}
-                    eligible={order.shipping_method === "parcel_locker" || order.shipping_method === "courier"}
-                    configured={omnivaConfigured()}
-                    defaultWeight={estWeight}
-                    trackingUrl={order.tracking_code ? omnivaTrackingUrl(order.tracking_code) : null}
-                  />
+              {order.shipping_point && order.shipping_method !== "pickup" && (
+                <div>
+                  <p className="mb-1 text-[12px] font-bold uppercase tracking-[0.08em] text-muted">
+                    Pakomāts{order.shipping_point.provider ? ` · ${carrierName(String(order.shipping_point.provider))}` : ""}
+                  </p>
+                  <AddressBlock value={order.shipping_point} />
                 </div>
-              </div>
+              )}
+              {order.shipping_address && order.shipping_method !== "pickup" && (
+                <div>
+                  <p className="mb-1 text-[12px] font-bold uppercase tracking-[0.08em] text-muted">Piegādes adrese</p>
+                  <AddressBlock value={order.shipping_address} />
+                </div>
+              )}
+            </div>
+            <div className="p-5">
+              <OrderShipping
+                orderId={order.id}
+                shipments={shipments}
+                carriers={carrierInfo}
+                options={shipOptions}
+                apiCarriers={apiCarriers}
+                isPickup={order.shipping_method === "pickup"}
+              />
             </div>
           </section>
 

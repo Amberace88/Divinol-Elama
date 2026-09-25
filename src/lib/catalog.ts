@@ -31,6 +31,7 @@ function seedCatalog(): { products: Product[]; categories: Category[] } {
 type DbVariant = {
   id: string; sku: string | null; size: number | null; unit: string; price_net: number | string;
   in_stock: boolean; stock: number | null; image: string | null; sort: number; is_active: boolean;
+  availability?: Variant["availability"]; lead_time_days?: number | null;
 };
 type DbProduct = {
   id: string; slug: string; base_sku: string | null; sae: string | null; iso_vg: string | null;
@@ -47,13 +48,17 @@ async function loadFromDb(): Promise<{ products: Product[]; categories: Category
       sb.from("categories").select("id, slug, icon, image, sort, i18n").eq("is_active", true).order("sort"),
       sb
         .from("products")
-        .select("id, slug, base_sku, sae, iso_vg, specs, oem_approvals, performance, images, i18n, is_featured, tds_url, sds_url, sort, categories(slug), product_variants(id, sku, size, unit, price_net, in_stock, stock, image, sort, is_active)")
+        .select("id, slug, base_sku, sae, iso_vg, specs, oem_approvals, performance, images, i18n, is_featured, tds_url, sds_url, sort, categories(slug), product_variants(id, sku, size, unit, price_net, in_stock, stock, availability, lead_time_days, image, sort, is_active)")
         .eq("is_active", true)
         .order("sort")
         .order("slug"),
     ]);
     if (ce || pe || !prods || prods.length === 0) return null;
-    const products: Product[] = (prods as unknown as DbProduct[]).map((p) => ({
+    // A product whose every active pack is discontinued disappears from the storefront.
+    const sellable = (prods as unknown as DbProduct[]).filter(
+      (p) => !(p.product_variants ?? []).some((v) => v.is_active) || (p.product_variants ?? []).some((v) => v.is_active && v.availability !== "discontinued"),
+    );
+    const products: Product[] = sellable.map((p) => ({
       id: p.id,
       slug: p.slug,
       base_sku: p.base_sku,
@@ -69,7 +74,8 @@ async function loadFromDb(): Promise<{ products: Product[]; categories: Category
       tds_url: p.tds_url,
       sds_url: p.sds_url,
       variants: (p.product_variants ?? [])
-        .filter((v) => v.is_active)
+        // discontinued variants are hidden from the storefront (and rejected by place_order)
+        .filter((v) => v.is_active && v.availability !== "discontinued")
         .sort((a, b) => a.sort - b.sort || Number(a.size ?? 0) - Number(b.size ?? 0))
         .map<Variant>((v) => ({
           id: v.id,
@@ -79,6 +85,8 @@ async function loadFromDb(): Promise<{ products: Product[]; categories: Category
           price_net: Number(v.price_net),
           in_stock: v.in_stock,
           stock: v.stock,
+          availability: v.availability,
+          lead_time_days: v.lead_time_days ?? null,
           image: v.image,
         })),
     }));

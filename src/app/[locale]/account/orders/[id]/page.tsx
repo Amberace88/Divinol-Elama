@@ -11,6 +11,7 @@ import { OrderEvents, OrderProgress, type OrderEvent } from "@/components/accoun
 import { ReorderButton, type ReorderLine } from "@/components/account/ReorderButton";
 import { EmptyState, InvoicePdfLink, LoadError, Panel, StatusPill } from "@/components/account/ui";
 import { INVOICE_COLUMNS, type InvoiceRow } from "@/components/account/types";
+import { buildTrackingUrl, guessCarrier } from "@/lib/shipping/tracking";
 
 type Json = Record<string, unknown> | null;
 
@@ -37,6 +38,7 @@ type OrderDetail = {
   reverse_charge: boolean;
   notes: string | null;
   tracking_code: string | null;
+  tracking_url: string | null;
   paid_at: string | null;
 };
 
@@ -61,7 +63,7 @@ type ItemRow = {
 };
 
 const ORDER_COLUMNS =
-  "id, number, created_at, status, payment_method, payment_status, shipping_method, shipping_point, shipping_address, billing_address, customer, email, phone, shipping_net, subtotal_net, discount_net, vat_rate, vat_amount, total_gross, reverse_charge, notes, tracking_code, paid_at";
+  "id, number, created_at, status, payment_method, payment_status, shipping_method, shipping_point, shipping_address, billing_address, customer, email, phone, shipping_net, subtotal_net, discount_net, vat_rate, vat_amount, total_gross, reverse_charge, notes, tracking_code, tracking_url, paid_at";
 
 const ITEM_COLUMNS =
   "id, sku, name, pack_label, image, qty, unit_price_net, line_net, products(slug, images), product_variants(sku, size, unit, price_net, image, in_stock)";
@@ -176,6 +178,11 @@ export default async function OrderDetailPage({ params }: PageProps<"/[locale]/a
 
   const shippingLines = addressLines(order.shipping_address, (c) => tm(c));
   const point = order.shipping_point;
+  const trackingHref = order.tracking_code
+    ? order.tracking_url && /^https:\/\//.test(order.tracking_url)
+      ? order.tracking_url
+      : buildTrackingUrl(null, order.tracking_code, guessCarrier(order.tracking_code))
+    : null;
   const pointLines = point ? [str(point.name), str(point.address), str(point.city)].filter((x): x is string => Boolean(x)) : [];
   const discount = num(order.discount_net);
 
@@ -325,9 +332,9 @@ export default async function OrderDetailPage({ params }: PageProps<"/[locale]/a
                 <div>
                   <dt className="text-xs font-bold tracking-wider text-muted uppercase">{t("order.tracking")}</dt>
                   <dd className="mt-0.5 font-mono text-[13px] font-semibold break-all">
-                    {/^[A-Z]{2}\d{9}[A-Z]{2}$/.test(order.tracking_code) ? (
+                    {trackingHref ? (
                       <a
-                        href={`https://www.omniva.lv/en/track-and-receive-parcels/?barcode=${encodeURIComponent(order.tracking_code)}`}
+                        href={trackingHref}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-navy-600 underline decoration-brand-400 decoration-2 underline-offset-4 hover:text-navy-800"

@@ -32,6 +32,18 @@ export async function bulkSetProductsActive(ids: string[], value: boolean) {
   );
 }
 
+export async function bulkSetProductsFeatured(ids: string[], value: boolean) {
+  return adminAction(
+    async ({ supabase }) => {
+      const list = z.array(id).min(1, "Nav atlasītu produktu").max(500).parse(ids);
+      must(await supabase.from("products").update({ is_featured: Boolean(value) }).in("id", list));
+      revalidateCatalog();
+      return { count: list.length };
+    },
+    (d) => `${d.count} ${value ? "produkti izcelti" : "produkti noņemti no izceltajiem"}`,
+  );
+}
+
 export async function checkSlugAvailable(slug: string, excludeId?: string | null) {
   return adminAction(async ({ supabase }) => {
     let q = supabase.from("products").select("id").eq("slug", slug.trim()).limit(1);
@@ -99,7 +111,10 @@ export async function saveProduct(input: ProductPayload) {
           price_net: round4(v.price_net),
           cost_net: v.cost_net == null ? null : round4(v.cost_net),
           stock: v.stock,
-          in_stock: v.in_stock,
+          // in_stock is derived from availability by a DB trigger
+          availability: v.availability,
+          lead_time_days: v.availability === "on_order" || v.availability === "out_of_stock" ? v.lead_time_days : null,
+          low_stock_threshold: v.low_stock_threshold,
           is_active: v.is_active,
           image: v.image,
           weight_kg: v.weight_kg,
