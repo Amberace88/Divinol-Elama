@@ -1,0 +1,475 @@
+{
+  "auth": {
+    "meta": {
+      "login": "Prisijungti",
+      "register": "Registruotis",
+      "forgot": "Pamiršau slaptažodį",
+      "reset": "Naujo slaptažodžio nustatymas"
+    },
+    "panel": {
+      "eyebrow": "Mano paskyra",
+      "title": "Visa informacija apie tavo užsakymus vienoje vietoje",
+      "text": "Susikurk paskyrą ir valdyk pirkinius, sąskaitas ir pristatymo adresus greičiau — tiek kaip privatus asmuo, tiek kaip įmonė.",
+      "note": "Įmonių B2B kainos ir apmokėjimas sąskaita tampa prieinami, kai patikriname ir patvirtiname įmonės duomenis.",
+      "benefits": {
+        "b2b": {
+          "title": "B2B kainos įmonėms",
+          "text": "Individuali nuolaida ir kainos be PVM visame kataloge."
+        },
+        "history": {
+          "title": "Užsakymų istorija",
+          "text": "Statusas, pristatymas ir visos detalės apie kiekvieną pirkinį."
+        },
+        "invoices": {
+          "title": "Sąskaitos PDF formatu",
+          "text": "Atsisiųsk išankstines sąskaitas ir sąskaitas bet kuriuo metu."
+        },
+        "reorder": {
+          "title": "Greitas pakartotinis užsakymas",
+          "text": "Ankstesnis užsakymas krepšelyje vienu paspaudimu."
+        }
+      }
+    },
+    "notConfigured": {
+      "title": "Prisijungimas laikinai nepasiekiamas",
+      "text": "Klientų paskyros šiuo metu dar konfigūruojamos. Užsakymą vis tiek gali pateikti be registracijos arba susisiekti su mumis."
+    },
+    "fields": {
+      "optional": "Neprivaloma",
+      "email": "El. paštas",
+      "emailPlaceholder": "vardas@imone.lt",
+      "password": "Slaptažodis",
+      "passwordNew": "Naujas slaptažodis",
+      "passwordConfirm": "Pakartok slaptažodį",
+      "fullName": "Vardas, pavardė",
+      "contactPerson": "Kontaktinis asmuo",
+      "phone": "Telefonas",
+      "companyName": "Įmonės pavadinimas",
+      "regNo": "Registracijos numeris",
+      "vatNo": "PVM mokėtojo numeris",
+      "legalAddress": "Juridinis adresas"
+    },
+    "showPassword": "Rodyti slaptažodį",
+    "hidePassword": "Slėpti slaptažodį",
+    "strength": {
+      "label": "Saugumas",
+      "weak": "silpnas",
+      "fair": "vidutinis",
+      "good": "geras",
+      "strong": "labai geras",
+      "hint": "Bent 8 simboliai; didžiosios ir mažosios raidės, skaičiai ir simboliai padaro jį saugesnį."
+    },
+    "login": {
+      "eyebrow": "Sveiki sugrįžę",
+      "title": "Prisijungti prie paskyros",
+      "subtitle": "Peržiūrėk užsakymus, atsisiųsk sąskaitas ir apsipirk savo kainomis.",
+      "modeLabel": "Prisijungimo būdas",
+      "modePassword": "Su slaptažodžiu",
+      "modeMagic": "Su nuoroda el. paštu",
+      "magicHint": "Atsiųsime į tavo el. paštą vienkartinę prisijungimo nuorodą — slaptažodžio nereikės.",
+      "forgot": "Pamiršai slaptažodį?",
+      "submit": "Prisijungti",
+      "submitting": "Jungiamasi…",
+      "magicSubmit": "Siųsti prisijungimo nuorodą",
+      "success": "Sėkmingai prisijungei",
+      "magicSentTitle": "Patikrink savo el. paštą",
+      "magicSentText": "Prisijungimo nuoroda išsiųsta adresu",
+      "useAnotherMethod": "Prisijungti kitaip",
+      "noAccount": "Dar neturi paskyros?",
+      "register": "Registruotis"
+    },
+    "register": {
+      "eyebrow": "Nauja paskyra",
+      "title": "Sukurti paskyrą",
+      "subtitle": "Registracija užtrunka mažiau nei minutę.",
+      "typeLabel": "Kliento tipas",
+      "typePrivate": "Privatus asmuo",
+      "typeBusiness": "Įmonė",
+      "companySection": "Įmonės duomenys",
+      "businessNote": "Po registracijos patikrinsime įmonės duomenis ir suteiksime B2B kainas. Kol patvirtinimo laukiama, gali apsipirkti įprastomis kainomis.",
+      "terms": "Sutinku su <link>naudojimo taisyklėmis</link> ir esu susipažinęs su <privacy>privatumo politika</privacy>",
+      "marketing": "Noriu gauti naujienas ir pasiūlymus el. paštu (ne dažniau kaip kartą per mėnesį)",
+      "submit": "Sukurti paskyrą",
+      "submitBusiness": "Registruoti įmonę",
+      "submitting": "Kuriama paskyra…",
+      "haveAccount": "Jau turi paskyrą?",
+      "login": "Prisijungti",
+      "checkEmailTitle": "Patvirtink savo el. paštą",
+      "checkEmailText": "Išsiuntėme patvirtinimo nuorodą adresu",
+      "checkEmailHint": "Atidaryk el. paštą ir paspausk nuorodą, kad aktyvuotum paskyrą. Jei laiško nematai, patikrink šlamšto aplanką.",
+      "checkEmailBusiness": "Patvirtinus el. paštą, įmonės pateikta paraiška bus perduota mūsų komandai. Apie B2B statuso patvirtinimą pranešime el. paštu.",
+      "backToLogin": "Atgal į prisijungimą"
+    },
+    "forgot": {
+      "eyebrow": "Slaptažodžio atkūrimas",
+      "title": "Pamiršai slaptažodį?",
+      "subtitle": "Įvesk paskyros el. paštą, ir atsiųsime nuorodą naujam slaptažodžiui nustatyti.",
+      "submit": "Siųsti nuorodą",
+      "submitting": "Siunčiama…",
+      "sentTitle": "Patikrink savo el. paštą",
+      "sentText": "Jei paskyra su šiuo adresu egzistuoja, slaptažodžio atkūrimo nuoroda išsiųsta adresu",
+      "backToLogin": "Atgal į prisijungimą"
+    },
+    "reset": {
+      "eyebrow": "Saugumas",
+      "title": "Nustatyk naują slaptažodį",
+      "subtitle": "Pasirink saugų slaptažodį, kurio nenaudoji kituose paslaugose.",
+      "submit": "Išsaugoti slaptažodį",
+      "submitting": "Išsaugoma…",
+      "success": "Slaptažodis pakeistas",
+      "noSession": "Slaptažodžio atkūrimo nuoroda negalioja arba baigėsi jos galiojimo laikas.",
+      "requestNew": "Prašyti naujos nuorodos"
+    },
+    "errors": {
+      "callback": "Nuoroda negalioja arba baigėsi jos galiojimo laikas. Bandyk dar kartą.",
+      "generic": "Kažkas nutiko ne taip. Bandyk dar kartą.",
+      "invalidCredentials": "Neteisingas el. paštas arba slaptažodis.",
+      "emailNotConfirmed": "El. paštas dar nepatvirtintas. Patikrink savo pašto dėžutę.",
+      "userExists": "Paskyra su šiuo el. paštu jau egzistuoja. Bandyk prisijungti arba atkurti slaptažodį.",
+      "weakPassword": "Slaptažodis per paprastas. Pasirink ilgesnį arba sudėtingesnį slaptažodį.",
+      "samePassword": "Naujas slaptažodis turi skirtis nuo ankstesnio.",
+      "userNotFound": "Paskyra su šiuo el. paštu nerasta.",
+      "rateLimit": "Per daug bandymų. Palauk akimirką ir bandyk dar kartą.",
+      "invalidEmail": "Įvesk galiojantį el. pašto adresą.",
+      "tooShort": "Slaptažodis turi būti bent {min} simbolių ilgio.",
+      "mismatch": "Slaptažodžiai nesutampa.",
+      "terms": "Norint tęsti, reikia sutikti su naudojimo taisyklėmis.",
+      "companyRequired": "Nurodyk įmonės pavadinimą ir registracijos numerį."
+    }
+  },
+  "account": {
+    "meta": {
+      "overview": "Mano paskyra",
+      "orders": "Užsakymai",
+      "order": "Užsakymas",
+      "invoices": "Sąskaitos",
+      "profile": "Profilis",
+      "addresses": "Adresai",
+      "business": "Įmonė ir B2B"
+    },
+    "nav": {
+      "label": "Paskyros skiltys",
+      "overview": "Apžvalga",
+      "orders": "Užsakymai",
+      "invoices": "Sąskaitos",
+      "profile": "Profilis",
+      "addresses": "Adresai",
+      "business": "Įmonė / B2B",
+      "logout": "Atsijungti",
+      "loggingOut": "Atsijungiama…",
+      "loggedOut": "Sėkmingai atsijungei",
+      "pending": "Nagrinėjama"
+    },
+    "header": {
+      "eyebrow": "Mano paskyra",
+      "customerPrivate": "Privatus asmuo",
+      "customerBusiness": "Įmonė",
+      "memberSince": "Klientas nuo {date}",
+      "b2bApproved": "B2B klientas",
+      "b2bPending": "B2B paraiška nagrinėjama",
+      "discount": "Nuolaida {value}%",
+      "terms": "Apmokėjimas per {days} d."
+    },
+    "common": {
+      "loadError": "Nepavyko įkelti visų duomenų. Atnaujink puslapį arba bandyk vėliau."
+    },
+    "errors": {
+      "invalid": "Patikrink įvestus duomenis.",
+      "unauthorized": "Sesija baigėsi. Prisijunk iš naujo.",
+      "generic": "Nepavyko išsaugoti. Bandyk dar kartą.",
+      "locked": "Patvirtintos įmonės duomenis galima keisti tik susisiekus su mumis."
+    },
+    "status": {
+      "new": "Naujas",
+      "confirmed": "Patvirtintas",
+      "processing": "Komplektuojamas",
+      "shipped": "Išsiųstas",
+      "completed": "Įvykdytas",
+      "cancelled": "Atšauktas"
+    },
+    "paymentStatus": {
+      "unpaid": "Neapmokėtas",
+      "paid": "Apmokėtas",
+      "refunded": "Grąžinta suma",
+      "partially_refunded": "Iš dalies grąžinta suma"
+    },
+    "paymentMethod": {
+      "bank_transfer": "Banko pavedimas",
+      "card": "Mokėjimo kortelė",
+      "invoice": "Sąskaita su atidėtu mokėjimu",
+      "cash_on_pickup": "Apmokėjimas atsiimant"
+    },
+    "shippingMethod": {
+      "pickup": "Atsiėmimas sandėlyje",
+      "parcel_locker": "Paštomatas",
+      "courier": "Kurjeris",
+      "freight": "Krovininis pristatymas"
+    },
+    "overview": {
+      "greeting": "Sveiki, {name}!",
+      "greetingNoName": "Sveiki!",
+      "subtitle": "Čia matai savo užsakymų, sąskaitų ir B2B statuso suvestinę.",
+      "stats": {
+        "orders": "Užsakymai",
+        "spent": "Iš viso išleista",
+        "unpaid": "Neapmokėta",
+        "overdue": "{count, plural, one {# sąskaita vėluoja} few {# sąskaitos vėluoja} other {# sąskaitų vėluoja}}",
+        "openInvoices": "{count, plural, =0 {Visos sąskaitos apmokėtos} one {# atvira sąskaita} few {# atviros sąskaitos} other {# atvirų sąskaitų}}"
+      },
+      "recentOrders": "Naujausi užsakymai",
+      "viewAll": "Visi užsakymai",
+      "noOrders": "Užsakymų dar nėra",
+      "noOrdersText": "Kai pateiksi pirmą užsakymą, jis atsiras čia kartu su statusu ir sąskaitomis.",
+      "startShopping": "Į katalogą",
+      "quickLinks": {
+        "title": "Greitosios nuorodos",
+        "catalog": "Produktų katalogas",
+        "finder": "Alyvos parinkimas",
+        "invoices": "Mano sąskaitos",
+        "addresses": "Pristatymo adresai",
+        "profile": "Profilio nustatymai",
+        "contact": "Susisiekti su mumis"
+      },
+      "b2b": {
+        "noneTitle": "Apsipirk B2B kainomis",
+        "noneText": "Įmonėms siūlome individualią nuolaidą, kainas be PVM ir apmokėjimą sąskaita.",
+        "noneCta": "Pateikti įmonės paraišką",
+        "pendingTitle": "B2B paraiška nagrinėjama",
+        "pendingText": "Tikriname įmonės duomenis. Kai statusas bus patvirtintas, kainos paskyroje atsinaujins automatiškai.",
+        "pendingCta": "Žiūrėti paraišką",
+        "approvedTitle": "Tu esi B2B klientas",
+        "approvedText": "Kataloge matomos tavo kainos be PVM su suteikta nuolaida.",
+        "discountLabel": "Nuolaida",
+        "termsLabel": "Apmokėjimo terminas",
+        "termsValue": "{days} d.",
+        "termsPrepay": "Išankstinis apmokėjimas",
+        "rejectedTitle": "B2B paraiška nepatvirtinta",
+        "rejectedText": "Deja, šiuo metu negalėjome patvirtinti B2B statuso. Susisiek su mumis, ir padėsime rasti sprendimą.",
+        "rejectedCta": "Susisiekti",
+        "rejectedRetry": "Patikslinti duomenis"
+      }
+    },
+    "orders": {
+      "title": "Užsakymai",
+      "subtitle": "Visi tavo užsakymai, jų statusas ir sumos.",
+      "filterLabel": "Filtruoti pagal statusą",
+      "filterAll": "Visi",
+      "items": "{count, plural, one {# prekė} few {# prekės} other {# prekių}}",
+      "empty": "Užsakymų dar nėra",
+      "emptyFiltered": "Su tokiu statusu užsakymų nėra",
+      "emptyText": "Pasirink produktus kataloge — užsakymai atsiras čia."
+    },
+    "order": {
+      "back": "Atgal į užsakymus",
+      "title": "Užsakymas {number}",
+      "placed": "Pateiktas {date}",
+      "reorder": "Užsakyti pakartotinai",
+      "reorderDone": "{count, plural, one {# prekė pridėta} few {# prekės pridėtos} other {# prekių pridėta}} į krepšelį",
+      "reorderPartial": "{count, plural, one {# prekė pridėta} few {# prekės pridėtos} other {# prekių pridėta}} į krepšelį. {missing, plural, one {# produktas nebėra pasiekiamas} few {# produktai nebėra pasiekiami} other {# produktų nebėra pasiekiama}}.",
+      "reorderNone": "Šio užsakymo produktų nebėra",
+      "progress": "Užsakymo statusas",
+      "cancelledNote": "Šis užsakymas atšauktas.",
+      "items": "Prekės",
+      "pricesExVat": "Kainos nurodytos be PVM",
+      "pricesInclVat": "Kainos nurodytos su PVM",
+      "sku": "Art.",
+      "subtotal": "Prekių suma be PVM",
+      "discount": "Nuolaida",
+      "shippingCost": "Pristatymas be PVM",
+      "free": "Nemokamai",
+      "vat": "PVM {rate}%",
+      "vatReverse": "PVM (atvirkštinis apmokestinimas)",
+      "total": "Iš viso apmokėti",
+      "reverseChargeNote": "PVM netaikomas — pirkėjas PVM deklaruoja savo šalyje (atvirkštinio apmokestinimo tvarka).",
+      "timeline": "Užsakymo istorija",
+      "shipping": "Pristatymas",
+      "shippingMethod": "Pristatymo būdas",
+      "shippingPoint": "Atsiėmimo punktas",
+      "shippingAddress": "Pristatymo adresas",
+      "tracking": "Siuntos sekimo kodas",
+      "payment": "Apmokėjimas",
+      "paymentMethod": "Apmokėjimo būdas",
+      "paymentStatus": "Apmokėjimo statusas",
+      "notes": "Pastabos",
+      "invoices": "Sąskaitos",
+      "noInvoices": "Šiam užsakymui sąskaita dar neišrašyta.",
+      "notFound": "Užsakymas nerastas",
+      "notFoundText": "Galbūt nuoroda neteisinga arba užsakymas priklauso kitai paskyrai.",
+      "events": {
+        "created": "Užsakymas gautas",
+        "invoice": "Išrašyta sąskaita {number}",
+        "statusTo": "Statusas pakeistas: {status}",
+        "status": "Statusas atnaujintas",
+        "confirmed": "Užsakymas patvirtintas",
+        "processing": "Užsakymas komplektuojamas",
+        "shipped": "Užsakymas išsiųstas",
+        "completed": "Užsakymas įvykdytas",
+        "cancelled": "Užsakymas atšauktas",
+        "paid": "Mokėjimas gautas",
+        "payment": "Mokėjimo informacija atnaujinta",
+        "tracking": "Pridėtas siuntos sekimo kodas",
+        "note": "Pastaba",
+        "other": "Atnaujinimas"
+      }
+    },
+    "invoices": {
+      "title": "Sąskaitos",
+      "subtitle": "Išankstinės sąskaitos, sąskaitos ir kredito notos — atsisiunčiamos PDF formatu.",
+      "type": {
+        "proforma": "Išankstinė sąskaita",
+        "invoice": "Sąskaita",
+        "credit_note": "Kredito nota"
+      },
+      "state": {
+        "paid": "Apmokėta",
+        "unpaid": "Laukia apmokėjimo",
+        "overdue": "Vėluojama",
+        "void": "Anuliuota"
+      },
+      "pdf": "PDF",
+      "number": "Numeris",
+      "date": "Data",
+      "due": "Apmokėti iki",
+      "dueShort": "Iki {date}",
+      "status": "Statusas",
+      "total": "Suma",
+      "empty": "Sąskaitų dar nėra",
+      "emptyText": "Sąskaitos atsiras čia, kai tik jos bus išrašytos tavo užsakymui.",
+      "summaryUnpaid": "{count, plural, one {# sąskaita laukia} few {# sąskaitos laukia} other {# sąskaitų laukia}} apmokėjimo: {amount}",
+      "summaryOverdue": "{count, plural, one {# vėluoja} few {# vėluoja} other {# vėluoja}}"
+    },
+    "profile": {
+      "title": "Profilis",
+      "subtitle": "Kontaktinė informacija, kalba ir prisijungimo duomenys.",
+      "personal": "Asmeninė informacija",
+      "personalText": "Šie duomenys bus naudojami pateikiant užsakymus.",
+      "fullName": "Vardas, pavardė",
+      "phone": "Telefonas",
+      "language": "Bendravimo kalba",
+      "languageHint": "Šia kalba siųsime el. laiškus ir sąskaitas.",
+      "market": "Pristatymo šalis",
+      "marketHint": "Nustato taikomą PVM tarifą ir pristatymo galimybes.",
+      "marketing": "Naujienos ir pasiūlymai el. paštu",
+      "marketingHint": "Sezoniniai pasiūlymai ir naujienos — ne dažniau kaip kartą per mėnesį. Atsisakyti gali bet kada.",
+      "save": "Išsaugoti pakeitimus",
+      "saving": "Išsaugoma…",
+      "saved": "Profilis išsaugotas",
+      "emailSection": "El. pašto adresas",
+      "emailText": "Į naują adresą atsiųsime patvirtinimo nuorodą.",
+      "emailCurrent": "Dabartinis el. paštas",
+      "emailNew": "Naujas el. paštas",
+      "emailSubmit": "Keisti el. paštą",
+      "emailSent": "Patvirtinimo nuoroda išsiųsta",
+      "emailSentText": "Kad pakeitimas įsigaliotų, atidaryk nuorodą, kurią atsiuntėme į naują el. pašto adresą.",
+      "emailSame": "Įvesk naują el. pašto adresą, kuris skiriasi nuo dabartinio.",
+      "passwordSection": "Slaptažodis",
+      "passwordText": "Rekomenduojame naudoti unikalų slaptažodį, kurio nenaudoji kitur.",
+      "passwordNew": "Naujas slaptažodis",
+      "passwordConfirm": "Pakartok naują slaptažodį",
+      "passwordSubmit": "Keisti slaptažodį",
+      "passwordChanged": "Slaptažodis pakeistas"
+    },
+    "addresses": {
+      "title": "Adresai",
+      "subtitle": "Išsaugoti pristatymo adresai greitesniam užsakymo pateikimui.",
+      "add": "Pridėti adresą",
+      "edit": "Redaguoti adresą",
+      "editShort": "Redaguoti",
+      "save": "Išsaugoti adresą",
+      "saving": "Išsaugoma…",
+      "saved": "Adresas išsaugotas",
+      "cancel": "Atšaukti",
+      "delete": "Ištrinti",
+      "deleteConfirm": "Ištrinti šį adresą?",
+      "deleted": "Adresas ištrintas",
+      "setDefault": "Padaryti pagrindiniu",
+      "defaultSet": "Pagrindinis adresas pakeistas",
+      "default": "Pagrindinis",
+      "empty": "Išsaugotų adresų dar nėra",
+      "emptyText": "Pridėk pristatymo adresą, ir kitą kartą pateikiant užsakymą jis bus užpildytas automatiškai.",
+      "form": {
+        "label": "Pavadinimas",
+        "optional": "neprivaloma",
+        "labelPlaceholder": "Pvz., Biuras arba Servisas Vilniuje",
+        "name": "Gavėjas",
+        "phone": "Telefonas",
+        "company": "Įmonė",
+        "street": "Gatvė, namas, butas",
+        "city": "Miestas / seniūnija",
+        "postalCode": "Pašto kodas",
+        "country": "Šalis",
+        "isDefault": "Naudoti kaip pagrindinį pristatymo adresą"
+      }
+    },
+    "business": {
+      "title": "Įmonė ir B2B",
+      "subtitle": "Įmonės rekvizitai ir B2B bendradarbiavimo sąlygos.",
+      "status": {
+        "none": {
+          "title": "Tapk B2B klientu",
+          "text": "Užpildyk įmonės duomenis — po patikrinimo suteiksime individualias kainas ir galimybę mokėti sąskaita."
+        },
+        "pending": {
+          "title": "Paraiška nagrinėjama",
+          "text": "Gavome tavo įmonės duomenis ir juos tikriname. Apie sprendimą pranešime el. paštu."
+        },
+        "approved": {
+          "title": "B2B statusas patvirtintas",
+          "text": "Kataloge ir krepšelyje matomos tavo kainos be PVM su suteikta nuolaida."
+        },
+        "rejected": {
+          "title": "Paraiška nepatvirtinta",
+          "text": "Šiuo metu negalėjome patvirtinti B2B statuso. Susisiek su mumis arba patikslink įmonės duomenis ir pateik paraišką iš naujo."
+        }
+      },
+      "contact": "Susisiekti su mumis",
+      "conditionsTitle": "Tavo bendradarbiavimo sąlygos",
+      "discount": "Individuali nuolaida",
+      "discountHint": "Taikoma visoms katalogo kainoms.",
+      "terms": "Apmokėjimo terminas",
+      "termsValue": "{days} dienos",
+      "termsPrepay": "Išankstinis apmokėjimas",
+      "termsHint": "Užsakymą gali apmokėti sąskaita per nurodytą terminą.",
+      "termsPrepayHint": "Užsakymai vykdomi po apmokėjimo.",
+      "companyData": "Įmonės rekvizitai",
+      "lockedNote": "Norėdamas pakeisti patvirtintos įmonės rekvizitus, susisiek su mumis.",
+      "companyName": "Įmonės pavadinimas",
+      "regNo": "Registracijos numeris",
+      "vatNo": "PVM mokėtojo numeris",
+      "legalAddress": "Juridinis adresas",
+      "phone": "Kontaktinis telefonas",
+      "optional": "neprivaloma",
+      "vatHint": "Reikalingas atvirkštiniam PVM apmokestinimui taikyti pristatymams į Estiją arba Lietuvą.",
+      "formTitle": "Pateikti B2B bendradarbiavimo paraišką",
+      "formText": "Nurodyk įmonės rekvizitus tokius, kokie jie registruoti Įmonių registre.",
+      "formTitlePending": "Paraiškos duomenys",
+      "formTextPending": "Kol paraiška nagrinėjama, duomenis gali patikslinti.",
+      "consentNote": "Pateikdamas paraišką patvirtini, kad esi įgaliotas atstovauti šiai įmonei.",
+      "submit": "Pateikti paraišką",
+      "submitting": "Pateikiama…",
+      "update": "Išsaugoti pakeitimus",
+      "updated": "Paraiškos duomenys atnaujinti",
+      "submitted": "Paraiška pateikta",
+      "submittedText": "Patikrinsime duomenis ir informuosime tave el. paštu.",
+      "benefitsTitle": "Ką gauna B2B klientai",
+      "benefits": {
+        "prices": {
+          "title": "Individualios kainos",
+          "text": "Asmeninė nuolaida ir kainos be PVM visame kataloge."
+        },
+        "invoice": {
+          "title": "Apmokėjimas sąskaita",
+          "text": "Atidėtas mokėjimas su sutartu apmokėjimo terminu."
+        },
+        "documents": {
+          "title": "Dokumentai vienoje vietoje",
+          "text": "Visos sąskaitos ir užsakymų istorija paskyroje."
+        },
+        "manager": {
+          "title": "Asmeninis kontaktas",
+          "text": "Pagalba renkantis produktus ir pristatant didesnius kiekius."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1 @@
+-- handle_new_user: business sign-ups start as b2b_status = 'pending' (see Supabase migration history for full body)

@@ -1,0 +1,475 @@
+{
+  "auth": {
+    "meta": {
+      "login": "Logi sisse",
+      "register": "Loo konto",
+      "forgot": "Unustatud parool",
+      "reset": "Uue parooli seadmine"
+    },
+    "panel": {
+      "eyebrow": "Minu konto",
+      "title": "Kõik sinu tellimuste kohta ühest kohast",
+      "text": "Loo konto ja halda oste, arveid ja tarneaadresse kiiremini — nii eraisiku kui ka ettevõttena.",
+      "note": "Ettevõtete B2B hinnad ja arvega maksmine muutuvad kättesaadavaks pärast seda, kui oleme ettevõtte andmed kontrollinud ja kinnitanud.",
+      "benefits": {
+        "b2b": {
+          "title": "B2B hinnad ettevõtetele",
+          "text": "Individuaalne allahindlus ja hinnad ilma käibemaksuta kogu kataloogis."
+        },
+        "history": {
+          "title": "Tellimuste ajalugu",
+          "text": "Iga ostu staatus, tarne ja kõik üksikasjad."
+        },
+        "invoices": {
+          "title": "Arved PDF-vormingus",
+          "text": "Laadi ettemaksuarved ja arved alla igal ajal."
+        },
+        "reorder": {
+          "title": "Kiire korduvtellimine",
+          "text": "Eelmine tellimus ostukorvi ühe klõpsuga."
+        }
+      }
+    },
+    "notConfigured": {
+      "title": "Sisselogimine ei ole ajutiselt saadaval",
+      "text": "Kliendikontosid alles seadistatakse. Tellimuse saad ikkagi vormistada ilma registreerimiseta või võta meiega ühendust."
+    },
+    "fields": {
+      "optional": "Ei ole kohustuslik",
+      "email": "E-post",
+      "emailPlaceholder": "nimi@ettevote.ee",
+      "password": "Parool",
+      "passwordNew": "Uus parool",
+      "passwordConfirm": "Korda parooli",
+      "fullName": "Ees- ja perekonnanimi",
+      "contactPerson": "Kontaktisik",
+      "phone": "Telefon",
+      "companyName": "Ettevõtte nimi",
+      "regNo": "Registrikood",
+      "vatNo": "KMKR number",
+      "legalAddress": "Juriidiline aadress"
+    },
+    "showPassword": "Näita parooli",
+    "hidePassword": "Peida parool",
+    "strength": {
+      "label": "Tugevus",
+      "weak": "nõrk",
+      "fair": "keskmine",
+      "good": "hea",
+      "strong": "väga hea",
+      "hint": "Vähemalt 8 tähemärki; suur- ja väiketähed, numbrid ja sümbolid muudavad selle tugevamaks."
+    },
+    "login": {
+      "eyebrow": "Tere tulemast tagasi",
+      "title": "Logi kontosse sisse",
+      "subtitle": "Vaata tellimusi, laadi alla arveid ja osta oma hindadega.",
+      "modeLabel": "Sisselogimisviis",
+      "modePassword": "Parooliga",
+      "modeMagic": "E-posti lingiga",
+      "magicHint": "Saadame sinu e-postile ühekordse sisselogimislingi — parooli ei ole vaja.",
+      "forgot": "Unustasid parooli?",
+      "submit": "Logi sisse",
+      "submitting": "Sisselogimine…",
+      "magicSubmit": "Saada sisselogimislink",
+      "success": "Oled edukalt sisse loginud",
+      "magicSentTitle": "Kontrolli oma e-posti",
+      "magicSentText": "Sisselogimislink on saadetud aadressile",
+      "useAnotherMethod": "Logi sisse teisiti",
+      "noAccount": "Kontot veel ei ole?",
+      "register": "Loo konto"
+    },
+    "register": {
+      "eyebrow": "Uus konto",
+      "title": "Loo konto",
+      "subtitle": "Registreerimine võtab aega vähem kui minuti.",
+      "typeLabel": "Kliendi tüüp",
+      "typePrivate": "Eraisik",
+      "typeBusiness": "Ettevõte",
+      "companySection": "Ettevõtte andmed",
+      "businessNote": "Pärast registreerimist kontrollime ettevõtte andmeid ja määrame B2B hinnad. Kuni kinnitamiseni saad osta tavaliste hindadega.",
+      "terms": "Nõustun <link>kasutustingimustega</link> ja olen tutvunud <privacy>privaatsuspoliitikaga</privacy>",
+      "marketing": "Soovin saada uudiseid ja pakkumisi e-postiga (mitte sagedamini kui kord kuus)",
+      "submit": "Loo konto",
+      "submitBusiness": "Registreeri ettevõte",
+      "submitting": "Loon kontot…",
+      "haveAccount": "On juba konto?",
+      "login": "Logi sisse",
+      "checkEmailTitle": "Kinnita oma e-post",
+      "checkEmailText": "Saatsime kinnituslingi aadressile",
+      "checkEmailHint": "Ava e-kiri ja klõpsa lingil, et konto aktiveerida. Kui kirja ei näe, kontrolli rämpspostikausta.",
+      "checkEmailBusiness": "Pärast e-posti kinnitamist jõuab ettevõtte taotlus meie meeskonnani. B2B staatuse kinnitamisest teavitame e-postiga.",
+      "backToLogin": "Tagasi sisselogimisse"
+    },
+    "forgot": {
+      "eyebrow": "Parooli taastamine",
+      "title": "Unustasid parooli?",
+      "subtitle": "Sisesta konto e-post ja saadame lingi uue parooli seadmiseks.",
+      "submit": "Saada link",
+      "submitting": "Saadan…",
+      "sentTitle": "Kontrolli oma e-posti",
+      "sentText": "Kui selle aadressiga konto on olemas, on parooli taastamise link saadetud aadressile",
+      "backToLogin": "Tagasi sisselogimisse"
+    },
+    "reset": {
+      "eyebrow": "Turvalisus",
+      "title": "Sea uus parool",
+      "subtitle": "Vali turvaline parool, mida ei kasuta teistes teenustes.",
+      "submit": "Salvesta parool",
+      "submitting": "Salvestan…",
+      "success": "Parool vahetatud",
+      "noSession": "Parooli taastamise link on kehtetu või aegunud.",
+      "requestNew": "Küsi uut linki"
+    },
+    "errors": {
+      "callback": "Link on kehtetu või aegunud. Palun proovi uuesti.",
+      "generic": "Midagi läks valesti. Palun proovi uuesti.",
+      "invalidCredentials": "Vale e-post või parool.",
+      "emailNotConfirmed": "E-post ei ole veel kinnitatud. Kontrolli oma postkasti.",
+      "userExists": "Selle e-postiga konto on juba olemas. Proovi sisse logida või parool taastada.",
+      "weakPassword": "Parool on liiga lihtne. Vali pikem või keerulisem parool.",
+      "samePassword": "Uus parool peab erinema eelmisest.",
+      "userNotFound": "Selle e-postiga kontot ei leitud.",
+      "rateLimit": "Liiga palju katseid. Palun oota hetk ja proovi uuesti.",
+      "invalidEmail": "Sisesta kehtiv e-posti aadress.",
+      "tooShort": "Parool peab olema vähemalt {min} tähemärki pikk.",
+      "mismatch": "Paroolid ei ühti.",
+      "terms": "Jätkamiseks pead nõustuma kasutustingimustega.",
+      "companyRequired": "Sisesta ettevõtte nimi ja registrikood."
+    }
+  },
+  "account": {
+    "meta": {
+      "overview": "Minu konto",
+      "orders": "Tellimused",
+      "order": "Tellimus",
+      "invoices": "Arved",
+      "profile": "Profiil",
+      "addresses": "Aadressid",
+      "business": "Ettevõte ja B2B"
+    },
+    "nav": {
+      "label": "Konto jaotised",
+      "overview": "Ülevaade",
+      "orders": "Tellimused",
+      "invoices": "Arved",
+      "profile": "Profiil",
+      "addresses": "Aadressid",
+      "business": "Ettevõte / B2B",
+      "logout": "Logi välja",
+      "loggingOut": "Väljalogimine…",
+      "loggedOut": "Oled kontost välja loginud",
+      "pending": "Menetluses"
+    },
+    "header": {
+      "eyebrow": "Minu konto",
+      "customerPrivate": "Eraisik",
+      "customerBusiness": "Ettevõte",
+      "memberSince": "Klient alates {date}",
+      "b2bApproved": "B2B klient",
+      "b2bPending": "B2B taotlus menetluses",
+      "discount": "Allahindlus {value}%",
+      "terms": "Maksetähtaeg {days} päeva"
+    },
+    "common": {
+      "loadError": "Kõiki andmeid ei õnnestunud laadida. Palun värskenda lehte või proovi hiljem uuesti."
+    },
+    "errors": {
+      "invalid": "Palun kontrolli sisestatud andmeid.",
+      "unauthorized": "Sessioon on aegunud. Palun logi uuesti sisse.",
+      "generic": "Salvestamine ebaõnnestus. Palun proovi uuesti.",
+      "locked": "Kinnitatud ettevõtte andmeid saab muuta ainult meiega ühendust võttes."
+    },
+    "status": {
+      "new": "Uus",
+      "confirmed": "Kinnitatud",
+      "processing": "Komplekteeritakse",
+      "shipped": "Saadetud",
+      "completed": "Täidetud",
+      "cancelled": "Tühistatud"
+    },
+    "paymentStatus": {
+      "unpaid": "Maksmata",
+      "paid": "Makstud",
+      "refunded": "Tagasi makstud",
+      "partially_refunded": "Osaliselt tagasi makstud"
+    },
+    "paymentMethod": {
+      "bank_transfer": "Pangaülekanne",
+      "card": "Maksekaart",
+      "invoice": "Järelmaksuarve",
+      "cash_on_pickup": "Makse kättesaamisel"
+    },
+    "shippingMethod": {
+      "pickup": "Kättesaamine laost",
+      "parcel_locker": "Pakiautomaat",
+      "courier": "Kuller",
+      "freight": "Veotarne"
+    },
+    "overview": {
+      "greeting": "Tere, {name}!",
+      "greetingNoName": "Tere tulemast!",
+      "subtitle": "Siin näed oma tellimuste, arvete ja B2B staatuse kokkuvõtet.",
+      "stats": {
+        "orders": "Tellimused",
+        "spent": "Kokku ostetud",
+        "unpaid": "Maksmata",
+        "overdue": "{count, plural, one {# arve on tähtaega ületanud} other {# arvet on tähtaega ületanud}}",
+        "openInvoices": "{count, plural, =0 {Kõik arved makstud} one {# avatud arve} other {# avatud arvet}}"
+      },
+      "recentOrders": "Viimased tellimused",
+      "viewAll": "Kõik tellimused",
+      "noOrders": "Tellimusi veel ei ole",
+      "noOrdersText": "Kui esitad esimese tellimuse, ilmub see siia koos staatuse ja arvetega.",
+      "startShopping": "Kataloogi",
+      "quickLinks": {
+        "title": "Kiirlingid",
+        "catalog": "Tootekataloog",
+        "finder": "Õlivalik",
+        "invoices": "Minu arved",
+        "addresses": "Tarneaadressid",
+        "profile": "Profiili seaded",
+        "contact": "Võta meiega ühendust"
+      },
+      "b2b": {
+        "noneTitle": "Osta B2B hindadega",
+        "noneText": "Ettevõtetele pakume individuaalset allahindlust, hindu ilma käibemaksuta ja arvega maksmist.",
+        "noneCta": "Taotle ettevõttena",
+        "pendingTitle": "B2B taotlust menetletakse",
+        "pendingText": "Kontrollime ettevõtte andmeid. Niipea kui staatus on kinnitatud, uuenevad hinnad kontos automaatselt.",
+        "pendingCta": "Vaata taotlust",
+        "approvedTitle": "Sa oled B2B klient",
+        "approvedText": "Kataloogis on näha sinu hinnad ilma käibemaksuta koos määratud allahindlusega.",
+        "discountLabel": "Allahindlus",
+        "termsLabel": "Maksetähtaeg",
+        "termsValue": "{days} päeva",
+        "termsPrepay": "Ettemaks",
+        "rejectedTitle": "B2B taotlust ei kinnitatud",
+        "rejectedText": "Kahjuks ei saanud me hetkel B2B staatust kinnitada. Võta meiega ühendust ja aitame lahenduse leida.",
+        "rejectedCta": "Võta ühendust",
+        "rejectedRetry": "Täpsusta andmeid"
+      }
+    },
+    "orders": {
+      "title": "Tellimused",
+      "subtitle": "Kõik sinu tellimused, nende staatus ja summad.",
+      "filterLabel": "Filtreeri staatuse järgi",
+      "filterAll": "Kõik",
+      "items": "{count, plural, one {# toode} other {# toodet}}",
+      "empty": "Tellimusi veel ei ole",
+      "emptyFiltered": "Selle staatusega tellimusi ei ole",
+      "emptyText": "Vali tooted kataloogist — tellimused ilmuvad siia."
+    },
+    "order": {
+      "back": "Tagasi tellimuste juurde",
+      "title": "Tellimus {number}",
+      "placed": "Esitatud {date}",
+      "reorder": "Telli uuesti",
+      "reorderDone": "{count, plural, one {# toode lisatud} other {# toodet lisatud}} ostukorvi",
+      "reorderPartial": "{count, plural, one {# toode lisatud} other {# toodet lisatud}} ostukorvi. {missing, plural, one {# toode ei ole enam saadaval} other {# toodet ei ole enam saadaval}}.",
+      "reorderNone": "Selle tellimuse tooted ei ole enam saadaval",
+      "progress": "Tellimuse staatus",
+      "cancelledNote": "See tellimus on tühistatud.",
+      "items": "Tooted",
+      "pricesExVat": "Hinnad on toodud ilma käibemaksuta",
+      "pricesInclVat": "Hinnad on toodud koos käibemaksuga",
+      "sku": "Kood",
+      "subtotal": "Toodete summa ilma käibemaksuta",
+      "discount": "Allahindlus",
+      "shippingCost": "Tarne ilma käibemaksuta",
+      "free": "Tasuta",
+      "vat": "Käibemaks {rate}%",
+      "vatReverse": "Käibemaks (pöördmaksustamine)",
+      "total": "Kokku tasumiseks",
+      "reverseChargeNote": "Käibemaksu ei rakendata — ostja deklareerib käibemaksu oma riigis (pöördmaksustamise kord).",
+      "timeline": "Tellimuse ajalugu",
+      "shipping": "Tarne",
+      "shippingMethod": "Tarneviis",
+      "shippingPoint": "Kättesaamispunkt",
+      "shippingAddress": "Tarneaadress",
+      "tracking": "Saadetise jälgimiskood",
+      "payment": "Maksmine",
+      "paymentMethod": "Maksmisviis",
+      "paymentStatus": "Makse staatus",
+      "notes": "Märkused",
+      "invoices": "Arved",
+      "noInvoices": "Sellele tellimusele ei ole veel arvet väljastatud.",
+      "notFound": "Tellimust ei leitud",
+      "notFoundText": "Link võib olla vale või tellimus kuulub teisele kontole.",
+      "events": {
+        "created": "Tellimus vastu võetud",
+        "invoice": "Väljastatud arve {number}",
+        "statusTo": "Staatus muudetud: {status}",
+        "status": "Staatus uuendatud",
+        "confirmed": "Tellimus kinnitatud",
+        "processing": "Tellimus komplekteeritakse",
+        "shipped": "Tellimus saadetud",
+        "completed": "Tellimus täidetud",
+        "cancelled": "Tellimus tühistatud",
+        "paid": "Makse laekunud",
+        "payment": "Makseinfo uuendatud",
+        "tracking": "Lisatud jälgimiskood",
+        "note": "Märkus",
+        "other": "Uuendus"
+      }
+    },
+    "invoices": {
+      "title": "Arved",
+      "subtitle": "Ettemaksuarved, arved ja kreeditarved — allalaaditavad PDF-vormingus.",
+      "type": {
+        "proforma": "Ettemaksuarve",
+        "invoice": "Arve",
+        "credit_note": "Kreeditarve"
+      },
+      "state": {
+        "paid": "Makstud",
+        "unpaid": "Ootab maksmist",
+        "overdue": "Tähtaeg ületatud",
+        "void": "Tühistatud"
+      },
+      "pdf": "PDF",
+      "number": "Number",
+      "date": "Kuupäev",
+      "due": "Tasuda hiljemalt",
+      "dueShort": "Kuni {date}",
+      "status": "Staatus",
+      "total": "Summa",
+      "empty": "Arveid veel ei ole",
+      "emptyText": "Arved ilmuvad siia, niipea kui need on sinu tellimusele väljastatud.",
+      "summaryUnpaid": "{count, plural, one {# arve ootab} other {# arvet ootab}} maksmist: {amount}",
+      "summaryOverdue": "{count, plural, one {# tähtaega ületanud} other {# tähtaega ületanud}}"
+    },
+    "profile": {
+      "title": "Profiil",
+      "subtitle": "Kontaktandmed, keel ja sisselogimisandmed.",
+      "personal": "Isiklik teave",
+      "personalText": "Neid andmeid kasutatakse tellimuste vormistamisel.",
+      "fullName": "Ees- ja perekonnanimi",
+      "phone": "Telefon",
+      "language": "Suhtluskeel",
+      "languageHint": "Selles keeles saadame e-kirju ja arveid.",
+      "market": "Tarneriik",
+      "marketHint": "Määrab kohaldatava käibemaksumäära ja tarnevõimalused.",
+      "marketing": "Uudised ja pakkumised e-postiga",
+      "marketingHint": "Hooajapakkumised ja uudised — mitte sagedamini kui kord kuus. Tellimuse saad igal ajal lõpetada.",
+      "save": "Salvesta muudatused",
+      "saving": "Salvestan…",
+      "saved": "Profiil salvestatud",
+      "emailSection": "E-posti aadress",
+      "emailText": "Uuele aadressile saadame kinnituslingi.",
+      "emailCurrent": "Praegune e-post",
+      "emailNew": "Uus e-post",
+      "emailSubmit": "Muuda e-posti",
+      "emailSent": "Kinnituslink saadetud",
+      "emailSentText": "Muutmise lõpetamiseks ava link, mille saatsime uuele e-posti aadressile.",
+      "emailSame": "Sisesta uus e-posti aadress, mis erineb praegusest.",
+      "passwordSection": "Parool",
+      "passwordText": "Soovitame kasutada unikaalset parooli, mida ei kasuta mujal.",
+      "passwordNew": "Uus parool",
+      "passwordConfirm": "Korda uut parooli",
+      "passwordSubmit": "Muuda parooli",
+      "passwordChanged": "Parool vahetatud"
+    },
+    "addresses": {
+      "title": "Aadressid",
+      "subtitle": "Salvestatud tarneaadressid tellimuse kiiremaks vormistamiseks.",
+      "add": "Lisa aadress",
+      "edit": "Muuda aadressi",
+      "editShort": "Muuda",
+      "save": "Salvesta aadress",
+      "saving": "Salvestan…",
+      "saved": "Aadress salvestatud",
+      "cancel": "Tühista",
+      "delete": "Kustuta",
+      "deleteConfirm": "Kustutada see aadress?",
+      "deleted": "Aadress kustutatud",
+      "setDefault": "Määra peamiseks",
+      "defaultSet": "Peamine aadress muudetud",
+      "default": "Peamine",
+      "empty": "Salvestatud aadresse veel ei ole",
+      "emptyText": "Lisa tarneaadress ja järgmisel tellimusel täidetakse see automaatselt.",
+      "form": {
+        "label": "Nimetus",
+        "optional": "ei ole kohustuslik",
+        "labelPlaceholder": "Nt Kontor või Teenindus Riias",
+        "name": "Saaja",
+        "phone": "Telefon",
+        "company": "Ettevõte",
+        "street": "Tänav, maja, korter",
+        "city": "Linn / vald",
+        "postalCode": "Postiindeks",
+        "country": "Riik",
+        "isDefault": "Kasuta peamise tarneaadressina"
+      }
+    },
+    "business": {
+      "title": "Ettevõte ja B2B",
+      "subtitle": "Ettevõtte rekvisiidid ja B2B koostöö tingimused.",
+      "status": {
+        "none": {
+          "title": "Saa B2B kliendiks",
+          "text": "Täida ettevõtte andmed — pärast kontrollimist määrame individuaalsed hinnad ja võimaluse maksta arvega."
+        },
+        "pending": {
+          "title": "Taotlust menetletakse",
+          "text": "Oleme saanud sinu ettevõtte andmed ja kontrollime neid. Otsusest teavitame e-postiga."
+        },
+        "approved": {
+          "title": "B2B staatus kinnitatud",
+          "text": "Kataloogis ja ostukorvis on näha sinu hinnad ilma käibemaksuta koos määratud allahindlusega."
+        },
+        "rejected": {
+          "title": "Taotlust ei kinnitatud",
+          "text": "Praegu ei saanud me B2B staatust kinnitada. Võta meiega ühendust või täpsusta ettevõtte andmeid ja esita taotlus uuesti."
+        }
+      },
+      "contact": "Võta meiega ühendust",
+      "conditionsTitle": "Sinu koostöötingimused",
+      "discount": "Individuaalne allahindlus",
+      "discountHint": "Rakendatud kõigile kataloogi hindadele.",
+      "terms": "Maksetähtaeg",
+      "termsValue": "{days} päeva",
+      "termsPrepay": "Ettemaks",
+      "termsHint": "Tellimuse saad tasuda arvega määratud tähtaja jooksul.",
+      "termsPrepayHint": "Tellimused täidetakse pärast maksmist.",
+      "companyData": "Ettevõtte rekvisiidid",
+      "lockedNote": "Kinnitatud ettevõtte rekvisiitide muutmiseks võta palun meiega ühendust.",
+      "companyName": "Ettevõtte nimi",
+      "regNo": "Registrikood",
+      "vatNo": "KMKR number",
+      "legalAddress": "Juriidiline aadress",
+      "phone": "Kontakttelefon",
+      "optional": "ei ole kohustuslik",
+      "vatHint": "Vajalik pöördmaksustatava käibemaksu rakendamiseks tarnetel Lätisse või Leetu.",
+      "formTitle": "Taotle B2B koostööd",
+      "formText": "Sisesta ettevõtte rekvisiidid nii, nagu need on registreeritud äriregistris.",
+      "formTitlePending": "Taotluse andmed",
+      "formTextPending": "Kuni taotlust menetletakse, saad andmeid täpsustada.",
+      "consentNote": "Taotlust esitades kinnitad, et oled volitatud seda ettevõtet esindama.",
+      "submit": "Esita taotlus",
+      "submitting": "Esitan…",
+      "update": "Salvesta muudatused",
+      "updated": "Taotluse andmed uuendatud",
+      "submitted": "Taotlus esitatud",
+      "submittedText": "Kontrollime andmeid ja teavitame sind e-postiga.",
+      "benefitsTitle": "Mida B2B kliendid saavad",
+      "benefits": {
+        "prices": {
+          "title": "Individuaalsed hinnad",
+          "text": "Personaalne allahindlus ja hinnad ilma käibemaksuta kogu kataloogis."
+        },
+        "invoice": {
+          "title": "Maksmine arvega",
+          "text": "Järelmaks kokkulepitud maksetähtajaga."
+        },
+        "documents": {
+          "title": "Dokumendid ühes kohas",
+          "text": "Kõik arved ja tellimuste ajalugu kontos."
+        },
+        "manager": {
+          "title": "Personaalne kontakt",
+          "text": "Abi toodete valikul ja suuremate koguste tarnetel."
+        }
+      }
+    }
+  }
+}

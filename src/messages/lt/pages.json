@@ -1,0 +1,616 @@
+{
+  "pagesUi": {
+    "faqTitle": "Dažniausiai užduodami klausimai",
+    "faqEyebrow": "DUK",
+    "required": "privaloma",
+    "optional": "neprivaloma",
+    "privacyNote": "Siųsdamas formą sutinki, kad tavo duomenys būtų tvarkomi atsakymui pateikti pagal <link>privatumo politiką</link>.",
+    "sentTitle": "Ačiū — žinutė išsiųsta!",
+    "sendAnother": "Siųsti dar vieną",
+    "toc": "Turinys",
+    "backToTop": "Į viršų",
+    "updated": "Atnaujinta: {date}"
+  },
+  "finder": {
+    "metaTitle": "Alyvos parinkimas pagal automobilį — Divinol alyvų paieška",
+    "metaDescription": "Rask tinkamiausią Divinol variklio alyvą savo automobiliui, sunkvežimiui, motociklui ar technikai pagal gamintoją, kurą ir laidos metus. VW, BMW, Mercedes, Opel, Ford, MAN, Scania ir kiti patvirtinimai.",
+    "eyebrow": "Alyvos parinkimas",
+    "title": "Rask tinkamą alyvą per 3 žingsnius",
+    "text": "Parinkimas grindžiamas gamintojų patvirtinimais (pvz., VW 504.00, MB 229.51, BMW Longlife-04, GM dexos2, MAN M 3477) ir ACEA/API/JASO specifikacijomis.",
+    "heroPoint1": "Daugiau nei 30 automobilių ir technikos gamintojų",
+    "heroPoint2": "Paaiškinimas prie kiekvienos rekomendacijos",
+    "heroPoint3": "Nemokama specialisto konsultacija",
+    "progress": "{current} žingsnis iš {total}",
+    "step1": "Technikos tipas",
+    "step2": "Gamintojas",
+    "step2App": "Panaudojimas",
+    "step3": "Variklis ir metai",
+    "stepResults": "Rezultatai",
+    "step1Title": "Kokiai technikai ieškai alyvos?",
+    "step2Title": "Pasirink gamintoją",
+    "step2AppTitle": "Kur alyva bus naudojama?",
+    "step3Title": "Papasakok apie variklį",
+    "vehicle": {
+      "car": "Lengvasis automobilis",
+      "van": "Mikroautobusas",
+      "truck": "Sunkvežimis / traktorius",
+      "moto": "Motociklas / keturratis",
+      "garden": "Sodo technika / 2T",
+      "industry": "Hidraulika / pramonė"
+    },
+    "vehicleHint": {
+      "car": "Benzininiai, dyzeliniai ir hibridiniai automobiliai",
+      "van": "Furgonai ir komerciniai automobiliai iki 3,5 t",
+      "truck": "Sunkvežimiai, autobusai, žemės ūkio ir statybų technika",
+      "moto": "4T motociklai, keturračiai ir 2T motoroleriai",
+      "garden": "Motoriniai pjūklai, trimeriai, vejapjovės",
+      "industry": "Hidraulika, reduktoriai, kompresoriai, grandinės"
+    },
+    "apps": {
+      "street": { "label": "Kelių motociklas", "hint": "Kasdieniai ir turistiniai 4T motociklai su šlapia sankaba" },
+      "sport": { "label": "Sportinis motociklas", "hint": "Aukštų apsukų ir lenktyniniai varikliai" },
+      "heavy": { "label": "Didelės kubatūros / čoperis", "hint": "Oru aušinami V formos varikliai, pvz., Harley-Davidson" },
+      "quad": { "label": "Keturratis / UTV", "hint": "Bekelės technika su bendra variklio ir sankabos alyva" },
+      "twoStroke": { "label": "2T motoroleris / kroso motociklas", "hint": "Dvitakčiai varikliai su atskiru alyvos baku arba mišiniu" },
+      "chainsaw": { "label": "Motorinis pjūklas", "hint": "2T mišinio alyva ir grandinės alyva" },
+      "trimmer": { "label": "Trimeris / pūstuvas", "hint": "Dvitaktė sodo technika" },
+      "mower": { "label": "Vejapjovė (4T)", "hint": "Keturtakčiai varikliai vejapjovėse ir sodo traktoriukuose" },
+      "chainOil": { "label": "Grandinės tepimas", "hint": "Pjūklo grandinės ir kreipiančiosios tepimas" },
+      "hydraulic": { "label": "Pramoninė hidraulika", "hint": "Presai, staklės, stacionarios sistemos (HLP)" },
+      "hydraulicHv": { "label": "Mobilioji hidraulika", "hint": "Ekskavatoriai, krautuvai, lauko technika (HVLP)" },
+      "gear": { "label": "Reduktoriai", "hint": "Uždaros pramoninės pavarų dėžės (CLP)" },
+      "compressor": { "label": "Kompresoriai", "hint": "Stūmokliniai ir rotaciniai kompresoriai" },
+      "chain": { "label": "Grandinės ir konvejeriai", "hint": "Grandinių ir kreipiančiųjų tepimas" }
+    },
+    "brandOther": "Kitas gamintojas",
+    "brandOtherHint": "Parinksime pagal ACEA/API specifikaciją",
+    "fuel": "Kuras",
+    "fuels": {
+      "petrol": "Benzinas",
+      "diesel": "Dyzelinas",
+      "hybrid": "Hibridinis",
+      "lpg": "Dujos (LPG/CNG)"
+    },
+    "year": "Laidos metai",
+    "years": {
+      "old": "iki 2004",
+      "mid": "2004–2014",
+      "new": "nuo 2015"
+    },
+    "dpf": "Kietųjų dalelių filtras (DPF/GPF)",
+    "dpfHint": "Dyzeliniams automobiliams su DPF arba benzininiams su GPF reikalinga mažo pelenų kiekio (Low SAPS) alyva.",
+    "dpfUnknown": "Nežinau",
+    "yes": "Yra",
+    "no": "Nėra",
+    "showResults": "Rodyti rekomendacijas",
+    "results": "Rekomenduojamos alyvos",
+    "resultsCount": "{count, plural, =0 {Radome # tinkamų alyvų} one {Radome # tinkamą alyvą} few {Radome # tinkamas alyvas} other {Radome # tinkamų alyvų}}",
+    "selection": "Tavo pasirinkimas",
+    "edit": "Keisti",
+    "bestMatch": "Geriausias atitikimas",
+    "oemBadge": "Gamintojo patvirtinimas",
+    "why": "Kodėl ši alyva",
+    "approvals": "Patvirtinimai ir specifikacijos",
+    "moreApprovals": "+{count}",
+    "pack": "Pakuotė",
+    "details": "Produkto aprašymas",
+    "reason": {
+      "oem": "Atitinka {brand} reikalavimus: {items}",
+      "soft": "Atitinka {items} — standartą, kurį {brand} nurodo serviso knygelėje",
+      "lowSaps": "Mažo pelenų kiekio (Low SAPS) formulė, tausojanti DPF ir katalizatorių: {items}",
+      "acea": "Atitinka {items} specifikaciją",
+      "heavyDuty": "Didelės galios dyzeliniams varikliams: {items}",
+      "cng": "Tinka dujiniams varikliams: {items}",
+      "viscosity": "Rekomenduojamas klampumas šiam varikliui — {sae}",
+      "jaso": "Suderinama su šlapia sankaba: {items}",
+      "twoStroke": "Dvitakčiams varikliams: {items}",
+      "lawnmower": "Keturtakčiams sodo technikos varikliams, {sae}",
+      "chainOil": "Pjūklo grandinės ir kreipiančiosios tepimui su geru sukibimu",
+      "chainOilBio": "Biologiškai skaidi grandinės alyva — rekomenduojama darbui miške",
+      "hydraulic": "Hidraulinė alyva {iso}",
+      "hydraulicSpecs": "Hidraulinė alyva {iso}: {items}",
+      "gear": "Pramoninė reduktorių alyva {iso}",
+      "compressor": "Kompresorių alyva {iso}"
+    },
+    "noMatch": "Automatiškai tikslaus atitikimo nerado. Atsiųsk automobilio duomenis — specialistas parinks alyvą asmeniškai.",
+    "noMatchCta": "Klausti specialisto",
+    "disclaimer": "Rekomendacija yra orientacinė ir grindžiama produktų patvirtinimais bei specifikacijomis. Prieš keisdamas alyvą visada patikrink technikos gamintojo reikalavimus serviso knygelėje arba naudojimo instrukcijoje.",
+    "restart": "Pradėti iš naujo",
+    "back": "Atgal",
+    "expertEyebrow": "Asmeninė konsultacija",
+    "expertTitle": "Tikslus parinkimas pagal valstybinį numerį",
+    "expertText": "Atsiųsk automobilio valstybinį numerį arba VIN — mūsų specialistas atsakys su tiksliu alyvos, filtrų ir kiekio pasiūlymu.",
+    "plate": "Valstybinis numeris arba VIN",
+    "platePlaceholder": "pvz., AB1234 arba WVWZZZ…",
+    "carModel": "Automobilio marka, modelis, variklis",
+    "carModelPlaceholder": "pvz., Škoda Octavia 2.0 TDI, 2018",
+    "name": "Vardas",
+    "email": "El. paštas",
+    "phone": "Telefonas",
+    "comment": "Komentaras",
+    "expertCta": "Gauti rekomendaciją",
+    "sent": "Ačiū! Specialistas atsakys artimiausią darbo dieną.",
+    "advisorEyebrow": "Gamintojo duomenų bazė",
+    "advisorTitle": "Oficialus Divinol Lubricant Advisor",
+    "advisorText": "Zeller+Gmelin duomenų bazė su tūkstančiais transporto priemonių modelių, variklių ir tepimo taškų (anglų kalba).",
+    "advisorCta": "Atidaryti Lubricant Advisor",
+    "faq": [
+      {
+        "q": "Kaip išsirinkti tinkamą variklio alyvą savo automobiliui?",
+        "a": "Svarbiausia — automobilio gamintojo patvirtinimas (pvz., VW 504.00/507.00, MB 229.51, BMW Longlife-04 arba GM dexos2) ir klampumas, nurodytas serviso knygelėje arba naudojimo instrukcijoje. Jei patvirtinimas nenurodytas, rinkis alyvą pagal ACEA klasę — šiuolaikiniams automobiliams su kietųjų dalelių filtru dažniausiai reikalinga C klasė (C2, C3, C5)."
+      },
+      {
+        "q": "Ką reiškia klampumas, pavyzdžiui, 5W-30?",
+        "a": "Pirmasis skaičius su raide W (winter) apibūdina alyvos tekamumą šaltyje — kuo mažesnis, tuo lengvesnis paleidimas žiemą. Antrasis skaičius nurodo klampumą variklio darbinėje temperatūroje (100 °C). 5W-30 ir 0W-20 yra tipiški šiuolaikiniams varikliams, 10W-40 ir 15W-40 — senesniems varikliams ir didelės galios technikai."
+      },
+      {
+        "q": "Kuo skiriasi gamintojo patvirtinimas ir ACEA specifikacija?",
+        "a": "ACEA ir API yra bendri pramonės standartai, nustatantys minimalias alyvos savybes. Gamintojo patvirtinimas (OEM approval) reiškia, kad alyva papildomai išbandyta konkretaus gamintojo testuose ir įtraukta į jo patvirtintų alyvų sąrašą. Garantijos laikotarpiu naudok alyvą su gamintojo reikalaujamu patvirtinimu."
+      },
+      {
+        "q": "Kodėl automobiliams su DPF reikalinga Low SAPS alyva?",
+        "a": "Low SAPS alyvos turi sumažintą sulfatinių pelenų, fosforo ir sieros kiekį. Tai apsaugo dyzelinio variklio kietųjų dalelių filtrą (DPF), benzininio variklio kietųjų dalelių filtrą (GPF) ir katalizatorių nuo užsikimšimo. Tokios alyvos žymimos ACEA C klase (C2–C6) arba sunkvežimiams — E6, E9, API CK-4."
+      },
+      {
+        "q": "Kaip dažnai reikia keisti variklio alyvą?",
+        "a": "Laikykis automobilio gamintojo nurodyto intervalo. Paprastai tai 10 000–15 000 km arba kartą per metus; LongLife režimu — iki 30 000 km arba 2 metų. Trumpos kelionės mieste, dažnas paleidimas šaltyje, priekabos vilkimas arba dujų naudojimas yra sunkios eksploatacijos sąlygos — tokiu atveju alyvą rekomenduojama keisti dažniau."
+      },
+      {
+        "q": "Ar galima maišyti skirtingas variklio alyvas?",
+        "a": "Kokybiškos alyvos su vienodu klampumu ir specifikacija paprastai yra suderinamos, todėl papildymui ekstremaliu atveju galima naudoti kitą alyvą. Tačiau geriausiai apsaugai ir patvirtinimo išlaikymui rekomenduojama papildyti ta pačia alyva, kuri jau įpilta į variklį."
+      }
+    ]
+  },
+  "calc": {
+    "metaTitle": "Alyvos skaičiuoklės — kiekis, išlaidos, mišiniai",
+    "metaDescription": "Nemokamos skaičiuoklės: alyvos keitimo išlaidos ir palankiausios pakuotės, autoparko metinis sunaudojimas, 2T kuro mišinys ir priešrūkinio skysčio koncentrato skiedimas.",
+    "eyebrow": "Skaičiuoklės",
+    "title": "Apskaičiuok tiksliai — pirk naudingai",
+    "text": "Praktiški įrankiai vairuotojams, servisams ir autoparkams. Visi skaičiavimai atliekami iš karto tavo naršyklėje.",
+    "nav": "Skaičiuoklės",
+    "liters": "{amount} L",
+    "ml": "{amount} ml",
+    "perYear": "per metus",
+    "approx": "Apytikslis skaičiavimas",
+    "oil": {
+      "title": "Alyvos keitimo planuoklis",
+      "text": "Pasirink alyvą, variklio tūrį ir keitimų skaičių — surasime pigiausią pakuočių derinį.",
+      "product": "Alyva",
+      "search": "Ieškok alyvos arba klampumo…",
+      "noProducts": "Nieko nerasta",
+      "capacity": "Variklio alyvos tūris (L)",
+      "changes": "Keitimų skaičius",
+      "required": "Reikia",
+      "result": "Palankiausias derinys",
+      "total": "Iš viso",
+      "leftover": "Liks {amount} L — pravers papildymui",
+      "noLeftover": "Be likučio",
+      "vsSmall": "Lyginant su {pack} pakuotėmis, sutaupai {amount}",
+      "noSavings": "Šiam kiekiui palankiausios {pack} pakuotės",
+      "addAll": "Viską į krepšelį",
+      "added": "Pakuotės pridėtos į krepšelį",
+      "empty": "Šiam produktui nėra galimų pakuočių litrais."
+    },
+    "fleet": {
+      "title": "Autoparko metinis sunaudojimas",
+      "text": "Apskaičiuok metinį alyvos sunaudojimą ir sutaupymą perkant didelėmis pakuotėmis.",
+      "product": "Didelės galios alyva",
+      "vehicles": "Transporto priemonių skaičius",
+      "km": "Metinė rida 1 automobiliui (km)",
+      "interval": "Keitimo intervalas (km)",
+      "capacity": "Alyvos kiekis 1 keitimui (L)",
+      "topup": "Papildymas (L kas 10 000 km)",
+      "liters": "Metinis sunaudojimas",
+      "changes": "Keitimai per metus",
+      "changesValue": "{count} keitimai",
+      "cost20": "Perkant 20 L kanistrais",
+      "cost200": "Perkant 200 L statinėmis",
+      "packs": "{count} × {pack}",
+      "perLitre": "{price}/L",
+      "missing": "Šiam produktui nėra {pack} pakuotės",
+      "savings": "Metinis sutaupymas su statinėmis",
+      "noSavings": "Šiam kiekiui palankesni 20 L kanistrai",
+      "b2bNote": "B2B klientams taikome individualią nuolaidą visam katalogui.",
+      "cta": "Prašyti B2B pasiūlymo"
+    },
+    "twoT": {
+      "title": "2T kuro mišinys",
+      "text": "Kiek alyvos pilti į benziną motoriniam pjūklui, trimeriui ar valties varikliui.",
+      "fuel": "Benzino kiekis (L)",
+      "ratio": "Proporcija",
+      "custom": "Kita",
+      "customLabel": "Sava proporcija 1:",
+      "oil": "Reikalinga alyva",
+      "mix": "Mišinys 1:{ratio}",
+      "canister": "Kanistras su {fuel} L benzino ir {oil} ml alyvos",
+      "hint": "Visada laikykis technikos gamintojo nurodytos proporcijos. Sintetinė Divinol Synthetic 2T tinka mišiniams iki 1:100.",
+      "products": "2T alyvos"
+    },
+    "washer": {
+      "title": "Priešrūkinio skysčio skiedimas",
+      "text": "Kiek vandens pilti į −60 °C koncentratą, kad pasiektum reikiamą atsparumą šalčiui.",
+      "target": "Pageidaujamas atsparumas šalčiui",
+      "total": "Paruošto skysčio kiekis (L)",
+      "concentrate": "Koncentratas",
+      "water": "Vanduo",
+      "ratio": "Santykis",
+      "ratioValue": "1 : {parts}",
+      "ratioHint": "koncentratas : vanduo",
+      "hint": "Skaičiavimas orientacinis — užšalimo temperatūra interpoliuota iš tipinių skiedimo verčių. Naudok distiliuotą arba minkštą vandenį ir atsargai pasirink kelis laipsnius žemesnę temperatūrą.",
+      "product": "Žiūrėti koncentratą"
+    }
+  },
+  "business": {
+    "metaTitle": "Divinol alyvos įmonėms — B2B kainos, sąskaitos, didelės pakuotės",
+    "metaDescription": "B2B bendradarbiavimas autoservisams, autoparkams, ūkininkams, statyboms ir pramonei: individualios kainos, apmokėjimas sąskaita, 20–200 L pakuotės ir techninė pagalba.",
+    "eyebrow": "B2B bendradarbiavimas",
+    "title": "Patikimas alyvų tiekėjas tavo įmonei",
+    "text": "Dirbame su autoservisais, vežėjais, žemės ūkio, statybos, miškų ūkio ir pramonės įmonėmis visoje Baltijos šalyse.",
+    "heroCta": "Prašyti pasiūlymo",
+    "heroCta2": "Registruoti įmonę",
+    "segmentsEyebrow": "Sektoriai",
+    "segmentsTitle": "Kam tiekiame",
+    "segments": {
+      "service": "Autoservisai ir padangų centrai",
+      "fleet": "Vežėjai ir autoparkai",
+      "agro": "Žemės ūkis",
+      "construction": "Statyba ir kelių tiesyba",
+      "forestry": "Miškų ūkis",
+      "industry": "Pramonė ir gamyba"
+    },
+    "segmentsText": {
+      "service": "Variklio alyvos su VW, BMW, MB, GM dexos patvirtinimais 20 L kanistruose ir 200 L statinėse.",
+      "fleet": "Low SAPS alyvos Euro VI sunkvežimiams ir autobusams su MAN, MB, Volvo, Scania patvirtinimais.",
+      "agro": "Multimax universalios alyvos traktoriams ir kombainams, hidraulinės ir transmisinės alyvos.",
+      "construction": "Hidraulinės alyvos, tepalai ir betono skiedinio priemonės statybų aikštelei.",
+      "forestry": "Biologiškai skaidžios grandinės alyvos ir hidraulinės alyvos darbui jautrioje aplinkoje.",
+      "industry": "Reduktorių, kompresorių, hidraulinės alyvos ir tepalai gamykloms."
+    },
+    "benefitsEyebrow": "Privalumai",
+    "benefitsTitle": "Ką gauni",
+    "benefits": {
+      "prices": "Individualios kainos",
+      "pricesText": "Nuolaida taikoma automatiškai visam katalogui — kainas be PVM matai iš karto po prisijungimo.",
+      "invoice": "Apmokėjimas sąskaita",
+      "invoiceText": "Patvirtintiems klientams — apmokėjimas sąskaita pagal bendrą terminą.",
+      "bulk": "Didelės pakuotės",
+      "bulkText": "20 L kanistrai, 60 L ir 200 L statinės bei 180 kg tepalų statinės dirbtuvėms ir gamykloms.",
+      "manager": "Asmeninis vadybininkas",
+      "managerText": "Techninė konsultacija dėl produktų pasirinkimo, patvirtinimų ir keitimo intervalų.",
+      "portal": "Kliento portalas",
+      "portalText": "Visi užsakymai, sąskaitos ir pakartotiniai užsakymai vienoje vietoje — 24/7.",
+      "docs": "Dokumentacija",
+      "docsText": "Techninių ir saugos duomenų lapai (TDS/SDS) bei OEM patvirtinimų informacija."
+    },
+    "howEyebrow": "Kaip pradėti",
+    "howTitle": "Kaip tapti B2B klientu",
+    "how1": "Registruokis ir nurodyk įmonės rekvizitus",
+    "how1Text": "Užpildyk registracijos formą nurodydamas įmonės pavadinimą, registracijos ir PVM mokėtojo numerį.",
+    "how2": "Mes patikriname duomenis ir suteikiame kainų lygį",
+    "how2Text": "Paprastai per 1 darbo dieną. Apie patvirtinimą pranešime el. paštu.",
+    "how3": "Pirk savo kainomis",
+    "how3Text": "Prisijunk, matyk kainas be PVM su nuolaida ir apmokėk sąskaita.",
+    "registerCta": "Registruoti įmonę",
+    "statsTitle": "Divinol skaičiais",
+    "stats": {
+      "products": "produktai kataloge",
+      "since": "gamintojo įkūrimo metai",
+      "markets": "Baltijos šalys, į kurias pristatome",
+      "drum": "didžiausia alyvos pakuotė"
+    },
+    "formEyebrow": "Individualus pasiūlymas",
+    "formTitle": "Prašyti pasiūlymo",
+    "formText": "Papasakok apie savo poreikius — paruošime individualų kainos pasiūlymą ir pasiūlysime tinkamiausius produktus.",
+    "formPoint1": "Atsakymas per 1 darbo dieną",
+    "formPoint2": "Be įsipareigojimų",
+    "formPoint3": "Nemokama techninė konsultacija",
+    "company": "Įmonė",
+    "regNo": "Registracijos nr.",
+    "name": "Kontaktinis asmuo",
+    "email": "El. paštas",
+    "phone": "Telefonas",
+    "segment": "Sektorius",
+    "segmentOther": "Kitas sektorius",
+    "choose": "Pasirink…",
+    "volume": "Apytikslis sunaudojimas per mėnesį",
+    "volumes": {
+      "xs": "iki 50 L",
+      "s": "50–200 L",
+      "m": "200–1000 L",
+      "l": "virš 1000 L"
+    },
+    "message": "Kokie produktai tave domina?",
+    "messagePlaceholder": "pvz., variklio alyva 10W-40 sunkvežimiui (MAN M 3477), hidraulinė alyva HLP 46, tepalas…",
+    "submit": "Siųsti užklausą",
+    "sent": "Ačiū! Mūsų vadybininkas susisieks su tavimi per 1 darbo dieną."
+  },
+  "about": {
+    "metaTitle": "Apie mus — SIA Elama, oficialus Divinol atstovas Latvijoje",
+    "metaDescription": "SIA Elama yra oficialus Zeller+Gmelin Divinol alyvų ir tepalų atstovas Latvijoje. Vokiška kokybė nuo 1866 metų, ISO 9001 sertifikuota gamyba.",
+    "eyebrow": "Apie mus",
+    "title": "Divinol Latvijoje — SIA Elama",
+    "text": "SIA Elama yra oficialus Divinol produkcijos atstovas Latvijoje. Tiekiame originalias Zeller+Gmelin alyvas, tepalus ir automobilinę chemiją privatiems asmenims ir įmonėms bei padedame išsirinkti sprendimą, atitinkantį technikos gamintojo reikalavimus.",
+    "storyEyebrow": "Mūsų istorija",
+    "storyTitle": "Oficialus atstovas — tiesioginis ryšys su gamintoju",
+    "storyText1": "Kaip oficialus Divinol atstovas, produkciją gauname tiesiai iš gamintojo Vokietijoje. Tai reiškia originalius produktus, pilną techninę dokumentaciją ir aktualią informaciją apie gamintojų patvirtinimus.",
+    "storyText2": "Mūsų sandėlis yra Rygoje, Ventspils iela 51 — iš čia užsakymai siunčiami klientams Latvijoje, Estijoje ir Lietuvoje. Įmonėms siūlome individualias kainas, dideles pakuotes ir techninę konsultaciją.",
+    "zgEyebrow": "Gamintojas",
+    "zgTitle": "Zeller+Gmelin — gamintojas nuo 1866 metų",
+    "zgText1": "Divinol® — tai aukštos kokybės tepimo medžiagos, kurias gamina viena seniausių Vokietijos įmonių — Zeller+Gmelin GmbH & Co. KG iš Eislingeno. Įmonė specializuojasi automobilių, pramoninėse ir hidraulinėse alyvose, tepaluose, automobilių priežiūros priemonėse, naftos chemijoje, taip pat spaudos dažuose ir lakuose.",
+    "zgText2": "Gamyba sertifikuota pagal ISO 9001, o įmonės laboratorijose prie produktų tobulinimo dirba kvalifikuotų specialistų komanda. Zeller+Gmelin įtraukta į Vokietijos inovatyviausių įmonių sąrašą „TOP 100“.",
+    "facts": {
+      "founded": "įkurta Eislingene, Vokietijoje",
+      "years": "metų patirtis",
+      "subsidiaries": "dukterinės įmonės pasaulyje",
+      "products": "produktai mūsų kataloge"
+    },
+    "badges": {
+      "iso": "ISO 9001 sertifikuota gamyba",
+      "top100": "TOP 100 inovatyviausios įmonės",
+      "made": "Pagaminta Vokietijoje",
+      "family": "Šeimos įmonė"
+    },
+    "trustEyebrow": "Partneriai",
+    "trustTitle": "Pasitiki pasaulio gamintojai",
+    "trustText": "Apie kokybę liudija ilgalaikės tiekimo sutartys su tokiomis įmonėmis kaip BMW, Porsche, Bosch, BASF, Deutsche Bahn, Metabo ir kitomis.",
+    "valuesEyebrow": "Vertybės",
+    "valuesTitle": "Mūsų principai",
+    "value1": "Tik originalūs produktai",
+    "value1Text": "Tiekiame produkciją tiesiai iš gamintojo Vokietijoje — be tarpininkų ir klastočių rizikos.",
+    "value2": "Sąžiningas patarimas",
+    "value2Text": "Rekomenduosime būtent tai, kas reikalinga tavo technikai, remdamiesi gamintojo patvirtinimais.",
+    "value3": "Greitas pristatymas",
+    "value3Text": "Paštomatai, kurjeris arba atsiėmimas sandėlyje Rygoje — Latvijoje, Estijoje ir Lietuvoje.",
+    "value4": "Ilgalaikis bendradarbiavimas",
+    "value4Text": "Individualios kainos, atidėtas mokėjimas ir asmeninis kontaktas įmonėms.",
+    "ctaTitle": "Pasiruošęs rasti tinkamą alyvą?",
+    "ctaText": "Pasinaudok alyvos parinkimo įrankiu arba susisiek su mumis — padėsime išsirinkti.",
+    "ctaFinder": "Rasti alyvą",
+    "ctaContact": "Susisiekti"
+  },
+  "contact": {
+    "metaTitle": "Kontaktai — SIA Elama, Divinol Latvija",
+    "metaDescription": "Susisiek su SIA Elama — oficialiu Divinol atstovu Latvijoje. Sandėlis ir užsakymų atsiėmimas Ventspils iela 51, Rygoje.",
+    "eyebrow": "Kontaktai",
+    "title": "Susisiek su mumis",
+    "text": "Klausimai apie produktus, užsakymus ar bendradarbiavimą? Skambink, rašyk arba užpildyk formą — atsakysime artimiausią darbo dieną.",
+    "phone": "Telefonas",
+    "email": "El. paštas",
+    "warehouse": "Sandėlis ir atsiėmimas",
+    "legal": "Juridinis adresas",
+    "requisites": "Rekvizitai",
+    "company": "Įmonė",
+    "regNo": "Reg. nr.",
+    "vatNo": "PVM nr.",
+    "bank": "Bankas",
+    "iban": "Sąskaita",
+    "swift": "SWIFT",
+    "hours": "Darbo laikas",
+    "copy": "Kopijuoti",
+    "copied": "Nukopijuota",
+    "formEyebrow": "Žinutė",
+    "formTitle": "Rašyk mums",
+    "formText": "Užpildyk formą, ir susisieksime su tavimi el. paštu arba telefonu.",
+    "name": "Vardas",
+    "message": "Žinutė",
+    "messagePlaceholder": "Kuo galime padėti?",
+    "consent": "Sutinku, kad mano duomenys būtų tvarkomi atsakymui pateikti pagal <link>privatumo politiką</link>.",
+    "consentRequired": "Patvirtink sutikimą dėl duomenų tvarkymo",
+    "submit": "Siųsti žinutę",
+    "sent": "Ačiū! Tavo žinutė gauta — atsakysime artimiausiu metu.",
+    "mapTitle": "Sandėlio vieta žemėlapyje — Ventspils iela 51, Ryga",
+    "directions": "Atidaryti žemėlapyje",
+    "googleMaps": "Google Maps",
+    "social": "Sek mus"
+  },
+  "downloads": {
+    "metaTitle": "Divinol produktų katalogai (PDF)",
+    "metaDescription": "Atsisiųsk oficialius Divinol katalogus PDF formatu: lengviesiems automobiliams, komerciniam transportui, pramoninėms alyvoms, tepalams, biotepalams, motociklams ir žemės ūkiui.",
+    "eyebrow": "Katalogai",
+    "title": "Produktų katalogai ir brošiūros",
+    "text": "Oficialūs Zeller+Gmelin Divinol katalogai su produktų aprašymais, specifikacijomis ir patvirtinimais.",
+    "lang": "Kalba",
+    "size": "Dydis",
+    "pages": "{count} psl.",
+    "open": "Atidaryti",
+    "download": "Atsisiųsti",
+    "langs": {
+      "lv": "Latvių",
+      "de": "Vokiečių",
+      "en": "Anglų",
+      "ru": "Rusų"
+    },
+    "items": {
+      "cars": "Lengviesiems automobiliams",
+      "commercial": "Sunkvežimiams ir komerciniam transportui",
+      "industrial": "Pramoninės alyvos",
+      "bio": "Biotepalai",
+      "greases": "Tepalai",
+      "release": "Betono ir asfalto skiedimo priemonės",
+      "moto": "Motociklų alyvos",
+      "agro": "Žemės ūkiui"
+    },
+    "descriptions": {
+      "cars": "Variklio alyvos, transmisinės alyvos ir skysčiai lengviesiems automobiliams su specifikacijomis ir patvirtinimais.",
+      "commercial": "Multimax didelės galios alyvos, transmisinės ir hidraulinės alyvos sunkvežimiams ir autobusams.",
+      "industrial": "Reduktorių, hidraulinės, kreipiančiųjų ir slydimo paviršių alyvos pramonei.",
+      "bio": "Aplinkai draugiškos tepimo medžiagos jautrioms aplinkoms — grandinės alyvos, hidraulika, tepalai.",
+      "greases": "Aukšto našumo tepalai pramonei ir servisams.",
+      "release": "Formų alyvos betonui ir skiedimo priemonės asfaltui.",
+      "moto": "Motociklų, keturračių ir motorolerių alyvų asortimentas viename lape.",
+      "agro": "Tepimo lentelė žemės ūkio traktoriams ir kombainams."
+    },
+    "helpTitle": "Nerandi reikiamo dokumento?",
+    "helpText": "Techniniai (TDS) ir saugos duomenų lapai (SDS) yra produktų puslapiuose. Jei reikia kito dokumento, parašyk mums.",
+    "helpCta": "Susisiekti"
+  },
+  "delivery": {
+    "metaTitle": "Pristatymas ir apmokėjimas — Divinol Latvija",
+    "metaDescription": "Pristatymo būdai ir kainos Latvijoje, Estijoje ir Lietuvoje: paštomatai, kurjeris, atsiėmimas sandėlyje Rygoje ir krovininis pristatymas. Apmokėjimas kortele, pavedimu arba sąskaita.",
+    "eyebrow": "Pristatymas ir apmokėjimas",
+    "title": "Kaip atsiimti užsakymą",
+    "text": "Pristatome visoje Baltijos šalyse — nuo mažų butelių iki 200 L statinių. Kainos nurodytos su PVM pagal pristatymo šalį.",
+    "freeBanner": "Nemokamas pristatymas į paštomatą arba kurjeriu užsakymams virš {amount} (Latvijoje)",
+    "methodsEyebrow": "Pristatymas",
+    "methods": "Pristatymo būdai",
+    "pickup": "Atsiėmimas sandėlyje",
+    "pickupText": "Ventspils iela 51, Ryga. Apie užsakymo paruošimą pranešime el. paštu arba SMS žinute.",
+    "parcel_locker": "Paštomatas",
+    "parcel_lockerText": "Omniva, DPD arba Smartpost paštomatas Latvijoje, Estijoje ir Lietuvoje.",
+    "courier": "Kurjeris iki durų",
+    "courierText": "Pristatymas nurodytu adresu per 1–3 darbo dienas.",
+    "freight": "Krovininis pristatymas",
+    "freightText": "60 L ir 200 L statinėms bei 180 kg tepalų statinėms — kainą patvirtiname individualiai.",
+    "maxItem": "Pakuotėms iki {size} L",
+    "market": "Šalis",
+    "price": "Kaina",
+    "free": "Nemokamai nuo {amount}",
+    "freeShort": "Nemokamai",
+    "onRequest": "Pagal susitarimą",
+    "notAvailable": "—",
+    "pricesNote": "Kainos su PVM: {rates}. B2B klientams kainos rodomos be PVM.",
+    "paymentsEyebrow": "Apmokėjimas",
+    "payments": "Apmokėjimo būdai",
+    "card": "Banko kortelė",
+    "cardText": "Saugus apmokėjimas Visa, Mastercard, Apple Pay arba Google Pay kortele.",
+    "transfer": "Banko pavedimas",
+    "transferText": "Po užsakymo el. paštu gausi išankstinę sąskaitą.",
+    "invoice": "Sąskaita įmonėms",
+    "invoiceText": "Patvirtintiems B2B klientams — atidėtas mokėjimas pagal bendrą terminą.",
+    "returnsEyebrow": "Grąžinimas",
+    "returns": "Atsisakymo teisė ir grąžinimas",
+    "returnsText": "Privatūs asmenys turi teisę atsisakyti pirkinio per 14 dienų nuo prekės gavimo dienos nenurodydami priežasties. Susisiek su mumis, ir padėsime sutvarkyti grąžinimą.",
+    "returnsLink": "Skaityti naudojimo taisykles",
+    "faq": [
+      {
+        "q": "Kiek laiko reikia laukti pristatymo?",
+        "a": "Produktus, esančius sandėlyje, išsiunčiame per 1–2 darbo dienas. Pristatymas kurjeriu paprastai užtrunka 1–3 darbo dienas, siunta į paštomatą dažniausiai pasiekiama kitą darbo dieną po išsiuntimo. Produktai, pažymėti „Pagal užsakymą“, pristatomi iš gamintojo — terminą patvirtiname individualiai."
+      },
+      {
+        "q": "Ar galiu užsakymą atsiimti pats?",
+        "a": "Taip — pasirink „Atsiėmimas sandėlyje“, ir užsakymą galėsi atsiimti Ventspils iela 51, Rygoje, nemokamai. Prieš atvykdamas palauk mūsų pranešimo apie užsakymo paruošimą."
+      },
+      {
+        "q": "Kaip pristatomos 200 L statinės?",
+        "a": "Dideles pakuotes (60 L, 200 L statines ir 180 kg tepalų statines) pristatome krovininiu vežėju ant palečių. Pristatymo kainą ir laiką patvirtiname gavę užsakymą, priklausomai nuo adreso."
+      },
+      {
+        "q": "Ką daryti, jei siunta pažeista?",
+        "a": "Gavęs siuntą, patikrink pakuotę. Jei ji pažeista arba produktas ištekėjęs, tai užfiksuok (pavyzdžiui, nuotrauka) ir nedelsdamas susisiek su mumis el. paštu arba telefonu — išspręsime situaciją."
+      },
+      {
+        "q": "Ar pristatote į Estiją ir Lietuvą?",
+        "a": "Taip. Į Estiją ir Lietuvą pristatome paštomatu, kurjeriu arba krovininiu vežėju. Kainos apskaičiuojamos pagal atitinkamos šalies PVM tarifą, o nemokamo pristatymo riba nurodyta lentelėje aukščiau."
+      }
+    ]
+  },
+  "legal": {
+    "termsMetaTitle": "Naudojimo ir pirkimo taisyklės",
+    "termsMetaDescription": "Divinol internetinės parduotuvės naudojimo ir nuotolinės prekybos sutarties taisyklės: užsakymas, kainos, apmokėjimas, pristatymas, 14 dienų atsisakymo teisė, garantija ir ginčų sprendimas.",
+    "privacyMetaTitle": "Privatumo politika",
+    "privacyMetaDescription": "Kaip SIA Elama tvarko asmens duomenis Divinol internetinėje parduotuvėje: tikslai, teisiniai pagrindai, duomenų tvarkytojai, saugojimo terminai, tavo teisės ir slapukai.",
+    "eyebrow": "Teisinė informacija",
+    "termsTitle": "Naudojimo ir pirkimo taisyklės",
+    "termsText": "Taisyklės, taikomos pirkiniams Divinol internetinėje parduotuvėje.",
+    "privacyTitle": "Privatumo politika",
+    "privacyText": "Kaip mes tvarkome ir saugome tavo asmens duomenis.",
+    "updatedDate": "25.09.2026",
+    "questions": "Turi klausimų apie šį dokumentą? Rašyk adresu {email}.",
+    "terms": {
+      "sections": [
+        {
+          "title": "Bendrosios nuostatos",
+          "body": "Šios taisyklės nustato tvarką, kuria įsigyjamos prekės Divinol internetinėje parduotuvėje (divinol.lv ir divinol.ee).\n\nPardavėjas: {companyName}, registracijos nr. {regNo}, PVM mokėtojo nr. {vatNo}, juridinis adresas: {address}. Sandėlis ir prekių išdavimas: {warehouse}. El. paštas: {email}, telefonas: {phone}.\n\nPateikdamas užsakymą, pirkėjas patvirtina, kad susipažino su šiomis taisyklėmis ir su jomis sutinka. Pirkėju gali būti tiek vartotojas (fizinis asmuo), tiek juridinis asmuo. Taisyklės, taikomos tik įmonėms, išskirtos atskiroje dalyje."
+        },
+        {
+          "title": "Užsakymas ir sutarties sudarymas",
+          "body": "Prekės pasirenkamos jas įdedant į pirkinių krepšelį ir pateikiant užsakymą. Prieš patvirtindamas užsakymą pirkėjas gali patikrinti ir pataisyti įvestus duomenis.\n\nPateikus užsakymą, pirkėjas gauna patvirtinimą nurodytu el. pašto adresu. Nuotolinė sutartis laikoma sudaryta nuo to momento, kai pardavėjas patvirtina užsakymą.\n\nJei užsakytos prekės pristatyti neįmanoma (pavyzdžiui, jos nėra pas gamintoją), pardavėjas apie tai nedelsdamas informuoja pirkėją ir pasiūlo alternatyvą arba grąžina sumokėtą sumą ne vėliau kaip per 14 dienų."
+        },
+        {
+          "title": "Kainos",
+          "body": "Kainos nurodytos eurais (EUR). Privatiems asmenims kainos rodomos su pridėtinės vertės mokesčiu (PVM) pagal pasirinktos pristatymo šalies tarifą. Patvirtintiems B2B klientams kainos rodomos be PVM, taikant individualią nuolaidą.\n\nPristatymo išlaidos parodomos prieš patvirtinant užsakymą. Krovininio pristatymo kainą didelėms pakuotėms pardavėjas patvirtina individualiai prieš vykdydamas užsakymą.\n\nJei prekės kaina dėl akivaizdžios techninės klaidos nurodyta neteisingai, pardavėjas informuoja pirkėją, o pirkėjas gali patvirtinti užsakymą su teisinga kaina arba jo atsisakyti."
+        },
+        {
+          "title": "Apmokėjimas",
+          "body": "Galimi apmokėjimo būdai:\n- mokėjimo kortele (Visa, Mastercard) ir mokėjimo paslaugomis, siūlomomis užsakymo pateikimo metu;\n- banko pavedimu pagal išankstinę sąskaitą;\n- atidėtu mokėjimu sąskaita — tik patvirtintiems B2B klientams.\n\nIšankstinė sąskaita turi būti apmokėta joje nurodytu terminu. Užsakymas perduodamas vykdyti gavus mokėjimą. Kortelių mokėjimus apdoroja sertifikuotas mokėjimo paslaugų teikėjas; pardavėjas mokėjimo kortelės duomenų nemato ir nesaugo."
+        },
+        {
+          "title": "Pristatymas",
+          "body": "Prekės pristatomos į Latviją, Estiją ir Lietuvą paštomatu, kurjeriu, krovininiu vežėju arba jas galima atsiimti sandėlyje Rygoje. Pristatymo būdai, kainos ir nemokamo pristatymo sąlygos nurodytos puslapyje „Pristatymas ir apmokėjimas“.\n\nPristatymo terminas nurodomas užsakymo patvirtinime. Jei terminas nenurodytas, pardavėjas pristato prekę ne vėliau kaip per 30 dienų nuo sutarties sudarymo.\n\nAtsitiktinio prekės žuvimo rizika pereina pirkėjui tuo momentu, kai pirkėjas arba jo nurodytas asmuo prekę gauna. Gavęs siuntą, prašome patikrinti pakuotę ir apie pažeidimus nedelsiant informuoti pardavėją."
+        },
+        {
+          "title": "Atsisakymo teisė (14 dienų)",
+          "body": "Vartotojas turi teisę per 14 dienų atsisakyti nuotolinės sutarties nenurodydamas priežasties. Atsisakymo terminas prasideda tą dieną, kai vartotojas arba jo nurodytas asmuo gauna prekę.\n\nNorėdamas pasinaudoti atsisakymo teise, vartotojas prieš termino pabaigą siunčia pardavėjui aiškų pranešimą adresu {email}, nurodydamas užsakymo numerį, prekes ir banko sąskaitą grąžinimui. Taip pat galima naudoti Latvijos Ministrų kabineto noteikumų Nr. 255 „Nuostatai dėl nuotolinės prekybos sutarčių“ priede pateiktą atsisakymo formą.\n\nVartotojas prekę grąžina nepagrįstai nedelsdamas, ne vėliau kaip per 14 dienų nuo pranešimo išsiuntimo. Tiesiogines prekės grąžinimo išlaidas padengia vartotojas, jei nesusitarta kitaip.\n\nPardavėjas grąžina visus gautus mokėjimus, įskaitant standartines pristatymo išlaidas, ne vėliau kaip per 14 dienų nuo pranešimo gavimo, naudodamas tą pačią mokėjimo priemonę. Pardavėjas gali sulaikyti grąžinimą, kol prekė bus gauta atgal.\n\nVartotojas atsako už prekės vertės sumažėjimą, jei ji naudota kitaip, nei būtina jos pobūdžiui ir savybėms nustatyti — pavyzdžiui, jei pakuotė atidaryta ir dalis produkto sunaudota."
+        },
+        {
+          "title": "Prekių atitiktis ir pretenzijos",
+          "body": "Pardavėjas atsako už prekių atitiktį sutarties sąlygoms. Vartotojas gali pateikti pretenziją dėl neatitinkančios prekės per dvejus metus nuo prekės gavimo dienos pagal Latvijos Vartotojų teisių apsaugos įstatymą.\n\nPretenzija teikiama raštu adresu {email}, pridedant pirkimą patvirtinantį dokumentą ir, jei įmanoma, nuotraukas. Pardavėjas į pretenziją atsako per 15 dienų.\n\nPardavėjas neatsako už žalą, atsiradusią dėl produkto naudojimo neatitinkant technikos gamintojo reikalavimų, produkto aprašymo ar saugos duomenų lapo, taip pat dėl netinkamo laikymo."
+        },
+        {
+          "title": "Nuostatos įmonėms (B2B)",
+          "body": "Pirkiniams, kuriuos atlieka juridiniai asmenys arba fiziniai asmenys, vykdydami ūkinę veiklą, vartotojų atsisakymo teisė netaikoma.\n\nB2B kainų lygį, nuolaidą ir atidėto mokėjimo terminą pardavėjas suteikia patikrinęs įmonės duomenis. Pardavėjas gali pakeisti arba atšaukti atidėto mokėjimo galimybę, jei sąskaitos neapmokamos laiku.\n\nGavimo metu pirkėjas turi patikrinti prekių kiekį ir pakuotės vientisumą, o akivaizdžius neatitikimus užfiksuoti važtaraštyje arba nedelsdamas apie juos pranešti pardavėjui. Už pavėluotus mokėjimus pardavėjas gali skaičiuoti įstatymuose numatytas delspinigių palūkanas pagal Latvijos Komercinį kodeksą."
+        },
+        {
+          "title": "Atsakomybė",
+          "body": "Pardavėjas neatsako už sutartinių įsipareigojimų nevykdymą dėl nenugalimos jėgos aplinkybių. Produktų aprašymai, alyvos parinkimo įrankio rekomendacijos ir skaičiuoklių rezultatai yra informacinio pobūdžio — prieš naudodamas produktą patikrink technikos gamintojo reikalavimus.\n\nProduktų nuotraukos gali šiek tiek skirtis nuo faktinės pakuotės, jei gamintojas pakeitė dizainą."
+        },
+        {
+          "title": "Asmens duomenys",
+          "body": "Pirkėjo asmens duomenys tvarkomi užsakymo vykdymui ir teisės aktų reikalavimams įgyvendinti pagal Privatumo politiką, kuri pateikiama šioje svetainėje."
+        },
+        {
+          "title": "Ginčų sprendimas",
+          "body": "Ginčus pardavėjas ir pirkėjas pirmiausia sprendžia tarpusavio derybomis. Jei susitarimo pasiekti nepavyksta, vartotojas gali kreiptis į Latvijos Vartotojų teisių apsaugos centrą (PTAC, www.ptac.gov.lv) arba Vartotojų ginčų sprendimo komisiją.\n\nTarpvalstybiniuose ginčuose vartotojas gali kreiptis į Europos vartotojų centrą Latvijoje (www.ecclatvia.lv). Europos Komisijos ginčų sprendimo internetu (ODR) platforma nutraukė veiklą 2025 m. liepos 20 d.\n\nGinčai, dėl kurių nepavyksta susitarti, nagrinėjami Latvijos Respublikos teisme pagal Latvijos Respublikos teisės aktus."
+        },
+        {
+          "title": "Baigiamosios nuostatos",
+          "body": "Pardavėjas gali keisti šias taisykles. Užsakymui taikomos taisyklės, galiojusios užsakymo pateikimo momentu. Šioms taisyklėms taikomi Latvijos Respublikos teisės aktai."
+        }
+      ]
+    },
+    "privacy": {
+      "sections": [
+        {
+          "title": "Duomenų valdytojas",
+          "body": "Asmens duomenų valdytojas yra {companyName}, registracijos nr. {regNo}, juridinis adresas: {address}. Susisiekti duomenų tvarkymo klausimais: {email}, telefonas {phone}.\n\nŠi politika taikoma asmens duomenų tvarkymui Divinol internetinėje parduotuvėje (divinol.lv, divinol.ee), klientų portale ir bendraujant su mumis."
+        },
+        {
+          "title": "Kokius duomenis tvarkome",
+          "body": "- Paskyros duomenys: vardas, pavardė, el. paštas, telefonas, slaptažodis (saugomas šifruota forma pas autentifikavimo paslaugos teikėją).\n- Užsakymų duomenys: pristatymo ir atsiskaitymo adresas, užsakytos prekės, apmokėjimo statusas, sąskaitos.\n- Įmonių duomenys: įmonės pavadinimas, registracijos ir PVM mokėtojo numeris, juridinis adresas, kontaktinis asmuo.\n- Bendravimo duomenys: žinutės ir užklausos, siųstos kontaktų forma, B2B forma arba alyvos parinkimo forma (įskaitant automobilio valstybinį numerį arba VIN, jei jį nurodai).\n- Techniniai duomenys: IP adresas, naršyklės informacija ir serverio žurnalai, reikalingi svetainės veikimui ir saugumui."
+        },
+        {
+          "title": "Tikslai ir teisiniai pagrindai",
+          "body": "- Užsakymų vykdymas, pristatymas, paskyros ir klientų portalo palaikymas — sutarties sudarymas ir vykdymas (BDAR 6 straipsnio 1 dalies b punktas).\n- Buhalterinės apskaitos ir mokesčių reikalavimų vykdymas, sąskaitų saugojimas — teisinė prievolė (c punktas).\n- Atsakymai į klausimus ir užklausas, B2B klientų duomenų tikrinimas — veiksmai prieš sudarant sutartį ir mūsų teisėti interesai (b ir f punktai).\n- Svetainės saugumas, sukčiavimo prevencija ir techninė priežiūra — teisėti interesai (f punktas).\n- Naujienlaiškiai — sutikimas (a punktas), kurį gali atšaukti bet kada."
+        },
+        {
+          "title": "Duomenų tvarkytojai ir gavėjai",
+          "body": "Duomenis perduodame tik tiems paslaugų teikėjams, kurie būtini svetainės veikimui ir užsakymų vykdymui, ir tik tokia apimtimi, kokia būtina:\n- Supabase — duomenų bazė ir naudotojų autentifikavimas; duomenys saugomi Europos Sąjungoje (Frankfurte, Vokietijoje).\n- Netlify — svetainės talpinimas ir turinio pateikimo tinklas.\n- El. pašto paslaugų teikėjas — užsakymų patvirtinimų ir pranešimų siuntimas.\n- Mokėjimo paslaugų teikėjas — kortelių mokėjimų apdorojimas; mes nematome ir nesaugome kortelės duomenų.\n- Pristatymo partneriai (paštomatų operatoriai, kurjeriai, krovininiai vežėjai) — pristatymui užtikrinti.\n- Buhalterinės apskaitos paslaugų teikėjai ir valstybės institucijos — jei to reikalauja teisės aktai.\n\nAsmens duomenų neparduodame ir nenaudojame automatizuotam sprendimų priėmimui."
+        },
+        {
+          "title": "Duomenų perdavimas už EEE ribų",
+          "body": "Kai kurie paslaugų teikėjai (pavyzdžiui, svetainės talpinimo paslauga) gali tvarkyti techninius duomenis už Europos ekonominės erdvės ribų. Tokiais atvejais duomenų apsaugą užtikrina Europos Komisijos sprendimas dėl tinkamo apsaugos lygio (pavyzdžiui, ES–JAV duomenų privatumo sistema) arba standartinės sutarčių sąlygos."
+        },
+        {
+          "title": "Saugojimo terminai",
+          "body": "- Paskyros duomenys — kol paskyra aktyvi arba iki prašymo ją ištrinti.\n- Užsakymai, sąskaitos ir su jais susiję duomenys — 5 metus pagal Buhalterinės apskaitos įstatymą.\n- Užklausos — iki 2 metų nuo paskutinio bendravimo, jei jos nesusijusios su užsakymu.\n- Naujienlaiškio prenumerata — iki sutikimo atšaukimo.\n- Serverio žurnalai — trumpai, tiek, kiek būtina saugumui užtikrinti."
+        },
+        {
+          "title": "Tavo teisės",
+          "body": "Tu turi teisę susipažinti su savo duomenimis, juos ištaisyti, prašyti ištrinti ar apriboti tvarkymą, nesutikti su tvarkymu, grindžiamu teisėtais interesais, ir gauti savo duomenis susistemintu, įprastai naudojamu formatu. Jei tvarkymas grindžiamas sutikimu, gali jį atšaukti bet kada.\n\nUžklausas siųsk adresu {email} — atsakysime per vieną mėnesį. Jei manai, kad tavo duomenys tvarkomi neteisėtai, gali pateikti skundą Latvijos Valstybinei duomenų inspekcijai (www.dvi.gov.lv)."
+        },
+        {
+          "title": "Slapukai",
+          "body": "Naudojame tik svetainės veikimui būtinus slapukus ir naršyklės saugyklą:\n- pirkinių krepšelis — išsaugo į krepšelį įdėtas prekes tavo naršyklėje;\n- autentifikavimas — palaiko prisijungimo sesiją klientų portale;\n- pristatymo šalis (market) — įsimena pasirinktą šalį kainų ir PVM skaičiavimui (iki 1 metų);\n- slapukų pasirinkimas — įsimena tavo pasirinkimą slapukų pranešime.\n\nAnalitikos ar rinkodaros slapukai be tavo sutikimo nenaudojami. Slapukus gali ištrinti arba blokuoti naršyklės nustatymuose, tačiau tada krepšelis ir prisijungimas gali neveikti."
+        },
+        {
+          "title": "Saugumas",
+          "body": "Duomenys perduodami šifruota forma (HTTPS/TLS). Prieiga prie duomenų bazės ribojama naudotojų teisėmis — kiekvienas klientas mato tik savo užsakymus ir sąskaitas, o visą prieigą turi tik įgalioti darbuotojai."
+        },
+        {
+          "title": "Politikos pakeitimai",
+          "body": "Galime atnaujinti šią politiką, jei pasikeičia mūsų paslaugos arba teisės aktų reikalavimai. Aktuali versija visada skelbiama šiame puslapyje, o jos atnaujinimo data nurodyta puslapio viršuje."
+        }
+      ]
+    }
+  }
+}

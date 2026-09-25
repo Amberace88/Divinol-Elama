@@ -1,0 +1,475 @@
+{
+  "auth": {
+    "meta": {
+      "login": "Ienākt",
+      "register": "Reģistrēties",
+      "forgot": "Aizmirsta parole",
+      "reset": "Jaunas paroles iestatīšana"
+    },
+    "panel": {
+      "eyebrow": "Mans konts",
+      "title": "Viss par taviem pasūtījumiem vienuviet",
+      "text": "Izveido kontu un pārvaldi pirkumus, rēķinus un piegādes adreses ātrāk — gan kā privātpersona, gan kā uzņēmums.",
+      "note": "Uzņēmumu B2B cenas un apmaksa ar rēķinu kļūst pieejamas pēc tam, kad esam pārbaudījuši un apstiprinājuši uzņēmuma datus.",
+      "benefits": {
+        "b2b": {
+          "title": "B2B cenas uzņēmumiem",
+          "text": "Individuāla atlaide un cenas bez PVN visā katalogā."
+        },
+        "history": {
+          "title": "Pasūtījumu vēsture",
+          "text": "Statuss, piegāde un visas detaļas par katru pirkumu."
+        },
+        "invoices": {
+          "title": "Rēķini PDF formātā",
+          "text": "Lejupielādē avansa rēķinus un rēķinus jebkurā brīdī."
+        },
+        "reorder": {
+          "title": "Ātra atkārtota pasūtīšana",
+          "text": "Iepriekšējais pasūtījums grozā ar vienu klikšķi."
+        }
+      }
+    },
+    "notConfigured": {
+      "title": "Pieslēgšanās īslaicīgi nav pieejama",
+      "text": "Klientu konti šobrīd vēl tiek konfigurēti. Pasūtījumu joprojām vari noformēt bez reģistrācijas vai sazināties ar mums."
+    },
+    "fields": {
+      "optional": "Nav obligāts",
+      "email": "E-pasts",
+      "emailPlaceholder": "vards@uznemums.lv",
+      "password": "Parole",
+      "passwordNew": "Jaunā parole",
+      "passwordConfirm": "Atkārto paroli",
+      "fullName": "Vārds, uzvārds",
+      "contactPerson": "Kontaktpersona",
+      "phone": "Tālrunis",
+      "companyName": "Uzņēmuma nosaukums",
+      "regNo": "Reģistrācijas numurs",
+      "vatNo": "PVN maksātāja numurs",
+      "legalAddress": "Juridiskā adrese"
+    },
+    "showPassword": "Rādīt paroli",
+    "hidePassword": "Slēpt paroli",
+    "strength": {
+      "label": "Drošība",
+      "weak": "vāja",
+      "fair": "vidēja",
+      "good": "laba",
+      "strong": "ļoti laba",
+      "hint": "Vismaz 8 rakstzīmes; lielie un mazie burti, cipari un simboli padara to drošāku."
+    },
+    "login": {
+      "eyebrow": "Laipni lūgti atpakaļ",
+      "title": "Ienākt kontā",
+      "subtitle": "Skati pasūtījumus, lejupielādē rēķinus un iepērcies ar savām cenām.",
+      "modeLabel": "Pieslēgšanās veids",
+      "modePassword": "Ar paroli",
+      "modeMagic": "Ar saiti e-pastā",
+      "magicHint": "Nosūtīsim uz tavu e-pastu vienreizēju pieslēgšanās saiti — parole nav nepieciešama.",
+      "forgot": "Aizmirsi paroli?",
+      "submit": "Ienākt",
+      "submitting": "Notiek pieslēgšanās…",
+      "magicSubmit": "Sūtīt pieslēgšanās saiti",
+      "success": "Esi veiksmīgi pieslēdzies",
+      "magicSentTitle": "Pārbaudi savu e-pastu",
+      "magicSentText": "Pieslēgšanās saite nosūtīta uz",
+      "useAnotherMethod": "Ienākt citādi",
+      "noAccount": "Vēl nav konta?",
+      "register": "Reģistrēties"
+    },
+    "register": {
+      "eyebrow": "Jauns konts",
+      "title": "Izveidot kontu",
+      "subtitle": "Reģistrācija aizņem mazāk nekā minūti.",
+      "typeLabel": "Klienta veids",
+      "typePrivate": "Privātpersona",
+      "typeBusiness": "Uzņēmums",
+      "companySection": "Uzņēmuma dati",
+      "businessNote": "Pēc reģistrācijas pārbaudīsim uzņēmuma datus un piešķirsim B2B cenas. Līdz apstiprināšanai vari iepirkties ar parastajām cenām.",
+      "terms": "Piekrītu <link>lietošanas noteikumiem</link> un esmu iepazinies ar <privacy>privātuma politiku</privacy>",
+      "marketing": "Vēlos saņemt jaunumus un piedāvājumus e-pastā (ne biežāk kā reizi mēnesī)",
+      "submit": "Izveidot kontu",
+      "submitBusiness": "Reģistrēt uzņēmumu",
+      "submitting": "Veido kontu…",
+      "haveAccount": "Jau ir konts?",
+      "login": "Ienākt",
+      "checkEmailTitle": "Apstiprini savu e-pastu",
+      "checkEmailText": "Nosūtījām apstiprinājuma saiti uz",
+      "checkEmailHint": "Atver e-pastu un noklikšķini uz saites, lai aktivizētu kontu. Ja vēstuli neredzi, pārbaudi mēstuļu mapi.",
+      "checkEmailBusiness": "Pēc e-pasta apstiprināšanas uzņēmuma pieteikums nonāks pie mūsu komandas. Par B2B statusa apstiprināšanu paziņosim e-pastā.",
+      "backToLogin": "Atpakaļ uz pieslēgšanos"
+    },
+    "forgot": {
+      "eyebrow": "Paroles atjaunošana",
+      "title": "Aizmirsi paroli?",
+      "subtitle": "Ievadi konta e-pastu, un nosūtīsim saiti jaunas paroles iestatīšanai.",
+      "submit": "Sūtīt saiti",
+      "submitting": "Sūta…",
+      "sentTitle": "Pārbaudi savu e-pastu",
+      "sentText": "Ja konts ar šo adresi eksistē, paroles atjaunošanas saite ir nosūtīta uz",
+      "backToLogin": "Atpakaļ uz pieslēgšanos"
+    },
+    "reset": {
+      "eyebrow": "Drošība",
+      "title": "Iestati jaunu paroli",
+      "subtitle": "Izvēlies drošu paroli, ko neizmanto citos pakalpojumos.",
+      "submit": "Saglabāt paroli",
+      "submitting": "Saglabā…",
+      "success": "Parole nomainīta",
+      "noSession": "Paroles atjaunošanas saite ir nederīga vai tai beidzies derīguma termiņš.",
+      "requestNew": "Pieprasīt jaunu saiti"
+    },
+    "errors": {
+      "callback": "Saite ir nederīga vai tai beidzies derīguma termiņš. Lūdzu, mēģini vēlreiz.",
+      "generic": "Kaut kas nogāja greizi. Lūdzu, mēģini vēlreiz.",
+      "invalidCredentials": "Nepareizs e-pasts vai parole.",
+      "emailNotConfirmed": "E-pasts vēl nav apstiprināts. Pārbaudi savu pastkastīti.",
+      "userExists": "Konts ar šo e-pastu jau eksistē. Mēģini ienākt vai atjaunot paroli.",
+      "weakPassword": "Parole ir pārāk vienkārša. Izvēlies garāku vai sarežģītāku paroli.",
+      "samePassword": "Jaunajai parolei jāatšķiras no iepriekšējās.",
+      "userNotFound": "Konts ar šo e-pastu netika atrasts.",
+      "rateLimit": "Pārāk daudz mēģinājumu. Lūdzu, uzgaidi mirkli un mēģini vēlreiz.",
+      "invalidEmail": "Ievadi derīgu e-pasta adresi.",
+      "tooShort": "Parolei jābūt vismaz {min} rakstzīmes garai.",
+      "mismatch": "Paroles nesakrīt.",
+      "terms": "Lai turpinātu, jāpiekrīt lietošanas noteikumiem.",
+      "companyRequired": "Norādi uzņēmuma nosaukumu un reģistrācijas numuru."
+    }
+  },
+  "account": {
+    "meta": {
+      "overview": "Mans konts",
+      "orders": "Pasūtījumi",
+      "order": "Pasūtījums",
+      "invoices": "Rēķini",
+      "profile": "Profils",
+      "addresses": "Adreses",
+      "business": "Uzņēmums un B2B"
+    },
+    "nav": {
+      "label": "Konta sadaļas",
+      "overview": "Pārskats",
+      "orders": "Pasūtījumi",
+      "invoices": "Rēķini",
+      "profile": "Profils",
+      "addresses": "Adreses",
+      "business": "Uzņēmums / B2B",
+      "logout": "Iziet",
+      "loggingOut": "Iziet…",
+      "loggedOut": "Esi izgājis no konta",
+      "pending": "Izskatīšanā"
+    },
+    "header": {
+      "eyebrow": "Mans konts",
+      "customerPrivate": "Privātpersona",
+      "customerBusiness": "Uzņēmums",
+      "memberSince": "Klients kopš {date}",
+      "b2bApproved": "B2B klients",
+      "b2bPending": "B2B pieteikums izskatīšanā",
+      "discount": "Atlaide {value}%",
+      "terms": "Apmaksa {days} dienu laikā"
+    },
+    "common": {
+      "loadError": "Neizdevās ielādēt visus datus. Lūdzu, atsvaidzini lapu vai mēģini vēlāk."
+    },
+    "errors": {
+      "invalid": "Lūdzu, pārbaudi ievadītos datus.",
+      "unauthorized": "Sesija ir beigusies. Lūdzu, ienāc no jauna.",
+      "generic": "Neizdevās saglabāt. Lūdzu, mēģini vēlreiz.",
+      "locked": "Apstiprināta uzņēmuma datus var mainīt tikai, sazinoties ar mums."
+    },
+    "status": {
+      "new": "Jauns",
+      "confirmed": "Apstiprināts",
+      "processing": "Tiek komplektēts",
+      "shipped": "Nosūtīts",
+      "completed": "Izpildīts",
+      "cancelled": "Atcelts"
+    },
+    "paymentStatus": {
+      "unpaid": "Nav apmaksāts",
+      "paid": "Apmaksāts",
+      "refunded": "Atmaksāts",
+      "partially_refunded": "Daļēji atmaksāts"
+    },
+    "paymentMethod": {
+      "bank_transfer": "Bankas pārskaitījums",
+      "card": "Maksājumu karte",
+      "invoice": "Pēcapmaksa ar rēķinu",
+      "cash_on_pickup": "Apmaksa saņemot"
+    },
+    "shippingMethod": {
+      "pickup": "Saņemšana noliktavā",
+      "parcel_locker": "Pakomāts",
+      "courier": "Kurjers",
+      "freight": "Kravas piegāde"
+    },
+    "overview": {
+      "greeting": "Sveiki, {name}!",
+      "greetingNoName": "Sveicināti!",
+      "subtitle": "Šeit redzams tavu pasūtījumu, rēķinu un B2B statusa kopsavilkums.",
+      "stats": {
+        "orders": "Pasūtījumi",
+        "spent": "Kopā iepirkts",
+        "unpaid": "Neapmaksāts",
+        "overdue": "{count, plural, one {# rēķins kavēts} other {# rēķini kavēti}}",
+        "openInvoices": "{count, plural, =0 {Visi rēķini apmaksāti} one {# atvērts rēķins} other {# atvērti rēķini}}"
+      },
+      "recentOrders": "Jaunākie pasūtījumi",
+      "viewAll": "Visi pasūtījumi",
+      "noOrders": "Pasūtījumu vēl nav",
+      "noOrdersText": "Kad veiksi pirmo pasūtījumu, tas parādīsies šeit kopā ar statusu un rēķiniem.",
+      "startShopping": "Uz katalogu",
+      "quickLinks": {
+        "title": "Ātrās saites",
+        "catalog": "Produktu katalogs",
+        "finder": "Eļļas izvēle",
+        "invoices": "Mani rēķini",
+        "addresses": "Piegādes adreses",
+        "profile": "Profila iestatījumi",
+        "contact": "Sazināties ar mums"
+      },
+      "b2b": {
+        "noneTitle": "Iepērcies ar B2B cenām",
+        "noneText": "Uzņēmumiem piedāvājam individuālu atlaidi, cenas bez PVN un apmaksu ar rēķinu.",
+        "noneCta": "Pieteikt uzņēmumu",
+        "pendingTitle": "B2B pieteikums tiek izskatīts",
+        "pendingText": "Pārbaudām uzņēmuma datus. Tiklīdz statuss būs apstiprināts, cenas kontā atjaunosies automātiski.",
+        "pendingCta": "Skatīt pieteikumu",
+        "approvedTitle": "Tu esi B2B klients",
+        "approvedText": "Katalogā redzamas tavas cenas bez PVN ar piešķirto atlaidi.",
+        "discountLabel": "Atlaide",
+        "termsLabel": "Apmaksas termiņš",
+        "termsValue": "{days} d.",
+        "termsPrepay": "Priekšapmaksa",
+        "rejectedTitle": "B2B pieteikums nav apstiprināts",
+        "rejectedText": "Diemžēl pašlaik nevarējām apstiprināt B2B statusu. Sazinies ar mums, un palīdzēsim atrast risinājumu.",
+        "rejectedCta": "Sazināties",
+        "rejectedRetry": "Precizēt datus"
+      }
+    },
+    "orders": {
+      "title": "Pasūtījumi",
+      "subtitle": "Visi tavi pasūtījumi, to statuss un summas.",
+      "filterLabel": "Filtrēt pēc statusa",
+      "filterAll": "Visi",
+      "items": "{count, plural, one {# prece} other {# preces}}",
+      "empty": "Pasūtījumu vēl nav",
+      "emptyFiltered": "Ar šādu statusu pasūtījumu nav",
+      "emptyText": "Izvēlies produktus katalogā — pasūtījumi parādīsies šeit."
+    },
+    "order": {
+      "back": "Atpakaļ uz pasūtījumiem",
+      "title": "Pasūtījums {number}",
+      "placed": "Noformēts {date}",
+      "reorder": "Pasūtīt atkārtoti",
+      "reorderDone": "{count, plural, one {# prece pievienota} other {# preces pievienotas}} grozam",
+      "reorderPartial": "{count, plural, one {# prece pievienota} other {# preces pievienotas}} grozam. {missing, plural, one {# produkts vairs nav pieejams} other {# produkti vairs nav pieejami}}.",
+      "reorderNone": "Šī pasūtījuma produkti vairs nav pieejami",
+      "progress": "Pasūtījuma statuss",
+      "cancelledNote": "Šis pasūtījums ir atcelts.",
+      "items": "Preces",
+      "pricesExVat": "Cenas norādītas bez PVN",
+      "pricesInclVat": "Cenas norādītas ar PVN",
+      "sku": "Art.",
+      "subtotal": "Preču summa bez PVN",
+      "discount": "Atlaide",
+      "shippingCost": "Piegāde bez PVN",
+      "free": "Bez maksas",
+      "vat": "PVN {rate}%",
+      "vatReverse": "PVN (apgrieztā maksāšana)",
+      "total": "Kopā apmaksai",
+      "reverseChargeNote": "PVN netiek piemērots — pircējs PVN deklarē savā valstī (apgrieztās maksāšanas kārtība).",
+      "timeline": "Pasūtījuma vēsture",
+      "shipping": "Piegāde",
+      "shippingMethod": "Piegādes veids",
+      "shippingPoint": "Saņemšanas punkts",
+      "shippingAddress": "Piegādes adrese",
+      "tracking": "Sūtījuma izsekošanas kods",
+      "payment": "Apmaksa",
+      "paymentMethod": "Apmaksas veids",
+      "paymentStatus": "Apmaksas statuss",
+      "notes": "Piezīmes",
+      "invoices": "Rēķini",
+      "noInvoices": "Šim pasūtījumam rēķins vēl nav izrakstīts.",
+      "notFound": "Pasūtījums netika atrasts",
+      "notFoundText": "Iespējams, saite ir kļūdaina vai pasūtījums pieder citam kontam.",
+      "events": {
+        "created": "Pasūtījums saņemts",
+        "invoice": "Izrakstīts rēķins {number}",
+        "statusTo": "Statuss mainīts: {status}",
+        "status": "Statuss atjaunināts",
+        "confirmed": "Pasūtījums apstiprināts",
+        "processing": "Pasūtījums tiek komplektēts",
+        "shipped": "Pasūtījums nosūtīts",
+        "completed": "Pasūtījums izpildīts",
+        "cancelled": "Pasūtījums atcelts",
+        "paid": "Maksājums saņemts",
+        "payment": "Maksājuma informācija atjaunināta",
+        "tracking": "Pievienots izsekošanas kods",
+        "note": "Piezīme",
+        "other": "Atjauninājums"
+      }
+    },
+    "invoices": {
+      "title": "Rēķini",
+      "subtitle": "Avansa rēķini, rēķini un kredītrēķini — lejupielādējami PDF formātā.",
+      "type": {
+        "proforma": "Avansa rēķins",
+        "invoice": "Rēķins",
+        "credit_note": "Kredītrēķins"
+      },
+      "state": {
+        "paid": "Apmaksāts",
+        "unpaid": "Gaida apmaksu",
+        "overdue": "Kavēts",
+        "void": "Anulēts"
+      },
+      "pdf": "PDF",
+      "number": "Numurs",
+      "date": "Datums",
+      "due": "Apmaksāt līdz",
+      "dueShort": "Līdz {date}",
+      "status": "Statuss",
+      "total": "Summa",
+      "empty": "Rēķinu vēl nav",
+      "emptyText": "Rēķini parādīsies šeit, tiklīdz tie būs izrakstīti tavam pasūtījumam.",
+      "summaryUnpaid": "{count, plural, one {# rēķins gaida} other {# rēķini gaida}} apmaksu: {amount}",
+      "summaryOverdue": "{count, plural, one {# kavēts} other {# kavēti}}"
+    },
+    "profile": {
+      "title": "Profils",
+      "subtitle": "Kontaktinformācija, valoda un pieslēgšanās dati.",
+      "personal": "Personīgā informācija",
+      "personalText": "Šie dati tiks izmantoti, noformējot pasūtījumus.",
+      "fullName": "Vārds, uzvārds",
+      "phone": "Tālrunis",
+      "language": "Saziņas valoda",
+      "languageHint": "Šajā valodā sūtīsim e-pastus un rēķinus.",
+      "market": "Piegādes valsts",
+      "marketHint": "Nosaka piemērojamo PVN likmi un piegādes iespējas.",
+      "marketing": "Jaunumi un piedāvājumi e-pastā",
+      "marketingHint": "Sezonas piedāvājumi un jaunumi — ne biežāk kā reizi mēnesī. Atteikties var jebkurā brīdī.",
+      "save": "Saglabāt izmaiņas",
+      "saving": "Saglabā…",
+      "saved": "Profils saglabāts",
+      "emailSection": "E-pasta adrese",
+      "emailText": "Uz jauno adresi nosūtīsim apstiprinājuma saiti.",
+      "emailCurrent": "Pašreizējais e-pasts",
+      "emailNew": "Jaunais e-pasts",
+      "emailSubmit": "Mainīt e-pastu",
+      "emailSent": "Apstiprinājuma saite nosūtīta",
+      "emailSentText": "Lai pabeigtu maiņu, atver saiti, ko nosūtījām uz jauno e-pasta adresi.",
+      "emailSame": "Ievadi jaunu e-pasta adresi, kas atšķiras no pašreizējās.",
+      "passwordSection": "Parole",
+      "passwordText": "Ieteicams izmantot unikālu paroli, ko neizmanto citur.",
+      "passwordNew": "Jaunā parole",
+      "passwordConfirm": "Atkārto jauno paroli",
+      "passwordSubmit": "Mainīt paroli",
+      "passwordChanged": "Parole nomainīta"
+    },
+    "addresses": {
+      "title": "Adreses",
+      "subtitle": "Saglabātās piegādes adreses ātrākai pasūtījuma noformēšanai.",
+      "add": "Pievienot adresi",
+      "edit": "Labot adresi",
+      "editShort": "Labot",
+      "save": "Saglabāt adresi",
+      "saving": "Saglabā…",
+      "saved": "Adrese saglabāta",
+      "cancel": "Atcelt",
+      "delete": "Dzēst",
+      "deleteConfirm": "Dzēst šo adresi?",
+      "deleted": "Adrese dzēsta",
+      "setDefault": "Padarīt par galveno",
+      "defaultSet": "Galvenā adrese nomainīta",
+      "default": "Galvenā",
+      "empty": "Saglabātu adrešu vēl nav",
+      "emptyText": "Pievieno piegādes adresi, un pie nākamā pasūtījuma tā būs aizpildīta automātiski.",
+      "form": {
+        "label": "Nosaukums",
+        "optional": "nav obligāts",
+        "labelPlaceholder": "Piem., Birojs vai Serviss Rīgā",
+        "name": "Saņēmējs",
+        "phone": "Tālrunis",
+        "company": "Uzņēmums",
+        "street": "Iela, māja, dzīvoklis",
+        "city": "Pilsēta / pagasts",
+        "postalCode": "Pasta indekss",
+        "country": "Valsts",
+        "isDefault": "Izmantot kā galveno piegādes adresi"
+      }
+    },
+    "business": {
+      "title": "Uzņēmums un B2B",
+      "subtitle": "Uzņēmuma rekvizīti un B2B sadarbības nosacījumi.",
+      "status": {
+        "none": {
+          "title": "Kļūsti par B2B klientu",
+          "text": "Aizpildi uzņēmuma datus — pēc pārbaudes piešķirsim individuālas cenas un iespēju maksāt ar rēķinu."
+        },
+        "pending": {
+          "title": "Pieteikums tiek izskatīts",
+          "text": "Esam saņēmuši tava uzņēmuma datus un tos pārbaudām. Par lēmumu paziņosim e-pastā."
+        },
+        "approved": {
+          "title": "B2B statuss apstiprināts",
+          "text": "Katalogā un grozā redzamas tavas cenas bez PVN ar piešķirto atlaidi."
+        },
+        "rejected": {
+          "title": "Pieteikums nav apstiprināts",
+          "text": "Pašlaik nevarējām apstiprināt B2B statusu. Sazinies ar mums vai precizē uzņēmuma datus un piesakies atkārtoti."
+        }
+      },
+      "contact": "Sazināties ar mums",
+      "conditionsTitle": "Tavi sadarbības nosacījumi",
+      "discount": "Individuālā atlaide",
+      "discountHint": "Piemērota visām kataloga cenām.",
+      "terms": "Apmaksas termiņš",
+      "termsValue": "{days} dienas",
+      "termsPrepay": "Priekšapmaksa",
+      "termsHint": "Pasūtījumu vari apmaksāt ar rēķinu norādītajā termiņā.",
+      "termsPrepayHint": "Pasūtījumi tiek izpildīti pēc apmaksas.",
+      "companyData": "Uzņēmuma rekvizīti",
+      "lockedNote": "Lai mainītu apstiprināta uzņēmuma rekvizītus, lūdzu, sazinies ar mums.",
+      "companyName": "Uzņēmuma nosaukums",
+      "regNo": "Reģistrācijas numurs",
+      "vatNo": "PVN maksātāja numurs",
+      "legalAddress": "Juridiskā adrese",
+      "phone": "Kontakttālrunis",
+      "optional": "nav obligāts",
+      "vatHint": "Nepieciešams, lai piemērotu apgriezto PVN piegādēm uz Igauniju vai Lietuvu.",
+      "formTitle": "Pieteikties B2B sadarbībai",
+      "formText": "Norādi uzņēmuma rekvizītus, kā tie reģistrēti Uzņēmumu reģistrā.",
+      "formTitlePending": "Pieteikuma dati",
+      "formTextPending": "Kamēr pieteikums tiek izskatīts, datus vari precizēt.",
+      "consentNote": "Iesniedzot pieteikumu, apliecini, ka esi pilnvarots pārstāvēt šo uzņēmumu.",
+      "submit": "Iesniegt pieteikumu",
+      "submitting": "Iesniedz…",
+      "update": "Saglabāt izmaiņas",
+      "updated": "Pieteikuma dati atjaunināti",
+      "submitted": "Pieteikums iesniegts",
+      "submittedText": "Pārbaudīsim datus un informēsim tevi e-pastā.",
+      "benefitsTitle": "Ko iegūst B2B klienti",
+      "benefits": {
+        "prices": {
+          "title": "Individuālas cenas",
+          "text": "Personīga atlaide un cenas bez PVN visā katalogā."
+        },
+        "invoice": {
+          "title": "Apmaksa ar rēķinu",
+          "text": "Pēcapmaksa ar saskaņotu apmaksas termiņu."
+        },
+        "documents": {
+          "title": "Dokumenti vienuviet",
+          "text": "Visi rēķini un pasūtījumu vēsture kontā."
+        },
+        "manager": {
+          "title": "Personīgs kontakts",
+          "text": "Palīdzība produktu izvēlē un lielāku apjomu piegādēs."
+        }
+      }
+    }
+  }
+}

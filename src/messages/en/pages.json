@@ -1,0 +1,616 @@
+{
+  "pagesUi": {
+    "faqTitle": "Frequently asked questions",
+    "faqEyebrow": "FAQ",
+    "required": "required",
+    "optional": "optional",
+    "privacyNote": "By sending this form you agree that your data is processed to answer your request in accordance with our <link>privacy policy</link>.",
+    "sentTitle": "Thank you — message sent!",
+    "sendAnother": "Send another",
+    "toc": "Contents",
+    "backToTop": "Back to top",
+    "updated": "Updated: {date}"
+  },
+  "finder": {
+    "metaTitle": "Oil finder by vehicle — Divinol engine oil selector",
+    "metaDescription": "Find the right Divinol engine oil for your car, truck, motorcycle or machinery by manufacturer, fuel and model year. VW, BMW, Mercedes, Opel, Ford, MAN, Scania and more approvals.",
+    "eyebrow": "Oil finder",
+    "title": "Find the right oil in 3 steps",
+    "text": "Recommendations are based on manufacturer approvals (e.g. VW 504.00, MB 229.51, BMW Longlife-04, GM dexos2, MAN M 3477) and ACEA/API/JASO specifications.",
+    "heroPoint1": "More than 30 vehicle and machinery brands",
+    "heroPoint2": "An explanation for every recommendation",
+    "heroPoint3": "Free advice from a specialist",
+    "progress": "Step {current} of {total}",
+    "step1": "Vehicle type",
+    "step2": "Manufacturer",
+    "step2App": "Application",
+    "step3": "Engine & year",
+    "stepResults": "Results",
+    "step1Title": "What do you need oil for?",
+    "step2Title": "Choose the manufacturer",
+    "step2AppTitle": "Where will the oil be used?",
+    "step3Title": "Tell us about the engine",
+    "vehicle": {
+      "car": "Passenger car",
+      "van": "Van",
+      "truck": "Truck / tractor",
+      "moto": "Motorcycle / quad",
+      "garden": "Garden equipment / 2T",
+      "industry": "Hydraulics / industry"
+    },
+    "vehicleHint": {
+      "car": "Petrol, diesel and hybrid cars",
+      "van": "Vans and light commercial vehicles up to 3.5 t",
+      "truck": "Trucks, buses, agricultural and construction machinery",
+      "moto": "4-stroke motorcycles, quads and 2-stroke scooters",
+      "garden": "Chainsaws, trimmers, lawnmowers",
+      "industry": "Hydraulics, gearboxes, compressors, chains"
+    },
+    "apps": {
+      "street": { "label": "Road motorcycle", "hint": "Everyday and touring 4-stroke bikes with wet clutch" },
+      "sport": { "label": "Sport motorcycle", "hint": "High-revving and racing engines" },
+      "heavy": { "label": "Big-bore / cruiser", "hint": "Air-cooled V-twins, e.g. Harley-Davidson" },
+      "quad": { "label": "Quad / UTV", "hint": "Off-road vehicles with shared engine and clutch oil" },
+      "twoStroke": { "label": "2T scooter / motocross", "hint": "Two-stroke engines with oil tank or premix" },
+      "chainsaw": { "label": "Chainsaw", "hint": "2-stroke mix oil and saw-chain oil" },
+      "trimmer": { "label": "Trimmer / blower", "hint": "Two-stroke garden equipment" },
+      "mower": { "label": "Lawnmower (4T)", "hint": "Four-stroke engines in mowers and garden tractors" },
+      "chainOil": { "label": "Chain lubrication", "hint": "Saw chain and guide bar lubrication" },
+      "hydraulic": { "label": "Industrial hydraulics", "hint": "Presses, machine tools, stationary systems (HLP)" },
+      "hydraulicHv": { "label": "Mobile hydraulics", "hint": "Excavators, loaders, outdoor machinery (HVLP)" },
+      "gear": { "label": "Gearboxes", "hint": "Enclosed industrial gear units (CLP)" },
+      "compressor": { "label": "Compressors", "hint": "Reciprocating and rotary compressors" },
+      "chain": { "label": "Chains & conveyors", "hint": "Chain and slideway lubrication" }
+    },
+    "brandOther": "Other manufacturer",
+    "brandOtherHint": "We will match by ACEA/API specification",
+    "fuel": "Fuel",
+    "fuels": {
+      "petrol": "Petrol",
+      "diesel": "Diesel",
+      "hybrid": "Hybrid",
+      "lpg": "Gas (LPG/CNG)"
+    },
+    "year": "Model year",
+    "years": {
+      "old": "before 2004",
+      "mid": "2004–2014",
+      "new": "2015 or newer"
+    },
+    "dpf": "Particulate filter (DPF/GPF)",
+    "dpfHint": "Diesel cars with a DPF and petrol cars with a GPF need a low-ash (Low SAPS) oil.",
+    "dpfUnknown": "Not sure",
+    "yes": "Yes",
+    "no": "No",
+    "showResults": "Show recommendations",
+    "results": "Recommended oils",
+    "resultsCount": "{count, plural, one {We found # suitable oil} other {We found # suitable oils}}",
+    "selection": "Your selection",
+    "edit": "Change",
+    "bestMatch": "Best match",
+    "oemBadge": "Manufacturer approval",
+    "why": "Why this oil",
+    "approvals": "Approvals & specifications",
+    "moreApprovals": "+{count}",
+    "pack": "Pack size",
+    "details": "Product details",
+    "reason": {
+      "oem": "Meets {brand} requirements: {items}",
+      "soft": "Meets {items} — the standard {brand} lists in the service book",
+      "lowSaps": "Low-ash (Low SAPS) formula that protects the DPF and catalyst: {items}",
+      "acea": "Meets specification {items}",
+      "heavyDuty": "For heavy-duty diesel engines: {items}",
+      "cng": "Suitable for gas engines: {items}",
+      "viscosity": "Recommended viscosity for this engine — {sae}",
+      "jaso": "Wet-clutch compatible: {items}",
+      "twoStroke": "For two-stroke engines: {items}",
+      "lawnmower": "For four-stroke garden equipment engines, {sae}",
+      "chainOil": "Lubricates saw chain and guide bar with excellent adhesion",
+      "chainOilBio": "Biodegradable chain oil — recommended for forestry work",
+      "hydraulic": "Hydraulic oil {iso}",
+      "hydraulicSpecs": "Hydraulic oil {iso}: {items}",
+      "gear": "Industrial gear oil {iso}",
+      "compressor": "Compressor oil {iso}"
+    },
+    "noMatch": "We could not find an exact match automatically. Send us your vehicle details and a specialist will select the oil for you.",
+    "noMatchCta": "Ask a specialist",
+    "disclaimer": "Recommendations are indicative and based on product approvals and specifications. Before an oil change always check the requirements in your vehicle's service book or owner's manual.",
+    "restart": "Start over",
+    "back": "Back",
+    "expertEyebrow": "Personal advice",
+    "expertTitle": "Exact match by licence plate",
+    "expertText": "Send us your licence plate or VIN — our specialist will reply with the exact oil, filter and quantity recommendation.",
+    "plate": "Licence plate or VIN",
+    "platePlaceholder": "e.g. AB-1234 or WVWZZZ…",
+    "carModel": "Make, model, engine",
+    "carModelPlaceholder": "e.g. Škoda Octavia 2.0 TDI, 2018",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "comment": "Comment",
+    "expertCta": "Get a recommendation",
+    "sent": "Thank you! A specialist will reply on the next business day.",
+    "advisorEyebrow": "Manufacturer database",
+    "advisorTitle": "Official Divinol Lubricant Advisor",
+    "advisorText": "Zeller+Gmelin's database covering thousands of vehicle models, engines and lubrication points.",
+    "advisorCta": "Open Lubricant Advisor",
+    "faq": [
+      {
+        "q": "How do I choose the right engine oil for my car?",
+        "a": "The most important thing is the manufacturer approval (e.g. VW 504.00/507.00, MB 229.51, BMW Longlife-04 or GM dexos2) and the viscosity stated in the service book or owner's manual. If no approval is specified, choose by ACEA class — modern cars with a particulate filter usually need a C class (C2, C3, C5)."
+      },
+      {
+        "q": "What does a viscosity such as 5W-30 mean?",
+        "a": "The first number with the letter W (winter) describes how the oil flows in the cold — the lower it is, the easier the cold start. The second number indicates viscosity at engine operating temperature (100 °C). 5W-30 and 0W-20 are typical for modern engines, 10W-40 and 15W-40 for older engines and heavy-duty machinery."
+      },
+      {
+        "q": "What is the difference between a manufacturer approval and an ACEA specification?",
+        "a": "ACEA and API are general industry standards that define the minimum properties of an oil. A manufacturer (OEM) approval means the oil has additionally passed that manufacturer's own tests and is on its list of approved oils. During the warranty period, use an oil with the approval your manufacturer requires."
+      },
+      {
+        "q": "Why does a car with a DPF need a Low SAPS oil?",
+        "a": "Low SAPS oils have reduced sulphated ash, phosphorus and sulphur content. This protects the diesel particulate filter (DPF), gasoline particulate filter (GPF) and catalyst from clogging. Such oils carry an ACEA C class (C2–C6) or, for trucks, E6, E9 or API CK-4."
+      },
+      {
+        "q": "How often should engine oil be changed?",
+        "a": "Follow the interval specified by the manufacturer. Typically this is 10,000–15,000 km or once a year; in LongLife mode up to 30,000 km or 2 years. Short city trips, frequent cold starts, towing or running on LPG are severe operating conditions — change the oil more often."
+      },
+      {
+        "q": "Can different engine oils be mixed?",
+        "a": "Quality oils with the same viscosity and specification are generally compatible, so another oil can be used to top up in an emergency. For the best protection and to keep the approval, it is recommended to top up with the same oil that is in the engine."
+      }
+    ]
+  },
+  "calc": {
+    "metaTitle": "Oil calculators — quantity, cost, mixing ratios",
+    "metaDescription": "Free calculators: oil change cost and the cheapest pack sizes, annual fleet consumption, 2-stroke fuel mix and screenwash concentrate dilution.",
+    "eyebrow": "Calculators",
+    "title": "Calculate precisely — buy smarter",
+    "text": "Practical tools for drivers, workshops and fleets. All calculations run instantly in your browser.",
+    "nav": "Calculators",
+    "liters": "{amount} L",
+    "ml": "{amount} ml",
+    "perYear": "per year",
+    "approx": "Approximate calculation",
+    "oil": {
+      "title": "Oil change planner",
+      "text": "Choose an oil, engine capacity and number of changes — we'll find the cheapest combination of packs.",
+      "product": "Oil",
+      "search": "Search oil or viscosity…",
+      "noProducts": "Nothing found",
+      "capacity": "Engine oil capacity (L)",
+      "changes": "Number of changes",
+      "required": "Required",
+      "result": "Best-value combination",
+      "total": "Total",
+      "leftover": "{amount} L left over — handy for topping up",
+      "noLeftover": "Nothing left over",
+      "vsSmall": "Compared with {pack} packs you save {amount}",
+      "noSavings": "For this quantity {pack} packs are the best value",
+      "addAll": "Add all to cart",
+      "added": "Packs added to cart",
+      "empty": "This product has no packs sold in litres."
+    },
+    "fleet": {
+      "title": "Fleet annual consumption",
+      "text": "Estimate yearly oil consumption and how much you save by buying large packs.",
+      "product": "Heavy-duty oil",
+      "vehicles": "Number of vehicles",
+      "km": "Annual mileage per vehicle (km)",
+      "interval": "Change interval (km)",
+      "capacity": "Oil capacity per change (L)",
+      "topup": "Top-up (L per 10,000 km)",
+      "liters": "Annual consumption",
+      "changes": "Changes per year",
+      "changesValue": "{count} changes",
+      "cost20": "Buying 20 L cans",
+      "cost200": "Buying 200 L drums",
+      "packs": "{count} × {pack}",
+      "perLitre": "{price}/L",
+      "missing": "This product has no {pack} pack",
+      "savings": "Yearly savings with drums",
+      "noSavings": "For this volume 20 L cans are better value",
+      "b2bNote": "Business customers get an individual discount on the whole catalogue.",
+      "cta": "Request a B2B quote"
+    },
+    "twoT": {
+      "title": "2-stroke fuel mix",
+      "text": "How much oil to add to petrol for a chainsaw, trimmer or outboard motor.",
+      "fuel": "Petrol (L)",
+      "ratio": "Ratio",
+      "custom": "Custom",
+      "customLabel": "Custom ratio 1:",
+      "oil": "Oil required",
+      "mix": "Mix 1:{ratio}",
+      "canister": "Canister with {fuel} L of petrol and {oil} ml of oil",
+      "hint": "Always follow the ratio specified by the equipment manufacturer. Fully synthetic Divinol Synthetic 2T is suitable for mixes up to 1:100.",
+      "products": "2-stroke oils"
+    },
+    "washer": {
+      "title": "Screenwash dilution",
+      "text": "How much water to add to a −60 °C concentrate to reach the frost protection you need.",
+      "target": "Target frost protection",
+      "total": "Ready-to-use quantity (L)",
+      "concentrate": "Concentrate",
+      "water": "Water",
+      "ratio": "Ratio",
+      "ratioValue": "1 : {parts}",
+      "ratioHint": "concentrate : water",
+      "hint": "Approximate calculation — freeze points are interpolated from typical dilution values. Use distilled or soft water and aim a few degrees lower for a safety margin.",
+      "product": "View concentrate"
+    }
+  },
+  "business": {
+    "metaTitle": "Divinol oils for business — B2B prices, invoices, bulk packs",
+    "metaDescription": "B2B partnership for workshops, fleets, agriculture, construction and industry: individual prices, payment by invoice, 20–200 L packs and technical support.",
+    "eyebrow": "B2B partnership",
+    "title": "A reliable lubricant supplier for your business",
+    "text": "We work with workshops, hauliers, agricultural, construction, forestry and industrial companies across the Baltics.",
+    "heroCta": "Request a quote",
+    "heroCta2": "Register your company",
+    "segmentsEyebrow": "Industries",
+    "segmentsTitle": "Who we supply",
+    "segments": {
+      "service": "Workshops and tyre centres",
+      "fleet": "Hauliers and fleets",
+      "agro": "Agriculture",
+      "construction": "Construction and road building",
+      "forestry": "Forestry",
+      "industry": "Industry and manufacturing"
+    },
+    "segmentsText": {
+      "service": "Engine oils with VW, BMW, MB and GM dexos approvals in 20 L cans and 200 L drums.",
+      "fleet": "Low SAPS oils for Euro VI trucks and buses with MAN, MB, Volvo and Scania approvals.",
+      "agro": "Multimax universal oils for tractors and combines, hydraulic and transmission oils.",
+      "construction": "Hydraulic oils, greases and concrete release agents for the job site.",
+      "forestry": "Biodegradable chain oils and hydraulic oils for environmentally sensitive work.",
+      "industry": "Gear, compressor and hydraulic oils and greases for production plants."
+    },
+    "benefitsEyebrow": "Benefits",
+    "benefitsTitle": "What you get",
+    "benefits": {
+      "prices": "Individual prices",
+      "pricesText": "Your discount is applied automatically across the catalogue — see net prices right after signing in.",
+      "invoice": "Pay by invoice",
+      "invoiceText": "For approved customers — payment by invoice within the agreed term.",
+      "bulk": "Bulk packs",
+      "bulkText": "20 L cans, 60 L and 200 L drums and 180 kg grease drums for workshops and plants.",
+      "manager": "Personal account manager",
+      "managerText": "Technical advice on product selection, approvals and change intervals.",
+      "portal": "Customer portal",
+      "portalText": "All orders, invoices and repeat orders in one place — 24/7.",
+      "docs": "Documentation",
+      "docsText": "Technical and safety data sheets (TDS/SDS) and OEM approval information."
+    },
+    "howEyebrow": "Getting started",
+    "howTitle": "How to become a B2B customer",
+    "how1": "Register with your company details",
+    "how1Text": "Fill in the registration form with your company name, registration and VAT number.",
+    "how2": "We verify your data and assign a price level",
+    "how2Text": "Usually within 1 business day. We will confirm by email.",
+    "how3": "Buy at your prices",
+    "how3Text": "Sign in, see discounted net prices and pay by invoice.",
+    "registerCta": "Register your company",
+    "statsTitle": "Divinol in numbers",
+    "stats": {
+      "products": "products in the catalogue",
+      "since": "year the manufacturer was founded",
+      "markets": "Baltic countries we deliver to",
+      "drum": "largest oil pack"
+    },
+    "formEyebrow": "Individual offer",
+    "formTitle": "Request a quote",
+    "formText": "Tell us what you need — we'll prepare an individual price offer and recommend the most suitable products.",
+    "formPoint1": "Reply within 1 business day",
+    "formPoint2": "No obligation",
+    "formPoint3": "Free technical advice",
+    "company": "Company",
+    "regNo": "Registration no.",
+    "name": "Contact person",
+    "email": "Email",
+    "phone": "Phone",
+    "segment": "Industry",
+    "segmentOther": "Other industry",
+    "choose": "Choose…",
+    "volume": "Approximate monthly consumption",
+    "volumes": {
+      "xs": "up to 50 L",
+      "s": "50–200 L",
+      "m": "200–1000 L",
+      "l": "over 1000 L"
+    },
+    "message": "Which products are you interested in?",
+    "messagePlaceholder": "e.g. 10W-40 engine oil for trucks (MAN M 3477), HLP 46 hydraulic oil, grease…",
+    "submit": "Send request",
+    "sent": "Thank you! Our account manager will contact you within 1 business day."
+  },
+  "about": {
+    "metaTitle": "About us — SIA Elama, official Divinol representative in Latvia",
+    "metaDescription": "SIA Elama is the official representative of Zeller+Gmelin Divinol oils and lubricants in Latvia. German quality since 1866, ISO 9001 certified production.",
+    "eyebrow": "About us",
+    "title": "Divinol in Latvia — SIA Elama",
+    "text": "SIA Elama is the official representative of Divinol products in Latvia. We supply genuine Zeller+Gmelin oils, lubricants and car care products to private and business customers, and help choose the solution that meets the equipment manufacturer's requirements.",
+    "storyEyebrow": "Our story",
+    "storyTitle": "Official representative — a direct line to the manufacturer",
+    "storyText1": "As the official Divinol representative we receive products directly from the manufacturer in Germany. That means genuine products, complete technical documentation and up-to-date information on manufacturer approvals.",
+    "storyText2": "Our warehouse is in Riga, at Ventspils iela 51 — from here orders are shipped to customers in Latvia, Estonia and Lithuania. Business customers get individual prices, bulk packs and technical advice.",
+    "zgEyebrow": "Manufacturer",
+    "zgTitle": "Zeller+Gmelin — manufacturing since 1866",
+    "zgText1": "Divinol® is a range of high-quality lubricants made by one of Germany's oldest companies — Zeller+Gmelin GmbH & Co. KG of Eislingen. The company specialises in automotive, industrial and hydraulic oils, greases, car care products, petrochemicals as well as printing inks and varnishes.",
+    "zgText2": "Production is certified to ISO 9001, and a team of qualified specialists works on product development in the company's laboratories. Zeller+Gmelin is listed among Germany's “TOP 100” most innovative companies.",
+    "facts": {
+      "founded": "founded in Eislingen, Germany",
+      "years": "years of experience",
+      "subsidiaries": "subsidiaries worldwide",
+      "products": "products in our catalogue"
+    },
+    "badges": {
+      "iso": "ISO 9001 certified production",
+      "top100": "TOP 100 most innovative companies",
+      "made": "Made in Germany",
+      "family": "Family-owned company"
+    },
+    "trustEyebrow": "Partners",
+    "trustTitle": "Trusted by global manufacturers",
+    "trustText": "Long-term supply contracts with companies such as BMW, Porsche, Bosch, BASF, Deutsche Bahn, Metabo and others speak for the quality.",
+    "valuesEyebrow": "Values",
+    "valuesTitle": "Our principles",
+    "value1": "Only genuine products",
+    "value1Text": "We supply products directly from the manufacturer in Germany — no middlemen, no risk of counterfeits.",
+    "value2": "Honest advice",
+    "value2Text": "We recommend exactly what your equipment needs, based on manufacturer approvals.",
+    "value3": "Fast delivery",
+    "value3Text": "Parcel lockers, courier or pickup at our Riga warehouse — in Latvia, Estonia and Lithuania.",
+    "value4": "Long-term partnership",
+    "value4Text": "Individual prices, payment by invoice and a personal contact for businesses.",
+    "ctaTitle": "Ready to find the right oil?",
+    "ctaText": "Use the oil finder or get in touch — we'll help you choose.",
+    "ctaFinder": "Find oil",
+    "ctaContact": "Contact us"
+  },
+  "contact": {
+    "metaTitle": "Contact — SIA Elama, Divinol Latvia",
+    "metaDescription": "Contact SIA Elama — the official Divinol representative in Latvia. Warehouse and order pickup at Ventspils iela 51, Riga.",
+    "eyebrow": "Contact",
+    "title": "Get in touch",
+    "text": "Questions about products, orders or partnership? Call, write or fill in the form — we'll reply on the next business day.",
+    "phone": "Phone",
+    "email": "Email",
+    "warehouse": "Warehouse & pickup",
+    "legal": "Registered address",
+    "requisites": "Company details",
+    "company": "Company",
+    "regNo": "Reg. no.",
+    "vatNo": "VAT no.",
+    "bank": "Bank",
+    "iban": "Account",
+    "swift": "SWIFT",
+    "hours": "Opening hours",
+    "copy": "Copy",
+    "copied": "Copied",
+    "formEyebrow": "Message",
+    "formTitle": "Write to us",
+    "formText": "Fill in the form and we will get back to you by email or phone.",
+    "name": "Name",
+    "message": "Message",
+    "messagePlaceholder": "How can we help?",
+    "consent": "I agree that my data is processed to answer my request in accordance with the <link>privacy policy</link>.",
+    "consentRequired": "Please confirm your consent to data processing",
+    "submit": "Send message",
+    "sent": "Thank you! We have received your message and will reply shortly.",
+    "mapTitle": "Warehouse location on the map — Ventspils iela 51, Riga",
+    "directions": "Open in maps",
+    "googleMaps": "Google Maps",
+    "social": "Follow us"
+  },
+  "downloads": {
+    "metaTitle": "Divinol product catalogues (PDF)",
+    "metaDescription": "Download official Divinol catalogues in PDF: passenger cars, commercial vehicles, industrial oils, greases, biolubricants, motorcycles and agriculture.",
+    "eyebrow": "Catalogues",
+    "title": "Product catalogues and brochures",
+    "text": "Official Zeller+Gmelin Divinol catalogues with product descriptions, specifications and approvals.",
+    "lang": "Language",
+    "size": "Size",
+    "pages": "{count} pages",
+    "open": "Open",
+    "download": "Download",
+    "langs": {
+      "lv": "Latvian",
+      "de": "German",
+      "en": "English",
+      "ru": "Russian"
+    },
+    "items": {
+      "cars": "Passenger cars",
+      "commercial": "Trucks and commercial vehicles",
+      "industrial": "Industrial oils",
+      "bio": "Biolubricants",
+      "greases": "Greases",
+      "release": "Concrete and asphalt release agents",
+      "moto": "Motorcycle oils",
+      "agro": "Agriculture"
+    },
+    "descriptions": {
+      "cars": "Engine oils, transmission oils and fluids for passenger cars with specifications and approvals.",
+      "commercial": "Multimax heavy-duty oils, transmission and hydraulic oils for trucks and buses.",
+      "industrial": "Gear, hydraulic, slideway and guideway oils for industry.",
+      "bio": "Environmentally friendly lubricants for sensitive areas — chain oils, hydraulics, greases.",
+      "greases": "High-performance greases for industry and aftersales.",
+      "release": "Form oils for concrete and release agents for asphalt.",
+      "moto": "The motorcycle, quad and scooter oil range on one page.",
+      "agro": "Lubrication chart for agricultural tractors and combines."
+    },
+    "helpTitle": "Can't find the document you need?",
+    "helpText": "Technical (TDS) and safety data sheets (SDS) are available on the product pages. If you need another document, write to us.",
+    "helpCta": "Contact us"
+  },
+  "delivery": {
+    "metaTitle": "Delivery and payment — Divinol Latvia",
+    "metaDescription": "Delivery options and prices in Latvia, Estonia and Lithuania: parcel lockers, courier, pickup at our Riga warehouse and freight. Pay by card, bank transfer or invoice.",
+    "eyebrow": "Delivery & payment",
+    "title": "How to receive your order",
+    "text": "We deliver across the Baltics — from small bottles to 200 L drums. Prices include VAT of the destination country.",
+    "freeBanner": "Free parcel locker or courier delivery on orders over {amount} (Latvia)",
+    "methodsEyebrow": "Delivery",
+    "methods": "Delivery options",
+    "pickup": "Warehouse pickup",
+    "pickupText": "Ventspils iela 51, Riga. We'll notify you by email or SMS when your order is ready.",
+    "parcel_locker": "Parcel locker",
+    "parcel_lockerText": "Omniva, DPD or Smartpost parcel lockers in Latvia, Estonia and Lithuania.",
+    "courier": "Courier to your door",
+    "courierText": "Delivery to your address within 1–3 business days.",
+    "freight": "Freight delivery",
+    "freightText": "For 60 L and 200 L drums and 180 kg grease drums — price confirmed individually.",
+    "maxItem": "Packs up to {size} L",
+    "market": "Country",
+    "price": "Price",
+    "free": "Free over {amount}",
+    "freeShort": "Free",
+    "onRequest": "On request",
+    "notAvailable": "—",
+    "pricesNote": "Prices incl. VAT: {rates}. Business customers see prices excluding VAT.",
+    "paymentsEyebrow": "Payment",
+    "payments": "Payment methods",
+    "card": "Bank card",
+    "cardText": "Secure payment with Visa, Mastercard, Apple Pay or Google Pay.",
+    "transfer": "Bank transfer",
+    "transferText": "After ordering you will receive a prepayment invoice by email.",
+    "invoice": "Invoice for businesses",
+    "invoiceText": "For approved B2B customers — payment within the agreed term.",
+    "returnsEyebrow": "Returns",
+    "returns": "Right of withdrawal and returns",
+    "returnsText": "Private customers may withdraw from a purchase within 14 days of receiving the goods without giving a reason. Contact us and we'll help you arrange the return.",
+    "returnsLink": "Read the terms and conditions",
+    "faq": [
+      {
+        "q": "How long does delivery take?",
+        "a": "Products in stock are dispatched within 1–2 business days. Courier delivery usually takes 1–3 business days, and parcels are usually available in the locker the business day after dispatch. Products marked “On order” are supplied by the manufacturer — we will confirm the lead time individually."
+      },
+      {
+        "q": "Can I collect my order myself?",
+        "a": "Yes — choose “Warehouse pickup” and collect your order free of charge at Ventspils iela 51, Riga. Please wait for our notification that your order is ready before coming."
+      },
+      {
+        "q": "How are 200 L drums delivered?",
+        "a": "Large packs (60 L and 200 L drums and 180 kg grease drums) are delivered on a pallet by a freight carrier. We confirm the delivery price and time after receiving your order, depending on the address."
+      },
+      {
+        "q": "What if the parcel is damaged?",
+        "a": "Check the packaging when you receive the parcel. If it is damaged or the product has leaked, record it (e.g. with a photo) and contact us immediately by email or phone — we will sort it out."
+      },
+      {
+        "q": "Do you deliver to Estonia and Lithuania?",
+        "a": "Yes. We deliver to Estonia and Lithuania by parcel locker, courier or freight carrier. Prices are calculated with the VAT rate of the destination country, and the free delivery threshold is shown in the table above."
+      }
+    ]
+  },
+  "legal": {
+    "termsMetaTitle": "Terms and conditions of sale",
+    "termsMetaDescription": "Terms and conditions of the Divinol online shop: ordering, prices, payment, delivery, 14-day right of withdrawal, warranty and dispute resolution.",
+    "privacyMetaTitle": "Privacy policy",
+    "privacyMetaDescription": "How SIA Elama processes personal data in the Divinol online shop: purposes, legal bases, processors, retention periods, your rights and cookies.",
+    "eyebrow": "Legal information",
+    "termsTitle": "Terms and conditions of sale",
+    "termsText": "The terms that apply to purchases in the Divinol online shop.",
+    "privacyTitle": "Privacy policy",
+    "privacyText": "How we process and protect your personal data.",
+    "updatedDate": "25.09.2026",
+    "questions": "Questions about this document? Write to {email}.",
+    "terms": {
+      "sections": [
+        {
+          "title": "General provisions",
+          "body": "These terms govern purchases in the Divinol online shop (divinol.lv and divinol.ee).\n\nSeller: {companyName}, registration no. {regNo}, VAT no. {vatNo}, registered address: {address}. Warehouse and order pickup: {warehouse}. Email: {email}, phone: {phone}.\n\nBy placing an order the buyer confirms that they have read and accept these terms. The buyer may be a consumer (natural person) or a legal entity. Terms that apply only to businesses are set out in a separate section."
+        },
+        {
+          "title": "Orders and conclusion of the contract",
+          "body": "Products are selected by adding them to the shopping cart and completing the checkout. Before confirming the order the buyer can review and correct the entered data.\n\nAfter placing the order the buyer receives a confirmation at the email address provided. The distance contract is concluded when the seller confirms the order.\n\nIf an ordered product cannot be supplied (e.g. it is unavailable from the manufacturer), the seller will inform the buyer without delay and offer an alternative or refund the amount paid within 14 days at the latest."
+        },
+        {
+          "title": "Prices",
+          "body": "Prices are in euros (EUR). Private customers see prices including value added tax (VAT) at the rate of the selected delivery country. Approved B2B customers see prices excluding VAT with their individual discount applied.\n\nDelivery costs are shown before the order is confirmed. The freight price for large packs is confirmed individually by the seller before the order is fulfilled.\n\nIf a price is displayed incorrectly due to an obvious technical error, the seller will inform the buyer, who may either confirm the order at the correct price or cancel it."
+        },
+        {
+          "title": "Payment",
+          "body": "Available payment methods:\n- payment card (Visa, Mastercard) and payment services offered at checkout;\n- bank transfer against a prepayment invoice;\n- payment by invoice — for approved B2B customers only.\n\nA prepayment invoice must be paid within the term stated on it. The order is processed once payment is received. Card payments are processed by a certified payment service provider; the seller never sees or stores card details."
+        },
+        {
+          "title": "Delivery",
+          "body": "Products are delivered in Latvia, Estonia and Lithuania by parcel locker, courier or freight carrier, or can be collected at our Riga warehouse. Delivery options, prices and free delivery conditions are listed on the “Delivery and payment” page.\n\nThe delivery time is stated in the order confirmation. If no time is stated, the seller delivers the goods within 30 days of the conclusion of the contract at the latest.\n\nThe risk of accidental loss of or damage to the goods passes to the buyer when the buyer or a person designated by the buyer takes possession of the goods. Please check the packaging on receipt and inform the seller of any damage without delay."
+        },
+        {
+          "title": "Right of withdrawal (14 days)",
+          "body": "A consumer has the right to withdraw from the distance contract within 14 days without giving any reason. The withdrawal period starts on the day the consumer or a person designated by the consumer receives the goods.\n\nTo exercise the right of withdrawal, the consumer must send the seller a clear statement to {email} before the period expires, stating the order number, the products and a bank account for the refund. The model withdrawal form annexed to Cabinet Regulation No. 255 “Regulations on Distance Contracts” may also be used.\n\nThe consumer must return the goods without undue delay and no later than 14 days after sending the withdrawal notice. The direct cost of returning the goods is borne by the consumer unless agreed otherwise.\n\nThe seller refunds all payments received, including standard delivery costs, no later than 14 days after receiving the withdrawal notice, using the same means of payment. The seller may withhold the refund until the goods have been received back.\n\nThe consumer is liable for any diminished value of the goods resulting from handling beyond what is necessary to establish their nature and characteristics — for example if the package has been opened and part of the product used."
+        },
+        {
+          "title": "Conformity of goods and complaints",
+          "body": "The seller is responsible for the conformity of the goods with the contract. A consumer may submit a claim regarding non-conforming goods within two years of receiving the goods in accordance with the Latvian Consumer Rights Protection Law.\n\nClaims must be submitted in writing to {email}, together with proof of purchase and, if possible, photos. The seller will respond to the claim within 15 days.\n\nThe seller is not liable for damage caused by using a product contrary to the equipment manufacturer's requirements, the product description or the safety data sheet, or by improper storage."
+        },
+        {
+          "title": "Terms for businesses (B2B)",
+          "body": "The consumer right of withdrawal does not apply to purchases made by legal entities or by natural persons in the course of their business.\n\nThe B2B price level, discount and invoice payment term are granted by the seller after verifying the company's details. The seller may change or withdraw the option to pay by invoice if invoices are not paid on time.\n\nOn receipt the buyer must check the quantity of goods and the integrity of the packaging, and record obvious discrepancies on the delivery note or notify the seller without delay. For late payments the seller may charge statutory default interest in accordance with the Latvian Commercial Law."
+        },
+        {
+          "title": "Liability",
+          "body": "The seller is not liable for failure to perform contractual obligations due to force majeure. Product descriptions, oil finder recommendations and calculator results are for information only — check the equipment manufacturer's requirements before using a product.\n\nProduct images may differ slightly from the actual packaging if the manufacturer has changed the design."
+        },
+        {
+          "title": "Personal data",
+          "body": "The buyer's personal data is processed to fulfil the order and to comply with legal requirements in accordance with the Privacy Policy available on this website."
+        },
+        {
+          "title": "Dispute resolution",
+          "body": "Disputes are first resolved through negotiation between the seller and the buyer. If no agreement is reached, the consumer may contact the Consumer Rights Protection Centre of Latvia (PTAC, www.ptac.gov.lv) or the Consumer Dispute Resolution Commission.\n\nIn cross-border disputes the consumer may contact the European Consumer Centre Latvia (www.ecclatvia.lv). The European Commission's Online Dispute Resolution (ODR) platform ceased operating on 20 July 2025.\n\nDisputes that cannot be settled by agreement are resolved by the courts of the Republic of Latvia in accordance with Latvian law."
+        },
+        {
+          "title": "Final provisions",
+          "body": "The seller may amend these terms. An order is governed by the terms in force at the time the order was placed. These terms are governed by the laws of the Republic of Latvia."
+        }
+      ]
+    },
+    "privacy": {
+      "sections": [
+        {
+          "title": "Controller",
+          "body": "The controller of personal data is {companyName}, registration no. {regNo}, registered address: {address}. For data protection matters contact {email}, phone {phone}.\n\nThis policy applies to the processing of personal data in the Divinol online shop (divinol.lv, divinol.ee), the customer portal and in communication with us."
+        },
+        {
+          "title": "What data we process",
+          "body": "- Account data: first and last name, email, phone, password (stored in hashed form by the authentication provider).\n- Order data: delivery and billing address, ordered products, payment status, invoices.\n- Business data: company name, registration and VAT number, registered address, contact person.\n- Communication data: messages and requests sent via the contact form, the B2B form or the oil finder form (including a licence plate or VIN if you provide it).\n- Technical data: IP address, browser information and server logs needed for the operation and security of the website."
+        },
+        {
+          "title": "Purposes and legal bases",
+          "body": "- Fulfilling orders, delivery, maintaining your account and the customer portal — conclusion and performance of a contract (GDPR Art. 6(1)(b)).\n- Compliance with accounting and tax requirements, keeping invoices — legal obligation (Art. 6(1)(c)).\n- Answering questions and requests, verifying B2B customer details — pre-contractual steps and our legitimate interests (Art. 6(1)(b) and (f)).\n- Website security, fraud prevention and technical maintenance — legitimate interests (Art. 6(1)(f)).\n- Newsletters — consent (Art. 6(1)(a)), which you may withdraw at any time."
+        },
+        {
+          "title": "Processors and recipients",
+          "body": "We share data only with service providers needed to run the website and fulfil orders, and only to the extent necessary:\n- Supabase — database and user authentication; data is stored in the European Union (Frankfurt, Germany).\n- Netlify — website hosting and content delivery network.\n- Email service provider — sending order confirmations and notifications.\n- Payment service provider — processing card payments; we do not see or store card details.\n- Delivery partners (parcel locker operators, couriers, freight carriers) — to deliver your order.\n- Accounting service providers and public authorities — where required by law.\n\nWe do not sell personal data and do not use it for automated decision-making."
+        },
+        {
+          "title": "Transfers outside the EEA",
+          "body": "Some service providers (e.g. the hosting service) may process technical data outside the European Economic Area. In such cases data protection is ensured by a European Commission adequacy decision (e.g. the EU–US Data Privacy Framework) or standard contractual clauses."
+        },
+        {
+          "title": "Retention periods",
+          "body": "- Account data — while the account is active or until you request deletion.\n- Orders, invoices and related data — 5 years in accordance with the Latvian Accounting Law.\n- Enquiries — up to 2 years after the last communication, unless related to an order.\n- Newsletter subscription — until consent is withdrawn.\n- Server logs — short-term, only as long as needed for security."
+        },
+        {
+          "title": "Your rights",
+          "body": "You have the right to access your data, rectify it, request erasure or restriction of processing, object to processing based on legitimate interests and receive your data in a portable format. Where processing is based on consent, you may withdraw it at any time.\n\nSend requests to {email} — we will reply within one month. If you believe your data is processed unlawfully, you may lodge a complaint with the Data State Inspectorate of Latvia (www.dvi.gov.lv)."
+        },
+        {
+          "title": "Cookies",
+          "body": "We only use cookies and browser storage that are necessary for the website to work:\n- shopping cart — keeps the products in your cart in your browser;\n- authentication — maintains your session in the customer portal;\n- delivery country (market) — remembers the selected country for price and VAT calculation (up to 1 year);\n- cookie choice — remembers your choice in the cookie notice.\n\nNo analytics or marketing cookies are used without your consent. You can delete or block cookies in your browser settings, but the cart and sign-in may then not work."
+        },
+        {
+          "title": "Security",
+          "body": "Data is transmitted in encrypted form (HTTPS/TLS). Access to the database is restricted by user permissions — each customer sees only their own orders and invoices, and full access is limited to authorised staff."
+        },
+        {
+          "title": "Changes to this policy",
+          "body": "We may update this policy if our services or legal requirements change. The current version is always published on this page, and the date of the last update is shown at the top of the page."
+        }
+      ]
+    }
+  }
+}

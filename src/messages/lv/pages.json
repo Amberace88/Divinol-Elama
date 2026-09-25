@@ -1,0 +1,616 @@
+{
+  "pagesUi": {
+    "faqTitle": "Biežāk uzdotie jautājumi",
+    "faqEyebrow": "BUJ",
+    "required": "obligāts",
+    "optional": "nav obligāts",
+    "privacyNote": "Nosūtot formu, tu piekrīti datu apstrādei atbildes sniegšanai saskaņā ar <link>privātuma politiku</link>.",
+    "sentTitle": "Paldies — ziņa nosūtīta!",
+    "sendAnother": "Nosūtīt vēl vienu",
+    "toc": "Saturs",
+    "backToTop": "Uz augšu",
+    "updated": "Atjaunots: {date}"
+  },
+  "finder": {
+    "metaTitle": "Eļļas izvēle pēc auto — Divinol eļļu meklētājs",
+    "metaDescription": "Atrodi piemērotāko Divinol motoreļļu savam auto, kravas auto, motociklam vai tehnikai pēc ražotāja, degvielas un izlaiduma gada. VW, BMW, Mercedes, Opel, Ford, MAN, Scania un citi apstiprinājumi.",
+    "eyebrow": "Eļļas izvēle",
+    "title": "Atrodi pareizo eļļu 3 soļos",
+    "text": "Atlase balstīta uz ražotāju apstiprinājumiem (piem. VW 504.00, MB 229.51, BMW Longlife-04, GM dexos2, MAN M 3477) un ACEA/API/JASO specifikācijām.",
+    "heroPoint1": "Vairāk nekā 30 auto un tehnikas ražotāju",
+    "heroPoint2": "Paskaidrojums katram ieteikumam",
+    "heroPoint3": "Bezmaksas speciālista konsultācija",
+    "progress": "{current}. solis no {total}",
+    "step1": "Tehnikas veids",
+    "step2": "Ražotājs",
+    "step2App": "Pielietojums",
+    "step3": "Dzinējs un gads",
+    "stepResults": "Rezultāti",
+    "step1Title": "Kādai tehnikai meklē eļļu?",
+    "step2Title": "Izvēlies ražotāju",
+    "step2AppTitle": "Kur eļļa tiks izmantota?",
+    "step3Title": "Pastāsti par dzinēju",
+    "vehicle": {
+      "car": "Vieglais auto",
+      "van": "Mikroautobuss",
+      "truck": "Kravas auto / traktors",
+      "moto": "Motocikls / kvadricikls",
+      "garden": "Dārza tehnika / 2T",
+      "industry": "Hidraulika / rūpniecība"
+    },
+    "vehicleHint": {
+      "car": "Benzīna, dīzeļa un hibrīdauto",
+      "van": "Furgoni un komerciālie auto līdz 3,5 t",
+      "truck": "Kravas auto, autobusi, lauksaimniecības un būvtehnika",
+      "moto": "4T motocikli, kvadricikli un 2T motorolleri",
+      "garden": "Motorzāģi, trimmeri, zāles pļāvēji",
+      "industry": "Hidraulika, reduktori, kompresori, ķēdes"
+    },
+    "apps": {
+      "street": { "label": "Ceļa motocikls", "hint": "Ikdienas un tūrisma 4T motocikli ar slapjo sajūgu" },
+      "sport": { "label": "Sporta motocikls", "hint": "Augstu apgriezienu un sacīkšu dzinēji" },
+      "heavy": { "label": "Lielas kubatūras / čoperis", "hint": "Gaisa dzesēšanas V-dzinēji, piem. Harley-Davidson" },
+      "quad": { "label": "Kvadricikls / UTV", "hint": "Bezceļa tehnika ar kopīgu dzinēja un sajūga eļļu" },
+      "twoStroke": { "label": "2T motorollers / krosa moto", "hint": "Divtaktu dzinēji ar atsevišķu eļļas tvertni vai maisījumu" },
+      "chainsaw": { "label": "Motorzāģis", "hint": "2T maisījuma eļļa un ķēžeļļa" },
+      "trimmer": { "label": "Trimmeris / pūtējs", "hint": "Divtaktu dārza tehnika" },
+      "mower": { "label": "Zāles pļāvējs (4T)", "hint": "Četrtaktu dzinēji zāles pļāvējos un dārza traktoros" },
+      "chainOil": { "label": "Ķēdes eļļošana", "hint": "Zāģa ķēdes un sliedes eļļošana" },
+      "hydraulic": { "label": "Rūpnieciskā hidraulika", "hint": "Preses, darbgaldi, stacionāras sistēmas (HLP)" },
+      "hydraulicHv": { "label": "Mobilā hidraulika", "hint": "Ekskavatori, iekrāvēji, ārā strādājoša tehnika (HVLP)" },
+      "gear": { "label": "Reduktori", "hint": "Slēgtas rūpnieciskās pārnesumkārbas (CLP)" },
+      "compressor": { "label": "Kompresori", "hint": "Virzuļu un rotācijas kompresori" },
+      "chain": { "label": "Ķēdes un konveijeri", "hint": "Ķēžu un vadotņu eļļošana" }
+    },
+    "brandOther": "Cits ražotājs",
+    "brandOtherHint": "Atlasīsim pēc ACEA/API specifikācijas",
+    "fuel": "Degviela",
+    "fuels": {
+      "petrol": "Benzīns",
+      "diesel": "Dīzelis",
+      "hybrid": "Hibrīds",
+      "lpg": "Gāze (LPG/CNG)"
+    },
+    "year": "Izlaiduma gads",
+    "years": {
+      "old": "līdz 2004",
+      "mid": "2004–2014",
+      "new": "no 2015"
+    },
+    "dpf": "Daļiņu filtrs (DPF/GPF)",
+    "dpfHint": "Dīzeļauto ar DPF vai benzīna auto ar GPF nepieciešama zema pelnu satura (Low SAPS) eļļa.",
+    "dpfUnknown": "Nezinu",
+    "yes": "Ir",
+    "no": "Nav",
+    "showResults": "Rādīt ieteikumus",
+    "results": "Ieteicamās eļļas",
+    "resultsCount": "{count, plural, zero {Atradām # piemērotu eļļu} one {Atradām # piemērotu eļļu} other {Atradām # piemērotas eļļas}}",
+    "selection": "Tava izvēle",
+    "edit": "Mainīt",
+    "bestMatch": "Labākā atbilstība",
+    "oemBadge": "Ražotāja apstiprinājums",
+    "why": "Kāpēc šī eļļa",
+    "approvals": "Apstiprinājumi un specifikācijas",
+    "moreApprovals": "+{count}",
+    "pack": "Iepakojums",
+    "details": "Produkta apraksts",
+    "reason": {
+      "oem": "Atbilst {brand} prasībām: {items}",
+      "soft": "Atbilst {items} — standartam, ko {brand} norāda servisa grāmatiņā",
+      "lowSaps": "Zema pelnu satura (Low SAPS) formula, saudzīga pret DPF un katalizatoru: {items}",
+      "acea": "Atbilst specifikācijai {items}",
+      "heavyDuty": "Lieljaudas dīzeļdzinējiem: {items}",
+      "cng": "Piemērota gāzes dzinējiem: {items}",
+      "viscosity": "Ieteicamā viskozitāte šādam dzinējam — {sae}",
+      "jaso": "Saderīga ar slapjo sajūgu: {items}",
+      "twoStroke": "Divtaktu dzinējiem: {items}",
+      "lawnmower": "Četrtaktu dārza tehnikas dzinējiem, {sae}",
+      "chainOil": "Zāģa ķēdes un sliedes eļļošanai ar labu pielipšanu",
+      "chainOilBio": "Bioloģiski noārdāma ķēžeļļa — ieteicama darbam mežā",
+      "hydraulic": "Hidrauliskā eļļa {iso}",
+      "hydraulicSpecs": "Hidrauliskā eļļa {iso}: {items}",
+      "gear": "Rūpnieciskā reduktoru eļļa {iso}",
+      "compressor": "Kompresoru eļļa {iso}"
+    },
+    "noMatch": "Automātiski neatradām precīzu atbilstību. Atsūti auto datus — speciālists atlasīs eļļu personīgi.",
+    "noMatchCta": "Jautāt speciālistam",
+    "disclaimer": "Ieteikums ir orientējošs un balstīts uz produktu apstiprinājumiem un specifikācijām. Pirms eļļas maiņas vienmēr pārbaudi tehnikas ražotāja prasības servisa grāmatiņā vai lietošanas instrukcijā.",
+    "restart": "Sākt no jauna",
+    "back": "Atpakaļ",
+    "expertEyebrow": "Personīga konsultācija",
+    "expertTitle": "Precīza izvēle pēc numura zīmes",
+    "expertText": "Atsūti auto numura zīmi vai VIN — mūsu speciālists atbildēs ar precīzu eļļas, filtru un daudzuma ieteikumu.",
+    "plate": "Numura zīme vai VIN",
+    "platePlaceholder": "piem. AB-1234 vai WVWZZZ…",
+    "carModel": "Auto marka, modelis, dzinējs",
+    "carModelPlaceholder": "piem. Škoda Octavia 2.0 TDI, 2018",
+    "name": "Vārds",
+    "email": "E-pasts",
+    "phone": "Tālrunis",
+    "comment": "Komentārs",
+    "expertCta": "Saņemt ieteikumu",
+    "sent": "Paldies! Speciālists atbildēs tuvākajā darba dienā.",
+    "advisorEyebrow": "Ražotāja datubāze",
+    "advisorTitle": "Oficiālais Divinol Lubricant Advisor",
+    "advisorText": "Zeller+Gmelin datubāze ar tūkstošiem transportlīdzekļu modeļu, dzinēju un eļļošanas punktu (angļu valodā).",
+    "advisorCta": "Atvērt Lubricant Advisor",
+    "faq": [
+      {
+        "q": "Kā izvēlēties pareizo motoreļļu savam auto?",
+        "a": "Svarīgākais ir auto ražotāja apstiprinājums (piem. VW 504.00/507.00, MB 229.51, BMW Longlife-04 vai GM dexos2) un viskozitāte, kas norādīta servisa grāmatiņā vai lietošanas instrukcijā. Ja apstiprinājums nav norādīts, izvēlies eļļu pēc ACEA klases — mūsdienu auto ar daļiņu filtru parasti nepieciešama C klase (C2, C3, C5)."
+      },
+      {
+        "q": "Ko nozīmē viskozitāte, piemēram, 5W-30?",
+        "a": "Pirmais skaitlis ar burtu W (winter) raksturo eļļas plūstamību aukstumā — jo mazāks, jo vieglāka ziemas iedarbināšana. Otrais skaitlis norāda viskozitāti dzinēja darba temperatūrā (100 °C). 5W-30 un 0W-20 ir tipiskas mūsdienu dzinējiem, 10W-40 un 15W-40 — vecākiem dzinējiem un lieljaudas tehnikai."
+      },
+      {
+        "q": "Kāda ir atšķirība starp ražotāja apstiprinājumu un ACEA specifikāciju?",
+        "a": "ACEA un API ir vispārīgi nozares standarti, kas nosaka eļļas minimālās īpašības. Ražotāja apstiprinājums (OEM approval) nozīmē, ka eļļa ir papildus pārbaudīta konkrētā ražotāja testos un ir iekļauta tā apstiprināto eļļu sarakstā. Garantijas laikā izmanto eļļu ar ražotāja pieprasīto apstiprinājumu."
+      },
+      {
+        "q": "Kāpēc auto ar DPF vajadzīga Low SAPS eļļa?",
+        "a": "Low SAPS eļļām ir samazināts sulfātu pelnu, fosfora un sēra saturs. Tas pasargā dīzeļa daļiņu filtru (DPF), benzīna daļiņu filtru (GPF) un katalizatoru no aizsērēšanas. Šādas eļļas atzīmētas ar ACEA C klasi (C2–C6) vai kravas auto — ar E6, E9, API CK-4."
+      },
+      {
+        "q": "Cik bieži jāmaina motoreļļa?",
+        "a": "Ievēro auto ražotāja norādīto intervālu. Parasti tas ir 10 000–15 000 km vai reizi gadā; LongLife režīmā — līdz 30 000 km vai 2 gadiem. Īsi braucieni pilsētā, bieža iedarbināšana aukstumā, piekabes vilkšana vai LPG izmantošana ir smagi ekspluatācijas apstākļi — tad eļļu ieteicams mainīt biežāk."
+      },
+      {
+        "q": "Vai drīkst sajaukt dažādas motoreļļas?",
+        "a": "Kvalitatīvas eļļas ar vienādu viskozitāti un specifikāciju parasti ir savietojamas, tāpēc papildināšanai ārkārtas gadījumā var izmantot citu eļļu. Tomēr labākās aizsardzības un apstiprinājuma saglabāšanai ieteicams papildināt ar to pašu eļļu, kas ielieta dzinējā."
+      }
+    ]
+  },
+  "calc": {
+    "metaTitle": "Eļļas kalkulatori — daudzums, izmaksas, maisījumi",
+    "metaDescription": "Bezmaksas kalkulatori: eļļas maiņas izmaksas un izdevīgākie iepakojumi, autoparka gada patēriņš, 2T degvielas maisījums un vējstiklu šķidruma koncentrāta atšķaidīšana.",
+    "eyebrow": "Kalkulatori",
+    "title": "Aprēķini precīzi — pērc izdevīgi",
+    "text": "Praktiski rīki autovadītājiem, servisiem un autoparkiem. Visi aprēķini notiek uzreiz tavā pārlūkā.",
+    "nav": "Kalkulatori",
+    "liters": "{amount} L",
+    "ml": "{amount} ml",
+    "perYear": "gadā",
+    "approx": "Aptuvens aprēķins",
+    "oil": {
+      "title": "Eļļas maiņas plānotājs",
+      "text": "Izvēlies eļļu, dzinēja tilpumu un maiņu skaitu — atradīsim lētāko iepakojumu kombināciju.",
+      "product": "Eļļa",
+      "search": "Meklē eļļu vai viskozitāti…",
+      "noProducts": "Nekas netika atrasts",
+      "capacity": "Dzinēja eļļas tilpums (L)",
+      "changes": "Maiņu skaits",
+      "required": "Nepieciešams",
+      "result": "Izdevīgākā kombinācija",
+      "total": "Kopā",
+      "leftover": "Pāri paliks {amount} L — noderēs papildināšanai",
+      "noLeftover": "Bez atlikuma",
+      "vsSmall": "Salīdzinot ar {pack} iepakojumiem, ietaupi {amount}",
+      "noSavings": "Šim daudzumam izdevīgākie ir {pack} iepakojumi",
+      "addAll": "Pievienot visu grozam",
+      "added": "Iepakojumi pievienoti grozam",
+      "empty": "Šim produktam nav pieejamu iepakojumu litros."
+    },
+    "fleet": {
+      "title": "Autoparka gada patēriņš",
+      "text": "Aprēķini eļļas patēriņu gadā un ietaupījumu, pērkot lielos iepakojumos.",
+      "product": "Lieljaudas eļļa",
+      "vehicles": "Transportlīdzekļu skaits",
+      "km": "Nobraukums gadā uz 1 auto (km)",
+      "interval": "Maiņas intervāls (km)",
+      "capacity": "Eļļas tilpums 1 maiņai (L)",
+      "topup": "Papildināšana (L uz 10 000 km)",
+      "liters": "Gada patēriņš",
+      "changes": "Maiņas gadā",
+      "changesValue": "{count} maiņas",
+      "cost20": "Pērkot 20 L kannās",
+      "cost200": "Pērkot 200 L mucās",
+      "packs": "{count} × {pack}",
+      "perLitre": "{price}/L",
+      "missing": "Šim produktam nav {pack} iepakojuma",
+      "savings": "Ietaupījums gadā ar mucām",
+      "noSavings": "Šādam apjomam izdevīgākas ir 20 L kannas",
+      "b2bNote": "B2B klientiem piemērojam individuālu atlaidi visam katalogam.",
+      "cta": "Pieprasīt B2B piedāvājumu"
+    },
+    "twoT": {
+      "title": "2T degvielas maisījums",
+      "text": "Cik eļļas pievienot benzīnam motorzāģim, trimmerim vai laivas motoram.",
+      "fuel": "Benzīna daudzums (L)",
+      "ratio": "Proporcija",
+      "custom": "Cita",
+      "customLabel": "Sava proporcija 1:",
+      "oil": "Nepieciešamā eļļa",
+      "mix": "Maisījums 1:{ratio}",
+      "canister": "Kanna ar {fuel} L benzīna un {oil} ml eļļas",
+      "hint": "Vienmēr ievēro tehnikas ražotāja norādīto proporciju. Sintētiskā Divinol Synthetic 2T ir piemērota maisījumiem līdz 1:100.",
+      "products": "2T eļļas"
+    },
+    "washer": {
+      "title": "Vējstiklu šķidruma atšķaidīšana",
+      "text": "Cik ūdens pievienot −60 °C koncentrātam, lai sasniegtu vajadzīgo salizturību.",
+      "target": "Vēlamā salizturība",
+      "total": "Gatavā šķidruma daudzums (L)",
+      "concentrate": "Koncentrāts",
+      "water": "Ūdens",
+      "ratio": "Attiecība",
+      "ratioValue": "1 : {parts}",
+      "ratioHint": "koncentrāts : ūdens",
+      "hint": "Aprēķins ir orientējošs — sasalšanas temperatūra interpolēta no tipiskām atšķaidīšanas vērtībām. Lieto destilētu vai mīkstu ūdeni un rezervei izvēlies par dažiem grādiem zemāku temperatūru.",
+      "product": "Skatīt koncentrātu"
+    }
+  },
+  "business": {
+    "metaTitle": "Divinol eļļas uzņēmumiem — B2B cenas, rēķini, lieli iepakojumi",
+    "metaDescription": "B2B sadarbība autoservisiem, autoparkiem, lauksaimniekiem, būvniecībai un rūpniecībai: individuālas cenas, pēcapmaksa ar rēķinu, 20–200 L iepakojumi un tehniskais atbalsts.",
+    "eyebrow": "B2B sadarbība",
+    "title": "Uzticams eļļu piegādātājs tavam uzņēmumam",
+    "text": "Strādājam ar autoservisiem, pārvadātājiem, lauksaimniecības, būvniecības, mežistrādes un rūpniecības uzņēmumiem visā Baltijā.",
+    "heroCta": "Pieprasīt piedāvājumu",
+    "heroCta2": "Reģistrēt uzņēmumu",
+    "segmentsEyebrow": "Nozares",
+    "segmentsTitle": "Kam mēs piegādājam",
+    "segments": {
+      "service": "Autoservisi un riepu centri",
+      "fleet": "Pārvadātāji un autoparki",
+      "agro": "Lauksaimniecība",
+      "construction": "Būvniecība un ceļu būve",
+      "forestry": "Mežistrāde",
+      "industry": "Rūpniecība un ražošana"
+    },
+    "segmentsText": {
+      "service": "Motoreļļas ar VW, BMW, MB, GM dexos apstiprinājumiem 20 L kannās un 200 L mucās.",
+      "fleet": "Low SAPS eļļas Euro VI kravas auto un autobusiem ar MAN, MB, Volvo, Scania apstiprinājumiem.",
+      "agro": "Multimax universālās eļļas traktoriem un kombainiem, hidrauliskās un transmisijas eļļas.",
+      "construction": "Hidrauliskās eļļas, smērvielas un betona atdalīšanas līdzekļi būvlaukumam.",
+      "forestry": "Bioloģiski noārdamas ķēžeļļas un hidrauliskās eļļas darbam jutīgā vidē.",
+      "industry": "Reduktoru, kompresoru, hidrauliskās eļļas un smērvielas ražotnēm."
+    },
+    "benefitsEyebrow": "Priekšrocības",
+    "benefitsTitle": "Ko iegūsti",
+    "benefits": {
+      "prices": "Individuālas cenas",
+      "pricesText": "Atlaide tiek piemērota automātiski visam katalogam — cenas bez PVN redzi uzreiz pēc pieslēgšanās.",
+      "invoice": "Pēcapmaksa ar rēķinu",
+      "invoiceText": "Apstiprinātiem klientiem — apmaksa ar rēķinu saskaņā ar vienoto termiņu.",
+      "bulk": "Lieli iepakojumi",
+      "bulkText": "20 L kannas, 60 L un 200 L mucas un 180 kg smērvielu mucas darbnīcām un ražotnēm.",
+      "manager": "Personīgs menedžeris",
+      "managerText": "Tehniska konsultācija par produktu izvēli, apstiprinājumiem un maiņas intervāliem.",
+      "portal": "Klienta portāls",
+      "portalText": "Visi pasūtījumi, rēķini un atkārtoti pasūtījumi vienuviet — 24/7.",
+      "docs": "Dokumentācija",
+      "docsText": "Tehniskās un drošības datu lapas (TDS/SDS) un OEM apstiprinājumu informācija."
+    },
+    "howEyebrow": "Kā sākt",
+    "howTitle": "Kā kļūt par B2B klientu",
+    "how1": "Reģistrējies un norādi uzņēmuma rekvizītus",
+    "how1Text": "Aizpildi reģistrācijas formu ar uzņēmuma nosaukumu, reģistrācijas un PVN numuru.",
+    "how2": "Mēs pārbaudām datus un piešķiram cenu līmeni",
+    "how2Text": "Parasti 1 darba dienas laikā. Par apstiprinājumu paziņosim e-pastā.",
+    "how3": "Pērc ar savām cenām",
+    "how3Text": "Pieslēdzies, redzi cenas bez PVN ar atlaidi un apmaksā ar rēķinu.",
+    "registerCta": "Reģistrēt uzņēmumu",
+    "statsTitle": "Divinol skaitļos",
+    "stats": {
+      "products": "produkti katalogā",
+      "since": "ražotāja dibināšanas gads",
+      "markets": "Baltijas valstis ar piegādi",
+      "drum": "lielākais eļļas iepakojums"
+    },
+    "formEyebrow": "Individuāls piedāvājums",
+    "formTitle": "Pieprasīt piedāvājumu",
+    "formText": "Pastāsti par savām vajadzībām — sagatavosim individuālu cenu piedāvājumu un ieteiksim piemērotākos produktus.",
+    "formPoint1": "Atbilde 1 darba dienas laikā",
+    "formPoint2": "Bez saistībām",
+    "formPoint3": "Tehniskā konsultācija bez maksas",
+    "company": "Uzņēmums",
+    "regNo": "Reģistrācijas nr.",
+    "name": "Kontaktpersona",
+    "email": "E-pasts",
+    "phone": "Tālrunis",
+    "segment": "Nozare",
+    "segmentOther": "Cita nozare",
+    "choose": "Izvēlies…",
+    "volume": "Aptuvenais patēriņš mēnesī",
+    "volumes": {
+      "xs": "līdz 50 L",
+      "s": "50–200 L",
+      "m": "200–1000 L",
+      "l": "virs 1000 L"
+    },
+    "message": "Kādi produkti tevi interesē?",
+    "messagePlaceholder": "piem. motoreļļa 10W-40 kravas auto (MAN M 3477), hidrauliskā eļļa HLP 46, smērviela…",
+    "submit": "Nosūtīt pieprasījumu",
+    "sent": "Paldies! Mūsu menedžeris sazināsies ar tevi 1 darba dienas laikā."
+  },
+  "about": {
+    "metaTitle": "Par mums — SIA Elama, oficiālais Divinol pārstāvis Latvijā",
+    "metaDescription": "SIA Elama ir oficiālais Zeller+Gmelin Divinol eļļu un smērvielu pārstāvis Latvijā. Vācu kvalitāte kopš 1866. gada, ISO 9001 sertificēta ražošana.",
+    "eyebrow": "Par mums",
+    "title": "Divinol Latvijā — SIA Elama",
+    "text": "SIA Elama ir oficiālais Divinol produkcijas pārstāvis Latvijā. Mēs piegādājam oriģinālas Zeller+Gmelin eļļas, smērvielas un auto ķīmiju privātpersonām un uzņēmumiem, un palīdzam izvēlēties risinājumu, kas atbilst tehnikas ražotāja prasībām.",
+    "storyEyebrow": "Mūsu stāsts",
+    "storyTitle": "Oficiālais pārstāvis — tieša saikne ar ražotāju",
+    "storyText1": "Kā oficiālais Divinol pārstāvis mēs saņemam produkciju tieši no ražotāja Vācijā. Tas nozīmē oriģinālus produktus, pilnu tehnisko dokumentāciju un aktuālu informāciju par ražotāju apstiprinājumiem.",
+    "storyText2": "Mūsu noliktava atrodas Rīgā, Ventspils ielā 51 — no šejienes pasūtījumi tiek nosūtīti klientiem Latvijā, Igaunijā un Lietuvā. Uzņēmumiem piedāvājam individuālas cenas, lielus iepakojumus un tehnisku konsultāciju.",
+    "zgEyebrow": "Ražotājs",
+    "zgTitle": "Zeller+Gmelin — ražotājs kopš 1866. gada",
+    "zgText1": "Divinol® ir augstas kvalitātes eļļošanas materiāli, ko ražo viens no vecākajiem Vācijas uzņēmumiem — Zeller+Gmelin GmbH & Co. KG no Eislingenes. Uzņēmums specializējas automobiļu, industriālajās un hidrauliskajās eļļās, smērvielās, auto kopšanas līdzekļos, naftas ķīmijā, kā arī drukas krāsās un lakās.",
+    "zgText2": "Ražošana ir sertificēta atbilstoši ISO 9001, un uzņēmuma laboratorijās pie produktu pilnveides strādā kvalificētu speciālistu komanda. Zeller+Gmelin ir iekļauts Vācijas inovatīvāko uzņēmumu “TOP 100” sarakstā.",
+    "facts": {
+      "founded": "dibināts Eislingenē, Vācijā",
+      "years": "gadu pieredze",
+      "subsidiaries": "meitasuzņēmumi pasaulē",
+      "products": "produkti mūsu katalogā"
+    },
+    "badges": {
+      "iso": "ISO 9001 sertificēta ražošana",
+      "top100": "TOP 100 inovatīvākie uzņēmumi",
+      "made": "Ražots Vācijā",
+      "family": "Ģimenes uzņēmums"
+    },
+    "trustEyebrow": "Partneri",
+    "trustTitle": "Uzticas pasaules ražotāji",
+    "trustText": "Par kvalitāti liecina ilgtermiņa piegādes līgumi ar tādiem uzņēmumiem kā BMW, Porsche, Bosch, BASF, Deutsche Bahn, Metabo un citiem.",
+    "valuesEyebrow": "Vērtības",
+    "valuesTitle": "Mūsu principi",
+    "value1": "Tikai oriģināli produkti",
+    "value1Text": "Piegādājam produkciju tieši no ražotāja Vācijā — bez starpniekiem un viltojumu riska.",
+    "value2": "Godīgs padoms",
+    "value2Text": "Ieteiksim tieši to, kas vajadzīgs tavai tehnikai, balstoties uz ražotāja apstiprinājumiem.",
+    "value3": "Ātra piegāde",
+    "value3Text": "Pakomāti, kurjers vai saņemšana noliktavā Rīgā — Latvijā, Igaunijā un Lietuvā.",
+    "value4": "Ilgtermiņa sadarbība",
+    "value4Text": "Individuālas cenas, pēcapmaksa un personīgs kontakts uzņēmumiem.",
+    "ctaTitle": "Gatavs atrast īsto eļļu?",
+    "ctaText": "Izmanto eļļas izvēles rīku vai sazinies ar mums — palīdzēsim izvēlēties.",
+    "ctaFinder": "Atrast eļļu",
+    "ctaContact": "Sazināties"
+  },
+  "contact": {
+    "metaTitle": "Kontakti — SIA Elama, Divinol Latvija",
+    "metaDescription": "Sazinies ar SIA Elama — oficiālo Divinol pārstāvi Latvijā. Noliktava un pasūtījumu saņemšana Ventspils ielā 51, Rīgā.",
+    "eyebrow": "Kontakti",
+    "title": "Sazinies ar mums",
+    "text": "Jautājumi par produktiem, pasūtījumiem vai sadarbību? Zvani, raksti vai aizpildi formu — atbildēsim tuvākajā darba dienā.",
+    "phone": "Tālrunis",
+    "email": "E-pasts",
+    "warehouse": "Noliktava un saņemšana",
+    "legal": "Juridiskā adrese",
+    "requisites": "Rekvizīti",
+    "company": "Uzņēmums",
+    "regNo": "Reģ. nr.",
+    "vatNo": "PVN nr.",
+    "bank": "Banka",
+    "iban": "Konts",
+    "swift": "SWIFT",
+    "hours": "Darba laiks",
+    "copy": "Kopēt",
+    "copied": "Nokopēts",
+    "formEyebrow": "Ziņa",
+    "formTitle": "Raksti mums",
+    "formText": "Aizpildi formu, un mēs sazināsimies ar tevi pa e-pastu vai tālruni.",
+    "name": "Vārds",
+    "message": "Ziņa",
+    "messagePlaceholder": "Kā varam palīdzēt?",
+    "consent": "Piekrītu, ka mani dati tiek apstrādāti atbildes sniegšanai saskaņā ar <link>privātuma politiku</link>.",
+    "consentRequired": "Lūdzu, apstiprini piekrišanu datu apstrādei",
+    "submit": "Nosūtīt ziņu",
+    "sent": "Paldies! Tava ziņa ir saņemta — atbildēsim tuvākajā laikā.",
+    "mapTitle": "Noliktavas atrašanās vieta kartē — Ventspils iela 51, Rīga",
+    "directions": "Atvērt kartē",
+    "googleMaps": "Google Maps",
+    "social": "Seko mums"
+  },
+  "downloads": {
+    "metaTitle": "Divinol produktu katalogi (PDF)",
+    "metaDescription": "Lejupielādē oficiālos Divinol katalogus PDF formātā: vieglajiem auto, komerctransportam, industriālās eļļas, smērvielas, biolubrikanti, motocikliem un lauksaimniecībai.",
+    "eyebrow": "Katalogi",
+    "title": "Produktu katalogi un brošūras",
+    "text": "Oficiālie Zeller+Gmelin Divinol katalogi ar produktu aprakstiem, specifikācijām un apstiprinājumiem.",
+    "lang": "Valoda",
+    "size": "Izmērs",
+    "pages": "{count} lpp.",
+    "open": "Atvērt",
+    "download": "Lejupielādēt",
+    "langs": {
+      "lv": "Latviešu",
+      "de": "Vācu",
+      "en": "Angļu",
+      "ru": "Krievu"
+    },
+    "items": {
+      "cars": "Vieglajiem auto",
+      "commercial": "Kravas auto un komerctransportam",
+      "industrial": "Industriālās eļļas",
+      "bio": "Biolubrikanti",
+      "greases": "Smērvielas",
+      "release": "Betona un asfalta atdalīšanas līdzekļi",
+      "moto": "Motociklu eļļas",
+      "agro": "Lauksaimniecībai"
+    },
+    "descriptions": {
+      "cars": "Motoreļļas, transmisijas eļļas un šķidrumi vieglajiem auto ar specifikācijām un apstiprinājumiem.",
+      "commercial": "Multimax lieljaudas eļļas, transmisijas un hidrauliskās eļļas kravas auto un autobusiem.",
+      "industrial": "Reduktoru, hidrauliskās, vadotņu un slīdvirsmu eļļas rūpniecībai.",
+      "bio": "Videi draudzīgi eļļošanas materiāli jutīgām vidēm — ķēžeļļas, hidraulika, smērvielas.",
+      "greases": "Augstas veiktspējas smērvielas rūpniecībai un servisam.",
+      "release": "Veidņu eļļas betonam un atdalīšanas līdzekļi asfaltam.",
+      "moto": "Motociklu, kvadriciklu un motorolleru eļļu klāsts vienā lapā.",
+      "agro": "Eļļošanas tabula lauksaimniecības traktoriem un kombainiem."
+    },
+    "helpTitle": "Nevari atrast vajadzīgo dokumentu?",
+    "helpText": "Tehniskās (TDS) un drošības datu lapas (SDS) atrodamas produktu lapās. Ja nepieciešams cits dokuments, raksti mums.",
+    "helpCta": "Sazināties"
+  },
+  "delivery": {
+    "metaTitle": "Piegāde un apmaksa — Divinol Latvija",
+    "metaDescription": "Piegādes veidi un cenas Latvijā, Igaunijā un Lietuvā: pakomāti, kurjers, saņemšana noliktavā Rīgā un kravas piegāde. Apmaksa ar karti, pārskaitījumu vai rēķinu.",
+    "eyebrow": "Piegāde un apmaksa",
+    "title": "Kā saņemt pasūtījumu",
+    "text": "Piegādājam visā Baltijā — no mazām pudelēm līdz 200 L mucām. Cenas norādītas ar PVN atbilstoši piegādes valstij.",
+    "freeBanner": "Bezmaksas piegāde uz pakomātu vai ar kurjeru pasūtījumiem virs {amount} (Latvijā)",
+    "methodsEyebrow": "Piegāde",
+    "methods": "Piegādes veidi",
+    "pickup": "Saņemšana noliktavā",
+    "pickupText": "Ventspils iela 51, Rīga. Par pasūtījuma gatavību paziņosim ar e-pastu vai SMS.",
+    "parcel_locker": "Pakomāts",
+    "parcel_lockerText": "Omniva, DPD vai Smartpost pakomāts Latvijā, Igaunijā un Lietuvā.",
+    "courier": "Kurjers līdz durvīm",
+    "courierText": "Piegāde uz norādīto adresi 1–3 darba dienu laikā.",
+    "freight": "Kravas piegāde",
+    "freightText": "60 L un 200 L mucām un 180 kg smērvielu mucām — cenu apstiprinām individuāli.",
+    "maxItem": "Iepakojumiem līdz {size} L",
+    "market": "Valsts",
+    "price": "Cena",
+    "free": "Bezmaksas no {amount}",
+    "freeShort": "Bezmaksas",
+    "onRequest": "Pēc vienošanās",
+    "notAvailable": "—",
+    "pricesNote": "Cenas ar PVN: {rates}. B2B klientiem cenas tiek rādītas bez PVN.",
+    "paymentsEyebrow": "Apmaksa",
+    "payments": "Apmaksas veidi",
+    "card": "Bankas karte",
+    "cardText": "Droša apmaksa ar Visa, Mastercard, Apple Pay vai Google Pay.",
+    "transfer": "Bankas pārskaitījums",
+    "transferText": "Pēc pasūtījuma saņemsi priekšapmaksas rēķinu uz e-pastu.",
+    "invoice": "Rēķins uzņēmumiem",
+    "invoiceText": "Apstiprinātiem B2B klientiem — pēcapmaksa saskaņā ar vienoto termiņu.",
+    "returnsEyebrow": "Atgriešana",
+    "returns": "Atteikuma tiesības un atgriešana",
+    "returnsText": "Privātpersonām ir tiesības atteikties no pirkuma 14 dienu laikā no preces saņemšanas dienas bez iemesla norādīšanas. Sazinies ar mums, un mēs palīdzēsim noformēt atgriešanu.",
+    "returnsLink": "Lasīt lietošanas noteikumus",
+    "faq": [
+      {
+        "q": "Cik ilgi jāgaida piegāde?",
+        "a": "Produktus, kas ir noliktavā, nosūtām 1–2 darba dienu laikā. Kurjera piegāde parasti aizņem 1–3 darba dienas, pakomātā sūtījums parasti ir pieejams nākamajā darba dienā pēc nosūtīšanas. Produkti ar norādi “Pēc pasūtījuma” tiek piegādāti no ražotāja — termiņu apstiprināsim individuāli."
+      },
+      {
+        "q": "Vai varu pasūtījumu saņemt pats?",
+        "a": "Jā — izvēlies “Saņemšana noliktavā”, un pasūtījumu varēsi saņemt Ventspils ielā 51, Rīgā, bez maksas. Pirms ierašanās sagaidi mūsu paziņojumu par pasūtījuma gatavību."
+      },
+      {
+        "q": "Kā tiek piegādātas 200 L mucas?",
+        "a": "Lielos iepakojumus (60 L, 200 L mucas un 180 kg smērvielu mucas) piegādājam ar kravas pārvadātāju uz paletes. Piegādes cenu un laiku apstiprinām pēc pasūtījuma saņemšanas atkarībā no adreses."
+      },
+      {
+        "q": "Ko darīt, ja sūtījums ir bojāts?",
+        "a": "Saņemot sūtījumu, pārbaudi iepakojumu. Ja tas ir bojāts vai produkts tecējis, fiksē to (piemēram, ar fotoattēlu) un nekavējoties sazinies ar mums pa e-pastu vai tālruni — atrisināsim situāciju."
+      },
+      {
+        "q": "Vai piegādājat uz Igauniju un Lietuvu?",
+        "a": "Jā. Uz Igauniju un Lietuvu piegādājam ar pakomātu, kurjeru vai kravas pārvadātāju. Cenas tiek aprēķinātas ar attiecīgās valsts PVN likmi, un bezmaksas piegādes slieksnis ir norādīts tabulā augstāk."
+      }
+    ]
+  },
+  "legal": {
+    "termsMetaTitle": "Lietošanas un pirkšanas noteikumi",
+    "termsMetaDescription": "Divinol interneta veikala lietošanas un distances pirkuma noteikumi: pasūtīšana, cenas, apmaksa, piegāde, 14 dienu atteikuma tiesības, garantija un strīdu risināšana.",
+    "privacyMetaTitle": "Privātuma politika",
+    "privacyMetaDescription": "Kā SIA Elama apstrādā personas datus Divinol interneta veikalā: nolūki, tiesiskie pamati, apstrādātāji, glabāšanas termiņi, tavas tiesības un sīkdatnes.",
+    "eyebrow": "Juridiskā informācija",
+    "termsTitle": "Lietošanas un pirkšanas noteikumi",
+    "termsText": "Noteikumi, kas attiecas uz pirkumiem Divinol interneta veikalā.",
+    "privacyTitle": "Privātuma politika",
+    "privacyText": "Kā mēs apstrādājam un aizsargājam tavus personas datus.",
+    "updatedDate": "25.09.2026",
+    "questions": "Jautājumi par šo dokumentu? Raksti uz {email}.",
+    "terms": {
+      "sections": [
+        {
+          "title": "Vispārīgie noteikumi",
+          "body": "Šie noteikumi nosaka kārtību, kādā tiek iegādātas preces Divinol interneta veikalā (divinol.lv un divinol.ee).\n\nPārdevējs: {companyName}, reģistrācijas nr. {regNo}, PVN maksātāja nr. {vatNo}, juridiskā adrese: {address}. Noliktava un preču izsniegšana: {warehouse}. E-pasts: {email}, tālrunis: {phone}.\n\nVeicot pasūtījumu, pircējs apliecina, ka ir iepazinies ar šiem noteikumiem un piekrīt tiem. Pircējs var būt gan patērētājs (fiziska persona), gan juridiska persona. Noteikumi, kas attiecas tikai uz uzņēmumiem, ir izdalīti atsevišķā sadaļā."
+        },
+        {
+          "title": "Pasūtījums un līguma noslēgšana",
+          "body": "Preces izvēlas, ievietojot tās iepirkumu grozā un noformējot pasūtījumu. Pirms pasūtījuma apstiprināšanas pircējs var pārbaudīt un labot ievadītos datus.\n\nPēc pasūtījuma noformēšanas pircējs saņem apstiprinājumu uz norādīto e-pasta adresi. Distances līgums tiek uzskatīts par noslēgtu brīdī, kad pārdevējs ir apstiprinājis pasūtījumu.\n\nJa pasūtīto preci nav iespējams piegādāt (piemēram, tā nav pieejama pie ražotāja), pārdevējs par to nekavējoties informē pircēju un piedāvā alternatīvu vai atmaksā samaksāto summu ne vēlāk kā 14 dienu laikā."
+        },
+        {
+          "title": "Cenas",
+          "body": "Cenas norādītas eiro (EUR). Privātpersonām cenas tiek rādītas ar pievienotās vērtības nodokli (PVN) atbilstoši izvēlētās piegādes valsts likmei. Apstiprinātiem B2B klientiem cenas tiek rādītas bez PVN, piemērojot individuālo atlaidi.\n\nPiegādes izmaksas tiek parādītas pirms pasūtījuma apstiprināšanas. Kravas piegādes cenu lieliem iepakojumiem pārdevējs apstiprina individuāli pirms pasūtījuma izpildes.\n\nJa preces cena acīmredzamas tehniskas kļūdas dēļ ir norādīta nepareizi, pārdevējs informē pircēju, un pircējs var pasūtījumu apstiprināt ar pareizo cenu vai no tā atteikties."
+        },
+        {
+          "title": "Apmaksa",
+          "body": "Pieejamie apmaksas veidi:\n- maksājumu karte (Visa, Mastercard) un maksājumu pakalpojumi, kas piedāvāti pasūtījuma noformēšanas brīdī;\n- bankas pārskaitījums pēc priekšapmaksas rēķina;\n- pēcapmaksa ar rēķinu — tikai apstiprinātiem B2B klientiem.\n\nPriekšapmaksas rēķins jāapmaksā tajā norādītajā termiņā. Pasūtījums tiek nodots izpildei pēc maksājuma saņemšanas. Karšu maksājumus apstrādā sertificēts maksājumu pakalpojumu sniedzējs; pārdevējs maksājumu kartes datus neredz un neglabā."
+        },
+        {
+          "title": "Piegāde",
+          "body": "Preces tiek piegādātas Latvijā, Igaunijā un Lietuvā ar pakomātu, kurjeru, kravas pārvadātāju vai tās var saņemt noliktavā Rīgā. Piegādes veidi, cenas un bezmaksas piegādes nosacījumi ir norādīti lapā “Piegāde un apmaksa”.\n\nPiegādes termiņš tiek norādīts pasūtījuma apstiprinājumā. Ja termiņš nav norādīts, pārdevējs piegādā preci ne vēlāk kā 30 dienu laikā no līguma noslēgšanas.\n\nRisks par preces nejaušu bojāeju pāriet uz pircēju brīdī, kad pircējs vai tā norādītā persona preci ir saņēmusi. Saņemot sūtījumu, lūdzam pārbaudīt iepakojumu un par bojājumiem nekavējoties informēt pārdevēju."
+        },
+        {
+          "title": "Atteikuma tiesības (14 dienas)",
+          "body": "Patērētājam ir tiesības 14 dienu laikā atteikties no distances līguma bez iemesla norādīšanas. Atteikuma termiņš sākas dienā, kad patērētājs vai tā norādītā persona ir saņēmusi preci.\n\nLai izmantotu atteikuma tiesības, patērētājs pirms termiņa beigām nosūta pārdevējam nepārprotamu paziņojumu uz {email}, norādot pasūtījuma numuru, preces un bankas kontu atmaksai. Var izmantot arī Ministru kabineta noteikumu Nr. 255 “Noteikumi par distances līgumu” pielikumā pievienoto atteikuma veidlapu.\n\nPatērētājs preci atgriež bez nepamatotas kavēšanās, ne vēlāk kā 14 dienu laikā pēc paziņojuma nosūtīšanas. Tiešās preces atpakaļ nosūtīšanas izmaksas sedz patērētājs, ja nav panākta cita vienošanās.\n\nPārdevējs atmaksā visus saņemtos maksājumus, tostarp standarta piegādes izmaksas, ne vēlāk kā 14 dienu laikā pēc paziņojuma saņemšanas, izmantojot to pašu maksāšanas līdzekli. Pārdevējs var aizturēt atmaksu, līdz prece ir saņemta atpakaļ.\n\nPatērētājs atbild par preces vērtības samazināšanos, ja tā lietota citādi, nekā nepieciešams preces rakstura un īpašību noskaidrošanai — piemēram, ja iepakojums ir atvērts un daļa produkta izlietota."
+        },
+        {
+          "title": "Preču atbilstība un pretenzijas",
+          "body": "Pārdevējs atbild par preces atbilstību līguma noteikumiem. Patērētājs var iesniegt pretenziju par neatbilstošu preci divu gadu laikā no preces saņemšanas dienas saskaņā ar Patērētāju tiesību aizsardzības likumu.\n\nPretenziju iesniedz rakstiski uz {email}, pievienojot pirkumu apliecinošu dokumentu un, ja iespējams, fotoattēlus. Pārdevējs atbild uz pretenziju 15 dienu laikā.\n\nPārdevējs neatbild par bojājumiem, kas radušies, produktu lietojot neatbilstoši tehnikas ražotāja prasībām, produkta aprakstam vai drošības datu lapai, kā arī nepareizas uzglabāšanas dēļ."
+        },
+        {
+          "title": "Noteikumi uzņēmumiem (B2B)",
+          "body": "Uz pirkumiem, ko veic juridiskas personas vai fiziskas personas saimnieciskās darbības ietvaros, neattiecas patērētāju atteikuma tiesības.\n\nB2B cenu līmeni, atlaidi un pēcapmaksas termiņu pārdevējs piešķir pēc uzņēmuma datu pārbaudes. Pārdevējs var mainīt vai atsaukt pēcapmaksas iespēju, ja rēķini netiek apmaksāti laikā.\n\nPircējam saņemšanas brīdī jāpārbauda preču daudzums un iepakojuma veselums, un acīmredzamas neatbilstības jāfiksē pavadzīmē vai nekavējoties jāpaziņo pārdevējam. Par nokavētiem maksājumiem pārdevējs var aprēķināt likumiskos nokavējuma procentus saskaņā ar Komerclikumu."
+        },
+        {
+          "title": "Atbildība",
+          "body": "Pārdevējs neatbild par līgumsaistību neizpildi nepārvaramas varas apstākļu dēļ. Produktu apraksti, ieteikumi eļļas izvēles rīkā un kalkulatoru rezultāti ir informatīvi — pirms produkta lietošanas pārbaudi tehnikas ražotāja prasības.\n\nProduktu attēli var nedaudz atšķirties no faktiskā iepakojuma, ja ražotājs ir mainījis dizainu."
+        },
+        {
+          "title": "Personas dati",
+          "body": "Pircēja personas dati tiek apstrādāti pasūtījuma izpildei un normatīvo aktu prasību izpildei saskaņā ar Privātuma politiku, kas pieejama šajā vietnē."
+        },
+        {
+          "title": "Strīdu risināšana",
+          "body": "Strīdus pārdevējs un pircējs vispirms risina savstarpējās sarunās. Ja vienošanos panākt neizdodas, patērētājs var vērsties Patērētāju tiesību aizsardzības centrā (PTAC, www.ptac.gov.lv) vai Patērētāju strīdu risināšanas komisijā.\n\nPārrobežu strīdos patērētājs var vērsties Eiropas Patērētāju informēšanas centrā Latvijā (www.ecclatvia.lv). Eiropas Komisijas strīdu izšķiršanas tiešsaistē (ODR) platforma darbību beidza 2025. gada 20. jūlijā.\n\nStrīdi, par kuriem vienošanās netiek panākta, tiek izskatīti Latvijas Republikas tiesā saskaņā ar Latvijas Republikas normatīvajiem aktiem."
+        },
+        {
+          "title": "Noslēguma noteikumi",
+          "body": "Pārdevējs var grozīt šos noteikumus. Pasūtījumam piemēro noteikumus, kas bija spēkā pasūtījuma veikšanas brīdī. Uz šiem noteikumiem attiecas Latvijas Republikas tiesību akti."
+        }
+      ]
+    },
+    "privacy": {
+      "sections": [
+        {
+          "title": "Pārzinis",
+          "body": "Personas datu pārzinis ir {companyName}, reģistrācijas nr. {regNo}, juridiskā adrese: {address}. Saziņai par datu apstrādes jautājumiem: {email}, tālrunis {phone}.\n\nŠī politika attiecas uz personas datu apstrādi Divinol interneta veikalā (divinol.lv, divinol.ee), klientu portālā un saziņā ar mums."
+        },
+        {
+          "title": "Kādus datus mēs apstrādājam",
+          "body": "- Konta dati: vārds, uzvārds, e-pasts, tālrunis, parole (glabājas šifrētā veidā pie autentifikācijas pakalpojuma sniedzēja).\n- Pasūtījumu dati: piegādes un norēķinu adrese, pasūtītās preces, apmaksas statuss, rēķini.\n- Uzņēmumu dati: uzņēmuma nosaukums, reģistrācijas un PVN numurs, juridiskā adrese, kontaktpersona.\n- Saziņas dati: ziņas un pieprasījumi, kas nosūtīti ar kontaktformu, B2B formu vai eļļas izvēles formu (tostarp auto numura zīme vai VIN, ja to norādi).\n- Tehniskie dati: IP adrese, pārlūka informācija un servera žurnāli, kas nepieciešami vietnes darbībai un drošībai."
+        },
+        {
+          "title": "Nolūki un tiesiskie pamati",
+          "body": "- Pasūtījumu izpilde, piegāde, konta un klientu portāla uzturēšana — līguma noslēgšana un izpilde (VDAR 6. panta 1. punkta b) apakšpunkts).\n- Grāmatvedības un nodokļu prasību izpilde, rēķinu glabāšana — juridisks pienākums (c) apakšpunkts).\n- Atbildes uz jautājumiem un pieprasījumiem, B2B klientu datu pārbaude — pasākumi pirms līguma noslēgšanas un mūsu leģitīmās intereses (b) un f) apakšpunkts).\n- Vietnes drošība, krāpšanas novēršana un tehniskā uzturēšana — leģitīmās intereses (f) apakšpunkts).\n- Jaunumu vēstules — piekrišana (a) apakšpunkts), ko vari atsaukt jebkurā laikā."
+        },
+        {
+          "title": "Datu apstrādātāji un saņēmēji",
+          "body": "Datus nododam tikai tiem pakalpojumu sniedzējiem, kas nepieciešami vietnes darbībai un pasūtījumu izpildei, un tikai tādā apjomā, kāds nepieciešams:\n- Supabase — datubāze un lietotāju autentifikācija; dati tiek glabāti Eiropas Savienībā (Frankfurte, Vācija).\n- Netlify — vietnes mitināšana un satura piegādes tīkls.\n- E-pasta pakalpojumu sniedzējs — pasūtījumu apstiprinājumu un paziņojumu nosūtīšana.\n- Maksājumu pakalpojumu sniedzējs — karšu maksājumu apstrāde; mēs neredzam un neglabājam kartes datus.\n- Piegādes partneri (pakomātu operatori, kurjeri, kravas pārvadātāji) — piegādes nodrošināšanai.\n- Grāmatvedības pakalpojumu sniedzēji un valsts iestādes — ja to prasa normatīvie akti.\n\nPersonas datus nepārdodam un neizmantojam automatizētai lēmumu pieņemšanai."
+        },
+        {
+          "title": "Datu nodošana ārpus EEZ",
+          "body": "Daži pakalpojumu sniedzēji (piemēram, vietnes mitināšanas pakalpojums) var apstrādāt tehniskos datus ārpus Eiropas Ekonomikas zonas. Šādos gadījumos datu aizsardzību nodrošina Eiropas Komisijas lēmums par aizsardzības līmeņa pietiekamību (piemēram, ES–ASV datu privātuma regulējums) vai standarta līguma klauzulas."
+        },
+        {
+          "title": "Glabāšanas termiņi",
+          "body": "- Konta dati — kamēr konts ir aktīvs vai līdz dzēšanas pieprasījumam.\n- Pasūtījumi, rēķini un ar tiem saistītie dati — 5 gadus saskaņā ar Grāmatvedības likumu.\n- Saziņas pieprasījumi — līdz 2 gadiem pēc pēdējās saziņas, ja tie nav saistīti ar pasūtījumu.\n- Jaunumu vēstules abonements — līdz piekrišanas atsaukšanai.\n- Servera žurnāli — īslaicīgi, tik ilgi, cik nepieciešams drošības nodrošināšanai."
+        },
+        {
+          "title": "Tavas tiesības",
+          "body": "Tev ir tiesības piekļūt saviem datiem, labot tos, pieprasīt dzēšanu vai apstrādes ierobežošanu, iebilst pret apstrādi, kas balstīta leģitīmajās interesēs, un saņemt savus datus pārnesamā formātā. Ja apstrāde balstīta piekrišanā, to vari atsaukt jebkurā laikā.\n\nPieprasījumus sūti uz {email} — atbildēsim viena mēneša laikā. Ja uzskati, ka tavi dati tiek apstrādāti nelikumīgi, vari iesniegt sūdzību Datu valsts inspekcijā (www.dvi.gov.lv)."
+        },
+        {
+          "title": "Sīkdatnes",
+          "body": "Mēs izmantojam tikai vietnes darbībai nepieciešamās sīkdatnes un pārlūka krātuvi:\n- iepirkumu grozs — saglabā grozā ievietotās preces tavā pārlūkā;\n- autentifikācija — uztur pieslēgšanās sesiju klientu portālā;\n- piegādes valsts (market) — atceras izvēlēto valsti cenu un PVN aprēķinam (līdz 1 gadam);\n- sīkdatņu izvēle — atceras tavu izvēli sīkdatņu paziņojumā.\n\nAnalītikas vai mārketinga sīkdatnes bez tavas piekrišanas netiek izmantotas. Sīkdatnes vari dzēst vai bloķēt pārlūka iestatījumos, taču tad grozs un pieslēgšanās var nedarboties."
+        },
+        {
+          "title": "Drošība",
+          "body": "Dati tiek pārsūtīti šifrētā veidā (HTTPS/TLS). Piekļuve datubāzei ir ierobežota ar lietotāju tiesībām — katrs klients redz tikai savus pasūtījumus un rēķinus, bet pilna piekļuve ir tikai pilnvarotiem darbiniekiem."
+        },
+        {
+          "title": "Izmaiņas politikā",
+          "body": "Mēs varam atjaunināt šo politiku, ja mainās mūsu pakalpojumi vai normatīvās prasības. Aktuālā versija vienmēr ir publicēta šajā lapā, un tās atjaunināšanas datums norādīts lapas augšpusē."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy-50: #eef2f9;
+  --color-navy-100: #d9e0ee;
+  --color-navy-200: #b3c0dc;
+  --color-navy-300: #8095c1;
+  --color-navy-400: #52689f;
+  --color-navy-500: #34497e;
+  --color-navy-600: #283b69;
+  --color-navy-700: #1e2d51;
+  --color-navy-800: #172340;
+  --color-navy-900: #111a31;
+  --color-navy-950: #0a1122;
+
+  --color-brand-50: #fff9e6;
+  --color-brand-100: #fff0bf;
+  --color-brand-200: #ffe38a;
+  --color-brand-300: #ffd44f;
+  --color-brand-400: #ffc10e;
+  --color-brand-500: #f0ae00;
+  --color-brand-600: #c98b00;
+  --color-brand-700: #9c6a00;
+
+  --color-ink: #1b1f2a;
+  --color-muted: #5b6475;
+  --color-line: #e3e7ef;
+  --color-canvas: #f5f7fb;
+  --color-success: #15803d;
+  --color-danger: #c2410c;
+
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.75rem;
+
+  --shadow-card: 0 1px 2px rgb(16 24 40 / 0.04), 0 8px 24px -12px rgb(16 24 40 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(16 24 40 / 0.06), 0 24px 48px -16px rgb(16 24 40 / 0.22);
+  --shadow-glow: 0 10px 40px -10px rgb(255 193 14 / 0.55);
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-shine: shine 2.8s ease-in-out infinite;
+  --animate-flow: flow 14s linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-14px) rotate(1deg); }
+  }
+  @keyframes shine {
+    0% { transform: translateX(-120%) skewX(-20deg); }
+    60%, 100% { transform: translateX(220%) skewX(-20deg); }
+  }
+  @keyframes flow {
+    from { background-position: 0% 50%; }
+    to { background-position: 200% 50%; }
+  }
+}
+
+:root {
+  color-scheme: light;
+  --font-manrope: "Manrope Variable", "Manrope";
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-brand-400);
+  color: var(--color-navy-900);
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-8;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-600;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply inline-block h-[3px] w-5 -skew-x-[20deg] rounded-sm bg-brand-400;
+  }
+  .h-display {
+    @apply font-extrabold tracking-[-0.03em] text-balance;
+  }
+  .skew-tag {
+    @apply inline-flex -skew-x-12 items-center rounded-md px-2.5 py-1;
+  }
+  .skew-tag > * {
+    @apply skew-x-12;
+  }
+  .prose-product {
+    @apply text-[15px] leading-7 text-ink/85;
+  }
+  .prose-product p {
+    @apply mb-4;
+  }
+  .prose-product h3 {
+    @apply mt-6 mb-2 text-base font-bold text-navy-700;
+  }
+  .prose-product ul {
+    @apply mb-4 grid gap-1.5 pl-0;
+  }
+  .prose-product li {
+    @apply relative list-none pl-6;
+  }
+  .prose-product li::before {
+    content: "";
+    @apply absolute top-[0.6em] left-1 h-2 w-2 -skew-x-[20deg] rounded-[2px] bg-brand-400;
+  }
+  .prose-product strong {
+    @apply font-bold text-ink;
+  }
+  .input {
+    @apply h-11 w-full rounded-xl border border-line bg-white px-3.5 text-[15px] text-ink shadow-[inset_0_1px_1px_rgb(16_24_40/0.04)] outline-none transition placeholder:text-muted/70 focus:border-navy-400 focus:ring-4 focus:ring-navy-100;
+  }
+  .label {
+    @apply mb-1.5 block text-[13px] font-semibold text-ink/80;
+  }
+  .card {
+    @apply rounded-2xl border border-line bg-white shadow-card;
+  }
+  .grid-bg {
+    background-image: linear-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

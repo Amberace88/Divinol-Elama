@@ -1,0 +1,616 @@
+{
+  "pagesUi": {
+    "faqTitle": "Korduma kippuvad küsimused",
+    "faqEyebrow": "KKK",
+    "required": "kohustuslik",
+    "optional": "ei ole kohustuslik",
+    "privacyNote": "Vormi saates nõustud, et sinu andmeid töödeldakse vastuse andmiseks vastavalt <link>privaatsuspoliitikale</link>.",
+    "sentTitle": "Aitäh — sõnum saadetud!",
+    "sendAnother": "Saada veel üks",
+    "toc": "Sisukord",
+    "backToTop": "Üles",
+    "updated": "Uuendatud: {date}"
+  },
+  "finder": {
+    "metaTitle": "Õlivalik auto järgi — Divinol õliotsija",
+    "metaDescription": "Leia sobivaim Divinol mootoriõli oma autole, veoautole, mootorrattale või tehnikale tootja, kütuse ja väljalaskeaasta järgi. VW, BMW, Mercedes, Opel, Ford, MAN, Scania ja teised heakskiidud.",
+    "eyebrow": "Õlivalik",
+    "title": "Leia õige õli 3 sammuga",
+    "text": "Valik põhineb tootjate heakskiitudel (nt VW 504.00, MB 229.51, BMW Longlife-04, GM dexos2, MAN M 3477) ja ACEA/API/JASO spetsifikatsioonidel.",
+    "heroPoint1": "Üle 30 auto- ja tehnikatootja",
+    "heroPoint2": "Selgitus iga soovituse juures",
+    "heroPoint3": "Tasuta konsultatsioon spetsialistiga",
+    "progress": "Samm {current}/{total}",
+    "step1": "Tehnika tüüp",
+    "step2": "Tootja",
+    "step2App": "Kasutusala",
+    "step3": "Mootor ja aasta",
+    "stepResults": "Tulemused",
+    "step1Title": "Millisele tehnikale õli otsid?",
+    "step2Title": "Vali tootja",
+    "step2AppTitle": "Kus õli kasutatakse?",
+    "step3Title": "Räägi mootorist",
+    "vehicle": {
+      "car": "Sõiduauto",
+      "van": "Kaubik",
+      "truck": "Veoauto / traktor",
+      "moto": "Mootorratas / neliratas",
+      "garden": "Aiatehnika / 2T",
+      "industry": "Hüdraulika / tööstus"
+    },
+    "vehicleHint": {
+      "car": "Bensiini-, diisli- ja hübriidautod",
+      "van": "Kaubikud ja tarbesõidukid kuni 3,5 t",
+      "truck": "Veoautod, bussid, põllumajandus- ja ehitustehnika",
+      "moto": "4T mootorrattad, neliratad ja 2T mopeedid",
+      "garden": "Mootorsaed, trimmerid, muruniidukid",
+      "industry": "Hüdraulika, reduktorid, kompressorid, ketid"
+    },
+    "apps": {
+      "street": { "label": "Maantee mootorratas", "hint": "Igapäeva- ja turismi 4T mootorrattad märja siduriga" },
+      "sport": { "label": "Spordimootorratas", "hint": "Kõrgete pööretega ja võidusõidumootorid" },
+      "heavy": { "label": "Suure kubatuuriga / tšopper", "hint": "Õhkjahutusega V-mootorid, nt Harley-Davidson" },
+      "quad": { "label": "Neliratas / UTV", "hint": "Maastikutehnika ühise mootori- ja siduriõliga" },
+      "twoStroke": { "label": "2T mopeed / motokross", "hint": "Kaktaktilised mootorid eraldi õlipaagi või seguga" },
+      "chainsaw": { "label": "Mootorsaag", "hint": "2T segueli ja ketiõli" },
+      "trimmer": { "label": "Trimmer / puhur", "hint": "Kaktaktiline aiatehnika" },
+      "mower": { "label": "Muruniiduk (4T)", "hint": "Neljataktilised mootorid muruniidukites ja aiatraktorites" },
+      "chainOil": { "label": "Keti õlitamine", "hint": "Saeketi ja liistu õlitamine" },
+      "hydraulic": { "label": "Tööstuslik hüdraulika", "hint": "Pressid, tööpingid, statsionaarsed süsteemid (HLP)" },
+      "hydraulicHv": { "label": "Mobiilne hüdraulika", "hint": "Ekskavaatorid, laadurid, välitingimustes töötav tehnika (HVLP)" },
+      "gear": { "label": "Reduktorid", "hint": "Suletud tööstuslikud käigukastid (CLP)" },
+      "compressor": { "label": "Kompressorid", "hint": "Kolb- ja rootorkompressorid" },
+      "chain": { "label": "Ketid ja konveierid", "hint": "Kettide ja juhikute õlitamine" }
+    },
+    "brandOther": "Muu tootja",
+    "brandOtherHint": "Valime ACEA/API spetsifikatsiooni järgi",
+    "fuel": "Kütus",
+    "fuels": {
+      "petrol": "Bensiin",
+      "diesel": "Diisel",
+      "hybrid": "Hübriid",
+      "lpg": "Gaas (LPG/CNG)"
+    },
+    "year": "Väljalaskeaasta",
+    "years": {
+      "old": "kuni 2004",
+      "mid": "2004–2014",
+      "new": "alates 2015"
+    },
+    "dpf": "Tahkete osakeste filter (DPF/GPF)",
+    "dpfHint": "Diiselautol koos DPF-iga või bensiiniautol koos GPF-iga on vaja madala tuhasisaldusega (Low SAPS) õli.",
+    "dpfUnknown": "Ei tea",
+    "yes": "On",
+    "no": "Ei ole",
+    "showResults": "Näita soovitusi",
+    "results": "Soovitatud õlid",
+    "resultsCount": "{count, plural, zero {Leidsime # sobiva õli} one {Leidsime # sobiva õli} other {Leidsime # sobivat õli}}",
+    "selection": "Sinu valik",
+    "edit": "Muuda",
+    "bestMatch": "Parim vaste",
+    "oemBadge": "Tootja heakskiit",
+    "why": "Miks see õli",
+    "approvals": "Heakskiidud ja spetsifikatsioonid",
+    "moreApprovals": "+{count}",
+    "pack": "Pakend",
+    "details": "Toote kirjeldus",
+    "reason": {
+      "oem": "Vastab {brand} nõuetele: {items}",
+      "soft": "Vastab {items} — standardile, mille {brand} on märkinud teenindusraamatusse",
+      "lowSaps": "Madala tuhasisaldusega (Low SAPS) valem, mis on õrn DPF-i ja katalüsaatori suhtes: {items}",
+      "acea": "Vastab spetsifikatsioonile {items}",
+      "heavyDuty": "Suure võimsusega diiselmootoritele: {items}",
+      "cng": "Sobib gaasimootoritele: {items}",
+      "viscosity": "Sellele mootorile soovitatud viskoossus — {sae}",
+      "jaso": "Sobib märja siduriga: {items}",
+      "twoStroke": "Kaktaktilistele mootoritele: {items}",
+      "lawnmower": "Neljataktiliste aiatehnika mootoritele, {sae}",
+      "chainOil": "Hea nakkuvusega saeketi ja liistu õlitamiseks",
+      "chainOilBio": "Biolagunev ketiõli — soovitatav metsatöödeks",
+      "hydraulic": "Hüdraulikaõli {iso}",
+      "hydraulicSpecs": "Hüdraulikaõli {iso}: {items}",
+      "gear": "Tööstuslik reduktoriõli {iso}",
+      "compressor": "Kompressoriõli {iso}"
+    },
+    "noMatch": "Automaatselt täpset vastet ei leidnud. Saada auto andmed — spetsialist valib õli isiklikult.",
+    "noMatchCta": "Küsi spetsialistilt",
+    "disclaimer": "Soovitus on suunav ja põhineb toodete heakskiitudel ja spetsifikatsioonidel. Enne õlivahetust kontrolli alati tehnika tootja nõudeid teenindusraamatust või kasutusjuhendist.",
+    "restart": "Alusta uuesti",
+    "back": "Tagasi",
+    "expertEyebrow": "Isiklik konsultatsioon",
+    "expertTitle": "Täpne valik registreerimismärgi järgi",
+    "expertText": "Saada auto registreerimismärk või VIN — meie spetsialist vastab täpse õli, filtri ja koguse soovitusega.",
+    "plate": "Registreerimismärk või VIN",
+    "platePlaceholder": "nt 123ABC või WVWZZZ…",
+    "carModel": "Auto mark, mudel, mootor",
+    "carModelPlaceholder": "nt Škoda Octavia 2.0 TDI, 2018",
+    "name": "Nimi",
+    "email": "E-post",
+    "phone": "Telefon",
+    "comment": "Kommentaar",
+    "expertCta": "Saa soovitus",
+    "sent": "Aitäh! Spetsialist vastab järgmisel tööpäeval.",
+    "advisorEyebrow": "Tootja andmebaas",
+    "advisorTitle": "Ametlik Divinol Lubricant Advisor",
+    "advisorText": "Zeller+Gmelini andmebaas tuhandete sõidukimudelite, mootorite ja määrimispunktidega (inglise keeles).",
+    "advisorCta": "Ava Lubricant Advisor",
+    "faq": [
+      {
+        "q": "Kuidas valida oma autole õige mootoriõli?",
+        "a": "Kõige olulisem on auto tootja heakskiit (nt VW 504.00/507.00, MB 229.51, BMW Longlife-04 või GM dexos2) ja viskoossus, mis on märgitud teenindusraamatus või kasutusjuhendis. Kui heakskiitu pole märgitud, vali õli ACEA klassi järgi — tänapäevastel tahkete osakeste filtriga autodel on tavaliselt vaja C klassi (C2, C3, C5)."
+      },
+      {
+        "q": "Mida tähendab viskoossus, näiteks 5W-30?",
+        "a": "Esimene number koos tähega W (winter) näitab õli voolavust külmas — mida väiksem number, seda kergem on külmkäivitus. Teine number näitab viskoossust mootori töötemperatuuril (100 °C). 5W-30 ja 0W-20 on tüüpilised tänapäeva mootoritele, 10W-40 ja 15W-40 — vanematele mootoritele ja suure võimsusega tehnikale."
+      },
+      {
+        "q": "Mis vahe on tootja heakskiidul ja ACEA spetsifikatsioonil?",
+        "a": "ACEA ja API on üldised tööstusstandardid, mis määravad õli minimaalsed omadused. Tootja heakskiit (OEM approval) tähendab, et õli on lisaks läbinud konkreetse tootja testid ja on tema heakskiidetud õlide nimekirjas. Garantiiajal kasuta õli, millel on tootja nõutud heakskiit."
+      },
+      {
+        "q": "Miks vajab DPF-iga auto Low SAPS õli?",
+        "a": "Low SAPS õlidel on vähendatud sulfaattuha, fosfori ja väävli sisaldus. See kaitseb diislikütuse tahkete osakeste filtrit (DPF), bensiini tahkete osakeste filtrit (GPF) ja katalüsaatorit ummistumise eest. Selliseid õlisid tähistatakse ACEA C klassiga (C2–C6) või veoautodel E6, E9, API CK-4."
+      },
+      {
+        "q": "Kui sageli tuleb mootoriõli vahetada?",
+        "a": "Järgi auto tootja määratud vahetusintervalli. Tavaliselt on see 10 000–15 000 km või kord aastas; LongLife režiimis kuni 30 000 km või 2 aastat. Lühikesed sõidud linnas, sagedane külmkäivitus, haagise vedamine või LPG kasutamine on rasked kasutustingimused — sel juhul on soovitatav õli vahetada sagedamini."
+      },
+      {
+        "q": "Kas eri mootoriõlisid tohib segada?",
+        "a": "Kvaliteetsed sama viskoossuse ja spetsifikatsiooniga õlid on tavaliselt omavahel ühilduvad, seega hädaolukorras võib lisamiseks kasutada teist õli. Parima kaitse ja heakskiidu säilitamise huvides on siiski soovitatav lisada sama õli, mis on juba mootoris."
+      }
+    ]
+  },
+  "calc": {
+    "metaTitle": "Õlikalkulaatorid — kogus, maksumus, segud",
+    "metaDescription": "Tasuta kalkulaatorid: õlivahetuse maksumus ja soodsaimad pakendid, autopargi aastane kulu, 2T kütusesegu ja klaasipesuvedeliku kontsentraadi lahjendamine.",
+    "eyebrow": "Kalkulaatorid",
+    "title": "Arvuta täpselt — osta soodsalt",
+    "text": "Praktilised tööriistad autojuhtidele, teenindustele ja autoparkidele. Kõik arvutused toimuvad kohe sinu brauseris.",
+    "nav": "Kalkulaatorid",
+    "liters": "{amount} L",
+    "ml": "{amount} ml",
+    "perYear": "aastas",
+    "approx": "Ligikaudne arvutus",
+    "oil": {
+      "title": "Õlivahetuse planeerija",
+      "text": "Vali õli, mootori maht ja vahetuste arv — leiame odavaima pakendite kombinatsiooni.",
+      "product": "Õli",
+      "search": "Otsi õli või viskoossust…",
+      "noProducts": "Midagi ei leitud",
+      "capacity": "Mootoriõli maht (L)",
+      "changes": "Vahetuste arv",
+      "required": "Vajalik",
+      "result": "Soodsaim kombinatsioon",
+      "total": "Kokku",
+      "leftover": "Üle jääb {amount} L — kulub lisamiseks ära",
+      "noLeftover": "Ilma ülejäägita",
+      "vsSmall": "Võrreldes {pack} pakenditega säästad {amount}",
+      "noSavings": "Sellele kogusele on soodsaimad {pack} pakendid",
+      "addAll": "Lisa kõik ostukorvi",
+      "added": "Pakendid lisatud ostukorvi",
+      "empty": "Sellel tootel ei ole liitrites pakendeid saadaval."
+    },
+    "fleet": {
+      "title": "Autopargi aastane kulu",
+      "text": "Arvuta aastane õlikulu ja sääst suurte pakendite ostmisel.",
+      "product": "Suure võimsusega õli",
+      "vehicles": "Sõidukite arv",
+      "km": "Aastane läbisõit ühe auto kohta (km)",
+      "interval": "Vahetusintervall (km)",
+      "capacity": "Õli maht ühe vahetuse kohta (L)",
+      "topup": "Lisamine (L 10 000 km kohta)",
+      "liters": "Aastane kulu",
+      "changes": "Vahetusi aastas",
+      "changesValue": "{count} vahetust",
+      "cost20": "Ostes 20 L kanistrites",
+      "cost200": "Ostes 200 L tünnides",
+      "packs": "{count} × {pack}",
+      "perLitre": "{price}/L",
+      "missing": "Sellel tootel ei ole {pack} pakendit",
+      "savings": "Aastane sääst tünnidega",
+      "noSavings": "Sellele mahule on soodsamad 20 L kanistrid",
+      "b2bNote": "B2B klientidele rakendame individuaalset allahindlust kogu kataloogile.",
+      "cta": "Küsi B2B pakkumist"
+    },
+    "twoT": {
+      "title": "2T kütusesegu",
+      "text": "Kui palju õli lisada bensiinile mootorsaele, trimmerile või paadimootorile.",
+      "fuel": "Bensiini kogus (L)",
+      "ratio": "Vahekord",
+      "custom": "Muu",
+      "customLabel": "Oma vahekord 1:",
+      "oil": "Vajalik õli",
+      "mix": "Segu 1:{ratio}",
+      "canister": "Kanister {fuel} L bensiini ja {oil} ml õliga",
+      "hint": "Järgi alati tehnika tootja määratud vahekorda. Sünteetiline Divinol Synthetic 2T sobib segudele kuni 1:100.",
+      "products": "2T õlid"
+    },
+    "washer": {
+      "title": "Klaasipesuvedeliku lahjendamine",
+      "text": "Kui palju vett lisada −60 °C kontsentraadile, et saavutada vajalik külmakindlus.",
+      "target": "Soovitud külmakindlus",
+      "total": "Valmis vedeliku kogus (L)",
+      "concentrate": "Kontsentraat",
+      "water": "Vesi",
+      "ratio": "Vahekord",
+      "ratioValue": "1 : {parts}",
+      "ratioHint": "kontsentraat : vesi",
+      "hint": "Arvutus on suunav — külmumistemperatuur on interpoleeritud tüüpiliste lahjendusväärtuste põhjal. Kasuta destilleeritud või pehmet vett ja vali varuks paar kraadi madalam temperatuur.",
+      "product": "Vaata kontsentraati"
+    }
+  },
+  "business": {
+    "metaTitle": "Divinol õlid ettevõtetele — B2B hinnad, arved, suured pakendid",
+    "metaDescription": "B2B koostöö autoteenindustele, autoparkidele, põllumeestele, ehitusele ja tööstusele: individuaalsed hinnad, järelmaksuarve, 20–200 L pakendid ja tehniline tugi.",
+    "eyebrow": "B2B koostöö",
+    "title": "Usaldusväärne õlitarnija sinu ettevõttele",
+    "text": "Teeme koostööd autoteenindustega, vedajatega, põllumajandus-, ehitus-, metsandus- ja tööstusettevõtetega kogu Baltikumis.",
+    "heroCta": "Küsi pakkumist",
+    "heroCta2": "Registreeri ettevõte",
+    "segmentsEyebrow": "Valdkonnad",
+    "segmentsTitle": "Kellele me tarnime",
+    "segments": {
+      "service": "Autoteenindused ja rehvikeskused",
+      "fleet": "Vedajad ja autopargid",
+      "agro": "Põllumajandus",
+      "construction": "Ehitus ja teedeehitus",
+      "forestry": "Metsandus",
+      "industry": "Tööstus ja tootmine"
+    },
+    "segmentsText": {
+      "service": "Mootoriõlid VW, BMW, MB, GM dexos heakskiitudega 20 L kanistrites ja 200 L tünnides.",
+      "fleet": "Low SAPS õlid Euro VI veoautodele ja bussidele MAN, MB, Volvo, Scania heakskiitudega.",
+      "agro": "Multimax universaalõlid traktoritele ja kombainidele, hüdraulika- ja käigukastiõlid.",
+      "construction": "Hüdraulikaõlid, määrded ja betooni lahtivõtmisvahendid ehitusplatsile.",
+      "forestry": "Biolagunevad ketiõlid ja hüdraulikaõlid tundlikus keskkonnas töötamiseks.",
+      "industry": "Reduktori-, kompressori-, hüdraulikaõlid ja määrded tootmisettevõtetele."
+    },
+    "benefitsEyebrow": "Eelised",
+    "benefitsTitle": "Mida sa saad",
+    "benefits": {
+      "prices": "Individuaalsed hinnad",
+      "pricesText": "Allahindlus rakendub automaatselt kogu kataloogile — hinnad ilma käibemaksuta näed kohe pärast sisselogimist.",
+      "invoice": "Järelmaksuarve",
+      "invoiceText": "Kinnitatud klientidele — maksmine arvega kokkulepitud tähtaja jooksul.",
+      "bulk": "Suured pakendid",
+      "bulkText": "20 L kanistrid, 60 L ja 200 L tünnid ning 180 kg määrdetünnid töökodadele ja tootmisettevõtetele.",
+      "manager": "Personaalne haldur",
+      "managerText": "Tehniline nõustamine toodete valikul, heakskiitudel ja vahetusintervallidel.",
+      "portal": "Kliendiportaal",
+      "portalText": "Kõik tellimused, arved ja korduvtellimused ühes kohas — 24/7.",
+      "docs": "Dokumentatsioon",
+      "docsText": "Tehnilised andmelehed ja ohutuskaardid (TDS/SDS) ning OEM heakskiitude info."
+    },
+    "howEyebrow": "Kuidas alustada",
+    "howTitle": "Kuidas saada B2B kliendiks",
+    "how1": "Registreeru ja sisesta ettevõtte rekvisiidid",
+    "how1Text": "Täida registreerimisvorm ettevõtte nime, registrikoodi ja KMKR numbriga.",
+    "how2": "Kontrollime andmeid ja määrame hinnataseme",
+    "how2Text": "Tavaliselt 1 tööpäeva jooksul. Kinnitusest teavitame e-postiga.",
+    "how3": "Osta oma hindadega",
+    "how3Text": "Logi sisse, näe allahindlusega hindu ilma käibemaksuta ja maksa arvega.",
+    "registerCta": "Registreeri ettevõte",
+    "statsTitle": "Divinol arvudes",
+    "stats": {
+      "products": "toodet kataloogis",
+      "since": "tootja asutamisaasta",
+      "markets": "Balti riiki tarnepiirkonnas",
+      "drum": "suurim õlipakend"
+    },
+    "formEyebrow": "Individuaalne pakkumine",
+    "formTitle": "Küsi pakkumist",
+    "formText": "Räägi meile oma vajadustest — koostame individuaalse hinnapakkumise ja soovitame sobivaimad tooted.",
+    "formPoint1": "Vastus 1 tööpäeva jooksul",
+    "formPoint2": "Ilma kohustusteta",
+    "formPoint3": "Tasuta tehniline konsultatsioon",
+    "company": "Ettevõte",
+    "regNo": "Registrikood",
+    "name": "Kontaktisik",
+    "email": "E-post",
+    "phone": "Telefon",
+    "segment": "Valdkond",
+    "segmentOther": "Muu valdkond",
+    "choose": "Vali…",
+    "volume": "Ligikaudne kuukulu",
+    "volumes": {
+      "xs": "kuni 50 L",
+      "s": "50–200 L",
+      "m": "200–1000 L",
+      "l": "üle 1000 L"
+    },
+    "message": "Millised tooted sind huvitavad?",
+    "messagePlaceholder": "nt mootoriõli 10W-40 veoautole (MAN M 3477), hüdraulikaõli HLP 46, määre…",
+    "submit": "Saada päring",
+    "sent": "Aitäh! Meie haldur võtab sinuga ühendust 1 tööpäeva jooksul."
+  },
+  "about": {
+    "metaTitle": "Meist — SIA Elama, ametlik Divinol esindaja Baltikumis",
+    "metaDescription": "SIA Elama on Zeller+Gmelin Divinol õlide ja määrdeainete ametlik esindaja Baltikumis. Saksa kvaliteet alates 1866. aastast, ISO 9001 sertifitseeritud tootmine.",
+    "eyebrow": "Meist",
+    "title": "Divinol Baltikumis — SIA Elama",
+    "text": "SIA Elama on Divinol toodete ametlik esindaja Baltikumis. Tarnime originaalseid Zeller+Gmelin õlisid, määrdeid ja autokeemiat eraisikutele ja ettevõtetele ning aitame valida lahenduse, mis vastab tehnika tootja nõuetele.",
+    "storyEyebrow": "Meie lugu",
+    "storyTitle": "Ametlik esindaja — otsene side tootjaga",
+    "storyText1": "Ametliku Divinol esindajana saame tooted otse tootjalt Saksamaalt. See tähendab originaaltooteid, täielikku tehnilist dokumentatsiooni ja värsket infot tootjate heakskiitude kohta.",
+    "storyText2": "Meie ladu asub Riias, Ventspils ielā 51 — siit saadetakse tellimused klientidele Lätis, Eestis ja Leedus. Ettevõtetele pakume individuaalseid hindu, suuri pakendeid ja tehnilist nõustamist.",
+    "zgEyebrow": "Tootja",
+    "zgTitle": "Zeller+Gmelin — tootja alates 1866. aastast",
+    "zgText1": "Divinol® on kõrgekvaliteedilised määrdematerjalid, mida toodab üks Saksamaa vanimaid ettevõtteid — Eislingenist pärit Zeller+Gmelin GmbH & Co. KG. Ettevõte on spetsialiseerunud auto-, tööstus- ja hüdraulikaõlidele, määretele, autohoolduse toodetele, naftakeemiale ning trükivärvidele ja lakkidele.",
+    "zgText2": "Tootmine on sertifitseeritud vastavalt ISO 9001-le ning ettevõtte laborites tegeleb toodete arendamisega kvalifitseeritud spetsialistide meeskond. Zeller+Gmelin kuulub Saksamaa uuenduslikumate ettevõtete “TOP 100” nimekirja.",
+    "facts": {
+      "founded": "asutatud Eislingenis, Saksamaal",
+      "years": "aastat kogemust",
+      "subsidiaries": "tütarettevõtet maailmas",
+      "products": "toodet meie kataloogis"
+    },
+    "badges": {
+      "iso": "ISO 9001 sertifitseeritud tootmine",
+      "top100": "TOP 100 uuenduslikumat ettevõtet",
+      "made": "Toodetud Saksamaal",
+      "family": "Pereettevõte"
+    },
+    "trustEyebrow": "Partnerid",
+    "trustTitle": "Usaldavad maailma tootjad",
+    "trustText": "Kvaliteedist annavad tunnistust pikaajalised tarnelepingud selliste ettevõtetega nagu BMW, Porsche, Bosch, BASF, Deutsche Bahn, Metabo ja teised.",
+    "valuesEyebrow": "Väärtused",
+    "valuesTitle": "Meie põhimõtted",
+    "value1": "Ainult originaaltooted",
+    "value1Text": "Tarnime tooteid otse tootjalt Saksamaalt — ilma vahendajate ja võltsimisriskita.",
+    "value2": "Aus nõuanne",
+    "value2Text": "Soovitame täpselt seda, mida sinu tehnika vajab, tuginedes tootja heakskiitudele.",
+    "value3": "Kiire tarne",
+    "value3Text": "Pakiautomaadid, kuller või kättesaamine laost Riias — Lätis, Eestis ja Leedus.",
+    "value4": "Pikaajaline koostöö",
+    "value4Text": "Individuaalsed hinnad, järelmaks ja personaalne kontakt ettevõtetele.",
+    "ctaTitle": "Valmis leidma õiget õli?",
+    "ctaText": "Kasuta õlivaliku tööriista või võta meiega ühendust — aitame valida.",
+    "ctaFinder": "Leia õli",
+    "ctaContact": "Võta ühendust"
+  },
+  "contact": {
+    "metaTitle": "Kontakt — SIA Elama, Divinol Eesti",
+    "metaDescription": "Võta ühendust SIA Elamaga — ametliku Divinoli esindajaga Baltikumis. Ladu ja tellimuste väljastamine Ventspils ielā 51, Riias.",
+    "eyebrow": "Kontakt",
+    "title": "Võta meiega ühendust",
+    "text": "Küsimusi toodete, tellimuste või koostöö kohta? Helista, kirjuta või täida vorm — vastame järgmisel tööpäeval.",
+    "phone": "Telefon",
+    "email": "E-post",
+    "warehouse": "Ladu ja kättesaamine",
+    "legal": "Juriidiline aadress",
+    "requisites": "Rekvisiidid",
+    "company": "Ettevõte",
+    "regNo": "Reg. nr.",
+    "vatNo": "KMKR nr.",
+    "bank": "Pank",
+    "iban": "Konto",
+    "swift": "SWIFT",
+    "hours": "Töötunnid",
+    "copy": "Kopeeri",
+    "copied": "Kopeeritud",
+    "formEyebrow": "Sõnum",
+    "formTitle": "Kirjuta meile",
+    "formText": "Täida vorm ja võtame sinuga ühendust e-posti või telefoni teel.",
+    "name": "Nimi",
+    "message": "Sõnum",
+    "messagePlaceholder": "Kuidas saame aidata?",
+    "consent": "Nõustun, et minu andmeid töödeldakse vastuse andmiseks vastavalt <link>privaatsuspoliitikale</link>.",
+    "consentRequired": "Palun kinnita nõusolek andmete töötlemiseks",
+    "submit": "Saada sõnum",
+    "sent": "Aitäh! Sinu sõnum on saadud — vastame peagi.",
+    "mapTitle": "Lao asukoht kaardil — Ventspils iela 51, Riia",
+    "directions": "Ava kaardil",
+    "googleMaps": "Google Maps",
+    "social": "Jälgi meid"
+  },
+  "downloads": {
+    "metaTitle": "Divinol tootekataloogid (PDF)",
+    "metaDescription": "Laadi alla ametlikud Divinol kataloogid PDF-vormingus: sõiduautodele, tarbesõidukitele, tööstusõlid, määrded, bioõlid, mootorratastele ja põllumajandusele.",
+    "eyebrow": "Kataloogid",
+    "title": "Tootekataloogid ja brošüürid",
+    "text": "Ametlikud Zeller+Gmelin Divinol kataloogid tootekirjelduste, spetsifikatsioonide ja heakskiitudega.",
+    "lang": "Keel",
+    "size": "Suurus",
+    "pages": "{count} lk",
+    "open": "Ava",
+    "download": "Laadi alla",
+    "langs": {
+      "lv": "Läti",
+      "de": "Saksa",
+      "en": "Inglise",
+      "ru": "Vene"
+    },
+    "items": {
+      "cars": "Sõiduautodele",
+      "commercial": "Veoautodele ja tarbesõidukitele",
+      "industrial": "Tööstusõlid",
+      "bio": "Bioõlid",
+      "greases": "Määrded",
+      "release": "Betooni ja asfaldi lahtivõtmisvahendid",
+      "moto": "Mootorratta õlid",
+      "agro": "Põllumajandusele"
+    },
+    "descriptions": {
+      "cars": "Mootoriõlid, käigukastiõlid ja vedelikud sõiduautodele koos spetsifikatsioonide ja heakskiitudega.",
+      "commercial": "Multimax suure võimsusega õlid, käigukasti- ja hüdraulikaõlid veoautodele ja bussidele.",
+      "industrial": "Reduktori-, hüdraulika-, juhiku- ja libisemispinnaõlid tööstusele.",
+      "bio": "Keskkonnasõbralikud määrdematerjalid tundlikele keskkondadele — ketiõlid, hüdraulika, määrded.",
+      "greases": "Kõrge jõudlusega määrded tööstusele ja teenindusele.",
+      "release": "Vormiõlid betoonile ja lahtivõtmisvahendid asfaldile.",
+      "moto": "Mootorratta, neliratta ja mopeedi õlide valik ühel lehel.",
+      "agro": "Määrimistabel põllumajandustraktoritele ja kombainidele."
+    },
+    "helpTitle": "Ei leia vajalikku dokumenti?",
+    "helpText": "Tehnilised andmelehed (TDS) ja ohutuskaardid (SDS) leiad tootelehtedelt. Kui vajad muud dokumenti, kirjuta meile.",
+    "helpCta": "Võta ühendust"
+  },
+  "delivery": {
+    "metaTitle": "Tarne ja maksmine — Divinol Eesti",
+    "metaDescription": "Tarneviisid ja hinnad Lätis, Eestis ja Leedus: pakiautomaadid, kuller, kättesaamine laost Riias ja veotarne. Maksmine kaardi, ülekande või arvega.",
+    "eyebrow": "Tarne ja maksmine",
+    "title": "Kuidas tellimust kätte saada",
+    "text": "Tarnime kogu Baltikumis — väikestest pudelitest kuni 200 L tünnideni. Hinnad on näidatud koos käibemaksuga vastavalt tarneriigile.",
+    "freeBanner": "Tasuta tarne pakiautomaati või kulleriga tellimustele üle {amount} (Eestis)",
+    "methodsEyebrow": "Tarne",
+    "methods": "Tarneviisid",
+    "pickup": "Kättesaamine laost",
+    "pickupText": "Ventspils iela 51, Riia. Tellimuse valmimisest teavitame e-posti või SMS-iga.",
+    "parcel_locker": "Pakiautomaat",
+    "parcel_lockerText": "Omniva, DPD või Smartposti pakiautomaat Lätis, Eestis ja Leedus.",
+    "courier": "Kuller ukseni",
+    "courierText": "Tarne sisestatud aadressile 1–3 tööpäeva jooksul.",
+    "freight": "Veotarne",
+    "freightText": "60 L ja 200 L tünnidele ning 180 kg määrdetünnidele — hinna kinnitame individuaalselt.",
+    "maxItem": "Pakenditele kuni {size} L",
+    "market": "Riik",
+    "price": "Hind",
+    "free": "Tasuta alates {amount}",
+    "freeShort": "Tasuta",
+    "onRequest": "Kokkuleppel",
+    "notAvailable": "—",
+    "pricesNote": "Hinnad koos käibemaksuga: {rates}. B2B klientidele kuvatakse hinnad ilma käibemaksuta.",
+    "paymentsEyebrow": "Maksmine",
+    "payments": "Maksmisviisid",
+    "card": "Pangakaart",
+    "cardText": "Turvaline maksmine Visa, Mastercard, Apple Pay või Google Pay'ga.",
+    "transfer": "Pangaülekanne",
+    "transferText": "Pärast tellimust saad ettemaksuarve e-postile.",
+    "invoice": "Arve ettevõtetele",
+    "invoiceText": "Kinnitatud B2B klientidele — järelmaks kokkulepitud tähtaja jooksul.",
+    "returnsEyebrow": "Tagastamine",
+    "returns": "Taganemisõigus ja tagastamine",
+    "returnsText": "Eraisikutel on õigus ostust taganeda 14 päeva jooksul alates kauba kättesaamise päevast, ilma põhjust esitamata. Võta meiega ühendust ja aitame tagastamise vormistada.",
+    "returnsLink": "Loe kasutustingimusi",
+    "faq": [
+      {
+        "q": "Kui kaua tuleb tarnet oodata?",
+        "a": "Laos olevad tooted saadame 1–2 tööpäeva jooksul. Kulleritarne võtab tavaliselt 1–3 tööpäeva, pakiautomaadi saadetis on tavaliselt kättesaadav järgmisel tööpäeval pärast saatmist. Märkega “Tellimisel” tooted tarnitakse tootjalt — tähtaja kinnitame individuaalselt."
+      },
+      {
+        "q": "Kas saan tellimuse ise kätte saada?",
+        "a": "Jah — vali “Kättesaamine laost” ja saad tellimuse kätte Ventspils ielā 51, Riias, tasuta. Enne kohalejõudmist oota meie teavitust tellimuse valmimise kohta."
+      },
+      {
+        "q": "Kuidas tarnitakse 200 L tünnid?",
+        "a": "Suured pakendid (60 L, 200 L tünnid ja 180 kg määrdetünnid) tarnime veokiga alusel. Tarnehinna ja -aja kinnitame pärast tellimuse saamist sõltuvalt aadressist."
+      },
+      {
+        "q": "Mida teha, kui saadetis on kahjustatud?",
+        "a": "Saadetist vastu võttes kontrolli pakendit. Kui see on kahjustatud või toode on lekkinud, jäädvusta see (näiteks fotoga) ja võta kohe meiega ühendust e-posti või telefoni teel — lahendame olukorra."
+      },
+      {
+        "q": "Kas tarnite ka Lätisse ja Leetu?",
+        "a": "Jah. Lätisse ja Leetu tarnime pakiautomaadi, kulleri või veoautoga. Hinnad arvutatakse vastavalt sihtriigi käibemaksumäärale ning tasuta tarne lävi on toodud ülal olevas tabelis."
+      }
+    ]
+  },
+  "legal": {
+    "termsMetaTitle": "Kasutus- ja ostutingimused",
+    "termsMetaDescription": "Divinol e-poe kasutus- ja kaugmüügilepingu tingimused: tellimine, hinnad, maksmine, tarne, 14-päevane taganemisõigus, garantii ja vaidluste lahendamine.",
+    "privacyMetaTitle": "Privaatsuspoliitika",
+    "privacyMetaDescription": "Kuidas SIA Elama töötleb isikuandmeid Divinol e-poes: eesmärgid, õiguslikud alused, volitatud töötlejad, säilitustähtajad, sinu õigused ja küpsised.",
+    "eyebrow": "Juriidiline teave",
+    "termsTitle": "Kasutus- ja ostutingimused",
+    "termsText": "Tingimused, mis kehtivad ostude kohta Divinol e-poes.",
+    "privacyTitle": "Privaatsuspoliitika",
+    "privacyText": "Kuidas me töötleme ja kaitseme sinu isikuandmeid.",
+    "updatedDate": "25.09.2026",
+    "questions": "Küsimusi selle dokumendi kohta? Kirjuta {email}.",
+    "terms": {
+      "sections": [
+        {
+          "title": "Üldsätted",
+          "body": "Need tingimused reguleerivad kaupade ostmist Divinol e-poes (divinol.lv ja divinol.ee).\n\nMüüja: {companyName}, registrikood {regNo}, KMKR nr {vatNo}, juriidiline aadress: {address}. Ladu ja kauba väljastamine: {warehouse}. E-post: {email}, telefon: {phone}.\n\nTellimust esitades kinnitab ostja, et on käesolevate tingimustega tutvunud ja nõustub nendega. Ostja võib olla nii tarbija (füüsiline isik) kui ka juriidiline isik. Ainult ettevõtetele kehtivad tingimused on toodud eraldi peatükis."
+        },
+        {
+          "title": "Tellimus ja lepingu sõlmimine",
+          "body": "Kaubad valitakse, lisades need ostukorvi ja vormistades tellimuse. Enne tellimuse kinnitamist saab ostja sisestatud andmeid kontrollida ja parandada.\n\nPärast tellimuse vormistamist saab ostja kinnituse sisestatud e-posti aadressile. Kaugmüügileping loetakse sõlmituks hetkest, kui müüja on tellimuse kinnitanud.\n\nKui tellitud kaupa ei ole võimalik tarnida (näiteks see ei ole tootjalt saadaval), teavitab müüja sellest ostjat viivitamata ja pakub alternatiivi või tagastab makstud summa hiljemalt 14 päeva jooksul."
+        },
+        {
+          "title": "Hinnad",
+          "body": "Hinnad on toodud eurodes (EUR). Eraisikutele näidatakse hindu koos käibemaksuga vastavalt valitud tarneriigi määrale. Kinnitatud B2B klientidele näidatakse hindu ilma käibemaksuta, rakendades individuaalset allahindlust.\n\nTarnekulu näidatakse enne tellimuse kinnitamist. Veotarne hinna suurtele pakenditele kinnitab müüja individuaalselt enne tellimuse täitmist.\n\nKui toote hind on ilmse tehnilise vea tõttu näidatud valesti, teavitab müüja ostjat ning ostja võib tellimuse kinnitada õige hinnaga või sellest loobuda."
+        },
+        {
+          "title": "Maksmine",
+          "body": "Saadaolevad maksmisviisid:\n- maksekaart (Visa, Mastercard) ja maksmisteenused, mis pakutakse tellimuse vormistamisel;\n- pangaülekanne ettemaksuarve alusel;\n- järelmaksuarve — ainult kinnitatud B2B klientidele.\n\nEttemaksuarve tuleb tasuda seal märgitud tähtaja jooksul. Tellimus võetakse täitmisele pärast makse laekumist. Kaardimakseid töötleb sertifitseeritud makseteenuse pakkuja; müüja ei näe ega salvesta maksekaardi andmeid."
+        },
+        {
+          "title": "Tarne",
+          "body": "Kaubad tarnitakse Lätis, Eestis ja Leedus pakiautomaadi, kulleri või veokiga, või neid saab kätte laost Riias. Tarneviisid, hinnad ja tasuta tarne tingimused on toodud lehel “Tarne ja maksmine”.\n\nTarnetähtaeg on märgitud tellimuse kinnituses. Kui tähtaega ei ole märgitud, tarnib müüja kauba hiljemalt 30 päeva jooksul lepingu sõlmimisest.\n\nKauba juhusliku hävimise risk läheb üle ostjale hetkel, mil ostja või tema määratud isik on kauba kätte saanud. Saadetist vastu võttes palume kontrollida pakendit ja kahjustustest müüjat viivitamata teavitada."
+        },
+        {
+          "title": "Taganemisõigus (14 päeva)",
+          "body": "Tarbijal on õigus 14 päeva jooksul kaugmüügilepingust taganeda ilma põhjust esitamata. Taganemistähtaeg algab päeval, mil tarbija või tema määratud isik on kauba kätte saanud.\n\nTaganemisõiguse kasutamiseks saadab tarbija enne tähtaja lõppu müüjale ühemõttelise teate aadressile {email}, märkides tellimuse numbri, kaubad ja pangakonto tagasimakseks. Kasutada võib ka Läti Ministrite Kabineti määruse nr 255 “Kaugmüügilepingute eeskirjad” lisas toodud taganemisvormi.\n\nTarbija tagastab kauba põhjendamatu viivituseta, hiljemalt 14 päeva jooksul pärast taganemisteate saatmist. Kauba tagastamise otsesed kulud kannab tarbija, kui ei ole kokku lepitud teisiti.\n\nMüüja tagastab kõik saadud maksed, sealhulgas standardse tarnekulu, hiljemalt 14 päeva jooksul pärast taganemisteate saamist, kasutades sama makseviisi. Müüja võib tagasimakse kinni pidada, kuni kaup on tagasi saadud.\n\nTarbija vastutab kauba väärtuse vähenemise eest, kui seda on kasutatud rohkem, kui on vajalik kauba olemuse ja omaduste kindlakstegemiseks — näiteks kui pakend on avatud ja osa toodet ära kasutatud."
+        },
+        {
+          "title": "Kauba vastavus ja pretensioonid",
+          "body": "Müüja vastutab kauba vastavuse eest lepingutingimustele. Tarbija võib esitada pretensiooni mittevastava kauba kohta kahe aasta jooksul alates kauba kättesaamise päevast vastavalt Läti tarbijaõiguste kaitse seadusele.\n\nPretensioon esitatakse kirjalikult aadressile {email}, lisades ostu tõendava dokumendi ja võimalusel fotod. Müüja vastab pretensioonile 15 päeva jooksul.\n\nMüüja ei vastuta kahjustuste eest, mis on tekkinud toodet kasutades vastuolus tehnika tootja nõuete, toote kirjelduse või ohutuskaardiga, samuti ebaõige säilitamise tõttu."
+        },
+        {
+          "title": "Tingimused ettevõtetele (B2B)",
+          "body": "Juriidiliste isikute või majandustegevuse raames ostvate füüsiliste isikute ostudele tarbija taganemisõigus ei laiene.\n\nB2B hinnataseme, allahindluse ja järelmaksutähtaja määrab müüja pärast ettevõtte andmete kontrollimist. Müüja võib järelmaksuvõimalust muuta või tühistada, kui arveid ei tasuta õigeaegselt.\n\nOstja peab kauba kättesaamisel kontrollima kauba kogust ja pakendi terviklikkust ning fikseerima ilmsed lahknevused saatelehel või teavitama müüjat viivitamata. Hilinenud maksete eest võib müüja arvestada seadusjärgset viivist vastavalt Läti Kaubandusseadusele."
+        },
+        {
+          "title": "Vastutus",
+          "body": "Müüja ei vastuta lepinguliste kohustuste täitmatajätmise eest vääramatu jõu asjaolude tõttu. Toodete kirjeldused, õlivaliku tööriista soovitused ja kalkulaatorite tulemused on informatiivsed — enne toote kasutamist kontrolli tehnika tootja nõudeid.\n\nToodete pildid võivad tegelikust pakendist veidi erineda, kui tootja on disaini muutnud."
+        },
+        {
+          "title": "Isikuandmed",
+          "body": "Ostja isikuandmeid töödeldakse tellimuse täitmiseks ja õigusaktide nõuete täitmiseks vastavalt Privaatsuspoliitikale, mis on saadaval sellel veebilehel."
+        },
+        {
+          "title": "Vaidluste lahendamine",
+          "body": "Vaidlusi lahendavad müüja ja ostja esmalt omavahelistel läbirääkimistel. Kui kokkulepet ei saavutata, võib tarbija pöörduda Läti Tarbijaõiguste Kaitse Keskusesse (PTAC, www.ptac.gov.lv) või Tarbijavaidluste Lahendamise Komisjoni.\n\nPiiriüleste vaidluste korral võib tarbija pöörduda Euroopa Tarbijakeskusesse Lätis (www.ecclatvia.lv). Euroopa Komisjoni veebipõhise vaidluste lahendamise (ODR) platvormi tegevus lõppes 20. juulil 2025.\n\nVaidlused, milles kokkulepet ei saavutata, lahendatakse Läti Vabariigi kohtus vastavalt Läti Vabariigi õigusaktidele."
+        },
+        {
+          "title": "Lõppsätted",
+          "body": "Müüja võib neid tingimusi muuta. Tellimusele kohaldatakse tingimusi, mis kehtisid tellimuse esitamise hetkel. Neile tingimustele kohaldatakse Läti Vabariigi õigusakte."
+        }
+      ]
+    },
+    "privacy": {
+      "sections": [
+        {
+          "title": "Vastutav töötleja",
+          "body": "Isikuandmete vastutav töötleja on {companyName}, registrikood {regNo}, juriidiline aadress: {address}. Andmetöötlusega seotud küsimustes võtke ühendust: {email}, telefon {phone}.\n\nKäesolev poliitika kehtib isikuandmete töötlemisele Divinol e-poes (divinol.lv, divinol.ee), kliendiportaalis ja meiega suhtlemisel."
+        },
+        {
+          "title": "Milliseid andmeid me töötleme",
+          "body": "- Konto andmed: eesnimi, perekonnanimi, e-post, telefon, parool (säilitatakse krüpteeritud kujul autentimisteenuse pakkuja juures).\n- Tellimuse andmed: tarne- ja arveldusaadress, tellitud kaubad, makse staatus, arved.\n- Ettevõtte andmed: ettevõtte nimi, registrikood ja KMKR number, juriidiline aadress, kontaktisik.\n- Suhtluse andmed: sõnumid ja päringud, mis on saadetud kontaktivormi, B2B vormi või õlivaliku vormi kaudu (sealhulgas auto registreerimismärk või VIN, kui sa selle esitad).\n- Tehnilised andmed: IP-aadress, brauseri info ja serveri logid, mis on vajalikud veebilehe toimimiseks ja turvalisuseks."
+        },
+        {
+          "title": "Eesmärgid ja õiguslikud alused",
+          "body": "- Tellimuste täitmine, tarne, konto ja kliendiportaali haldamine — lepingu sõlmimine ja täitmine (IKÜM artikli 6 lõike 1 punkt b).\n- Raamatupidamis- ja maksunõuete täitmine, arvete säilitamine — juriidiline kohustus (punkt c).\n- Vastamine küsimustele ja päringutele, B2B klientide andmete kontrollimine — lepingueelsed meetmed ja meie õigustatud huvid (punktid b ja f).\n- Veebilehe turvalisus, pettuste ennetamine ja tehniline haldus — õigustatud huvid (punkt f).\n- Uudiskirjad — nõusolek (punkt a), mille saad igal ajal tagasi võtta."
+        },
+        {
+          "title": "Volitatud töötlejad ja andmesaajad",
+          "body": "Andmeid edastame ainult teenusepakkujatele, kes on vajalikud veebilehe toimimiseks ja tellimuste täitmiseks, ja ainult vajalikus ulatuses:\n- Supabase — andmebaas ja kasutajate autentimine; andmeid säilitatakse Euroopa Liidus (Frankfurt, Saksamaa).\n- Netlify — veebilehe majutus ja sisu edastusvõrk.\n- E-posti teenuse pakkuja — tellimuse kinnituste ja teavituste saatmine.\n- Makseteenuse pakkuja — kaardimaksete töötlemine; me ei näe ega salvesta kaardiandmeid.\n- Tarnepartnerid (pakiautomaatide operaatorid, kullerid, veoettevõtted) — tarne tagamiseks.\n- Raamatupidamisteenuse pakkujad ja riigiasutused — kui seda nõuavad õigusaktid.\n\nMe ei müü isikuandmeid ega kasuta neid automatiseeritud otsuste tegemiseks."
+        },
+        {
+          "title": "Andmete edastamine väljapoole EMP-d",
+          "body": "Mõned teenusepakkujad (näiteks veebilehe majutusteenus) võivad töödelda tehnilisi andmeid väljaspool Euroopa Majanduspiirkonda. Sellistel juhtudel tagab andmekaitse Euroopa Komisjoni piisavuse otsus (näiteks ELi–USA andmekaitseraamistik) või standardsed lepingutingimused."
+        },
+        {
+          "title": "Säilitustähtajad",
+          "body": "- Konto andmed — kuni konto on aktiivne või kustutamise taotluseni.\n- Tellimused, arved ja nendega seotud andmed — 5 aastat vastavalt Läti raamatupidamise seadusele.\n- Suhtluspäringud — kuni 2 aastat pärast viimast suhtlust, kui need ei ole seotud tellimusega.\n- Uudiskirja tellimus — kuni nõusoleku tagasivõtmiseni.\n- Serveri logid — lühiajaliselt, nii kaua kui on vajalik turvalisuse tagamiseks."
+        },
+        {
+          "title": "Sinu õigused",
+          "body": "Sul on õigus pääseda ligi oma andmetele, neid parandada, taotleda kustutamist või töötlemise piiramist, esitada vastuväiteid õigustatud huvidel põhinevale töötlusele ning saada oma andmed ülekantavas vormingus. Kui töötlemine põhineb nõusolekul, võid selle igal ajal tagasi võtta.\n\nSaada päringud aadressile {email} — vastame ühe kuu jooksul. Kui arvad, et sinu andmeid töödeldakse ebaseaduslikult, võid esitada kaebuse Läti Andmete Riiklikule Inspektsioonile (Datu valsts inspekcija, www.dvi.gov.lv)."
+        },
+        {
+          "title": "Küpsised",
+          "body": "Kasutame ainult veebilehe toimimiseks vajalikke küpsiseid ja brauseri salvestusruumi:\n- ostukorv — salvestab sinu brauseris ostukorvi lisatud tooted;\n- autentimine — hoiab sisselogimisseanssi kliendiportaalis;\n- tarneriik (market) — jätab meelde valitud riigi hinna ja käibemaksu arvutamiseks (kuni 1 aasta);\n- küpsiste valik — jätab meelde sinu valiku küpsiste teavituses.\n\nAnalüütika- ega turunduse küpsiseid ilma sinu nõusolekuta ei kasutata. Küpsiseid saad kustutada või blokeerida brauseri seadetes, kuid siis ei pruugi ostukorv ja sisselogimine toimida."
+        },
+        {
+          "title": "Turvalisus",
+          "body": "Andmed edastatakse krüpteeritud kujul (HTTPS/TLS). Juurdepääs andmebaasile on piiratud kasutajaõigustega — iga klient näeb ainult oma tellimusi ja arveid, täielik juurdepääs on ainult volitatud töötajatel."
+        },
+        {
+          "title": "Poliitika muudatused",
+          "body": "Võime seda poliitikat uuendada, kui meie teenused või õigusnõuded muutuvad. Kehtiv versioon on alati avaldatud sellel lehel ja selle uuendamise kuupäev on märgitud lehe ülaossa."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,475 @@
+{
+  "auth": {
+    "meta": {
+      "login": "Sign in",
+      "register": "Create account",
+      "forgot": "Forgot password",
+      "reset": "Set a new password"
+    },
+    "panel": {
+      "eyebrow": "My account",
+      "title": "Everything about your orders in one place",
+      "text": "Create an account to manage purchases, invoices and delivery addresses faster — as a private customer or as a business.",
+      "note": "B2B prices and payment by invoice become available once we have verified and approved your company details.",
+      "benefits": {
+        "b2b": {
+          "title": "B2B prices for businesses",
+          "text": "A personal discount and prices excl. VAT across the whole catalogue."
+        },
+        "history": {
+          "title": "Order history",
+          "text": "Status, delivery and every detail of each purchase."
+        },
+        "invoices": {
+          "title": "PDF invoices",
+          "text": "Download proforma and final invoices at any time."
+        },
+        "reorder": {
+          "title": "Fast reorder",
+          "text": "Put a previous order back in your cart with one click."
+        }
+      }
+    },
+    "notConfigured": {
+      "title": "Sign-in is temporarily unavailable",
+      "text": "Customer accounts are still being set up. You can still place an order without registering or get in touch with us."
+    },
+    "fields": {
+      "optional": "Optional",
+      "email": "Email",
+      "emailPlaceholder": "name@company.com",
+      "password": "Password",
+      "passwordNew": "New password",
+      "passwordConfirm": "Repeat password",
+      "fullName": "Full name",
+      "contactPerson": "Contact person",
+      "phone": "Phone",
+      "companyName": "Company name",
+      "regNo": "Registration number",
+      "vatNo": "VAT number",
+      "legalAddress": "Legal address"
+    },
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "strength": {
+      "label": "Strength",
+      "weak": "weak",
+      "fair": "fair",
+      "good": "good",
+      "strong": "strong",
+      "hint": "At least 8 characters; upper and lower case letters, digits and symbols make it stronger."
+    },
+    "login": {
+      "eyebrow": "Welcome back",
+      "title": "Sign in to your account",
+      "subtitle": "View your orders, download invoices and shop with your own prices.",
+      "modeLabel": "Sign-in method",
+      "modePassword": "With password",
+      "modeMagic": "With email link",
+      "magicHint": "We'll email you a one-time sign-in link — no password needed.",
+      "forgot": "Forgot password?",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "magicSubmit": "Send sign-in link",
+      "success": "You are signed in",
+      "magicSentTitle": "Check your inbox",
+      "magicSentText": "We've sent a sign-in link to",
+      "useAnotherMethod": "Sign in another way",
+      "noAccount": "Don't have an account yet?",
+      "register": "Create one"
+    },
+    "register": {
+      "eyebrow": "New account",
+      "title": "Create an account",
+      "subtitle": "Registration takes less than a minute.",
+      "typeLabel": "Customer type",
+      "typePrivate": "Private person",
+      "typeBusiness": "Business",
+      "companySection": "Company details",
+      "businessNote": "After you register we'll verify your company details and assign B2B prices. Until then you can shop at regular prices.",
+      "terms": "I agree to the <link>terms of use</link> and have read the <privacy>privacy policy</privacy>",
+      "marketing": "I'd like to receive news and offers by email (no more than once a month)",
+      "submit": "Create account",
+      "submitBusiness": "Register business",
+      "submitting": "Creating account…",
+      "haveAccount": "Already have an account?",
+      "login": "Sign in",
+      "checkEmailTitle": "Confirm your email",
+      "checkEmailText": "We've sent a confirmation link to",
+      "checkEmailHint": "Open the email and click the link to activate your account. If you can't find it, check your spam folder.",
+      "checkEmailBusiness": "Once your email is confirmed, your business application goes to our team. We'll let you know by email when your B2B status is approved.",
+      "backToLogin": "Back to sign in"
+    },
+    "forgot": {
+      "eyebrow": "Password recovery",
+      "title": "Forgot your password?",
+      "subtitle": "Enter your account email and we'll send you a link to set a new password.",
+      "submit": "Send link",
+      "submitting": "Sending…",
+      "sentTitle": "Check your inbox",
+      "sentText": "If an account with this address exists, a password reset link has been sent to",
+      "backToLogin": "Back to sign in"
+    },
+    "reset": {
+      "eyebrow": "Security",
+      "title": "Set a new password",
+      "subtitle": "Choose a strong password you don't use for other services.",
+      "submit": "Save password",
+      "submitting": "Saving…",
+      "success": "Password changed",
+      "noSession": "The password reset link is invalid or has expired.",
+      "requestNew": "Request a new link"
+    },
+    "errors": {
+      "callback": "The link is invalid or has expired. Please try again.",
+      "generic": "Something went wrong. Please try again.",
+      "invalidCredentials": "Incorrect email or password.",
+      "emailNotConfirmed": "Your email hasn't been confirmed yet. Please check your inbox.",
+      "userExists": "An account with this email already exists. Try signing in or resetting your password.",
+      "weakPassword": "This password is too simple. Choose a longer or more complex one.",
+      "samePassword": "The new password must be different from the old one.",
+      "userNotFound": "No account was found with this email.",
+      "rateLimit": "Too many attempts. Please wait a moment and try again.",
+      "invalidEmail": "Enter a valid email address.",
+      "tooShort": "The password must be at least {min} characters long.",
+      "mismatch": "The passwords don't match.",
+      "terms": "Please accept the terms of use to continue.",
+      "companyRequired": "Please enter the company name and registration number."
+    }
+  },
+  "account": {
+    "meta": {
+      "overview": "My account",
+      "orders": "Orders",
+      "order": "Order",
+      "invoices": "Invoices",
+      "profile": "Profile",
+      "addresses": "Addresses",
+      "business": "Business & B2B"
+    },
+    "nav": {
+      "label": "Account sections",
+      "overview": "Overview",
+      "orders": "Orders",
+      "invoices": "Invoices",
+      "profile": "Profile",
+      "addresses": "Addresses",
+      "business": "Business / B2B",
+      "logout": "Sign out",
+      "loggingOut": "Signing out…",
+      "loggedOut": "You have signed out",
+      "pending": "In review"
+    },
+    "header": {
+      "eyebrow": "My account",
+      "customerPrivate": "Private customer",
+      "customerBusiness": "Business",
+      "memberSince": "Customer since {date}",
+      "b2bApproved": "B2B customer",
+      "b2bPending": "B2B application in review",
+      "discount": "{value}% discount",
+      "terms": "Payment within {days} days"
+    },
+    "common": {
+      "loadError": "Some data couldn't be loaded. Please refresh the page or try again later."
+    },
+    "errors": {
+      "invalid": "Please check the details you entered.",
+      "unauthorized": "Your session has expired. Please sign in again.",
+      "generic": "Couldn't save. Please try again.",
+      "locked": "Details of an approved business can only be changed by contacting us."
+    },
+    "status": {
+      "new": "New",
+      "confirmed": "Confirmed",
+      "processing": "Being prepared",
+      "shipped": "Shipped",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "paymentStatus": {
+      "unpaid": "Unpaid",
+      "paid": "Paid",
+      "refunded": "Refunded",
+      "partially_refunded": "Partially refunded"
+    },
+    "paymentMethod": {
+      "bank_transfer": "Bank transfer",
+      "card": "Payment card",
+      "invoice": "Pay by invoice",
+      "cash_on_pickup": "Pay on pickup"
+    },
+    "shippingMethod": {
+      "pickup": "Warehouse pickup",
+      "parcel_locker": "Parcel locker",
+      "courier": "Courier",
+      "freight": "Freight delivery"
+    },
+    "overview": {
+      "greeting": "Hello, {name}!",
+      "greetingNoName": "Welcome!",
+      "subtitle": "Here's a summary of your orders, invoices and B2B status.",
+      "stats": {
+        "orders": "Orders",
+        "spent": "Total purchased",
+        "unpaid": "Unpaid",
+        "overdue": "{count, plural, one {# invoice overdue} other {# invoices overdue}}",
+        "openInvoices": "{count, plural, =0 {All invoices paid} one {# open invoice} other {# open invoices}}"
+      },
+      "recentOrders": "Recent orders",
+      "viewAll": "All orders",
+      "noOrders": "No orders yet",
+      "noOrdersText": "Once you place your first order it will show up here together with its status and invoices.",
+      "startShopping": "Browse the catalogue",
+      "quickLinks": {
+        "title": "Quick links",
+        "catalog": "Product catalogue",
+        "finder": "Oil finder",
+        "invoices": "My invoices",
+        "addresses": "Delivery addresses",
+        "profile": "Profile settings",
+        "contact": "Contact us"
+      },
+      "b2b": {
+        "noneTitle": "Shop with B2B prices",
+        "noneText": "Businesses get a personal discount, prices excl. VAT and payment by invoice.",
+        "noneCta": "Apply as a business",
+        "pendingTitle": "Your B2B application is in review",
+        "pendingText": "We're verifying your company details. As soon as your status is approved, prices in your account will update automatically.",
+        "pendingCta": "View application",
+        "approvedTitle": "You're a B2B customer",
+        "approvedText": "The catalogue shows your prices excl. VAT with your discount applied.",
+        "discountLabel": "Discount",
+        "termsLabel": "Payment terms",
+        "termsValue": "{days} days",
+        "termsPrepay": "Prepayment",
+        "rejectedTitle": "B2B application not approved",
+        "rejectedText": "Unfortunately we couldn't approve B2B status at this time. Get in touch and we'll help find a solution.",
+        "rejectedCta": "Contact us",
+        "rejectedRetry": "Update details"
+      }
+    },
+    "orders": {
+      "title": "Orders",
+      "subtitle": "All your orders with their status and totals.",
+      "filterLabel": "Filter by status",
+      "filterAll": "All",
+      "items": "{count, plural, one {# item} other {# items}}",
+      "empty": "No orders yet",
+      "emptyFiltered": "No orders with this status",
+      "emptyText": "Pick products in the catalogue — your orders will appear here."
+    },
+    "order": {
+      "back": "Back to orders",
+      "title": "Order {number}",
+      "placed": "Placed on {date}",
+      "reorder": "Reorder",
+      "reorderDone": "{count, plural, one {# item} other {# items}} added to cart",
+      "reorderPartial": "{count, plural, one {# item} other {# items}} added to cart. {missing, plural, one {# product is} other {# products are}} no longer available.",
+      "reorderNone": "The products in this order are no longer available",
+      "progress": "Order status",
+      "cancelledNote": "This order has been cancelled.",
+      "items": "Items",
+      "pricesExVat": "Prices shown excl. VAT",
+      "pricesInclVat": "Prices shown incl. VAT",
+      "sku": "SKU",
+      "subtotal": "Items subtotal excl. VAT",
+      "discount": "Discount",
+      "shippingCost": "Shipping excl. VAT",
+      "free": "Free",
+      "vat": "VAT {rate}%",
+      "vatReverse": "VAT (reverse charge)",
+      "total": "Total",
+      "reverseChargeNote": "No VAT charged — the buyer accounts for VAT in their own country (reverse charge).",
+      "timeline": "Order history",
+      "shipping": "Delivery",
+      "shippingMethod": "Delivery method",
+      "shippingPoint": "Pickup point",
+      "shippingAddress": "Delivery address",
+      "tracking": "Tracking code",
+      "payment": "Payment",
+      "paymentMethod": "Payment method",
+      "paymentStatus": "Payment status",
+      "notes": "Notes",
+      "invoices": "Invoices",
+      "noInvoices": "No invoice has been issued for this order yet.",
+      "notFound": "Order not found",
+      "notFoundText": "The link may be wrong or the order belongs to a different account.",
+      "events": {
+        "created": "Order received",
+        "invoice": "Invoice {number} issued",
+        "statusTo": "Status changed: {status}",
+        "status": "Status updated",
+        "confirmed": "Order confirmed",
+        "processing": "Order is being prepared",
+        "shipped": "Order shipped",
+        "completed": "Order completed",
+        "cancelled": "Order cancelled",
+        "paid": "Payment received",
+        "payment": "Payment details updated",
+        "tracking": "Tracking code added",
+        "note": "Note",
+        "other": "Update"
+      }
+    },
+    "invoices": {
+      "title": "Invoices",
+      "subtitle": "Proforma invoices, invoices and credit notes — downloadable as PDF.",
+      "type": {
+        "proforma": "Proforma invoice",
+        "invoice": "Invoice",
+        "credit_note": "Credit note"
+      },
+      "state": {
+        "paid": "Paid",
+        "unpaid": "Awaiting payment",
+        "overdue": "Overdue",
+        "void": "Void"
+      },
+      "pdf": "PDF",
+      "number": "Number",
+      "date": "Date",
+      "due": "Due date",
+      "dueShort": "Due {date}",
+      "status": "Status",
+      "total": "Amount",
+      "empty": "No invoices yet",
+      "emptyText": "Invoices will appear here as soon as they are issued for your orders.",
+      "summaryUnpaid": "{count, plural, one {# invoice awaits} other {# invoices await}} payment: {amount}",
+      "summaryOverdue": "{count, plural, one {# overdue} other {# overdue}}"
+    },
+    "profile": {
+      "title": "Profile",
+      "subtitle": "Contact details, language and sign-in settings.",
+      "personal": "Personal details",
+      "personalText": "These details are used when you place orders.",
+      "fullName": "Full name",
+      "phone": "Phone",
+      "language": "Communication language",
+      "languageHint": "We'll send emails and invoices in this language.",
+      "market": "Delivery country",
+      "marketHint": "Determines the applicable VAT rate and delivery options.",
+      "marketing": "News and offers by email",
+      "marketingHint": "Seasonal offers and news — no more than once a month. You can unsubscribe at any time.",
+      "save": "Save changes",
+      "saving": "Saving…",
+      "saved": "Profile saved",
+      "emailSection": "Email address",
+      "emailText": "We'll send a confirmation link to the new address.",
+      "emailCurrent": "Current email",
+      "emailNew": "New email",
+      "emailSubmit": "Change email",
+      "emailSent": "Confirmation link sent",
+      "emailSentText": "To complete the change, open the link we sent to your new email address.",
+      "emailSame": "Enter a new email address that differs from the current one.",
+      "passwordSection": "Password",
+      "passwordText": "We recommend a unique password that you don't use elsewhere.",
+      "passwordNew": "New password",
+      "passwordConfirm": "Repeat new password",
+      "passwordSubmit": "Change password",
+      "passwordChanged": "Password changed"
+    },
+    "addresses": {
+      "title": "Addresses",
+      "subtitle": "Saved delivery addresses for faster checkout.",
+      "add": "Add address",
+      "edit": "Edit address",
+      "editShort": "Edit",
+      "save": "Save address",
+      "saving": "Saving…",
+      "saved": "Address saved",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "deleteConfirm": "Delete this address?",
+      "deleted": "Address deleted",
+      "setDefault": "Make default",
+      "defaultSet": "Default address updated",
+      "default": "Default",
+      "empty": "No saved addresses yet",
+      "emptyText": "Add a delivery address and it will be filled in automatically next time you order.",
+      "form": {
+        "label": "Label",
+        "optional": "optional",
+        "labelPlaceholder": "e.g. Office or Riga workshop",
+        "name": "Recipient",
+        "phone": "Phone",
+        "company": "Company",
+        "street": "Street, building, apartment",
+        "city": "City / parish",
+        "postalCode": "Postal code",
+        "country": "Country",
+        "isDefault": "Use as default delivery address"
+      }
+    },
+    "business": {
+      "title": "Business & B2B",
+      "subtitle": "Company details and B2B terms.",
+      "status": {
+        "none": {
+          "title": "Become a B2B customer",
+          "text": "Fill in your company details — once verified we'll assign personal prices and the option to pay by invoice."
+        },
+        "pending": {
+          "title": "Your application is in review",
+          "text": "We've received your company details and are verifying them. We'll email you with the decision."
+        },
+        "approved": {
+          "title": "B2B status approved",
+          "text": "The catalogue and cart show your prices excl. VAT with your discount applied."
+        },
+        "rejected": {
+          "title": "Application not approved",
+          "text": "We couldn't approve B2B status at this time. Contact us, or update your company details and apply again."
+        }
+      },
+      "contact": "Contact us",
+      "conditionsTitle": "Your terms",
+      "discount": "Personal discount",
+      "discountHint": "Applied to all catalogue prices.",
+      "terms": "Payment terms",
+      "termsValue": "{days} days",
+      "termsPrepay": "Prepayment",
+      "termsHint": "You can pay for orders by invoice within this period.",
+      "termsPrepayHint": "Orders are fulfilled after payment.",
+      "companyData": "Company details",
+      "lockedNote": "To change the details of an approved business, please contact us.",
+      "companyName": "Company name",
+      "regNo": "Registration number",
+      "vatNo": "VAT number",
+      "legalAddress": "Legal address",
+      "phone": "Contact phone",
+      "optional": "optional",
+      "vatHint": "Required to apply reverse-charge VAT to deliveries to Estonia or Lithuania.",
+      "formTitle": "Apply for B2B",
+      "formText": "Enter your company details exactly as registered in the business register.",
+      "formTitlePending": "Application details",
+      "formTextPending": "You can update the details while your application is being reviewed.",
+      "consentNote": "By submitting you confirm that you are authorised to represent this company.",
+      "submit": "Submit application",
+      "submitting": "Submitting…",
+      "update": "Save changes",
+      "updated": "Application details updated",
+      "submitted": "Application submitted",
+      "submittedText": "We'll verify the details and let you know by email.",
+      "benefitsTitle": "What B2B customers get",
+      "benefits": {
+        "prices": {
+          "title": "Personal pricing",
+          "text": "A personal discount and prices excl. VAT across the catalogue."
+        },
+        "invoice": {
+          "title": "Pay by invoice",
+          "text": "Deferred payment with agreed payment terms."
+        },
+        "documents": {
+          "title": "Documents in one place",
+          "text": "All invoices and your order history in your account."
+        },
+        "manager": {
+          "title": "Personal contact",
+          "text": "Help with choosing products and with larger volume deliveries."
+        }
+      }
+    }
+  }
+}
