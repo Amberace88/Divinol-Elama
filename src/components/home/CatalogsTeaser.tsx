@@ -16,8 +16,8 @@ export async function CatalogsTeaser() {
             {[0, 1, 2].map((i) => (
               <span
                 key={i}
-                className="absolute inset-0 rounded-xl border border-line bg-white shadow-card transition duration-500"
-                style={{ transform: `rotate(${(i - 1) * 8}deg) translateX(${(i - 1) * 10}px)` }}
+                className="absolute inset-0 rounded-xl border border-line bg-white shadow-card "
+                style={{ transform: `translate(${(i - 1) * 6}px, ${(i - 1) * 6}px)` }}
               >
                 <span className="absolute inset-x-2 top-2 h-8 rounded-md bg-navy-700" />
                 <span className="absolute left-2 top-12 h-1.5 w-12 rounded bg-brand-400" />
@@ -25,7 +25,7 @@ export async function CatalogsTeaser() {
                 <span className="absolute left-2 top-[4.5rem] h-1 w-10 rounded bg-line" />
               </span>
             ))}
-            <span className="absolute -bottom-2 -right-3 grid size-9 place-items-center rounded-full bg-brand-400 text-navy-900 shadow-glow transition group-hover:scale-110">
+            <span className="absolute -bottom-2 -right-3 grid size-9 place-items-center rounded-full bg-brand-400 text-navy-900 shadow-card">
               <Download className="size-4" />
             </span>
           </div>

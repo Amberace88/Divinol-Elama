@@ -35,9 +35,6 @@ export const Button = forwardRef<
 >(function Button({ variant = "primary", size = "md", className, children, ...props }, ref) {
   return (
     <button ref={ref} className={buttonClass(variant, size, className)} {...props}>
-      {variant === "primary" && (
-        <span className="pointer-events-none absolute inset-y-0 left-0 w-1/3 -translate-x-[120%] bg-gradient-to-r from-transparent via-white/60 to-transparent group-hover/btn:animate-shine" />
-      )}
       {children}
     </button>
   );

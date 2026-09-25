@@ -29,7 +29,7 @@ export async function CategoryGrid({ categories }: { categories: HomeCategory[] 
           <Reveal as="li" key={c.slug} delay={(i % 5) * 0.05} y={18}>
             <Link
               href={{ pathname: "/catalog/[category]", params: { category: c.slug } }}
-              className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-navy-200 hover:shadow-lift"
+              className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-card transition duration-200 hover:border-navy-200 hover:shadow-lift"
             >
               <div className="relative aspect-[4/3] overflow-hidden bg-[radial-gradient(120%_90%_at_50%_0%,#ffffff_40%,#e9eef7_100%)]">
                 {c.image && (
@@ -38,13 +38,13 @@ export async function CategoryGrid({ categories }: { categories: HomeCategory[] 
                     alt=""
                     fill
                     sizes="(min-width:1280px) 240px, (min-width:768px) 30vw, 45vw"
-                    className="object-contain p-5 mix-blend-multiply transition-transform duration-500 group-hover:-rotate-2 group-hover:scale-[1.07]"
+                    className="object-contain p-5 mix-blend-multiply transition-transform duration-300 group-hover:scale-[1.03]"
                   />
                 )}
-                <span className="absolute left-3 top-3 grid size-10 place-items-center rounded-xl bg-navy-700 text-brand-400 shadow-card transition duration-300 group-hover:-rotate-6 group-hover:bg-brand-400 group-hover:text-navy-900">
+                <span className="absolute left-3 top-3 grid size-10 place-items-center rounded-xl bg-navy-700 text-brand-400 shadow-card transition-colors duration-200 group-hover:bg-brand-400 group-hover:text-navy-900">
                   <CategoryIcon name={c.icon} className="size-5" aria-hidden />
                 </span>
-                <span aria-hidden className="absolute -bottom-1 right-0 h-1.5 w-0 -skew-x-[20deg] bg-brand-400 transition-all duration-500 group-hover:w-2/3" />
+                
               </div>
               <div className="flex flex-1 flex-col p-4">
                 <h3 className="text-[15px] font-extrabold leading-snug tracking-tight text-ink group-hover:text-navy-600">{c.name}</h3>

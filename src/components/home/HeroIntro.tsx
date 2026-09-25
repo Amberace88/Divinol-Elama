@@ -23,8 +23,8 @@ export function HeroItem({ children, className, as = "div" }: { children: React.
     <Comp
       className={className}
       variants={{
-        hidden: { opacity: 0.01, y: 22 },
-        show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
+        hidden: { opacity: 0.01, y: 8 },
+        show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
       }}
     >
       {children}

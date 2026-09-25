@@ -60,7 +60,7 @@ export function MegaMenu({
                   onClick={onNavigate}
                   className="group flex items-center gap-3.5 rounded-xl p-2.5 transition hover:bg-canvas"
                 >
-                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-navy-50 text-navy-600 transition group-hover:-rotate-3 group-hover:bg-brand-400 group-hover:text-navy-900">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-navy-50 text-navy-600 transition group-hover:bg-brand-400 group-hover:text-navy-900">
                     <CategoryIcon name={c.icon} className="size-5" aria-hidden />
                   </span>
                   <span className="min-w-0 flex-1">

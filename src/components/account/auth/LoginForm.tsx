@@ -48,7 +48,7 @@ export function LoginForm({ next, initialError }: { next?: string; initialError?
       } else {
         const { error: err } = await supabase.auth.signInWithOtp({
           email: email.trim(),
-          options: { shouldCreateUser: false, emailRedirectTo: callbackUrl(target) },
+          options: { shouldCreateUser: true, emailRedirectTo: callbackUrl(target) },
         });
         if (err) {
           setError(t(`errors.${authErrorKey(err)}`));

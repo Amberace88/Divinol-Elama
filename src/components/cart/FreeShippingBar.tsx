@@ -36,7 +36,6 @@ export function FreeShippingBar({ left, progress, className }: { left: number | 
           animate={{ width: `${Math.max(4, progress * 100)}%` }}
           transition={{ type: "spring", stiffness: 120, damping: 20 }}
         >
-          <span className="absolute inset-y-0 left-0 w-1/2 -translate-x-full animate-shine bg-gradient-to-r from-transparent via-white/60 to-transparent" />
         </motion.div>
       </div>
     </div>

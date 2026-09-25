@@ -1,19 +1,19 @@
 import { BadgeCheck } from "lucide-react";
 import { MARQUEE_APPROVALS } from "@/lib/shop/featured";
 
+/** Static strip of OEM approvals / specifications (no looping motion). */
 export function ApprovalMarquee({ label }: { label: string }) {
-  const items = [...MARQUEE_APPROVALS, ...MARQUEE_APPROVALS];
   return (
-    <section aria-label={label} className="relative border-b border-line bg-white py-5">
-      <p className="sr-only">{MARQUEE_APPROVALS.join(", ")}</p>
-      <div className="group flex overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)]" aria-hidden>
-        <ul className="flex w-max shrink-0 animate-marquee items-center gap-3 pr-3 group-hover:[animation-play-state:paused]">
-          {items.map((a, i) => (
+    <section aria-label={label} className="border-b border-line bg-white py-6">
+      <div className="container-x flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-8">
+        <p className="shrink-0 text-[12px] font-bold uppercase tracking-[0.14em] text-muted lg:max-w-[180px]">{label}</p>
+        <ul className="flex flex-wrap gap-2">
+          {MARQUEE_APPROVALS.map((a) => (
             <li
-              key={`${a}-${i}`}
-              className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-line bg-canvas px-4 py-2 text-[13px] font-bold text-navy-700"
+              key={a}
+              className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-line bg-canvas px-3 py-1.5 text-[12.5px] font-bold text-navy-700"
             >
-              <BadgeCheck className="size-4 text-brand-500" />
+              <BadgeCheck className="size-3.5 text-brand-500" aria-hidden />
               {a}
             </li>
           ))}

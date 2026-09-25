@@ -66,7 +66,7 @@
       "modeLabel": "Prisijungimo būdas",
       "modePassword": "Su slaptažodžiu",
       "modeMagic": "Su nuoroda el. paštu",
-      "magicHint": "Atsiųsime į tavo el. paštą vienkartinę prisijungimo nuorodą — slaptažodžio nereikės.",
+      "magicHint": "Atsiųsime vienkartinę prisijungimo nuorodą į jūsų el. paštą — slaptažodžio nereikia. Jei paskyros dar nėra, ji bus sukurta automatiškai.",
       "forgot": "Pamiršai slaptažodį?",
       "submit": "Prisijungti",
       "submitting": "Jungiamasi…",

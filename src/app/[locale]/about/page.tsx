@@ -173,7 +173,7 @@ export default async function AboutPage({ params }: PageProps<"/[locale]/about">
           <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {VALUES.map(({ n, icon: Icon }, i) => (
               <Reveal as="li" key={n} delay={i * 0.06}>
-                <div className="group h-full rounded-2xl border border-line bg-white p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-lift">
+                <div className="group h-full rounded-2xl border border-line bg-white p-6 shadow-card transition duration-300 hover:shadow-lift">
                   <span className="grid size-12 place-items-center rounded-xl bg-brand-400 text-navy-900 transition-transform duration-300 group-hover:rotate-6">
                     <Icon className="size-6" aria-hidden />
                   </span>

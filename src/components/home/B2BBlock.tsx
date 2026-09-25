@@ -9,7 +9,6 @@ export async function B2BBlock() {
   const points = [t("b2bPoint1"), t("b2bPoint2"), t("b2bPoint3"), t("b2bPoint4")];
   return (
     <section aria-labelledby="home-b2b" className="relative overflow-hidden bg-canvas py-20 sm:py-24">
-      <div aria-hidden className="absolute -right-20 top-10 h-[120%] w-40 -skew-x-[20deg] bg-brand-400/10" />
       <div className="container-x relative grid items-center gap-12 lg:grid-cols-2">
         <Reveal>
           <p className="eyebrow">{t("b2bEyebrow")}</p>
@@ -41,16 +40,13 @@ export async function B2BBlock() {
 
         <Reveal delay={0.1} className="relative">
           <div aria-hidden className="relative mx-auto max-w-md">
-            <div className="absolute -left-6 -top-6 h-full w-full rotate-[-4deg] rounded-3xl bg-navy-200/60" />
             <div className="relative rounded-3xl bg-navy-700 p-6 text-white shadow-lift sm:p-8">
               <div className="flex items-center justify-between">
                 <span className="inline-flex items-center gap-2 text-[13px] font-bold text-white/70">
                   <Building2 className="size-4 text-brand-400" />
                   {t("b2bCardTitle")}
                 </span>
-                <span className="skew-tag bg-brand-400 text-[11px] font-extrabold text-navy-900">
-                  <span>B2B</span>
-                </span>
+                <span className="rounded-md bg-brand-400 px-2 py-0.5 text-[11px] font-extrabold text-navy-900">B2B</span>
               </div>
               <div className="mt-8 grid gap-3">
                 {[
@@ -66,7 +62,7 @@ export async function B2BBlock() {
                 ))}
               </div>
               <div className="mt-6 h-2 overflow-hidden rounded-full bg-white/10">
-                <div className="h-full w-3/4 animate-flow rounded-full bg-[linear-gradient(90deg,#ffc10e,#ffe38a,#ffc10e)] bg-[length:200%_100%]" />
+                <div className="h-full w-3/4 rounded-full bg-brand-400" />
               </div>
             </div>
           </div>

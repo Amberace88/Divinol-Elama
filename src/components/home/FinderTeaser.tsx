@@ -16,7 +16,6 @@ export async function FinderTeaser() {
       <Reveal>
         <div className="relative isolate overflow-hidden rounded-[2rem] bg-navy-700 px-6 py-12 text-white shadow-lift sm:px-10 lg:px-14 lg:py-16">
           <div aria-hidden className="absolute inset-0 -z-10 grid-bg" />
-          <div aria-hidden className="absolute -right-24 top-0 -z-10 h-full w-72 -skew-x-[20deg] bg-gradient-to-b from-brand-400/30 to-transparent" />
           <div aria-hidden className="absolute -bottom-32 -left-24 -z-10 size-96 rounded-full bg-navy-400/40 blur-3xl" />
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <div>
@@ -37,18 +36,17 @@ export async function FinderTeaser() {
               </div>
             </div>
             <div aria-hidden className="relative mx-auto w-full max-w-md">
-              <div className="rounded-3xl bg-white p-5 text-ink shadow-[0_40px_80px_-30px_rgb(0_0_0/0.6)] sm:p-6">
+              <div className="rounded-2xl bg-white p-5 text-ink shadow-lift sm:p-6">
                 <div className="flex gap-1.5">
                   {steps.map((s) => (
                     <span key={s.label} className="h-1.5 flex-1 rounded-full bg-brand-400" />
                   ))}
                 </div>
                 <ul className="mt-5 grid gap-2.5">
-                  {steps.map(({ icon: Icon, label, value }, i) => (
+                  {steps.map(({ icon: Icon, label, value }) => (
                     <li
                       key={label}
                       className="flex items-center gap-3 rounded-2xl border border-line bg-canvas px-4 py-3"
-                      style={{ animation: `float 7s ease-in-out ${-i * 1.4}s infinite` }}
                     >
                       <span className="grid size-9 place-items-center rounded-xl bg-navy-700 text-brand-400">
                         <Icon className="size-4" />
@@ -62,9 +60,7 @@ export async function FinderTeaser() {
                   ))}
                 </ul>
                 <div className="mt-4 flex items-center gap-3 rounded-2xl bg-navy-700 px-4 py-3.5 text-white">
-                  <span className="skew-tag bg-brand-400 text-[12px] font-extrabold text-navy-900">
-                    <span>5W-30</span>
-                  </span>
+                  <span className="rounded-md bg-brand-400 px-2 py-1 text-[12px] font-extrabold text-navy-900">5W-30</span>
                   <span className="text-[13px] font-bold">{t("finderDemoResult")}</span>
                 </div>
               </div>

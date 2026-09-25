@@ -138,9 +138,9 @@ export default async function BusinessPage({ params }: PageProps<"/[locale]/busi
               const Icon = SEGMENT_ICON[s];
               return (
                 <Reveal as="li" key={s} delay={i * 0.05}>
-                  <div className="group relative h-full overflow-hidden rounded-2xl border border-line bg-white p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:border-navy-200 hover:shadow-lift">
+                  <div className="group relative h-full overflow-hidden rounded-2xl border border-line bg-white p-6 shadow-card transition duration-300 hover:border-navy-200 hover:shadow-lift">
                     <div aria-hidden className="absolute -top-10 -right-10 size-32 rounded-full bg-brand-400/0 transition-colors duration-500 group-hover:bg-brand-400/15" />
-                    <span className="relative grid size-12 place-items-center rounded-xl bg-navy-700 text-brand-400 transition-transform duration-300 group-hover:-rotate-6">
+                    <span className="relative grid size-12 place-items-center rounded-xl bg-navy-700 text-brand-400 transition-transform duration-300">
                       <Icon className="size-6" aria-hidden />
                     </span>
                     <h3 className="relative mt-5 text-lg font-extrabold text-navy-700">{t(`segments.${s}`)}</h3>

@@ -106,9 +106,9 @@ export default async function ContactPage({ params }: PageProps<"/[locale]/conta
         <div className="container-x grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {cards.map(({ icon: Icon, title, value, href, copy }, i) => (
             <Reveal key={title} delay={i * 0.05}>
-              <div className="group flex h-full flex-col rounded-2xl border border-line bg-white p-5 shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-lift">
+              <div className="group flex h-full flex-col rounded-2xl border border-line bg-white p-5 shadow-card transition duration-300 hover:shadow-lift">
                 <div className="flex items-center justify-between">
-                  <span className="grid size-11 place-items-center rounded-xl bg-navy-700 text-brand-400 transition-transform duration-300 group-hover:-rotate-6">
+                  <span className="grid size-11 place-items-center rounded-xl bg-navy-700 text-brand-400 transition-transform duration-300">
                     <Icon className="size-5" aria-hidden />
                   </span>
                   {copy && <CopyButton value={value} label={t("copy")} doneLabel={t("copied")} />}

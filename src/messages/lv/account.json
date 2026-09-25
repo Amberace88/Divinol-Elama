@@ -66,7 +66,7 @@
       "modeLabel": "Pieslēgšanās veids",
       "modePassword": "Ar paroli",
       "modeMagic": "Ar saiti e-pastā",
-      "magicHint": "Nosūtīsim uz tavu e-pastu vienreizēju pieslēgšanās saiti — parole nav nepieciešama.",
+      "magicHint": "Nosūtīsim uz tavu e-pastu vienreizēju pieslēgšanās saiti — parole nav nepieciešama. Ja konta vēl nav, tas tiks izveidots automātiski.",
       "forgot": "Aizmirsi paroli?",
       "submit": "Ienākt",
       "submitting": "Notiek pieslēgšanās…",

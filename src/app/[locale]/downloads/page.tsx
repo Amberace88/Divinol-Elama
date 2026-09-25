@@ -74,7 +74,7 @@ export default async function DownloadsPage({ params }: PageProps<"/[locale]/dow
             const title = t(`items.${it.key}`);
             return (
               <Reveal as="li" key={it.key} delay={(i % 4) * 0.06}>
-                <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-lift">
+                <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-card transition duration-300 hover:shadow-lift">
                   <a
                     href={it.href}
                     target="_blank"

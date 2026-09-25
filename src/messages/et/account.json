@@ -66,7 +66,7 @@
       "modeLabel": "Sisselogimisviis",
       "modePassword": "Parooliga",
       "modeMagic": "E-posti lingiga",
-      "magicHint": "Saadame sinu e-postile ühekordse sisselogimislingi — parooli ei ole vaja.",
+      "magicHint": "Saadame sinu e-postile ühekordse sisselogimislingi — parooli pole vaja. Kui kontot veel pole, luuakse see automaatselt.",
       "forgot": "Unustasid parooli?",
       "submit": "Logi sisse",
       "submitting": "Sisselogimine…",

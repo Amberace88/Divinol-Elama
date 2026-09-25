@@ -87,8 +87,8 @@ export default async function DeliveryPage({ params }: PageProps<"/[locale]/deli
               const Icon = METHOD_ICON[m.id] ?? Truck;
               return (
                 <Reveal as="li" key={m.id} delay={i * 0.06}>
-                  <article className="group flex h-full flex-col rounded-2xl border border-line bg-white p-6 shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-lift">
-                    <span className="grid size-12 place-items-center rounded-xl bg-navy-700 text-brand-400 transition-transform duration-300 group-hover:-rotate-6">
+                  <article className="group flex h-full flex-col rounded-2xl border border-line bg-white p-6 shadow-card transition duration-300 hover:shadow-lift">
+                    <span className="grid size-12 place-items-center rounded-xl bg-navy-700 text-brand-400 transition-transform duration-300">
                       <Icon className="size-6" aria-hidden />
                     </span>
                     <h3 className="mt-5 text-lg font-extrabold text-navy-700">{t(m.id)}</h3>

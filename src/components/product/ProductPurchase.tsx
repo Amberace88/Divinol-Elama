@@ -228,7 +228,6 @@ export function ProductPurchase({
                   : "bg-brand-400 text-navy-900 shadow-[0_10px_30px_-10px_rgb(255_193_14/0.9)] hover:bg-brand-300",
               )}
             >
-              <span className="pointer-events-none absolute inset-y-0 left-0 w-1/3 -translate-x-[120%] bg-gradient-to-r from-transparent via-white/60 to-transparent group-hover/btn:animate-shine" />
               <AnimatePresence mode="wait" initial={false}>
                 {justAdded ? (
                   <motion.span key="ok" className="flex items-center gap-2" initial={{ y: 14, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -14, opacity: 0 }}>
