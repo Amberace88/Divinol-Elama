@@ -6,6 +6,7 @@ import { transitLabel, type CompareOption } from "@/lib/shipping/compare";
 import { SERVICE_TYPE_LABEL } from "@/lib/shipping/tracking";
 import { cn } from "@/lib/utils";
 import { Pill, td, th } from "../ui";
+import { CarrierLogo } from "@/components/shipping/CarrierLogo";
 
 /** "Piegādes cenu salīdzinājums" table (order page + calculator). */
 export function CompareTable({
@@ -69,6 +70,7 @@ export function CompareTable({
                 )}
                 <td className={td}>
                   <div className="flex flex-wrap items-center gap-1.5">
+                    <CarrierLogo code={o.carrier} name={o.carrierName} />
                     <span className="font-bold text-ink">{o.carrierName}</span>
                     {o.badges.includes("cheapest") && <Pill tone="green">Lētākais</Pill>}
                     {o.badges.includes("fastest") && (

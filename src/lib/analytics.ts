@@ -4,7 +4,7 @@
  * - No cookies and no persistent identifiers: the only thing kept in the browser is a random
  *   session id in sessionStorage (dies with the tab, rolls over after 30 min of inactivity).
  * - Visitors are counted server-side with a daily-rotating salted hash (see /api/track).
- * - Opt out on a device (e.g. the shop owner): localStorage.setItem("dv_notrack", "1").
+ * - Opt out on a device (e.g. the shop owner): localStorage.setItem("dv_notrack_choice", "1") (switch on the admin "Apmeklējums" page).
  */
 import { locales, pathnames, type Locale } from "@/i18n/routing";
 
@@ -79,7 +79,7 @@ function disabled(): boolean {
   if (h === "localhost" || h === "127.0.0.1" || h === "[::1]" || h.endsWith(".local")) return true;
   if (navigator.webdriver) return true;
   try {
-    if (localStorage.getItem("dv_notrack") === "1") return true;
+    if (localStorage.getItem("dv_notrack_choice") === "1") return true;
   } catch {
     /* storage unavailable */
   }

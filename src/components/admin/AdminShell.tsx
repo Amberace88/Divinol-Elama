@@ -75,10 +75,11 @@ export function AdminShell({
   const [lastPath, setLastPath] = useState(pathname);
   const reduce = useReducedMotion();
 
-  // Exclude admins' own storefront visits from the website analytics on this browser.
+  // Earlier builds silently excluded every admin browser from the statistics — undo that.
+  // Opting out is now an explicit switch on the "Apmeklējums" page (key dv_notrack_choice).
   useEffect(() => {
     try {
-      localStorage.setItem("dv_notrack", "1");
+      localStorage.removeItem("dv_notrack");
     } catch {
       /* storage unavailable */
     }

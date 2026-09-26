@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Ban, ChevronDown, ExternalLink, FileUp, PackageCheck, Pencil, Printer, RefreshCw, Truck } from "lucide-react";
+import { Ban, ChevronDown, ExternalLink, FileUp, PackageCheck, Pencil, Printer, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import { cancelShipmentAction, markShipmentShipped, refreshTrackingAction, updateShipmentAction } from "@/lib/admin/actions/shipping";
 import { fmtDateTime, fmtMoney, fmtNumber } from "@/lib/admin/format";
@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { Spinner, useActionRunner, useConfirm } from "../client-ui";
 import { btn, inputCls, selectCls } from "../styles";
 import { Pill } from "../ui";
+import { CarrierLogo } from "@/components/shipping/CarrierLogo";
 
 export type CarrierInfo = { code: string; name: string; tracking_url_template: string | null; api: boolean; tracking: boolean };
 
@@ -49,9 +50,7 @@ export function ShipmentCard({ s, carrier, defaultOpen }: { s: ShipmentRow; carr
   return (
     <div className={cn("rounded-xl border bg-white", cancelled ? "border-line opacity-70" : "border-line shadow-card")}>
       <div className="flex flex-wrap items-start gap-3 p-4">
-        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-navy-50 text-navy-600">
-          <Truck className="h-4 w-4" />
-        </span>
+        <CarrierLogo code={s.carrier} name={carrier?.name ?? s.carrier} size="md" />
         <div className="min-w-0 flex-1">
           <p className="flex flex-wrap items-center gap-2 text-[14px] font-bold text-ink">
             {carrier?.name ?? s.carrier}

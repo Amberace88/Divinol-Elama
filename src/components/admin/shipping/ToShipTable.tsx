@@ -13,6 +13,7 @@ import { Modal, Spinner, useActionRunner } from "../client-ui";
 import { btn, selectCls } from "../styles";
 import { EmptyState, Pill, td, th } from "../ui";
 import { NewShipmentForm } from "./NewShipmentForm";
+import { CarrierLogo } from "@/components/shipping/CarrierLogo";
 
 export type ToShipRow = {
   id: string;
@@ -180,6 +181,8 @@ export function ToShipTable({ rows, apiCarriers }: { rows: ToShipRow[]; apiCarri
                     </td>
                     <td className={td}>
                       {valid.length ? (
+                        <div className="flex items-center gap-2">
+                        <CarrierLogo code={valid.find((x) => x.key === choice[r.id])?.carrier ?? valid[0]?.carrier} name={valid.find((x) => x.key === choice[r.id])?.carrierName ?? valid[0]?.carrierName} />
                         <select
                           className={cn(selectCls, "h-9 min-w-[210px] text-[12.5px]")}
                           value={choice[r.id] ?? ""}
@@ -195,6 +198,7 @@ export function ToShipTable({ rows, apiCarriers }: { rows: ToShipRow[]; apiCarri
                             </option>
                           ))}
                         </select>
+                        </div>
                       ) : (
                         <span className="text-[12px] font-semibold text-red-600">{r.options[0]?.reason ?? "Nav tarifu"}</span>
                       )}

@@ -8,6 +8,7 @@ import type { Carrier, CarrierCapabilities } from "@/lib/shipping/types";
 import { cn } from "@/lib/utils";
 import { Spinner, Switch, useActionRunner } from "../client-ui";
 import { btn, inputCls } from "../styles";
+import { CarrierLogo } from "@/components/shipping/CarrierLogo";
 
 /** Carrier settings: on/off, offered in checkout, tracking link template, API credential status (names only, never values). */
 export function CarrierSettings({ carriers, caps }: { carriers: Carrier[]; caps: Record<string, CarrierCapabilities> }) {
@@ -30,7 +31,9 @@ function CarrierCard({ c, cap }: { c: Carrier; cap?: CarrierCapabilities }) {
   return (
     <section className={cn("flex flex-col rounded-2xl border bg-white p-4 shadow-card", c.enabled ? "border-line" : "border-line opacity-70")}>
       <header className="mb-3 flex items-start justify-between gap-3">
-        <div>
+        <div className="flex items-start gap-3">
+          <CarrierLogo code={c.code} name={c.name} size="md" />
+          <div>
           <h3 className="text-[15px] font-bold text-ink">{c.name}</h3>
           <p className="mt-0.5 text-[12px]">
             {cap?.api ? (
@@ -43,6 +46,7 @@ function CarrierCard({ c, cap }: { c: Carrier; cap?: CarrierCapabilities }) {
               </span>
             )}
           </p>
+          </div>
         </div>
         <Switch checked={c.enabled} label={c.enabled ? "Atslēgt pārvadātāju" : "Ieslēgt pārvadātāju"} disabled={pending} onChange={(v) => save({ enabled: v })} />
       </header>

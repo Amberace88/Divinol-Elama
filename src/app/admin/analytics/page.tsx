@@ -44,6 +44,7 @@ import { EmptyState, ErrorNote, PageHeader, Panel, Segmented } from "@/component
 import { BarList } from "@/components/admin/analytics/BarList";
 import { Funnel } from "@/components/admin/analytics/Funnel";
 import { LivePill } from "@/components/admin/analytics/LivePill";
+import { NoTrackToggle } from "@/components/admin/analytics/NoTrackToggle";
 import { TrafficChart } from "@/components/admin/analytics/TrafficChart";
 
 export const metadata = { title: "Apmeklējums" };
@@ -103,6 +104,7 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Pr
         description={`Vietnes apmeklējuma statistika par pēdējām ${days === 365 ? "12 mēnešiem" : `${days} dienām`} salīdzinājumā ar iepriekšējo periodu.`}
         actions={
           <>
+            <NoTrackToggle />
             <LivePill initial={traffic?.realtime.visitors ?? 0} />
             <Segmented items={TRAFFIC_PERIODS.map((p) => ({ href: `/admin/analytics?days=${p.days}`, label: p.label, active: p.days === days }))} />
           </>

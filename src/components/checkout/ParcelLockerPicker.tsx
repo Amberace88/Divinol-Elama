@@ -6,6 +6,7 @@ import { Check, LocateFixed, Loader2, MapPin, Package, Pencil } from "lucide-rea
 import type { Market } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { distanceKm, searchLockerOptions, type LockerOption, type LockerProvider, type LockerProviderOption, type ParcelLocker } from "./lockers";
+import { CarrierLogo } from "@/components/shipping/CarrierLogo";
 
 const cache = new Map<string, Promise<LockerOption[]>>();
 const providerCache = new Map<Market, Promise<LockerProviderOption[]>>();
@@ -139,9 +140,7 @@ export function ParcelLockerPicker({
   if (value) {
     return (
       <div className="flex items-center gap-3 rounded-2xl border-2 border-navy-700 bg-navy-50/60 p-4">
-        <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-navy-700 text-brand-400">
-          <Package className="size-5" aria-hidden />
-        </span>
+        <CarrierLogo code={value.provider} name={providers.find((p) => p.id === value.provider)?.name ?? value.provider} size="md" />
         <div className="min-w-0 flex-1">
           <p className="text-[11px] font-bold uppercase tracking-wider text-muted">{providers.find((p) => p.id === value.provider)?.name ?? value.provider}</p>
           <p className="truncate text-[15px] font-bold text-ink">{value.name}</p>
@@ -171,10 +170,11 @@ export function ParcelLockerPicker({
               aria-checked={p.id === provider}
               onClick={() => switchProvider(p.id)}
               className={cn(
-                "inline-flex h-10 items-center gap-2 rounded-xl border-2 px-3.5 text-[13.5px] font-bold transition",
+                "inline-flex h-12 items-center gap-2.5 rounded-xl border-2 py-1 pl-1.5 pr-3.5 text-[13.5px] font-bold transition",
                 p.id === provider ? "border-navy-700 bg-navy-50/60 text-navy-700" : "border-line text-ink/75 hover:border-navy-200",
               )}
             >
+              <CarrierLogo code={p.id} name={p.name} />
               {p.name}
               {priceLabel && <span className="text-[12px] font-semibold text-muted">{priceLabel}</span>}
             </button>

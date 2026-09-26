@@ -13,6 +13,7 @@ import { Drawer, Spinner, useActionRunner } from "../client-ui";
 import { btn } from "../styles";
 import { EmptyState, Pill, td, th } from "../ui";
 import { ShipmentCard, type CarrierInfo } from "./ShipmentCard";
+import { CarrierLogo } from "@/components/shipping/CarrierLogo";
 
 export type ShipmentListRow = ShipmentRow & { order_number: string | null };
 
@@ -96,6 +97,7 @@ export function ShipmentsTable({ rows, carriers, filtered }: { rows: ShipmentLis
                     </td>
                     <td className={td}>
                       <p className="font-bold text-ink">
+                        <CarrierLogo code={r.carrier} name={c?.name ?? r.carrier} className="mr-2 align-middle" />
                         {c?.name ?? r.carrier} <span className="font-normal text-muted">· {r.type ? SERVICE_TYPE_LABEL[r.type] : r.service_name}</span>
                       </p>
                       {r.tracking_number ? (
