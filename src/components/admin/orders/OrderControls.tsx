@@ -17,7 +17,7 @@ export function StatusControl({ orderId, status }: { orderId: string; status: st
   const next = idx >= 0 && idx < flow.length - 1 ? flow[idx + 1] : null;
 
   async function save(target: string) {
-    if (target === "cancelled" && !(await confirm({ title: "Atcelt pasūtījumu?", description: "Statuss tiks nomainīts uz „Atcelts”. Atlikumi automātiski netiek atjaunoti.", confirmLabel: "Atcelt pasūtījumu", danger: true }))) {
+    if (target === "cancelled" && !(await confirm({ title: "Atcelt pasūtījumu?", description: "Statuss tiks nomainīts uz „Atcelts”, klientam tiks nosūtīts paziņojums, un preču atlikumi tiks automātiski atjaunoti.", confirmLabel: "Atcelt pasūtījumu", danger: true }))) {
       setValue(status);
       return;
     }

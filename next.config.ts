@@ -58,6 +58,7 @@ const nextConfig: NextConfig = {
       "./node_modules/@expo-google-fonts/manrope/**/*.ttf",
       "./public/media/brand/elama-logo.png",
     ],
+    "/api/admin/guide": ["./private/docs/*.pdf"],
   },
   images: {
     formats: ["image/avif", "image/webp"],

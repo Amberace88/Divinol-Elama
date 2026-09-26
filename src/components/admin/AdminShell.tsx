@@ -7,6 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
   Activity,
+  BookOpen,
   ChevronsLeft,
   ExternalLink,
   FolderTree,
@@ -275,6 +276,26 @@ function SidebarContent({ pathname, counts, collapsed, layoutId }: { pathname: s
             );
           })}
         </ul>
+        <div className="mt-3 border-t border-white/[0.06] pt-3">
+          <a
+            href="/api/admin/guide"
+            target="_blank"
+            rel="noopener"
+            title={collapsed ? "Lietošanas pamācība (PDF)" : undefined}
+            className={cn(
+              "group flex h-10 items-center gap-3 rounded-lg text-[13.5px] font-semibold text-white/60 transition hover:bg-white/[0.04] hover:text-white",
+              collapsed ? "justify-center px-0" : "px-3",
+            )}
+          >
+            <BookOpen className="h-[18px] w-[18px] shrink-0 text-white/50 group-hover:text-brand-400" aria-hidden />
+            {!collapsed && (
+              <>
+                <span className="flex-1 truncate">Pamācība</span>
+                <span className="rounded bg-white/[0.08] px-1.5 text-[10px] font-bold tracking-wide text-white/60">PDF</span>
+              </>
+            )}
+          </a>
+        </div>
       </nav>
       {!collapsed && (
         <div className="mx-3 mb-3 rounded-xl bg-gradient-to-br from-navy-800 to-navy-900 p-3.5 ring-1 ring-white/5">

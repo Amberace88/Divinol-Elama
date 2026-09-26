@@ -917,7 +917,7 @@ export function ManualOrderForm({
                   setPayMethod(e.target.value);
                 }}
               >
-                {Object.entries(PAYMENT_METHOD).map(([k, v]) => (
+                {Object.entries(PAYMENT_METHOD).filter(([k]) => !k.startsWith("montonio")).map(([k, v]) => (
                   <option key={k} value={k}>
                     {v}
                   </option>
