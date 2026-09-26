@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { ORDER_STATUS, ORDER_STATUSES, PAYMENT_STATUS, PAYMENT_STATUSES } from "../labels";
 import { ActionError, adminAction, must, revalidateAdmin, UUID_RE } from "../server";
+import { finalInvoiceNumbers, newFinalInvoices } from "../final-invoice";
 import { deferEmail } from "@/lib/email/send";
 import { notifyInvoiceIssued, notifyOrderCancelled, notifyOrderShipped } from "@/lib/email/notify";
 
@@ -39,6 +40,8 @@ export async function setOrderPayment(orderId: string, paymentStatus: string) {
     const patch: Record<string, unknown> = { payment_status: paymentStatus };
     if (paymentStatus === "paid") patch.paid_at = new Date().toISOString();
     if (paymentStatus === "unpaid") patch.paid_at = null;
+    const before = paymentStatus === "paid" ? await finalInvoiceNumbers(supabase, orderId) : null;
+    // → trigger orders_payment_paid: open proformas become paid + final invoice (ELA-) is issued once
     must(await supabase.from("orders").update(patch).eq("id", orderId));
     must(
       await supabase.from("order_events").insert({
@@ -48,9 +51,15 @@ export async function setOrderPayment(orderId: string, paymentStatus: string) {
         created_by: user.id,
       }),
     );
+    const issued = before ? await newFinalInvoices(supabase, orderId, before) : [];
+    for (const number of issued) deferEmail("invoice issued", () => notifyInvoiceIssued(supabase, number));
     revalidateAdmin();
-    return null;
-  }, paymentStatus === "paid" ? "Atzīmēts kā apmaksāts" : "Apmaksas statuss atjaunināts");
+    return { issued };
+  }, (d) =>
+    paymentStatus === "paid"
+      ? `Atzīmēts kā apmaksāts${d.issued.length ? ` · izrakstīts rēķins ${d.issued.join(", ")}` : ""}`
+      : "Apmaksas statuss atjaunināts",
+  );
 }
 
 export async function updateTracking(orderId: string, code: string) {

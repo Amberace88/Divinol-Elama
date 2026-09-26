@@ -45,6 +45,7 @@ export async function GET(req: NextRequest) {
       "Kopā ar PVN",
       "Reverse charge",
       "B2B",
+      "Avots",
     ],
     rows.map((o) => [
       o.number,
@@ -67,6 +68,7 @@ export async function GET(req: NextRequest) {
       Number(o.total_gross),
       o.reverse_charge,
       Boolean(o.customer?.b2b),
+      o.source === "admin" ? "Adminā" : "E-veikals",
     ]),
   );
 

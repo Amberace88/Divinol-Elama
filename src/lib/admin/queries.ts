@@ -1,6 +1,6 @@
 import "server-only";
 import type { createClient } from "@/lib/supabase/server";
-import { MARKETS, ORDER_STATUSES, PAYMENT_STATUSES } from "./labels";
+import { INVOICE_STATUS, INVOICE_TYPE, MARKETS, ORDER_STATUSES, PAYMENT_STATUSES } from "./labels";
 import { sp, spDate, spEnum, type SP } from "./params";
 import { sanitizeSearch } from "./server";
 
@@ -93,11 +93,46 @@ export type OrderRow = {
   reverse_charge: boolean;
   tracking_code: string | null;
   paid_at: string | null;
+  /** 'web' (e-shop checkout) | 'admin' (entered in the admin, migration 0010) */
+  source?: string | null;
 };
 
 export const ORDER_LIST_SELECT =
-  "id, number, created_at, email, phone, customer, market, status, payment_method, payment_status, shipping_method, subtotal_net, shipping_net, vat_amount, total_gross, reverse_charge, tracking_code, paid_at";
+  "id, number, created_at, email, phone, customer, market, status, payment_method, payment_status, shipping_method, subtotal_net, shipping_net, vat_amount, total_gross, reverse_charge, tracking_code, paid_at, source";
 
 export function customerName(c: OrderRow["customer"], fallback = "—") {
   return c?.company_name || c?.name || fallback;
+}
+
+// ───────────── invoices ─────────────
+export type InvoiceFilters = {
+  type: string | null;
+  status: string | null;
+  overdue: boolean;
+  from: string | null;
+  to: string | null;
+  q: string;
+};
+
+export function parseInvoiceFilters(params: SP): InvoiceFilters {
+  return {
+    type: spEnum(params, "type", Object.keys(INVOICE_TYPE), null),
+    status: spEnum(params, "status", Object.keys(INVOICE_STATUS), null),
+    overdue: sp(params, "overdue") === "1",
+    from: spDate(params, "from"),
+    to: spDate(params, "to"),
+    q: sanitizeSearch(sp(params, "q")),
+  };
+}
+
+/** Invoice list / export filters (issued_at is a Riga calendar date). `today` = todayRiga(). */
+export function invoicesQuery(supabase: Supabase, f: InvoiceFilters, select: string, today: string, count = false) {
+  let q = supabase.from("invoices").select(select, count ? { count: "exact" } : undefined);
+  if (f.type) q = q.eq("type", f.type);
+  if (f.status) q = q.eq("status", f.status);
+  if (f.overdue) q = q.eq("status", "issued").neq("type", "credit_note").lt("due_at", today);
+  if (f.from) q = q.gte("issued_at", f.from);
+  if (f.to) q = q.lte("issued_at", f.to);
+  if (f.q) q = q.or(`number.ilike.%${f.q}%,buyer->>name.ilike.%${f.q}%,buyer->>company_name.ilike.%${f.q}%,buyer->>email.ilike.%${f.q}%`);
+  return q;
 }

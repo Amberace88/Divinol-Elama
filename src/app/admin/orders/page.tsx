@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Download, ShoppingBag } from "lucide-react";
+import { Download, Plus, ShoppingBag } from "lucide-react";
 import { requireAdmin } from "@/lib/admin/auth";
 import { fmtDateTime, fmtMoney } from "@/lib/admin/format";
 import { labelOf, MARKET, MARKETS, ORDER_STATUS, PAYMENT_METHOD, PAYMENT_STATUS, SHIPPING_METHOD } from "@/lib/admin/labels";
@@ -43,9 +43,14 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
         title="Pasūtījumi"
         description={`${total} ${total === 1 ? "pasūtījums" : "pasūtījumi"}${hasFilters ? " atbilst filtriem" : ""}`}
         actions={
-          <a href={exportHref} className={btn("outline")} download>
-            <Download className="h-4 w-4" /> Eksportēt CSV
-          </a>
+          <>
+            <a href={exportHref} className={btn("outline")} download>
+              <Download className="h-4 w-4" /> Eksportēt CSV
+            </a>
+            <Link href="/admin/orders/new" className={btn("primary")}>
+              <Plus className="h-4 w-4" /> Jauns pasūtījums
+            </Link>
+          </>
         }
       />
 
@@ -75,7 +80,7 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
           <EmptyState
             icon={ShoppingBag}
             title={hasFilters ? "Nekas netika atrasts" : "Pasūtījumu vēl nav"}
-            description={hasFilters ? "Mēģiniet mainīt vai notīrīt filtrus." : "Kad klienti noformēs pirmos pasūtījumus, tie parādīsies šeit."}
+            description={hasFilters ? "Mēģiniet mainīt vai notīrīt filtrus." : "Kad klienti noformēs pirmos pasūtījumus, tie parādīsies šeit. Pasūtījumu pa tālruni vai e-pastu var ievadīt ar „Jauns pasūtījums”."}
           />
         ) : (
           <>
@@ -105,6 +110,11 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
                           {o.number}
                         </Link>
                         {o.customer?.b2b && <span className="ml-1.5 rounded bg-navy-700 px-1 py-px text-[10px] font-bold text-brand-400">B2B</span>}
+                        {o.source === "admin" && (
+                          <span className="ml-1.5 rounded bg-brand-100 px-1 py-px text-[10px] font-bold text-navy-700 ring-1 ring-inset ring-brand-300" title="Izveidots administrācijā">
+                            Adminā
+                          </span>
+                        )}
                       </td>
                       <td className={`${td} whitespace-nowrap text-muted`}>{fmtDateTime(o.created_at)}</td>
                       <td className={`${td} max-w-[240px]`}>

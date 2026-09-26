@@ -1,12 +1,13 @@
 import Link from "next/link";
-import { AlarmClock, CheckCircle2, FileClock, ReceiptText, Wallet } from "lucide-react";
+import { AlarmClock, CheckCircle2, Download, FileClock, Plus, ReceiptText, Wallet } from "lucide-react";
 import { requireAdmin } from "@/lib/admin/auth";
 import { fmtDate, fmtMoney, fmtNumber, todayRiga } from "@/lib/admin/format";
 import { INVOICE_STATUS, INVOICE_TYPE, labelOf } from "@/lib/admin/labels";
-import { PAGE_SIZE, sp, spDate, spEnum, spInt, withParams, type SP } from "@/lib/admin/params";
-import { rigaDayStart } from "@/lib/admin/queries";
-import { errorMessage, sanitizeSearch } from "@/lib/admin/server";
+import { PAGE_SIZE, spEnum, spInt, withParams, type SP } from "@/lib/admin/params";
+import { invoicesQuery, parseInvoiceFilters, rigaDayStart } from "@/lib/admin/queries";
+import { errorMessage } from "@/lib/admin/server";
 import { FilterBar } from "@/components/admin/FilterBar";
+import { btn } from "@/components/admin/styles";
 import { InvoiceActions } from "@/components/admin/invoices/InvoiceActions";
 import { EmptyState, ErrorNote, PageHeader, Pagination, Pill, SortTh, TableWrap, td, th, trHover } from "@/components/admin/ui";
 import { cn } from "@/lib/utils";
@@ -34,12 +35,8 @@ const SORTS = { issued: "issued_at", due: "due_at", total: "total_gross", number
 
 export default async function InvoicesPage({ searchParams }: { searchParams: Promise<SP> }) {
   const params = await searchParams;
-  const type = spEnum(params, "type", Object.keys(INVOICE_TYPE), null);
-  const status = spEnum(params, "status", Object.keys(INVOICE_STATUS), null);
-  const overdue = sp(params, "overdue") === "1";
-  const from = spDate(params, "from");
-  const to = spDate(params, "to");
-  const q = sanitizeSearch(sp(params, "q"));
+  const f = parseInvoiceFilters(params);
+  const { type, status, overdue, from, to, q } = f;
   const sort = spEnum(params, "sort", Object.keys(SORTS) as (keyof typeof SORTS)[], "issued");
   const dir = spEnum(params, "dir", ["asc", "desc"] as const, "desc");
   const page = spInt(params, "page", 1);
@@ -48,17 +45,13 @@ export default async function InvoicesPage({ searchParams }: { searchParams: Pro
 
   const { supabase } = await requireAdmin();
 
-  let query = supabase
-    .from("invoices")
-    .select("id, number, type, status, issued_at, due_at, paid_at, buyer, subtotal_net, vat_amount, total_gross, reverse_charge, order_id, orders(number)", {
-      count: "exact",
-    });
-  if (type) query = query.eq("type", type);
-  if (status) query = query.eq("status", status);
-  if (overdue) query = query.eq("status", "issued").neq("type", "credit_note").lt("due_at", today);
-  if (from) query = query.gte("issued_at", from);
-  if (to) query = query.lte("issued_at", to);
-  if (q) query = query.or(`number.ilike.%${q}%,buyer->>name.ilike.%${q}%,buyer->>company_name.ilike.%${q}%,buyer->>email.ilike.%${q}%`);
+  let query = invoicesQuery(
+    supabase,
+    f,
+    "id, number, type, status, issued_at, due_at, paid_at, buyer, subtotal_net, vat_amount, total_gross, reverse_charge, order_id, orders(number)",
+    today,
+    true,
+  );
   query = query.order(SORTS[sort], { ascending: dir === "asc", nullsFirst: false }).order("number", { ascending: false });
   const start = (page - 1) * PAGE_SIZE;
 
@@ -89,7 +82,25 @@ export default async function InvoicesPage({ searchParams }: { searchParams: Pro
 
   return (
     <>
-      <PageHeader title="Rēķini" description="Rēķini, avansa rēķini un kredītrēķini. Jaunus rēķinus izraksta no pasūtījuma kartītes." />
+      <PageHeader
+        title="Rēķini"
+        description="Avansa rēķini veidojas automātiski no e-veikala pasūtījumiem; rēķinu pēc apmaksas izraksta automātiski. Jaunu rēķinu vari izveidot arī manuāli."
+        actions={
+          <>
+            <a
+              href={`/api/admin/invoices/export${withParams(params, { page: null, sort: null, dir: null })}`}
+              className={btn("outline")}
+              download
+              title="CSV grāmatvedībai — pēc izvēlētajiem filtriem un perioda (No / Līdz)"
+            >
+              <Download className="h-4 w-4" /> CSV grāmatvedim
+            </a>
+            <Link href="/admin/orders/new?from=invoices" className={btn("primary")}>
+              <Plus className="h-4 w-4" /> Jauns rēķins
+            </Link>
+          </>
+        }
+      />
 
       <div className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
         {cards.map((c) => (
@@ -131,7 +142,7 @@ export default async function InvoicesPage({ searchParams }: { searchParams: Pro
           <EmptyState
             icon={ReceiptText}
             title={hasFilters ? "Nekas netika atrasts" : "Rēķinu vēl nav"}
-            description={hasFilters ? "Mēģiniet mainīt filtrus." : "Rēķini tiek izveidoti automātiski (bankas pārskaitījums / B2B) vai manuāli pasūtījuma kartītē."}
+            description={hasFilters ? "Mēģiniet mainīt filtrus." : "Rēķini tiek izveidoti automātiski (bankas pārskaitījums / B2B), manuāli pasūtījuma kartītē vai ar „Jauns rēķins”."}
           />
         ) : (
           <>

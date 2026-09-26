@@ -20,7 +20,7 @@ export default async function SettingsPage() {
     company,
     vat: { ...DEFAULT_SETTINGS.vat, ...(map.vat?.value ?? {}) } as SettingsInit["vat"],
     shipping: (map.shipping?.value ?? DEFAULT_SETTINGS.shipping) as unknown as SettingsInit["shipping"],
-    invoice: { due_days_default: 7, notes: "", ...(map.invoice?.value ?? {}) } as SettingsInit["invoice"],
+    invoice: { due_days_default: 7, notes: "", auto_final_invoice: true, ...(map.invoice?.value ?? {}) } as SettingsInit["invoice"],
     updated: Object.fromEntries(rows.map((r) => [r.key, fmtDateTime(r.updated_at)])),
   };
 

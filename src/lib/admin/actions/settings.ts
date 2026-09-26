@@ -41,6 +41,8 @@ const schemas = {
   invoice: z.object({
     due_days_default: z.number({ error: "Ievadiet dienas" }).int().min(0, "0–120").max(120, "0–120"),
     notes: s(1000),
+    /** read by ensure_final_invoice() (migration 0010); missing = on */
+    auto_final_invoice: z.boolean().default(true),
   }),
 } as const;
 

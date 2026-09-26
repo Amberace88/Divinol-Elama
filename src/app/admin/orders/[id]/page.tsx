@@ -43,6 +43,7 @@ type Order = {
   paid_at: string | null;
   created_at: string;
   updated_at: string;
+  source?: string | null;
 };
 type Item = { id: string; product_id: string | null; sku: string | null; name: string; pack_label: string | null; image: string | null; qty: number; unit_price_net: number; line_net: number };
 type Event = { id: string; type: string; message: string | null; created_at: string; profiles: { full_name: string | null; email: string } | null };
@@ -106,7 +107,7 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
             </Pill>
           </span>
         }
-        description={`Izveidots ${fmtDateTime(order.created_at)} · ${MARKET[order.market] ?? order.market} · valoda ${order.locale.toUpperCase()}`}
+        description={`Izveidots ${fmtDateTime(order.created_at)}${order.source === "admin" ? " administrācijā" : ""} · ${MARKET[order.market] ?? order.market} · valoda ${order.locale.toUpperCase()}`}
         actions={
           <Link href={`/admin/orders/${order.id}/print`} className={btn("outline")} target="_blank">
             <Printer className="h-4 w-4" /> Pavadzīme drukai

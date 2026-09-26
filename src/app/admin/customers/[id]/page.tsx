@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Mail, MapPin, Phone, ShoppingBag } from "lucide-react";
+import { Mail, MapPin, Phone, Plus, ShoppingBag } from "lucide-react";
 import { requireAdmin } from "@/lib/admin/auth";
 import { fmtDate, fmtDateTime, fmtMoney, fmtNumber } from "@/lib/admin/format";
 import { B2B_STATUS, INVOICE_STATUS, INVOICE_TYPE, labelOf, ORDER_STATUS, PAYMENT_STATUS } from "@/lib/admin/labels";
 import { UUID_RE } from "@/lib/admin/server";
 import { B2BDecision } from "@/components/admin/customers/B2BDecision";
 import { CustomerForm, type CustomerFormValues } from "@/components/admin/customers/CustomerForm";
+import { btn } from "@/components/admin/styles";
 import { EmptyState, PageHeader, Panel, Pill } from "@/components/admin/ui";
 
 type Profile = {
@@ -87,6 +88,11 @@ export default async function CustomerPage({ params }: { params: Promise<{ id: s
           </span>
         }
         description={`Reģistrēts ${fmtDateTime(profile.created_at)} · valoda ${profile.preferred_locale.toUpperCase()} · ${profile.marketing_consent ? "piekrīt jaunumiem" : "nav piekritis jaunumiem"}`}
+        actions={
+          <Link href={`/admin/orders/new?customer=${profile.id}`} className={btn("primary")}>
+            <Plus className="h-4 w-4" /> Izveidot pasūtījumu
+          </Link>
+        }
       />
 
       {profile.b2b_status === "pending" && (

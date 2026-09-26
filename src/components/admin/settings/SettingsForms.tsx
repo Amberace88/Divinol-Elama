@@ -16,7 +16,7 @@ export type SettingsInit = {
   company: Company;
   vat: Record<Market, number>;
   shipping: { free_threshold: Record<Market, number>; methods: Record<string, Method> };
-  invoice: { due_days_default: number; notes: string };
+  invoice: { due_days_default: number; notes: string; auto_final_invoice: boolean };
   updated: Partial<Record<SettingsKey, string>>;
 };
 
@@ -354,14 +354,15 @@ function ShippingForm({ initial, vat, updated }: { initial: SettingsInit["shippi
 function InvoiceForm({ initial, updated }: { initial: SettingsInit["invoice"]; updated?: string }) {
   const [days, setDays] = useState(String(initial.due_days_default ?? 7));
   const [notes, setNotes] = useState(initial.notes ?? "");
+  const [autoFinal, setAutoFinal] = useState(initial.auto_final_invoice !== false);
   const { save, pending, errors } = useSave("invoice");
   return (
     <Section
       id="invoice"
       icon={FileText}
       title="Rēķini"
-      description="Noklusējuma apmaksas termiņš manuāli izrakstītiem rēķiniem un piezīme rēķina PDF apakšā."
-      onSave={() => save({ due_days_default: Number(days), notes })}
+      description="Noklusējuma apmaksas termiņš manuāli izrakstītiem rēķiniem, piezīme rēķina PDF apakšā un automātiskā rēķina izrakstīšana."
+      onSave={() => save({ due_days_default: Number(days), notes, auto_final_invoice: autoFinal })}
       pending={pending}
       updated={updated}
     >
@@ -372,6 +373,16 @@ function InvoiceForm({ initial, updated }: { initial: SettingsInit["invoice"]; u
         <Field label="Piezīme rēķinā" htmlFor="inv-notes" error={errors.notes}>
           <textarea id="inv-notes" rows={3} className={textareaCls} value={notes} onChange={(e) => setNotes(e.target.value)} />
         </Field>
+      </div>
+      <div className="mt-5 flex items-start gap-3 rounded-xl border border-line bg-slate-50/60 px-4 py-3">
+        <Switch checked={autoFinal} onChange={setAutoFinal} label="Automātiski izrakstīt rēķinu pēc avansa rēķina apmaksas" />
+        <div className="text-[13px]">
+          <p className="font-bold text-ink">Automātiski izrakstīt rēķinu pēc avansa rēķina apmaksas</p>
+          <p className="text-muted">
+            Kad pasūtījums vai tā avansa rēķins (PR-) tiek atzīmēts kā apmaksāts, sistēma izraksta apmaksātu gala rēķinu (ELA-) ar atsauci uz avansa rēķinu un
+            nosūta to klientam. Katram pasūtījumam tikai vienu reizi.
+          </p>
+        </div>
       </div>
     </Section>
   );

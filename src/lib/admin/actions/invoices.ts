@@ -2,6 +2,9 @@
 
 import { z } from "zod";
 import { ActionError, adminAction, must, revalidateAdmin, UUID_RE } from "../server";
+import { finalInvoiceNumbers, newFinalInvoices } from "../final-invoice";
+import { deferEmail } from "@/lib/email/send";
+import { notifyInvoiceIssued } from "@/lib/email/notify";
 
 const id = z.string().regex(UUID_RE, "Nederīgs ID");
 
@@ -20,17 +23,22 @@ export async function markInvoicePaid(invoiceId: string, alsoOrder = true) {
     if (inv.status === "void") throw new ActionError("Anulētu rēķinu nevar atzīmēt kā apmaksātu");
     const now = new Date().toISOString();
     must(await supabase.from("invoices").update({ status: "paid", paid_at: now }).eq("id", invoiceId));
+    let issued: string[] = [];
     if (alsoOrder && inv.order_id && inv.type !== "credit_note") {
+      const before = await finalInvoiceNumbers(supabase, inv.order_id);
+      // → trigger orders_payment_paid issues the final invoice (ELA-) after a paid proforma (idempotent)
       must(await supabase.from("orders").update({ payment_status: "paid", paid_at: now }).eq("id", inv.order_id).eq("payment_status", "unpaid"));
       must(
         await supabase
           .from("order_events")
           .insert({ order_id: inv.order_id, type: "payment", message: `Apmaksāts rēķins ${inv.number}`, created_by: user.id }),
       );
+      issued = await newFinalInvoices(supabase, inv.order_id, before);
+      for (const number of issued) deferEmail("invoice issued", () => notifyInvoiceIssued(supabase, number));
     }
     revalidateAdmin();
-    return null;
-  }, "Rēķins atzīmēts kā apmaksāts");
+    return { issued };
+  }, (d) => `Rēķins atzīmēts kā apmaksāts${d.issued.length ? ` · izrakstīts rēķins ${d.issued.join(", ")}` : ""}`);
 }
 
 export async function markInvoiceUnpaid(invoiceId: string) {

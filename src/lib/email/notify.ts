@@ -76,6 +76,44 @@ export async function notifyOrderPlaced(db: Db, payload: PlaceOrderPayload, rpc:
   ]);
 }
 
+/**
+ * Order entered by an administrator (phone / e-mail / B2B): order confirmation → customer only, with the
+ * issued proforma / invoice attached. The shop is not notified (the admin created it).
+ */
+export async function notifyManualOrder(db: Db, orderId: string, invoiceNumber: string | null) {
+  const order = await loadOrderForEmail(db, orderId);
+  if (!order || !isEmail(order.email)) return;
+  const ctx = await emailContext(order.locale);
+
+  let attachment: EmailAttachment | null = null;
+  if (invoiceNumber) {
+    const inv = await loadInvoiceByNumber(db, invoiceNumber);
+    if (inv) {
+      const { data: invoiceSettings } = await db.from("settings").select("value").eq("key", "invoice").maybeSingle();
+      attachment = await invoicePdf({
+        ...inv,
+        order_number: order.number,
+        default_notes: (invoiceSettings?.value as { notes?: string } | null)?.notes ?? null,
+      });
+    }
+  }
+
+  const mail = renderOrderConfirmation(ctx, {
+    order,
+    invoiceNumber,
+    invoiceAttached: Boolean(attachment),
+    accountUrl: accountOrderUrl(order),
+    registerUrl: null,
+  });
+  await sendEmail({
+    to: order.email,
+    ...mail,
+    attachments: attachment ? [attachment] : undefined,
+    tags: { type: "order_confirmation_manual" },
+    idempotencyKey: `order-confirmation/${order.id}`,
+  });
+}
+
 // ───────────────────────── 3. shipped ─────────────────────────
 
 type ShipmentLite = { carrier: string; tracking_number: string | null; tracking_numbers: string[] | null; status: string };
