@@ -11,17 +11,17 @@ import { btn, inputCls } from "../styles";
 import { CarrierLogo } from "@/components/shipping/CarrierLogo";
 
 /** Carrier settings: on/off, offered in checkout, tracking link template, API credential status (names only, never values). */
-export function CarrierSettings({ carriers, caps }: { carriers: Carrier[]; caps: Record<string, CarrierCapabilities> }) {
+export function CarrierSettings({ carriers, caps, developer = false }: { carriers: Carrier[]; caps: Record<string, CarrierCapabilities>; developer?: boolean }) {
   return (
     <div className="grid gap-4 p-5 md:grid-cols-2 2xl:grid-cols-3">
       {carriers.map((c) => (
-        <CarrierCard key={c.code + c.tracking_url_template} c={c} cap={caps[c.code]} />
+        <CarrierCard key={c.code + c.tracking_url_template} c={c} cap={caps[c.code]} developer={developer} />
       ))}
     </div>
   );
 }
 
-function CarrierCard({ c, cap }: { c: Carrier; cap?: CarrierCapabilities }) {
+function CarrierCard({ c, cap, developer }: { c: Carrier; cap?: CarrierCapabilities; developer: boolean }) {
   const router = useRouter();
   const { run, pending } = useActionRunner();
   const [tpl, setTpl] = useState(c.tracking_url_template ?? "");
@@ -51,7 +51,7 @@ function CarrierCard({ c, cap }: { c: Carrier; cap?: CarrierCapabilities }) {
         <Switch checked={c.enabled} label={c.enabled ? "Atslēgt pārvadātāju" : "Ieslēgt pārvadātāju"} disabled={pending} onChange={(v) => save({ enabled: v })} />
       </header>
 
-      {hasApiDef && (
+      {developer && hasApiDef && (
         <div className="mb-3 rounded-xl bg-slate-50 p-3">
           <p className="mb-1.5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-muted">
             <KeyRound className="h-3.5 w-3.5" /> Netlify vides mainīgie
@@ -90,6 +90,17 @@ function CarrierCard({ c, cap }: { c: Carrier; cap?: CarrierCapabilities }) {
         />
       </label>
 
+      {!developer && (
+        <p className="mb-3 flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2 text-[12.5px]">
+          <span className={cn("inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[12px] font-semibold ring-1", cap?.api ? "bg-emerald-50 text-emerald-700 ring-emerald-200" : "bg-slate-100 text-slate-600 ring-slate-200")}>
+            <span className={cn("h-1.5 w-1.5 rounded-full", cap?.api ? "bg-emerald-500" : "bg-slate-400")} />
+            {cap?.api ? "Pieslēgts" : "Nav pieslēgts"}
+          </span>
+          <span className="text-muted">{cap?.api ? "Uzlīmes un kodi tiek veidoti automātiski" : "Sūtījumus noformē pārvadātāja portālā"}</span>
+        </p>
+      )}
+
+      {developer && (
       <form
         className="mt-auto flex items-end gap-2"
         onSubmit={(e) => {
@@ -105,8 +116,9 @@ function CarrierCard({ c, cap }: { c: Carrier; cap?: CarrierCapabilities }) {
           {pending ? <Spinner /> : null} Saglabāt
         </button>
       </form>
+      )}
 
-      {cap?.docs.length ? (
+      {developer && cap?.docs.length ? (
         <p className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-[11.5px]">
           {cap.docs.map((d) => (
             <a key={d} href={d} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-navy-600 hover:underline">

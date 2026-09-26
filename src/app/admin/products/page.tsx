@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { isDeveloperEmail } from "@/lib/admin/developer";
 import { PackageSearch, Plus } from "lucide-react";
 import { requireAdmin } from "@/lib/admin/auth";
 import { PAGE_SIZE, sp, spEnum, spInt, withParams, type SP } from "@/lib/admin/params";
@@ -56,7 +57,8 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
   const page = spInt(params, "page", 1);
   const PER = PAGE_SIZE + 5;
 
-  const { supabase } = await requireAdmin();
+  const { supabase, user } = await requireAdmin();
+  const developer = isDeveloperEmail(user.email);
 
   // SKU search goes through the variants table.
   let skuIds: string[] = [];
@@ -156,7 +158,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
         actions={
           <>
             {dbTotal > 0 && <InventoryCsvButtons />}
-            {dbTotal > 0 && <CatalogImportButton />}
+            {dbTotal > 0 && developer && <CatalogImportButton />}
             <Link href="/admin/products/new" className={btn("primary")}>
               <Plus className="h-4 w-4" /> Jauns produkts
             </Link>
@@ -164,7 +166,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
         }
       />
 
-      {!totalRes.error && dbTotal === 0 && <CatalogImportHero productCount={dbTotal} />}
+      {!totalRes.error && dbTotal === 0 && developer && <CatalogImportHero productCount={dbTotal} />}
 
       <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-card">
         <FilterBar

@@ -1,4 +1,5 @@
 import { requireAdmin } from "@/lib/admin/auth";
+import { isDeveloperEmail } from "@/lib/admin/developer";
 import { fmtDateTime } from "@/lib/admin/format";
 import { errorMessage } from "@/lib/admin/server";
 import { DEFAULT_SETTINGS } from "@/lib/settings";
@@ -14,6 +15,7 @@ export const metadata = { title: "Iestatījumi" };
 
 export default async function SettingsPage() {
   const { supabase, profile, user } = await requireAdmin();
+  const developer = isDeveloperEmail(user.email);
   const { data, error } = await supabase.from("settings").select("key, value, updated_at").in("key", ["company", "vat", "shipping", "invoice"]);
   const rows = (data ?? []) as { key: string; value: Record<string, unknown>; updated_at: string }[];
   const map = Object.fromEntries(rows.map((r) => [r.key, r]));
@@ -38,11 +40,11 @@ export default async function SettingsPage() {
       <SettingsForms initial={initial} />
       <div className="mt-6 grid gap-6 lg:grid-cols-[200px_minmax(0,1fr)]">
         <div className="hidden lg:block" />
-        <EmailSettingsCard status={{ ...(await emailStatus()), adminEmail: profile.email || user.email || null }} />
+        <EmailSettingsCard status={{ ...(await emailStatus()), adminEmail: profile.email || user.email || null }} developer={developer} />
       </div>
       <div className="mt-6 grid gap-6 lg:grid-cols-[200px_minmax(0,1fr)]">
         <div className="hidden lg:block" />
-        <MontonioSettingsCard status={{ ...(await montonioAdminStatus()), webhookUrl: notificationUrl() }} />
+        <MontonioSettingsCard status={{ ...(await montonioAdminStatus()), webhookUrl: notificationUrl() }} developer={developer} />
       </div>
     </>
   );

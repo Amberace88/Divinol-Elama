@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { isDeveloperEmail } from "@/lib/admin/developer";
 import { Coins, PackageOpen, Route, Truck } from "lucide-react";
 import { requireAdmin } from "@/lib/admin/auth";
 import { fmtMoney, fmtNumber } from "@/lib/admin/format";
@@ -42,7 +43,8 @@ type Tab = (typeof TABS)[number]["id"];
 export default async function ShippingPage({ searchParams }: { searchParams: Promise<SP> }) {
   const params = await searchParams;
   const tab = (TABS.find((t) => t.id === sp(params, "tab"))?.id ?? "to-ship") as Tab;
-  const { supabase } = await requireAdmin();
+  const { supabase, user } = await requireAdmin();
+  const developer = isDeveloperEmail(user.email);
 
   const [carriers, rates] = await Promise.all([loadCarriers(supabase), loadRates(supabase)]);
   const caps = allCapabilities(carriers.map((c) => c.code));
@@ -112,8 +114,8 @@ export default async function ShippingPage({ searchParams }: { searchParams: Pro
 
       {tab === "rates" && (
         <div className="space-y-6">
-          <Panel title="Pārvadātāji" description="API atslēgas glabājas tikai Netlify vides mainīgajos — šeit redzams, vai tās ir iestatītas." bodyClassName="p-0">
-            <CarrierSettings carriers={carriers} caps={caps} />
+          <Panel title="Pārvadātāji" description={developer ? "API atslēgas glabājas tikai Netlify vides mainīgajos — šeit redzams, vai tās ir iestatītas." : "Ieslēdziet vai izslēdziet pārvadātājus un izvēlieties, kuru pakomātus piedāvāt klientiem. Pieslēgumus iestata izstrādātājs."} bodyClassName="p-0">
+            <CarrierSettings carriers={carriers} caps={caps} developer={developer} />
           </Panel>
           <Panel title="Tarifi" description="Izmaksas veikalam (bez PVN) par vienu paku izmēra/svara klasē. Salīdzinājums izmanto tikai aktīvos tarifus." bodyClassName="p-0">
             <RatesEditor rates={rates} carriers={carriers} />

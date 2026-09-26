@@ -4,6 +4,7 @@ import seedProducts from "@/data/products.seed.json";
 import { categoriesSeed } from "@/data/categories";
 import { BASE_VAT } from "@/lib/commerce";
 import { ActionError, adminAction, must, revalidateAdmin, revalidateCatalog } from "../server";
+import { isDeveloperEmail } from "../developer";
 
 const CHUNK = 15;
 
@@ -23,7 +24,8 @@ export type ImportChunkResult = {
  * Categories are sent only with the first chunk. Seed prices are gross incl. 21% LV VAT → stored as net (4 decimals).
  */
 export async function importCatalogChunk(index: number) {
-  return adminAction<ImportChunkResult>(async ({ supabase }) => {
+  return adminAction<ImportChunkResult>(async ({ supabase, user }) => {
+    if (!isDeveloperEmail(user.email)) throw new ActionError("Kataloga importu var veikt tikai izstrādātājs.");
     const all = seedProducts as unknown as SeedProduct[];
     const chunks = Math.ceil(all.length / CHUNK);
     const i = Math.floor(Number(index));

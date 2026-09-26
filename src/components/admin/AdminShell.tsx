@@ -9,6 +9,7 @@ import {
   Activity,
   BookOpen,
   ChevronsLeft,
+  Download,
   ExternalLink,
   FolderTree,
   Inbox,
@@ -276,24 +277,32 @@ function SidebarContent({ pathname, counts, collapsed, layoutId }: { pathname: s
             );
           })}
         </ul>
-        <div className="mt-3 border-t border-white/[0.06] pt-3">
+        <div className={cn("mt-3 flex items-center gap-1 border-t border-white/[0.06] pt-3", collapsed && "flex-col")}>
           <a
             href="/api/admin/guide"
             target="_blank"
             rel="noopener"
-            title={collapsed ? "Lietošanas pamācība (PDF)" : undefined}
+            title={collapsed ? "Atvērt lietošanas pamācību (PDF)" : "Atvērt lietošanas pamācību"}
             className={cn(
-              "group flex h-10 items-center gap-3 rounded-lg text-[13.5px] font-semibold text-white/60 transition hover:bg-white/[0.04] hover:text-white",
-              collapsed ? "justify-center px-0" : "px-3",
+              "group flex h-10 min-w-0 flex-1 items-center gap-3 rounded-lg text-[13.5px] font-semibold text-white/60 transition hover:bg-white/[0.04] hover:text-white",
+              collapsed ? "w-full justify-center px-0" : "px-3",
             )}
           >
             <BookOpen className="h-[18px] w-[18px] shrink-0 text-white/50 group-hover:text-brand-400" aria-hidden />
-            {!collapsed && (
-              <>
-                <span className="flex-1 truncate">Pamācība</span>
-                <span className="rounded bg-white/[0.08] px-1.5 text-[10px] font-bold tracking-wide text-white/60">PDF</span>
-              </>
+            {!collapsed && <span className="flex-1 truncate">Pamācība</span>}
+          </a>
+          <a
+            href="/api/admin/guide?download=1"
+            download
+            title="Lejupielādēt pamācību (PDF)"
+            aria-label="Lejupielādēt pamācību (PDF)"
+            className={cn(
+              "group flex h-10 shrink-0 items-center justify-center gap-1.5 rounded-lg text-[11px] font-bold text-white/60 ring-1 ring-white/10 transition hover:bg-white/[0.06] hover:text-white",
+              collapsed ? "w-10" : "px-2.5",
             )}
+          >
+            <Download className="h-4 w-4 text-white/50 group-hover:text-brand-400" aria-hidden />
+            {!collapsed && <span>PDF</span>}
           </a>
         </div>
       </nav>

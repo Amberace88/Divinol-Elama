@@ -30,16 +30,22 @@ function State({ ok, okLabel = "Iestatīts", offLabel = "Nav iestatīts", warn }
 const COUNTRY: Record<string, string> = { LV: "Latvija", EE: "Igaunija", LT: "Lietuva" };
 
 /** Iestatījumi → Tiešsaistes maksājumi (Montonio): configuration status + enabled methods. Never shows key values. */
-export function MontonioSettingsCard({ status }: { status: MontonioCardStatus }) {
+export function MontonioSettingsCard({ status, developer = false }: { status: MontonioCardStatus; developer?: boolean }) {
   const m = status.methods;
   const rows: [string, React.ReactNode][] = [
     ["Statuss", <State key="s" ok={status.configured} okLabel="Pieslēgts — klienti var maksāt tiešsaistē" offLabel="Nav pieslēgts — kasē tikai pārskaitījums / rēķins" />],
-    ["Vide", <State key="e" ok warn={status.env === "sandbox"} okLabel={status.env === "production" ? "Production (īsti maksājumi)" : "Sandbox (testa maksājumi)"} />],
-    ["MONTONIO_ACCESS_KEY", <State key="a" ok={status.accessKey} />],
-    ["MONTONIO_SECRET_KEY", <State key="k" ok={status.secretKey} />],
-    ["SUPABASE_SERVICE_ROLE_KEY", <State key="r" ok={status.serviceRole} />],
-    ["Paziņojumu adrese", <code key="w" className="break-all text-[12px] text-ink">{status.webhookUrl}</code>],
   ];
+  if (developer) {
+    rows.push(
+      ["Vide", <State key="e" ok warn={status.env === "sandbox"} okLabel={status.env === "production" ? "Production (īsti maksājumi)" : "Sandbox (testa maksājumi)"} />],
+      ["MONTONIO_ACCESS_KEY", <State key="a" ok={status.accessKey} />],
+      ["MONTONIO_SECRET_KEY", <State key="k" ok={status.secretKey} />],
+      ["SUPABASE_SERVICE_ROLE_KEY", <State key="r" ok={status.serviceRole} />],
+      ["Paziņojumu adrese", <code key="w" className="break-all text-[12px] text-ink">{status.webhookUrl}</code>],
+    );
+  } else if (status.configured) {
+    rows.push(["Režīms", <State key="e" ok warn={status.env === "sandbox"} okLabel={status.env === "production" ? "Īsti maksājumi" : "Testa režīms"} />]);
+  }
   if (m) {
     rows.push([
       "Kartes",
@@ -82,8 +88,9 @@ export function MontonioSettingsCard({ status }: { status: MontonioCardStatus })
         <div>
           <h2 className="text-[15px] font-bold text-ink">Tiešsaistes maksājumi (Montonio)</h2>
           <p className="text-[13px] text-muted">
-            Bankas saites (Swedbank, SEB, Citadele, Luminor u.c.), kartes, Apple Pay un Google Pay. Atslēgas — Montonio Partner System → Stores → API Keys; vides
-            mainīgie Netlify iestatījumos. Paziņojumu adrese tiek nosūtīta ar katru maksājumu automātiski — Montonio pusē nekas nav jāiestata.
+            {developer
+              ? "Bankas saites (Swedbank, SEB, Citadele, Luminor u.c.), kartes, Apple Pay un Google Pay. Atslēgas — Montonio Partner System → Stores → API Keys; vides mainīgie Netlify iestatījumos. Paziņojumu adrese tiek nosūtīta ar katru maksājumu automātiski — Montonio pusē nekas nav jāiestata."
+              : "Bankas saites (Swedbank, SEB, Citadele, Luminor u.c.), kartes, Apple Pay un Google Pay. Pieslēgumu iestata izstrādātājs."}
           </p>
         </div>
       </header>
@@ -95,7 +102,12 @@ export function MontonioSettingsCard({ status }: { status: MontonioCardStatus })
           </div>
         ))}
       </dl>
-      {(status.error || (status.accessKey && status.secretKey && !status.serviceRole)) && (
+      {!developer && status.error && (
+        <footer className="border-t border-line bg-slate-50/60 px-5 py-3 text-[12px]">
+          <p className="font-semibold text-red-700">Maksājumu pieslēgumā ir kļūda — lūdzu, sazinieties ar izstrādātāju.</p>
+        </footer>
+      )}
+      {developer && (status.error || (status.accessKey && status.secretKey && !status.serviceRole)) && (
         <footer className="border-t border-line bg-slate-50/60 px-5 py-3 text-[12px]">
           {status.error && <p className="font-semibold text-red-700">Montonio API kļūda: {status.error}. Pārbaudiet atslēgas un MONTONIO_ENV (sandbox atslēgas der tikai sandbox vidē).</p>}
           {status.accessKey && status.secretKey && !status.serviceRole && (

@@ -33,11 +33,13 @@ function State({ ok, okLabel = "Iestatīts", offLabel = "Nav iestatīts" }: { ok
 }
 
 /** Iestatījumi → E-pasti: Resend configuration status (values never shown) + "send test e-mail". */
-export function EmailSettingsCard({ status }: { status: EmailStatus }) {
+export function EmailSettingsCard({ status, developer = false }: { status: EmailStatus; developer?: boolean }) {
   const { run, pending } = useActionRunner();
   const rows: [string, React.ReactNode][] = [
-    ["Sūtīšanas veids", <State key="k" ok={status.apiKey} okLabel={status.transport === "smtp" ? "Google / SMTP pastkaste" : "Resend"} offLabel="Nav pieslēgts" />],
-    ["EMAIL_FROM", <State key="f" ok={status.fromConfigured} offLabel="Noklusējums" />],
+    developer
+      ? ["Sūtīšanas veids", <State key="k" ok={status.apiKey} okLabel={status.transport === "smtp" ? "Google / SMTP pastkaste" : "Resend"} offLabel="Nav pieslēgts" />]
+      : ["E-pastu sūtīšana", <State key="k" ok={status.apiKey} okLabel="Pieslēgts" offLabel="Nav pieslēgts" />],
+    ...(developer ? [["EMAIL_FROM", <State key="f" ok={status.fromConfigured} offLabel="Noklusējums" />] as [string, React.ReactNode]] : []),
     ["Sūtītājs", <code key="fa" className="text-[13px] break-all text-ink">{status.from}</code>],
     ["Atbildes adrese", <span key="r" className="text-[13px] break-all text-ink">{status.replyTo}{!status.replyToConfigured && <span className="text-muted"> (no iestatījumiem)</span>}</span>],
     ["Paziņojumi veikalam", <span key="n" className="text-[13px] break-all text-ink">{status.notify}{!status.notifyConfigured && <span className="text-muted"> (no iestatījumiem)</span>}</span>],
@@ -52,7 +54,9 @@ export function EmailSettingsCard({ status }: { status: EmailStatus }) {
         <div>
           <h2 className="text-[15px] font-bold text-ink">E-pasti</h2>
           <p className="text-[13px] text-muted">
-            Pasūtījumu, piegādes, rēķinu un B2B paziņojumi klientiem un veikalam. Sūta caur uzņēmuma Google pastkasti (SMTP_*) vai Resend (RESEND_API_KEY) — vides mainīgie Netlify iestatījumos.
+            {developer
+              ? "Pasūtījumu, piegādes, rēķinu un B2B paziņojumi klientiem un veikalam. Sūta caur uzņēmuma Google pastkasti (SMTP_*) vai Resend (RESEND_API_KEY) — vides mainīgie Netlify iestatījumos."
+              : "Pasūtījumu, piegādes, rēķinu un B2B paziņojumi klientiem un veikalam. Pieslēgumu iestata izstrādātājs."}
           </p>
         </div>
       </header>

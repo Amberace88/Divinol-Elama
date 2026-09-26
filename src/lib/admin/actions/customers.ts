@@ -1,5 +1,6 @@
 "use server";
 
+import { isDeveloperEmail } from "../developer";
 import { z } from "zod";
 import { issuesToFieldErrors } from "../schemas";
 import { ActionError, adminAction, must, revalidateAdmin, UUID_RE } from "../server";
@@ -40,6 +41,10 @@ export async function updateCustomer(customerId: string, patch: CustomerPatch) {
     if (!parsed.success) throw new ActionError("Pārbaudiet iezīmētos laukus", issuesToFieldErrors(parsed.error.issues));
     const data = Object.fromEntries(Object.entries(parsed.data).filter(([, v]) => v !== undefined));
     if (customerId === user.id && data.role && data.role !== "admin") throw new ActionError("Nevar noņemt administratora tiesības pašam sev.");
+    if (data.role && !isDeveloperEmail(user.email)) {
+      const target = must(await supabase.from("profiles").select("email").eq("id", customerId).maybeSingle()) as { email: string | null } | null;
+      if (isDeveloperEmail(target?.email)) throw new ActionError("Izstrādātāja konta tiesības var mainīt tikai izstrādātājs.");
+    }
     if (!Object.keys(data).length) return null;
     const decided = data.b2b_status === "approved" || data.b2b_status === "rejected" ? (data.b2b_status as "approved" | "rejected") : null;
     const prev = decided ? (must(await supabase.from("profiles").select("b2b_status").eq("id", customerId).maybeSingle()) as { b2b_status: string } | null) : null;
