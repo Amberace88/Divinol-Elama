@@ -47,7 +47,9 @@
         "bank_transfer": "Banko pavedimas",
         "card": "Banko kortelė",
         "invoice": "Sąskaita su atidėtu mokėjimu",
-        "cash_on_pickup": "Apmokėjimas atsiimant"
+        "cash_on_pickup": "Apmokėjimas atsiimant",
+        "montonio_bank": "Banko nuoroda (internetinė bankininkystė)",
+        "montonio_card": "Kortelė / Apple Pay / Google Pay"
       },
       "bankIntro": "Prašome apmokėti užsakymą banko pavedimu šiais rekvizitais:",
       "recipient": "Gavėjas",
@@ -63,7 +65,10 @@
       "invoiceLater": "Sąskaitą su apmokėjimo terminu atsiųsime atskiru laišku.",
       "invoiceAttached": "Sąskaita prisegta (PDF).",
       "cashOnPickup": "Užsakymą apmokėsite atsiimdami sandėlyje: {address}. Pranešime, kai jis bus paruoštas.",
-      "card": "Patvirtinus mokėjimą, užsakymą paruošime išsiuntimui."
+      "card": "Patvirtinus mokėjimą, užsakymą paruošime išsiuntimui.",
+      "paidOnline": "Jūsų mokėjimas {amount} gautas — ačiū! Ruošiame užsakymą siuntimui.",
+      "onlinePending": "Laukiame internetinio mokėjimo patvirtinimo. Kai jis bus gautas, paruošime užsakymą siuntimui.",
+      "paidInvoiceAttached": "Pridėta: apmokėta sąskaita faktūra {invoice} (PDF)."
     },
     "orderConfirmation": {
       "subject": "Užsakymas {number} gautas",

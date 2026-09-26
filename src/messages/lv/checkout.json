@@ -78,7 +78,16 @@
       "invoice": "Rēķins ar pēcapmaksu",
       "invoiceText": "Apstiprinātiem B2B klientiem",
       "cash_on_pickup": "Apmaksa saņemot",
-      "cash_on_pickupText": "Apmaksā, saņemot pasūtījumu noliktavā"
+      "cash_on_pickupText": "Apmaksā, saņemot pasūtījumu noliktavā",
+      "montonio_bank": "Bankas saite",
+      "montonio_bankText": "Maksā savā internetbankā — Swedbank, SEB, Citadele, Luminor u.c. Maksājums tiek apstiprināts uzreiz.",
+      "montonio_card": "Maksājumu karte",
+      "montonio_cardText": "Visa, Mastercard · Apple Pay un Google Pay atbalstītās ierīcēs",
+      "montonio_cardTextNoWallets": "Visa, Mastercard",
+      "instant": "Uzreiz",
+      "chooseBank": "Izvēlies savu banku",
+      "bankHint": "Ja banku neizvēlēsies, to varēsi izvēlēties maksājuma lapā.",
+      "secureMontonio": "Drošs maksājums caur Montonio — kartes un bankas dati netiek glabāti mūsu veikalā."
     },
     "notes": "Piezīmes pasūtījumam",
     "notesPlaceholder": "piem. vēlamais piegādes laiks vai auto informācija",
@@ -121,7 +130,8 @@
       "company": "Norādi uzņēmuma nosaukumu un reģistrācijas numuru.",
       "shippingMethod": "Izvēlies piegādes veidu.",
       "paymentMethod": "Izvēlies apmaksas veidu.",
-      "terms": "Lūdzu, apstiprini lietošanas noteikumus."
+      "terms": "Lūdzu, apstiprini lietošanas noteikumus.",
+      "payment_failed": "Tiešsaistes maksājumu šobrīd neizdevās uzsākt. Pasūtījums netika izveidots — mēģini vēlreiz vai izvēlies bankas pārskaitījumu."
     },
     "success": {
       "metaTitle": "Paldies par pasūtījumu",
@@ -159,6 +169,52 @@
       "toCatalog": "Turpināt iepirkties",
       "createAccount": "Izveido kontu, lai sekotu pasūtījumiem un saņemtu rēķinus vienuviet.",
       "register": "Izveidot kontu"
+    },
+    "payWithTotal": "Apmaksāt · {total}",
+    "payHint": "Tevi novirzīs uz drošu maksājuma lapu. Rēķinu nosūtīsim uz e-pastu, tiklīdz maksājums būs saņemts.",
+    "redirecting": "Novirza uz maksājumu…",
+    "paymentReturn": {
+      "metaTitle": "Pasūtījuma apmaksa",
+      "orderNumber": "Pasūtījuma numurs",
+      "total": "Summa",
+      "payment": "Apmaksa",
+      "invoice": "Rēķins",
+      "questions": "Jautājumi? Raksti {email} vai zvani {phone}.",
+      "retry": "Maksāt vēlreiz",
+      "payByCard": "Maksāt ar karti",
+      "payByBank": "Maksāt ar bankas saiti",
+      "payByTransfer": "Bankas pārskaitījums",
+      "recheck": "Jau samaksāju — pārbaudīt vēlreiz",
+      "transferHint": "Izvēloties bankas pārskaitījumu, nosūtīsim priekšapmaksas rēķinu uz e-pastu, un pasūtījums paliks rezervēts.",
+      "errors": {
+        "forbidden": "Saite nav derīga. Lūdzu, sazinies ar mums.",
+        "not_allowed": "Šim pasūtījumam apmaksas veidu vairs nevar mainīt.",
+        "payment_failed": "Maksājumu neizdevās uzsākt. Mēģini vēlreiz pēc brīža vai izvēlies bankas pārskaitījumu.",
+        "generic": "Radās kļūda. Lūdzu, mēģini vēlreiz vai sazinies ar mums."
+      },
+      "paid": {
+        "title": "Paldies! Maksājums saņemts",
+        "text": "Pasūtījums {number} ir apmaksāts. Apstiprinājumu un rēķinu nosūtījām uz tavu e-pastu.",
+        "step1": "Rēķins {invoice} ir pievienots apstiprinājuma e-pastam.",
+        "step2": "Pasūtījumu sagatavosim un nosūtīsim 1–3 darba dienu laikā.",
+        "step3": "Par nosūtīšanu paziņosim ar e-pastu."
+      },
+      "pending": {
+        "title": "Maksājums vēl nav apstiprināts",
+        "text": "Pasūtījums {number} ir rezervēts, bet maksājumu vēl neesam saņēmuši. Ja maksājumu pārtrauci, vari mēģināt vēlreiz vai izvēlēties citu apmaksas veidu."
+      },
+      "failed": {
+        "title": "Maksājums neizdevās",
+        "text": "Pasūtījuma {number} maksājums netika pabeigts. Vari mēģināt vēlreiz vai izvēlēties citu apmaksas veidu."
+      },
+      "cancelled": {
+        "title": "Pasūtījums atcelts",
+        "text": "Pasūtījums {number} tika atcelts, jo maksājums netika pabeigts. Nauda nav iekasēta — noformē pasūtījumu no jauna vai sazinies ar mums."
+      },
+      "invalid": {
+        "title": "Pasūtījums nav atrasts",
+        "text": "Saite nav derīga vai ir novecojusi. Ja veici maksājumu, apstiprinājumu saņemsi e-pastā."
+      }
     }
   }
 }

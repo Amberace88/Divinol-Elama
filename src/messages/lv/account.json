@@ -195,13 +195,17 @@
       "unpaid": "Nav apmaksāts",
       "paid": "Apmaksāts",
       "refunded": "Atmaksāts",
-      "partially_refunded": "Daļēji atmaksāts"
+      "partially_refunded": "Daļēji atmaksāts",
+      "pending": "Gaida maksājumu",
+      "failed": "Maksājums neizdevās"
     },
     "paymentMethod": {
       "bank_transfer": "Bankas pārskaitījums",
       "card": "Maksājumu karte",
       "invoice": "Pēcapmaksa ar rēķinu",
-      "cash_on_pickup": "Apmaksa saņemot"
+      "cash_on_pickup": "Apmaksa saņemot",
+      "montonio_bank": "Bankas saite",
+      "montonio_card": "Maksājumu karte"
     },
     "shippingMethod": {
       "pickup": "Saņemšana noliktavā",

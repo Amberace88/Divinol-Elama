@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useLocale, useTranslations } from "next-intl";
 import {
@@ -41,8 +41,14 @@ import { OrderSummary, type SummaryTotals } from "./OrderSummary";
 import { ParcelLockerPicker } from "./ParcelLockerPicker";
 import type { ParcelLocker } from "./lockers";
 
-type PaymentId = "card" | "bank_transfer" | "invoice" | "cash_on_pickup";
+type PaymentId = "montonio_bank" | "montonio_card" | "card" | "bank_transfer" | "invoice" | "cash_on_pickup";
 const PAYMENTS: PaymentId[] = ["card", "bank_transfer", "invoice", "cash_on_pickup"];
+/** With online payments (Montonio) configured: bank links + cards replace the "card — soon" placeholder. */
+const ONLINE_PAYMENTS: PaymentId[] = ["montonio_bank", "montonio_card", "bank_transfer", "invoice", "cash_on_pickup"];
+const isOnline = (p: PaymentId | null) => p === "montonio_bank" || p === "montonio_card";
+
+type Bank = { code: string; name: string; logoUrl: string | null };
+type OnlineMethods = { status: "loading" | "ready" | "error"; country: string; banks: Bank[]; card: boolean; wallets: boolean };
 const CARD_ENABLED = process.env.NEXT_PUBLIC_STRIPE_ENABLED === "true";
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
@@ -63,7 +69,10 @@ type Form = {
   bStreet: string;
   bCity: string;
   bPostal: string;
-  payment: PaymentId;
+  /** null = default (B2B → invoice, online payments → bank link, otherwise bank transfer) */
+  payment: PaymentId | null;
+  /** Montonio bank code preselected in the bank grid (optional) */
+  bank: string | null;
   notes: string;
   terms: boolean;
 };
@@ -85,7 +94,8 @@ const INITIAL: Form = {
   bStreet: "",
   bCity: "",
   bPostal: "",
-  payment: "bank_transfer",
+  payment: null,
+  bank: null,
   notes: "",
   terms: false,
 };
@@ -97,9 +107,11 @@ const METHOD_ICON: Record<ShipMethodId, React.ReactNode> = {
   freight: <Truck className="size-5" aria-hidden />,
 };
 const PAY_ICON: Record<PaymentId, React.ReactNode> = {
+  montonio_bank: <Landmark className="size-5" aria-hidden />,
+  montonio_card: <CreditCard className="size-5" aria-hidden />,
   card: <CreditCard className="size-5" aria-hidden />,
-  bank_transfer: <Landmark className="size-5" aria-hidden />,
-  invoice: <FileText className="size-5" aria-hidden />,
+  bank_transfer: <FileText className="size-5" aria-hidden />,
+  invoice: <Building2 className="size-5" aria-hidden />,
   cash_on_pickup: <Banknote className="size-5" aria-hidden />,
 };
 
@@ -158,7 +170,7 @@ function Field({
 
 const inputCls = (err?: string) => cn("input mt-1.5 mb-1.5 font-normal", err && "border-danger ring-4 ring-red-100");
 
-export function CheckoutForm() {
+export function CheckoutForm({ onlinePayments = false }: { onlinePayments?: boolean }) {
   const t = useTranslations("checkout");
   const tm = useTranslations("market");
   const tc = useTranslations("cart");
@@ -174,6 +186,7 @@ export function CheckoutForm() {
   const [placed, setPlaced] = useState(false);
   const [pending, start] = useTransition();
   const [summaryOpen, setSummaryOpen] = useState(false);
+  const [online, setOnline] = useState<OnlineMethods | null>(null);
 
   // Prefill from the signed-in profile once it arrives.
   const [prefilledFor, setPrefilledFor] = useState<string | null>(null);
@@ -192,6 +205,28 @@ export function CheckoutForm() {
 
   const set = <K extends keyof Form>(k: K, v: Form[K]) => setForm((f) => ({ ...f, [k]: v }));
   const market = pricing.market;
+
+  // Online payment options (Montonio) for the delivery country: bank list with logos, cards / wallets.
+  useEffect(() => {
+    if (!onlinePayments) return;
+    const ctrl = new AbortController();
+    fetch(`/api/payment-methods?country=${market}`, { signal: ctrl.signal })
+      .then((r) => r.json())
+      .then((d: { enabled?: boolean; banks?: Bank[]; card?: { enabled?: boolean }; applePay?: boolean; googlePay?: boolean }) =>
+        setOnline(
+          d.enabled
+            ? { status: "ready", country: market, banks: d.banks ?? [], card: Boolean(d.card?.enabled), wallets: Boolean(d.applePay || d.googlePay) }
+            : { status: "error", country: market, banks: [], card: false, wallets: false },
+        ),
+      )
+      .catch((e: unknown) => {
+        if ((e as { name?: string })?.name !== "AbortError") setOnline({ status: "error", country: market, banks: [], card: false, wallets: false });
+      });
+    return () => ctrl.abort();
+  }, [onlinePayments, market]);
+  const onlineReady = onlinePayments && online?.status !== "error";
+  const banks = online && online.country === market && online.status === "ready" ? online.banks : [];
+  const banksLoading = onlinePayments && (!online || online.country !== market);
   const vatRate = settings.vat?.[market] ?? 21;
   const ctx = { market, b2b: pricing.b2b, discountPercent: pricing.discountPercent };
   const reverse = pricing.b2b && market !== "LV" && form.customerType === "business" && form.vatNo.trim() !== "";
@@ -205,9 +240,24 @@ export function CheckoutForm() {
   const needsFreight = quotes.find((q) => q.id === "freight")?.available ?? false;
 
   const payAvailable = (p: PaymentId) =>
-    p === "card" ? CARD_ENABLED : p === "invoice" ? pricing.b2b : p === "cash_on_pickup" ? method === "pickup" : true;
-  const payment: PaymentId = payAvailable(form.payment) ? form.payment : "bank_transfer";
-  const visiblePayments = PAYMENTS.filter((p) => p !== "invoice" || pricing.b2b).filter((p) => p !== "cash_on_pickup" || method === "pickup");
+    p === "montonio_bank"
+      ? onlineReady && (banksLoading || banks.length > 0 || online?.status !== "ready")
+      : p === "montonio_card"
+        ? onlineReady && (banksLoading || Boolean(online?.card))
+        : p === "card"
+          ? CARD_ENABLED && !onlineReady
+          : p === "invoice"
+            ? pricing.b2b
+            : p === "cash_on_pickup"
+              ? method === "pickup"
+              : true;
+  const defaultPayment: PaymentId = pricing.b2b ? "invoice" : onlineReady ? "montonio_bank" : "bank_transfer";
+  const wanted = form.payment ?? defaultPayment;
+  const payment: PaymentId = payAvailable(wanted) ? wanted : payAvailable(defaultPayment) ? defaultPayment : "bank_transfer";
+  const visiblePayments = (onlineReady ? ONLINE_PAYMENTS : PAYMENTS)
+    .filter((p) => p !== "invoice" || pricing.b2b)
+    .filter((p) => p !== "cash_on_pickup" || method === "pickup")
+    .filter((p) => !isOnline(p) || payAvailable(p));
 
   const shipText = (q: ShipQuote) => {
     if (q.price_net == null) return t("onRequest");
@@ -296,6 +346,7 @@ export function CheckoutForm() {
       shipping_address: shipAddr,
       billing_address: billAddr,
       payment_method: payment,
+      bank: payment === "montonio_bank" && form.bank && banks.some((b) => b.code === form.bank) ? form.bank : null,
       notes: form.notes.trim() || null,
       items: s.items.map((i) => ({ slug: i.slug, sku: i.sku, size: i.size, unit: i.unit, qty: i.qty })),
     };
@@ -314,6 +365,11 @@ export function CheckoutForm() {
       }
       setPlaced(true);
       s.clear();
+      if (res.paymentUrl) {
+        // online payment → Montonio's secure payment page (bank / card); comes back to /checkout/return
+        window.location.assign(res.paymentUrl);
+        return;
+      }
       router.push({
         pathname: "/checkout/success",
         query: { n: res.number, t: res.total.toFixed(2), p: res.payment, ...(res.invoice ? { inv: res.invoice } : {}) },
@@ -587,15 +643,76 @@ export function CheckoutForm() {
                 onChange={(v) => set("payment", v as PaymentId)}
                 icon={PAY_ICON[p]}
                 title={t(`payments.${p}`)}
-                text={t(`payments.${p}Text`)}
+                text={p === "montonio_card" && online?.status === "ready" && !online.wallets ? t("payments.montonio_cardTextNoWallets") : t(`payments.${p}Text`)}
                 badge={
                   p === "card" && !CARD_ENABLED ? (
                     <span className="rounded-full bg-brand-100 px-2 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wide text-brand-700">{t("payments.cardSoon")}</span>
+                  ) : p === "montonio_bank" ? (
+                    <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wide text-emerald-700 ring-1 ring-emerald-200">
+                      {t("payments.instant")}
+                    </span>
                   ) : undefined
                 }
               />
             ))}
           </div>
+          <AnimatePresence initial={false}>
+            {payment === "montonio_bank" && (
+              <motion.div key="banks" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+                <div className="pt-4">
+                  <p className="mb-2.5 text-[13px] font-extrabold text-ink">
+                    {t("payments.chooseBank")} <span className="font-normal text-muted">({t("optional")})</span>
+                  </p>
+                  {banksLoading ? (
+                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-4" aria-busy="true">
+                      {Array.from({ length: 4 }, (_, i) => (
+                        <span key={i} className="h-14 animate-pulse rounded-xl bg-canvas ring-1 ring-line" />
+                      ))}
+                    </div>
+                  ) : banks.length > 0 ? (
+                    <div role="radiogroup" aria-label={t("payments.chooseBank")} className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-4">
+                      {banks.map((b) => {
+                        const on = form.bank === b.code;
+                        return (
+                          <button
+                            key={b.code}
+                            type="button"
+                            role="radio"
+                            aria-checked={on}
+                            title={b.name}
+                            onClick={() => setForm((f) => ({ ...f, payment: "montonio_bank", bank: on ? null : b.code }))}
+                            className={cn(
+                              "relative grid h-14 place-items-center rounded-xl bg-white px-3 ring-1 transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-navy-200",
+                              on ? "ring-2 ring-navy-700 shadow-[0_8px_20px_-12px_rgb(30_45_81/0.6)]" : "ring-line hover:ring-navy-300",
+                            )}
+                          >
+                            {b.logoUrl ? (
+                              // eslint-disable-next-line @next/next/no-img-element -- remote Montonio CDN logos, tiny, no optimisation needed
+                              <img src={b.logoUrl} alt={b.name} loading="lazy" decoding="async" className="max-h-8 max-w-full object-contain" />
+                            ) : (
+                              <span className="text-[13px] font-bold text-slate-800">{b.name}</span>
+                            )}
+                            {on && (
+                              <span aria-hidden className="absolute -right-1.5 -top-1.5 grid size-5 place-items-center rounded-full bg-navy-700 text-white">
+                                <Check className="size-3" strokeWidth={3.5} />
+                              </span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  ) : null}
+                  <p className="mt-2.5 text-[12px] text-muted">{t("payments.bankHint")}</p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          {isOnline(payment) && (
+            <p className="mt-4 flex items-center gap-2 text-[12px] text-muted">
+              <LockKeyhole className="size-3.5 shrink-0" aria-hidden />
+              {t("payments.secureMontonio")}
+            </p>
+          )}
         </Step>
 
         {/* 5. confirm */}
@@ -640,16 +757,16 @@ export function CheckoutForm() {
             {pending ? (
               <>
                 <LoaderCircle className="size-5 animate-spin" aria-hidden />
-                {t("placing")}
+                {isOnline(payment) ? t("redirecting") : t("placing")}
               </>
             ) : (
               <>
                 <LockKeyhole className="size-5" aria-hidden />
-                {t("placeWithTotal", { total: money(totals.total) })}
+                {isOnline(payment) ? t("payWithTotal", { total: money(totals.total) }) : t("placeWithTotal", { total: money(totals.total) })}
               </>
             )}
           </button>
-          <p className="mt-3 text-center text-[12px] text-muted">{t("placeHint")}</p>
+          <p className="mt-3 text-center text-[12px] text-muted">{isOnline(payment) ? t("payHint") : t("placeHint")}</p>
         </Step>
 
         <Link href="/cart" className="inline-flex items-center gap-1.5 text-[14px] font-bold text-navy-600 hover:text-navy-800">

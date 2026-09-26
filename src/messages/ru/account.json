@@ -195,13 +195,17 @@
       "unpaid": "Не оплачен",
       "paid": "Оплачен",
       "refunded": "Возвращён",
-      "partially_refunded": "Частично возвращён"
+      "partially_refunded": "Частично возвращён",
+      "pending": "Ожидает оплаты",
+      "failed": "Оплата не прошла"
     },
     "paymentMethod": {
       "bank_transfer": "Банковский перевод",
       "card": "Платёжная карта",
       "invoice": "Оплата по счёту с отсрочкой",
-      "cash_on_pickup": "Оплата при получении"
+      "cash_on_pickup": "Оплата при получении",
+      "montonio_bank": "Банковская ссылка",
+      "montonio_card": "Платёжная карта"
     },
     "shippingMethod": {
       "pickup": "Самовывоз со склада",

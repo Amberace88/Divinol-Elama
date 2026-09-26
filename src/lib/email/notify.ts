@@ -114,6 +114,72 @@ export async function notifyManualOrder(db: Db, orderId: string, invoiceNumber: 
   });
 }
 
+// ───────────────────────── 1b. online payments (Montonio) ─────────────────────────
+
+/**
+ * Online-payment orders get no e-mail when they are placed (the customer is still at the bank). Once the payment
+ * arrives (or the customer switches to bank transfer) this sends what `notifyOrderPlaced` sends for other orders:
+ * order confirmation → customer (with the final invoice / proforma PDF attached) + new-order notification → shop.
+ * `db` must be able to read the order (service role for guests).
+ */
+async function notifyOrderWithDocument(db: Db, orderId: string, invoiceNumber: string | null, kind: string) {
+  const order = await loadOrderForEmail(db, orderId);
+  if (!order) return;
+  const ctx = await emailContext(order.locale);
+
+  let attachment: EmailAttachment | null = null;
+  if (invoiceNumber) {
+    const inv = await loadInvoiceByNumber(db, invoiceNumber);
+    if (inv) {
+      const { data: invoiceSettings } = await db.from("settings").select("value").eq("key", "invoice").maybeSingle();
+      attachment = await invoicePdf({
+        ...inv,
+        order_number: order.number,
+        default_notes: (invoiceSettings?.value as { notes?: string } | null)?.notes ?? null,
+      });
+    }
+  }
+
+  const customer = renderOrderConfirmation(ctx, {
+    order,
+    invoiceNumber,
+    invoiceAttached: Boolean(attachment),
+    accountUrl: accountOrderUrl(order),
+    registerUrl: order.user_id ? null : urlFor("/register", emailLocale(order.locale)),
+  });
+  const lv = order.locale === "lv" ? ctx : await emailContext("lv");
+  const shop = renderShopNewOrder(lv, { order, adminUrl: adminUrl(`/orders/${order.id}`), invoiceNumber });
+
+  await Promise.allSettled([
+    isEmail(order.email)
+      ? sendEmail({
+          to: order.email,
+          ...customer,
+          attachments: attachment ? [attachment] : undefined,
+          tags: { type: kind },
+          idempotencyKey: `order-confirmation/${order.id}`,
+        })
+      : Promise.resolve(null),
+    sendEmail({
+      to: await shopNotifyAddress(),
+      ...shop,
+      replyTo: isEmail(order.email) ? order.email : null,
+      tags: { type: "shop_new_order" },
+      idempotencyKey: `shop-new-order/${order.id}`,
+    }),
+  ]);
+}
+
+/** Montonio payment received → confirmation with the paid final invoice (ELA-) attached + shop notification. */
+export async function notifyOnlinePaymentReceived(db: Db, orderId: string, invoiceNumber: string | null) {
+  await notifyOrderWithDocument(db, orderId, invoiceNumber, "order_confirmation_paid_online");
+}
+
+/** Online payment not completed → customer chose bank transfer: confirmation with the proforma + shop notification. */
+export async function notifyOrderSwitchedToTransfer(db: Db, orderId: string, invoiceNumber: string | null) {
+  await notifyOrderWithDocument(db, orderId, invoiceNumber, "order_confirmation");
+}
+
 // ───────────────────────── 3. shipped ─────────────────────────
 
 type ShipmentLite = { carrier: string; tracking_number: string | null; tracking_numbers: string[] | null; status: string };

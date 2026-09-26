@@ -47,7 +47,9 @@
         "bank_transfer": "Bankas pārskaitījums",
         "card": "Bankas karte",
         "invoice": "Rēķins ar pēcapmaksu",
-        "cash_on_pickup": "Apmaksa saņemot"
+        "cash_on_pickup": "Apmaksa saņemot",
+        "montonio_bank": "Bankas saite (internetbanka)",
+        "montonio_card": "Maksājumu karte / Apple Pay / Google Pay"
       },
       "bankIntro": "Lūdzam apmaksāt pasūtījumu ar bankas pārskaitījumu uz šiem rekvizītiem:",
       "recipient": "Saņēmējs",
@@ -63,7 +65,10 @@
       "invoiceLater": "Rēķinu ar apmaksas termiņu nosūtīsim atsevišķā e-pastā.",
       "invoiceAttached": "Rēķins pievienots pielikumā (PDF).",
       "cashOnPickup": "Pasūtījumu apmaksā, saņemot to noliktavā: {address}. Paziņosim, kad tas būs gatavs saņemšanai.",
-      "card": "Pēc maksājuma apstiprināšanas pasūtījumu sagatavosim nosūtīšanai."
+      "card": "Pēc maksājuma apstiprināšanas pasūtījumu sagatavosim nosūtīšanai.",
+      "paidOnline": "Maksājums {amount} ir saņemts — paldies! Pasūtījumu sagatavosim nosūtīšanai.",
+      "onlinePending": "Gaidām tiešsaistes maksājuma apstiprinājumu. Tiklīdz tas būs saņemts, pasūtījumu sagatavosim nosūtīšanai.",
+      "paidInvoiceAttached": "Pielikumā — apmaksātais rēķins {invoice} (PDF)."
     },
     "orderConfirmation": {
       "subject": "Pasūtījums {number} saņemts",

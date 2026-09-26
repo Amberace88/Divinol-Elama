@@ -47,7 +47,9 @@
         "bank_transfer": "Pangaülekanne",
         "card": "Pangakaart",
         "invoice": "Arve järelmaksuga",
-        "cash_on_pickup": "Tasumine kättesaamisel"
+        "cash_on_pickup": "Tasumine kättesaamisel",
+        "montonio_bank": "Pangalink (internetipank)",
+        "montonio_card": "Kaart / Apple Pay / Google Pay"
       },
       "bankIntro": "Palun tasu tellimuse eest pangaülekandega järgmistel rekvisiitidel:",
       "recipient": "Saaja",
@@ -63,7 +65,10 @@
       "invoiceLater": "Saadame maksetähtajaga arve eraldi e-kirjaga.",
       "invoiceAttached": "Arve on manuses (PDF).",
       "cashOnPickup": "Tasu tellimuse eest laost kätte saades: {address}. Anname teada, kui tellimus on valmis.",
-      "card": "Pärast makse kinnitamist valmistame tellimuse saatmiseks ette."
+      "card": "Pärast makse kinnitamist valmistame tellimuse saatmiseks ette.",
+      "paidOnline": "Teie makse {amount} on laekunud — aitäh! Valmistame tellimuse saatmiseks ette.",
+      "onlinePending": "Ootame veebimakse kinnitust. Kui makse laekub, valmistame tellimuse saatmiseks ette.",
+      "paidInvoiceAttached": "Manuses: tasutud arve {invoice} (PDF)."
     },
     "orderConfirmation": {
       "subject": "Tellimus {number} on vastu võetud",

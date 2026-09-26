@@ -16,7 +16,9 @@ export const OPEN_ORDER_STATUSES = ["new", "confirmed", "processing"];
 
 export const PAYMENT_STATUS: LabelMap = {
   unpaid: { label: "Neapmaksāts", tone: "orange" },
+  pending: { label: "Gaida maksājumu", tone: "yellow" },
   paid: { label: "Apmaksāts", tone: "green" },
+  failed: { label: "Maksājums neizdevās", tone: "red" },
   refunded: { label: "Atmaksāts", tone: "gray" },
   partially_refunded: { label: "Daļēji atmaksāts", tone: "purple" },
 };
@@ -27,6 +29,8 @@ export const PAYMENT_METHOD: Record<string, string> = {
   card: "Maksājumu karte",
   invoice: "Pēc rēķina (B2B)",
   cash_on_pickup: "Maksa saņemot",
+  montonio_bank: "Bankas saite (Montonio)",
+  montonio_card: "Karte / Apple Pay / Google Pay (Montonio)",
 };
 
 export const SHIPPING_METHOD: Record<string, string> = {

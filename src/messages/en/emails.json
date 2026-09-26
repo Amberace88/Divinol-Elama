@@ -47,7 +47,9 @@
         "bank_transfer": "Bank transfer",
         "card": "Bank card",
         "invoice": "Invoice (deferred payment)",
-        "cash_on_pickup": "Pay on pickup"
+        "cash_on_pickup": "Pay on pickup",
+        "montonio_bank": "Bank link (online banking)",
+        "montonio_card": "Card / Apple Pay / Google Pay"
       },
       "bankIntro": "Please pay for the order by bank transfer using these details:",
       "recipient": "Beneficiary",
@@ -63,7 +65,10 @@
       "invoiceLater": "We will send the invoice with the payment term in a separate e-mail.",
       "invoiceAttached": "The invoice is attached (PDF).",
       "cashOnPickup": "Pay when collecting the order at the warehouse: {address}. We will let you know when it is ready.",
-      "card": "Once the payment is confirmed, we will prepare your order for shipping."
+      "card": "Once the payment is confirmed, we will prepare your order for shipping.",
+      "paidOnline": "Your payment of {amount} has been received — thank you! We are preparing your order for shipping.",
+      "onlinePending": "We are waiting for the online payment to be confirmed. Once it arrives, we will prepare your order for shipping.",
+      "paidInvoiceAttached": "Attached: paid invoice {invoice} (PDF)."
     },
     "orderConfirmation": {
       "subject": "Order {number} received",

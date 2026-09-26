@@ -5,6 +5,8 @@ import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { deferEmail } from "@/lib/email/send";
 import { notifyOrderPlaced, type PlacedOrderRpc } from "@/lib/email/notify";
+import { isMontonioConfigured } from "@/lib/payments/montonio";
+import { applyPaymentStatus, isOnlineMethod, startPayment } from "@/lib/payments/service";
 
 const address = z
   .object({
@@ -39,7 +41,9 @@ const schema = z.object({
     .nullable(),
   shipping_address: address,
   billing_address: address,
-  payment_method: z.enum(["bank_transfer", "card", "invoice", "cash_on_pickup"]),
+  payment_method: z.enum(["bank_transfer", "card", "invoice", "cash_on_pickup", "montonio_bank", "montonio_card"]),
+  /** Montonio bank (BIC code from GET /stores/payment-methods) preselected in the checkout — bank link only */
+  bank: z.string().trim().max(40).regex(/^[\w-]*$/).nullable().optional(),
   notes: z.string().max(2000).nullable(),
   items: z
     .array(
@@ -58,7 +62,7 @@ const schema = z.object({
 export type PlaceOrderPayload = z.infer<typeof schema>;
 
 export type PlaceOrderResult =
-  | { ok: true; number: string; total: number; payment: string; invoice: string | null; reverseCharge: boolean }
+  | { ok: true; number: string; total: number; payment: string; invoice: string | null; reverseCharge: boolean; paymentUrl?: string }
   | { ok: false; code: string; slug?: string };
 
 const KNOWN = new Set([
@@ -73,6 +77,7 @@ const KNOWN = new Set([
   "shipping_item_too_large",
   "shipping_point_required",
   "address_required",
+  "payment_failed",
 ]);
 
 /** Places the order through the `place_order` RPC with the visitor's session (so auth.uid() links the order). */
@@ -83,9 +88,12 @@ export async function placeOrder(input: PlaceOrderPayload): Promise<PlaceOrderRe
     const field = parsed.error.issues[0]?.path[0];
     return { ok: false, code: field === "items" ? "empty_cart" : field === "email" ? "invalid_email" : "generic" };
   }
+  const { bank, ...orderPayload } = parsed.data;
+  const online = isOnlineMethod(orderPayload.payment_method);
+  if (online && !isMontonioConfigured()) return { ok: false, code: "invalid_payment" };
   try {
     const supabase = await createClient();
-    const { data, error } = await supabase.rpc("place_order", { payload: parsed.data });
+    const { data, error } = await supabase.rpc("place_order", { payload: orderPayload });
     if (error) {
       const msg = error.message ?? "";
       const notFound = msg.match(/product_not_found:(\S*)/);
@@ -94,8 +102,37 @@ export async function placeOrder(input: PlaceOrderPayload): Promise<PlaceOrderRe
       return { ok: false, code: code ?? "generic" };
     }
     const r = data as PlacedOrderRpc;
+
+    if (online) {
+      // Online payment: no e-mails yet (sent when Montonio confirms the payment) → create the Montonio order.
+      try {
+        const paymentUrl = await startPayment(r.id, orderPayload.payment_method as "montonio_bank" | "montonio_card", {
+          preferredProvider: orderPayload.payment_method === "montonio_bank" ? bank || null : null,
+          locale: orderPayload.locale,
+        });
+        return {
+          ok: true,
+          number: r.number,
+          total: Number(r.total_gross),
+          payment: r.payment_method,
+          invoice: null,
+          reverseCharge: Boolean(r.reverse_charge),
+          paymentUrl,
+        };
+      } catch (e) {
+        console.error("[checkout] Montonio order failed", e);
+        // the payment could not even start → cancel the order (stock restored) and let the customer retry / pick another method
+        await applyPaymentStatus(r.id, {
+          ref: null,
+          status: "ABANDONED",
+          meta: { reason: "Neizdevās izveidot Montonio maksājumu — pasūtījums atcelts automātiski" },
+        }).catch((err) => console.error("[checkout] could not cancel order after Montonio failure", err));
+        return { ok: false, code: "payment_failed" };
+      }
+    }
+
     // Confirmation → customer + new-order notification → shop, sent after the response (never blocks checkout).
-    deferEmail("order placed", () => notifyOrderPlaced(supabase, parsed.data, r));
+    deferEmail("order placed", () => notifyOrderPlaced(supabase, orderPayload, r));
     return {
       ok: true,
       number: r.number,

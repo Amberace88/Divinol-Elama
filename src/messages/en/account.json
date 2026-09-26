@@ -195,13 +195,17 @@
       "unpaid": "Unpaid",
       "paid": "Paid",
       "refunded": "Refunded",
-      "partially_refunded": "Partially refunded"
+      "partially_refunded": "Partially refunded",
+      "pending": "Awaiting payment",
+      "failed": "Payment failed"
     },
     "paymentMethod": {
       "bank_transfer": "Bank transfer",
       "card": "Payment card",
       "invoice": "Pay by invoice",
-      "cash_on_pickup": "Pay on pickup"
+      "cash_on_pickup": "Pay on pickup",
+      "montonio_bank": "Bank link",
+      "montonio_card": "Payment card"
     },
     "shippingMethod": {
       "pickup": "Warehouse pickup",

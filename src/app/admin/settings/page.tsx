@@ -5,6 +5,9 @@ import { DEFAULT_SETTINGS } from "@/lib/settings";
 import { SettingsForms, type SettingsInit } from "@/components/admin/settings/SettingsForms";
 import { EmailSettingsCard } from "@/components/admin/settings/EmailSettingsCard";
 import { emailStatus } from "@/lib/email/send";
+import { MontonioSettingsCard } from "@/components/admin/settings/MontonioSettingsCard";
+import { montonioAdminStatus } from "@/lib/payments/montonio";
+import { notificationUrl } from "@/lib/payments/service";
 import { ErrorNote, PageHeader } from "@/components/admin/ui";
 
 export const metadata = { title: "Iestatījumi" };
@@ -36,6 +39,10 @@ export default async function SettingsPage() {
       <div className="mt-6 grid gap-6 lg:grid-cols-[200px_minmax(0,1fr)]">
         <div className="hidden lg:block" />
         <EmailSettingsCard status={{ ...(await emailStatus()), adminEmail: profile.email || user.email || null }} />
+      </div>
+      <div className="mt-6 grid gap-6 lg:grid-cols-[200px_minmax(0,1fr)]">
+        <div className="hidden lg:block" />
+        <MontonioSettingsCard status={{ ...(await montonioAdminStatus()), webhookUrl: notificationUrl() }} />
       </div>
     </>
   );

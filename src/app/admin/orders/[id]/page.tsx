@@ -7,6 +7,7 @@ import { B2B_STATUS, INVOICE_STATUS, INVOICE_TYPE, labelOf, MARKET, ORDER_EVENT,
 import { UUID_RE } from "@/lib/admin/server";
 import { AddressBlock } from "@/components/admin/Address";
 import { CommentForm, InvoiceButtons, NotesForm, PaymentControl, StatusControl } from "@/components/admin/orders/OrderControls";
+import { PaymentRecheckButton } from "@/components/admin/orders/PaymentRecheck";
 import { btn } from "@/components/admin/styles";
 import { OrderShipping } from "@/components/admin/shipping/OrderShipping";
 import { allCapabilities } from "@/lib/shipping/registry";
@@ -41,6 +42,9 @@ type Order = {
   admin_notes: string | null;
   tracking_code: string | null;
   paid_at: string | null;
+  payment_provider?: string | null;
+  payment_ref?: string | null;
+  payment_meta?: Record<string, unknown> | null;
   created_at: string;
   updated_at: string;
   source?: string | null;
@@ -93,6 +97,10 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
   const pay = labelOf(PAYMENT_STATUS, order.payment_status);
   const c = order.customer ?? {};
   const netTotal = Number(order.subtotal_net) + Number(order.shipping_net) - Number(order.discount_net);
+  const pm = (order.payment_meta ?? {}) as Record<string, unknown>;
+  const metaStr = (k: string) => (typeof pm[k] === "string" && pm[k] ? (pm[k] as string) : null);
+  const isMontonio = order.payment_provider === "montonio";
+  const paymentEvents = events.filter((e) => e.type === "payment" || (e.type === "invoice" && isMontonio)).slice(0, 8);
 
   return (
     <>
@@ -263,9 +271,44 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
                 items={[
                   ["Veids", PAYMENT_METHOD[order.payment_method] ?? order.payment_method],
                   ["Apmaksāts", order.paid_at ? fmtDateTime(order.paid_at) : "—"],
+                  ...(isMontonio
+                    ? ([
+                        ["Sistēma", `Montonio${metaStr("env") === "production" ? "" : metaStr("env") ? ` (${metaStr("env")})` : ""}`],
+                        ["Montonio ID", order.payment_ref ? <code key="ref" className="break-all text-[12px]">{order.payment_ref}</code> : "—"],
+                        ...(metaStr("montonio_status") ? ([["Montonio statuss", metaStr("montonio_status")]] as [string, string][]) : []),
+                        ...(metaStr("provider_name") || metaStr("preferred_provider")
+                          ? ([["Banka", metaStr("provider_name") ?? metaStr("preferred_provider")]] as [string, string | null][])
+                          : []),
+                        ...(metaStr("sender_name") ? ([["Maksātājs", metaStr("sender_name")]] as [string, string][]) : []),
+                        ...(Number(pm.attempts) > 1 ? ([["Mēģinājumi", String(pm.attempts)]] as [string, string][]) : []),
+                      ] as [string, React.ReactNode][])
+                    : []),
                 ]}
               />
               <PaymentControl orderId={order.id} paymentStatus={order.payment_status} />
+              {isMontonio && (
+                <div className="mt-3 space-y-3">
+                  <PaymentRecheckButton orderId={order.id} />
+                  {paymentEvents.length > 0 && (
+                    <ol className="relative space-y-2.5 border-l-2 border-line pl-4" aria-label="Maksājuma vēsture">
+                      {paymentEvents.map((e) => (
+                        <li key={e.id} className="relative text-[12px]">
+                          <span
+                            className={`absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full ring-4 ring-white ${
+                              /UZMANĪBU|neizdevās|netika|anulēja/i.test(e.message ?? "") ? "bg-red-500" : /Apmaksāts|ELA-/.test(e.message ?? "") ? "bg-emerald-500" : "bg-slate-300"
+                            }`}
+                            aria-hidden
+                          />
+                          <p className="text-ink">{e.message ?? ORDER_EVENT[e.type]}</p>
+                          <time className="text-muted" dateTime={e.created_at} title={fmtDateTime(e.created_at)}>
+                            {fmtRelative(e.created_at)}
+                          </time>
+                        </li>
+                      ))}
+                    </ol>
+                  )}
+                </div>
+              )}
             </div>
           </Panel>
 

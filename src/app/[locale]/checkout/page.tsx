@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { LockKeyhole } from "lucide-react";
 import type { Locale } from "@/i18n/routing";
 import { CheckoutForm } from "@/components/checkout/CheckoutForm";
+import { isMontonioConfigured } from "@/lib/payments/montonio";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -26,7 +27,7 @@ export default async function CheckoutPage({ params }: Props) {
             {t("secure")}
           </p>
         </div>
-        <CheckoutForm />
+        <CheckoutForm onlinePayments={isMontonioConfigured()} />
       </div>
     </div>
   );

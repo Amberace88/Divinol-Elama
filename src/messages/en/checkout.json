@@ -78,7 +78,16 @@
       "invoice": "Invoice with deferred payment",
       "invoiceText": "For approved B2B customers",
       "cash_on_pickup": "Pay on pickup",
-      "cash_on_pickupText": "Pay when you collect the order at the warehouse"
+      "cash_on_pickupText": "Pay when you collect the order at the warehouse",
+      "montonio_bank": "Bank link",
+      "montonio_bankText": "Pay in your online bank — Swedbank, SEB, Citadele, Luminor and more. Confirmed instantly.",
+      "montonio_card": "Payment card",
+      "montonio_cardText": "Visa, Mastercard · Apple Pay and Google Pay on supported devices",
+      "montonio_cardTextNoWallets": "Visa, Mastercard",
+      "instant": "Instant",
+      "chooseBank": "Choose your bank",
+      "bankHint": "If you don't choose a bank here, you can pick it on the payment page.",
+      "secureMontonio": "Secure payment via Montonio — card and bank details are never stored by our shop."
     },
     "notes": "Order notes",
     "notesPlaceholder": "e.g. preferred delivery time or car details",
@@ -121,7 +130,8 @@
       "company": "Please enter the company name and registration number.",
       "shippingMethod": "Please choose a delivery method.",
       "paymentMethod": "Please choose a payment method.",
-      "terms": "Please accept the terms of use."
+      "terms": "Please accept the terms of use.",
+      "payment_failed": "The online payment could not be started right now. The order was not placed — please try again or choose bank transfer."
     },
     "success": {
       "metaTitle": "Thank you for your order",
@@ -159,6 +169,52 @@
       "toCatalog": "Continue shopping",
       "createAccount": "Create an account to track orders and keep invoices in one place.",
       "register": "Create account"
+    },
+    "payWithTotal": "Pay · {total}",
+    "payHint": "You will be redirected to a secure payment page. We e-mail the invoice as soon as the payment arrives.",
+    "redirecting": "Redirecting to payment…",
+    "paymentReturn": {
+      "metaTitle": "Order payment",
+      "orderNumber": "Order number",
+      "total": "Amount",
+      "payment": "Payment",
+      "invoice": "Invoice",
+      "questions": "Questions? Write to {email} or call {phone}.",
+      "retry": "Pay again",
+      "payByCard": "Pay by card",
+      "payByBank": "Pay via bank link",
+      "payByTransfer": "Bank transfer",
+      "recheck": "I have paid — check again",
+      "transferHint": "If you choose bank transfer, we will e-mail a proforma invoice and keep your order reserved.",
+      "errors": {
+        "forbidden": "This link is not valid. Please contact us.",
+        "not_allowed": "The payment method of this order can no longer be changed.",
+        "payment_failed": "The payment could not be started. Please try again in a moment or choose bank transfer.",
+        "generic": "Something went wrong. Please try again or contact us."
+      },
+      "paid": {
+        "title": "Thank you! Payment received",
+        "text": "Order {number} is paid. We have e-mailed you the confirmation and the invoice.",
+        "step1": "Invoice {invoice} is attached to the confirmation e-mail.",
+        "step2": "We will prepare and ship your order within 1–3 business days.",
+        "step3": "We will let you know by e-mail when it ships."
+      },
+      "pending": {
+        "title": "Payment not confirmed yet",
+        "text": "Order {number} is reserved, but we have not received the payment yet. If you cancelled the payment, you can try again or choose another payment method."
+      },
+      "failed": {
+        "title": "Payment failed",
+        "text": "The payment for order {number} was not completed. You can try again or choose another payment method."
+      },
+      "cancelled": {
+        "title": "Order cancelled",
+        "text": "Order {number} was cancelled because the payment was not completed. No money was taken — place the order again or contact us."
+      },
+      "invalid": {
+        "title": "Order not found",
+        "text": "The link is invalid or has expired. If you paid, you will receive a confirmation by e-mail."
+      }
     }
   }
 }

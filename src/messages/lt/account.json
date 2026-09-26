@@ -195,13 +195,17 @@
       "unpaid": "Neapmokėtas",
       "paid": "Apmokėtas",
       "refunded": "Grąžinta suma",
-      "partially_refunded": "Iš dalies grąžinta suma"
+      "partially_refunded": "Iš dalies grąžinta suma",
+      "pending": "Laukiama mokėjimo",
+      "failed": "Mokėjimas nepavyko"
     },
     "paymentMethod": {
       "bank_transfer": "Banko pavedimas",
       "card": "Mokėjimo kortelė",
       "invoice": "Sąskaita su atidėtu mokėjimu",
-      "cash_on_pickup": "Apmokėjimas atsiimant"
+      "cash_on_pickup": "Apmokėjimas atsiimant",
+      "montonio_bank": "Banko nuoroda",
+      "montonio_card": "Mokėjimo kortelė"
     },
     "shippingMethod": {
       "pickup": "Atsiėmimas sandėlyje",

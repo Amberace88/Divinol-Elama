@@ -8,6 +8,7 @@ import { btn } from "../styles";
 
 export type EmailStatus = {
   apiKey: boolean;
+  transport?: "smtp" | "resend" | null;
   fromConfigured: boolean;
   from: string;
   replyTo: string;
@@ -35,7 +36,7 @@ function State({ ok, okLabel = "Iestatīts", offLabel = "Nav iestatīts" }: { ok
 export function EmailSettingsCard({ status }: { status: EmailStatus }) {
   const { run, pending } = useActionRunner();
   const rows: [string, React.ReactNode][] = [
-    ["RESEND_API_KEY", <State key="k" ok={status.apiKey} />],
+    ["Sūtīšanas veids", <State key="k" ok={status.apiKey} okLabel={status.transport === "smtp" ? "Google / SMTP pastkaste" : "Resend"} offLabel="Nav pieslēgts" />],
     ["EMAIL_FROM", <State key="f" ok={status.fromConfigured} offLabel="Noklusējums" />],
     ["Sūtītājs", <code key="fa" className="text-[13px] break-all text-ink">{status.from}</code>],
     ["Atbildes adrese", <span key="r" className="text-[13px] break-all text-ink">{status.replyTo}{!status.replyToConfigured && <span className="text-muted"> (no iestatījumiem)</span>}</span>],
@@ -45,13 +46,13 @@ export function EmailSettingsCard({ status }: { status: EmailStatus }) {
   return (
     <section id="email" className="scroll-mt-24 overflow-hidden rounded-2xl border border-line bg-white shadow-card">
       <header className="flex items-start gap-3 border-b border-line px-5 py-4">
-        <span className="grid h-9 w-9 shrink-0 -skew-x-6 place-items-center rounded-lg bg-navy-50 text-navy-600">
-          <Mail className="h-4 w-4 skew-x-6" />
+        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-navy-50 text-navy-600">
+          <Mail className="h-4 w-4" />
         </span>
         <div>
           <h2 className="text-[15px] font-bold text-ink">E-pasti</h2>
           <p className="text-[13px] text-muted">
-            Pasūtījumu, piegādes, rēķinu un B2B paziņojumi klientiem un veikalam (Resend). Vides mainīgos maina Netlify iestatījumos.
+            Pasūtījumu, piegādes, rēķinu un B2B paziņojumi klientiem un veikalam. Sūta caur uzņēmuma Google pastkasti (SMTP_*) vai Resend (RESEND_API_KEY) — vides mainīgie Netlify iestatījumos.
           </p>
         </div>
       </header>
@@ -67,7 +68,7 @@ export function EmailSettingsCard({ status }: { status: EmailStatus }) {
         <span className="text-[12px] text-muted">
           {status.apiKey
             ? `Parauga pasūtījuma apstiprinājums tiks nosūtīts uz ${status.adminEmail ?? "jūsu e-pastu"}.`
-            : "Kamēr RESEND_API_KEY nav iestatīts, e-pasti netiek sūtīti (pasūtījumi strādā kā parasti)."}
+            : "Kamēr e-pasta sūtīšana nav pieslēgta, e-pasti netiek sūtīti (pasūtījumi strādā kā parasti)."}
         </span>
         <button
           type="button"

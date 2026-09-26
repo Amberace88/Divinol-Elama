@@ -78,7 +78,16 @@
       "invoice": "Arve järelmaksuga",
       "invoiceText": "Kinnitatud B2B klientidele",
       "cash_on_pickup": "Makse kättesaamisel",
-      "cash_on_pickupText": "Maksa tellimust laost kätte saades"
+      "cash_on_pickupText": "Maksa tellimust laost kätte saades",
+      "montonio_bank": "Pangalink",
+      "montonio_bankText": "Maksa oma internetipangas — Swedbank, SEB, LHV, Luminor jt. Makse kinnitatakse kohe.",
+      "montonio_card": "Maksekaart",
+      "montonio_cardText": "Visa, Mastercard · Apple Pay ja Google Pay toetatud seadmetes",
+      "montonio_cardTextNoWallets": "Visa, Mastercard",
+      "instant": "Kohe",
+      "chooseBank": "Vali oma pank",
+      "bankHint": "Kui panka siin ei vali, saad selle valida makselehel.",
+      "secureMontonio": "Turvaline makse Montonio kaudu — kaardi- ja pangaandmeid meie poes ei säilitata."
     },
     "notes": "Märkused tellimusele",
     "notesPlaceholder": "nt soovitud tarneaeg või auto andmed",
@@ -121,7 +130,8 @@
       "company": "Sisesta ettevõtte nimi ja registrikood.",
       "shippingMethod": "Vali tarneviis.",
       "paymentMethod": "Vali maksmisviis.",
-      "terms": "Palun kinnita kasutustingimused."
+      "terms": "Palun kinnita kasutustingimused.",
+      "payment_failed": "Veebimakset ei õnnestunud praegu alustada. Tellimust ei loodud — proovi uuesti või vali pangaülekanne."
     },
     "success": {
       "metaTitle": "Aitäh tellimuse eest",
@@ -159,6 +169,52 @@
       "toCatalog": "Jätka ostlemist",
       "createAccount": "Loo konto, et jälgida tellimusi ja saada arveid ühest kohast.",
       "register": "Loo konto"
+    },
+    "payWithTotal": "Maksa · {total}",
+    "payHint": "Suuname sind turvalisele makselehele. Arve saadame e-postiga kohe, kui makse laekub.",
+    "redirecting": "Suuname maksma…",
+    "paymentReturn": {
+      "metaTitle": "Tellimuse tasumine",
+      "orderNumber": "Tellimuse number",
+      "total": "Summa",
+      "payment": "Makse",
+      "invoice": "Arve",
+      "questions": "Küsimused? Kirjuta {email} või helista {phone}.",
+      "retry": "Maksa uuesti",
+      "payByCard": "Maksa kaardiga",
+      "payByBank": "Maksa pangalingiga",
+      "payByTransfer": "Pangaülekanne",
+      "recheck": "Maksin juba — kontrolli uuesti",
+      "transferHint": "Pangaülekande valimisel saadame ettemaksuarve e-postiga ja tellimus jääb broneerituks.",
+      "errors": {
+        "forbidden": "Link ei kehti. Palun võta meiega ühendust.",
+        "not_allowed": "Selle tellimuse makseviisi ei saa enam muuta.",
+        "payment_failed": "Makset ei õnnestunud alustada. Proovi hetke pärast uuesti või vali pangaülekanne.",
+        "generic": "Tekkis viga. Proovi uuesti või võta meiega ühendust."
+      },
+      "paid": {
+        "title": "Aitäh! Makse laekus",
+        "text": "Tellimus {number} on tasutud. Saatsime kinnituse ja arve sinu e-posti aadressile.",
+        "step1": "Arve {invoice} on lisatud kinnituskirjale.",
+        "step2": "Valmistame tellimuse ette ja saadame 1–3 tööpäeva jooksul.",
+        "step3": "Anname saatmisest e-postiga teada."
+      },
+      "pending": {
+        "title": "Makse pole veel kinnitatud",
+        "text": "Tellimus {number} on broneeritud, kuid makset pole veel laekunud. Kui katkestasid makse, võid proovida uuesti või valida teise makseviisi."
+      },
+      "failed": {
+        "title": "Makse ebaõnnestus",
+        "text": "Tellimuse {number} makse jäi lõpetamata. Võid proovida uuesti või valida teise makseviisi."
+      },
+      "cancelled": {
+        "title": "Tellimus tühistatud",
+        "text": "Tellimus {number} tühistati, sest makse jäi lõpetamata. Raha ei võetud — vormista tellimus uuesti või võta meiega ühendust."
+      },
+      "invalid": {
+        "title": "Tellimust ei leitud",
+        "text": "Link on vigane või aegunud. Kui maksid, saad kinnituse e-postiga."
+      }
     }
   }
 }

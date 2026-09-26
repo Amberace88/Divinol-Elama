@@ -78,7 +78,16 @@
       "invoice": "Sąskaita su atidėtu mokėjimu",
       "invoiceText": "Patvirtintiems B2B klientams",
       "cash_on_pickup": "Apmokėjimas atsiimant",
-      "cash_on_pickupText": "Apmokėk atsiimdamas užsakymą sandėlyje"
+      "cash_on_pickupText": "Apmokėk atsiimdamas užsakymą sandėlyje",
+      "montonio_bank": "Banko nuoroda",
+      "montonio_bankText": "Mokėkite savo internetinėje bankininkystėje — Swedbank, SEB, Luminor, Šiaulių bankas ir kt. Patvirtinama iš karto.",
+      "montonio_card": "Mokėjimo kortelė",
+      "montonio_cardText": "Visa, Mastercard · Apple Pay ir Google Pay palaikomuose įrenginiuose",
+      "montonio_cardTextNoWallets": "Visa, Mastercard",
+      "instant": "Iš karto",
+      "chooseBank": "Pasirinkite banką",
+      "bankHint": "Jei banko čia nepasirinksite, galėsite jį pasirinkti mokėjimo puslapyje.",
+      "secureMontonio": "Saugus mokėjimas per Montonio — kortelės ir banko duomenys mūsų parduotuvėje nesaugomi."
     },
     "notes": "Pastabos užsakymui",
     "notesPlaceholder": "pvz., pageidaujamas pristatymo laikas arba automobilio informacija",
@@ -121,7 +130,8 @@
       "company": "Nurodyk įmonės pavadinimą ir registracijos numerį.",
       "shippingMethod": "Pasirink pristatymo būdą.",
       "paymentMethod": "Pasirink apmokėjimo būdą.",
-      "terms": "Patvirtink, kad sutinki su naudojimo taisyklėmis."
+      "terms": "Patvirtink, kad sutinki su naudojimo taisyklėmis.",
+      "payment_failed": "Šiuo metu nepavyko pradėti internetinio mokėjimo. Užsakymas nesukurtas — bandykite dar kartą arba pasirinkite banko pavedimą."
     },
     "success": {
       "metaTitle": "Ačiū už užsakymą",
@@ -159,6 +169,52 @@
       "toCatalog": "Tęsti apsipirkimą",
       "createAccount": "Susikurk paskyrą, kad galėtum sekti užsakymus ir gauti sąskaitas vienoje vietoje.",
       "register": "Sukurti paskyrą"
+    },
+    "payWithTotal": "Apmokėti · {total}",
+    "payHint": "Būsite nukreipti į saugų mokėjimo puslapį. Sąskaitą atsiųsime el. paštu, kai tik gausime mokėjimą.",
+    "redirecting": "Nukreipiama į mokėjimą…",
+    "paymentReturn": {
+      "metaTitle": "Užsakymo apmokėjimas",
+      "orderNumber": "Užsakymo numeris",
+      "total": "Suma",
+      "payment": "Mokėjimas",
+      "invoice": "Sąskaita",
+      "questions": "Klausimai? Rašykite {email} arba skambinkite {phone}.",
+      "retry": "Mokėti dar kartą",
+      "payByCard": "Mokėti kortele",
+      "payByBank": "Mokėti per banko nuorodą",
+      "payByTransfer": "Banko pavedimas",
+      "recheck": "Jau sumokėjau — patikrinti dar kartą",
+      "transferHint": "Pasirinkus banko pavedimą, atsiųsime išankstinio mokėjimo sąskaitą el. paštu, o užsakymas liks rezervuotas.",
+      "errors": {
+        "forbidden": "Nuoroda negalioja. Susisiekite su mumis.",
+        "not_allowed": "Šio užsakymo mokėjimo būdo nebegalima pakeisti.",
+        "payment_failed": "Nepavyko pradėti mokėjimo. Bandykite po akimirkos arba pasirinkite banko pavedimą.",
+        "generic": "Įvyko klaida. Bandykite dar kartą arba susisiekite su mumis."
+      },
+      "paid": {
+        "title": "Ačiū! Mokėjimas gautas",
+        "text": "Užsakymas {number} apmokėtas. Patvirtinimą ir sąskaitą išsiuntėme el. paštu.",
+        "step1": "Sąskaita {invoice} pridėta prie patvirtinimo laiško.",
+        "step2": "Užsakymą paruošime ir išsiųsime per 1–3 darbo dienas.",
+        "step3": "Apie išsiuntimą pranešime el. paštu."
+      },
+      "pending": {
+        "title": "Mokėjimas dar nepatvirtintas",
+        "text": "Užsakymas {number} rezervuotas, tačiau mokėjimo dar negavome. Jei nutraukėte mokėjimą, galite bandyti dar kartą arba pasirinkti kitą mokėjimo būdą."
+      },
+      "failed": {
+        "title": "Mokėjimas nepavyko",
+        "text": "Užsakymo {number} mokėjimas nebuvo užbaigtas. Galite bandyti dar kartą arba pasirinkti kitą mokėjimo būdą."
+      },
+      "cancelled": {
+        "title": "Užsakymas atšauktas",
+        "text": "Užsakymas {number} atšauktas, nes mokėjimas nebuvo užbaigtas. Pinigai nenuskaičiuoti — pateikite užsakymą iš naujo arba susisiekite su mumis."
+      },
+      "invalid": {
+        "title": "Užsakymas nerastas",
+        "text": "Nuoroda neteisinga arba pasenusi. Jei sumokėjote, patvirtinimą gausite el. paštu."
+      }
     }
   }
 }

@@ -195,13 +195,17 @@
       "unpaid": "Maksmata",
       "paid": "Makstud",
       "refunded": "Tagasi makstud",
-      "partially_refunded": "Osaliselt tagasi makstud"
+      "partially_refunded": "Osaliselt tagasi makstud",
+      "pending": "Ootab makset",
+      "failed": "Makse ebaõnnestus"
     },
     "paymentMethod": {
       "bank_transfer": "Pangaülekanne",
       "card": "Maksekaart",
       "invoice": "Järelmaksuarve",
-      "cash_on_pickup": "Makse kättesaamisel"
+      "cash_on_pickup": "Makse kättesaamisel",
+      "montonio_bank": "Pangalink",
+      "montonio_card": "Maksekaart"
     },
     "shippingMethod": {
       "pickup": "Kättesaamine laost",

@@ -47,6 +47,13 @@ export const pathnames = {
     en: "/checkout/success",
     ru: "/oformlenie/spasibo",
   },
+  "/checkout/return": {
+    lv: "/noformet/apmaksa",
+    et: "/kassa/makse",
+    lt: "/apmokejimas/mokejimas",
+    en: "/checkout/payment",
+    ru: "/oformlenie/oplata",
+  },
   "/terms": { lv: "/noteikumi", et: "/tingimused", lt: "/taisykles", en: "/terms", ru: "/usloviya" },
   "/privacy": { lv: "/privatuma-politika", et: "/privaatsus", lt: "/privatumas", en: "/privacy", ru: "/konfidentsialnost" },
   "/delivery": { lv: "/piegade", et: "/tarne", lt: "/pristatymas", en: "/delivery", ru: "/dostavka" },

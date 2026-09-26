@@ -141,7 +141,7 @@ export function shippingSummary(o: OrderEmailData, ctx: EmailContext): { method:
 }
 
 const METHOD_KEYS = { pickup: 1, parcel_locker: 1, courier: 1, freight: 1 } as const;
-const PAYMENT_KEYS = { bank_transfer: 1, card: 1, invoice: 1, cash_on_pickup: 1 } as const;
+const PAYMENT_KEYS = { bank_transfer: 1, card: 1, invoice: 1, cash_on_pickup: 1, montonio_bank: 1, montonio_card: 1 } as const;
 
 export function paymentLabel(o: OrderEmailData, ctx: EmailContext) {
   return o.payment_method in PAYMENT_KEYS ? ctx.t(`payment.methods.${o.payment_method}`) : o.payment_method;
