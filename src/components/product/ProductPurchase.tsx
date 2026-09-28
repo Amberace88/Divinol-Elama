@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { ArrowRight, BadgePercent, Building2, Check, Info, ShieldCheck, ShoppingBag, Store, Truck } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUp, BadgePercent, Building2, Check, Info, ShieldCheck, ShoppingBag, Store, Truck } from "lucide-react";
 import type { ProductSummary } from "@/lib/catalog";
 import { displayPrice, packLabel, pricePerUnit, round2 } from "@/lib/commerce";
 import { FREIGHT_ITEM_SIZE } from "@/lib/shop/shipping";
@@ -11,6 +11,7 @@ import { Link } from "@/i18n/navigation";
 import { usePricing } from "@/components/providers/PriceProvider";
 import { useSettings } from "@/components/providers/SettingsProvider";
 import { QtyStepper } from "@/components/ui/QtyStepper";
+import { RollingNumber } from "@/components/ui/RollingNumber";
 import { useMoney } from "@/components/ui/useMoney";
 import { defaultVariant, useAddToCart } from "@/components/catalog/useAddToCart";
 import { cn } from "@/lib/utils";
@@ -70,6 +71,18 @@ export function ProductPurchase({
   };
 
   const price = selected ? displayPrice(selected, pricing) : 0;
+  // Remember the previous price to show a short ▲/▼ difference chip when the pack changes.
+  const [delta, setDelta] = useState<{ key: string; prev: number; diff: number } | null>(null);
+  const [lastPrice, setLastPrice] = useState(price);
+  if (lastPrice !== price) {
+    setLastPrice(price);
+    setDelta({ key: `${key}-${price}`, prev: lastPrice, diff: round2(price - lastPrice) });
+  }
+  useEffect(() => {
+    if (!delta) return;
+    const id = window.setTimeout(() => setDelta(null), 1600);
+    return () => window.clearTimeout(id);
+  }, [delta]);
   const ppu = selected ? pricePerUnit(selected, pricing) : null;
   const vatRate = settings.vat?.[pricing.market] ?? 21;
   const threshold = settings.shipping.free_threshold?.[pricing.market];
@@ -109,18 +122,30 @@ export function ProductPurchase({
           {/* price */}
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
-              <AnimatePresence mode="popLayout" initial={false}>
-                <motion.p
-                  key={`${key}-${price}`}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.2 }}
-                  className="text-[34px] font-extrabold leading-none tracking-tight tabular-nums text-navy-700"
-                >
-                  {money(price)}
-                </motion.p>
-              </AnimatePresence>
+              <div className="flex items-center gap-2.5">
+                <p className="text-[34px] font-extrabold leading-none tracking-tight tabular-nums text-navy-700">
+                  <RollingNumber value={price} format={money} stagger={0.04} />
+                </p>
+                <AnimatePresence mode="popLayout">
+                  {delta && delta.diff !== 0 && (
+                    <motion.span
+                      key={delta.key}
+                      initial={{ opacity: 0, y: delta.diff > 0 ? 10 : -10, scale: 0.9 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: delta.diff > 0 ? -8 : 8 }}
+                      transition={{ type: "spring", stiffness: 420, damping: 30 }}
+                      className={cn(
+                        "inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-[12px] font-bold tabular-nums ring-1",
+                        delta.diff > 0 ? "bg-navy-50 text-navy-600 ring-navy-100" : "bg-emerald-50 text-emerald-700 ring-emerald-200",
+                      )}
+                      aria-hidden
+                    >
+                      {delta.diff > 0 ? <ArrowUp className="size-3.5" strokeWidth={2.75} /> : <ArrowDown className="size-3.5" strokeWidth={2.75} />}
+                      {money(Math.abs(delta.diff))}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </div>
               <p className="mt-1.5 text-[12.5px] text-muted">
                 {pricing.b2b
                   ? pricing.discountPercent > 0
@@ -130,8 +155,8 @@ export function ProductPurchase({
                 {ppu != null && selected && (
                   <>
                     {" · "}
-                    <span className="font-semibold text-ink/70">
-                      {money(ppu)}/{unitLabel(selected)}
+                    <span className="inline-flex items-baseline font-semibold text-ink/70">
+                      <RollingNumber value={ppu} format={money} stagger={0.025} />/{unitLabel(selected)}
                     </span>
                   </>
                 )}
