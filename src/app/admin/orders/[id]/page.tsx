@@ -5,6 +5,7 @@ import { requireAdmin } from "@/lib/admin/auth";
 import { fmtDate, fmtDateTime, fmtMoney, fmtNumber, fmtRelative } from "@/lib/admin/format";
 import { B2B_STATUS, INVOICE_STATUS, INVOICE_TYPE, labelOf, MARKET, ORDER_EVENT, ORDER_STATUS, PAYMENT_METHOD, PAYMENT_STATUS, SHIPPING_METHOD } from "@/lib/admin/labels";
 import { UUID_RE } from "@/lib/admin/server";
+import { RABEN_STATUS, type RabenStatus } from "@/lib/admin/raben";
 import { AddressBlock } from "@/components/admin/Address";
 import { CommentForm, InvoiceButtons, NotesForm, PaymentControl, StatusControl } from "@/components/admin/orders/OrderControls";
 import { PaymentRecheckButton } from "@/components/admin/orders/PaymentRecheck";
@@ -82,11 +83,13 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
   const profile = profileRes.data as { id: string; full_name: string | null; b2b_status: string; discount_percent: number; payment_terms_days: number } | null;
   const dueDefault = Number(profile?.payment_terms_days) || Number((settingsRes.data?.value as { due_days_default?: number } | null)?.due_days_default) || 14;
 
-  const [shipmentsRes, carriers, rates] = await Promise.all([
+  const [shipmentsRes, carriers, rates, rabenRes] = await Promise.all([
     supabase.from("shipments").select(SHIPMENT_COLS).eq("order_id", id).order("created_at", { ascending: false }),
     loadCarriers(supabase),
     loadRates(supabase, { activeOnly: true }),
+    supabase.from("raben_orders").select("id, number, status").eq("order_id", id).neq("status", "cancelled").order("created_at"),
   ]);
+  const rabenOrders = (rabenRes.data ?? []) as { id: string; number: string; status: string }[];
   const shipments = (shipmentsRes.data ?? []) as ShipmentRow[];
   const caps = allCapabilities(carriers.map((c) => c.code));
   const carrierInfo = carriers.map((c) => ({ code: c.code, name: c.name, tracking_url_template: c.tracking_url_template, api: caps[c.code]?.api ?? false, tracking: caps[c.code]?.tracking ?? false }));
@@ -195,9 +198,21 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
               <h2 className="flex items-center gap-2 text-[15px] font-bold text-ink">
                 <Truck className="h-4 w-4 text-navy-500" /> Piegāde
               </h2>
-              <Link href="/admin/shipping" className="text-[12px] font-bold text-navy-600 hover:underline">
-                Visi sūtījumi →
-              </Link>
+              <div className="flex flex-wrap items-center gap-3">
+                {rabenOrders.map((r) => (
+                  <Link key={r.id} href={`/admin/raben/${r.id}`} className="inline-flex items-center gap-1.5 rounded-full bg-navy-50 px-2.5 py-1 text-[12px] font-bold text-navy-700 ring-1 ring-inset ring-navy-100 hover:bg-navy-100">
+                    Raben {r.number} · {RABEN_STATUS[r.status as RabenStatus]?.label ?? r.status}
+                  </Link>
+                ))}
+                {order.shipping_method !== "pickup" && (
+                  <Link href={`/admin/raben/new?order=${order.id}`} className="text-[12px] font-bold text-navy-600 hover:underline" title="Palešu / kravas pārvadājums ar Raben">
+                    + Raben krava
+                  </Link>
+                )}
+                <Link href="/admin/shipping" className="text-[12px] font-bold text-navy-600 hover:underline">
+                  Visi sūtījumi →
+                </Link>
+              </div>
             </header>
             <div className="grid gap-4 border-b border-line/80 px-5 py-4 text-[13px] sm:grid-cols-3">
               <div>
