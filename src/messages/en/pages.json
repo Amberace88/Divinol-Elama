@@ -47,20 +47,62 @@
       "industry": "Hydraulics, gearboxes, compressors, chains"
     },
     "apps": {
-      "street": { "label": "Road motorcycle", "hint": "Everyday and touring 4-stroke bikes with wet clutch" },
-      "sport": { "label": "Sport motorcycle", "hint": "High-revving and racing engines" },
-      "heavy": { "label": "Big-bore / cruiser", "hint": "Air-cooled V-twins, e.g. Harley-Davidson" },
-      "quad": { "label": "Quad / UTV", "hint": "Off-road vehicles with shared engine and clutch oil" },
-      "twoStroke": { "label": "2T scooter / motocross", "hint": "Two-stroke engines with oil tank or premix" },
-      "chainsaw": { "label": "Chainsaw", "hint": "2-stroke mix oil and saw-chain oil" },
-      "trimmer": { "label": "Trimmer / blower", "hint": "Two-stroke garden equipment" },
-      "mower": { "label": "Lawnmower (4T)", "hint": "Four-stroke engines in mowers and garden tractors" },
-      "chainOil": { "label": "Chain lubrication", "hint": "Saw chain and guide bar lubrication" },
-      "hydraulic": { "label": "Industrial hydraulics", "hint": "Presses, machine tools, stationary systems (HLP)" },
-      "hydraulicHv": { "label": "Mobile hydraulics", "hint": "Excavators, loaders, outdoor machinery (HVLP)" },
-      "gear": { "label": "Gearboxes", "hint": "Enclosed industrial gear units (CLP)" },
-      "compressor": { "label": "Compressors", "hint": "Reciprocating and rotary compressors" },
-      "chain": { "label": "Chains & conveyors", "hint": "Chain and slideway lubrication" }
+      "street": {
+        "label": "Road motorcycle",
+        "hint": "Everyday and touring 4-stroke bikes with wet clutch"
+      },
+      "sport": {
+        "label": "Sport motorcycle",
+        "hint": "High-revving and racing engines"
+      },
+      "heavy": {
+        "label": "Big-bore / cruiser",
+        "hint": "Air-cooled V-twins, e.g. Harley-Davidson"
+      },
+      "quad": {
+        "label": "Quad / UTV",
+        "hint": "Off-road vehicles with shared engine and clutch oil"
+      },
+      "twoStroke": {
+        "label": "2T scooter / motocross",
+        "hint": "Two-stroke engines with oil tank or premix"
+      },
+      "chainsaw": {
+        "label": "Chainsaw",
+        "hint": "2-stroke mix oil and saw-chain oil"
+      },
+      "trimmer": {
+        "label": "Trimmer / blower",
+        "hint": "Two-stroke garden equipment"
+      },
+      "mower": {
+        "label": "Lawnmower (4T)",
+        "hint": "Four-stroke engines in mowers and garden tractors"
+      },
+      "chainOil": {
+        "label": "Chain lubrication",
+        "hint": "Saw chain and guide bar lubrication"
+      },
+      "hydraulic": {
+        "label": "Industrial hydraulics",
+        "hint": "Presses, machine tools, stationary systems (HLP)"
+      },
+      "hydraulicHv": {
+        "label": "Mobile hydraulics",
+        "hint": "Excavators, loaders, outdoor machinery (HVLP)"
+      },
+      "gear": {
+        "label": "Gearboxes",
+        "hint": "Enclosed industrial gear units (CLP)"
+      },
+      "compressor": {
+        "label": "Compressors",
+        "hint": "Reciprocating and rotary compressors"
+      },
+      "chain": {
+        "label": "Chains & conveyors",
+        "hint": "Chain and slideway lubrication"
+      }
     },
     "brandOther": "Other manufacturer",
     "brandOtherHint": "We will match by ACEA/API specification",
@@ -130,10 +172,10 @@
     "comment": "Comment",
     "expertCta": "Get a recommendation",
     "sent": "Thank you! A specialist will reply on the next business day.",
-    "advisorEyebrow": "Manufacturer database",
-    "advisorTitle": "Official Divinol Lubricant Advisor",
-    "advisorText": "Zeller+Gmelin's database covering thousands of vehicle models, engines and lubrication points.",
-    "advisorCta": "Open Lubricant Advisor",
+    "advisorEyebrow": "Precise by model",
+    "advisorTitle": "Know your exact model?",
+    "advisorText": "The official Zeller+Gmelin catalogue covers not only engine oil but gearbox, axle, brake and coolant fluids, capacities and change intervals.",
+    "advisorCta": "Choose by model",
     "faq": [
       {
         "q": "How do I choose the right engine oil for my car?",
@@ -159,7 +201,58 @@
         "q": "Can different engine oils be mixed?",
         "a": "Quality oils with the same viscosity and specification are generally compatible, so another oil can be used to top up in an emergency. For the best protection and to keep the approval, it is recommended to top up with the same oil that is in the engine."
       }
-    ]
+    ],
+    "model": {
+      "tabsLabel": "How to choose oil",
+      "tabQuick": "Quick finder",
+      "tabQuickHint": "3 steps: vehicle, brand, engine",
+      "tabModel": "Precise by model",
+      "tabModelHint": "Make → model → type: engine, gearbox, brakes, cooling",
+      "tabModelBadge": "Official",
+      "eyebrow": "Zeller+Gmelin lubricant advisor",
+      "title": "Precise selection by vehicle model",
+      "text": "The official catalogue of the Divinol manufacturer with tens of thousands of models. Choose make, model and type to see the recommended product for every component, capacities and change intervals.",
+      "searchLabel": "Make and model",
+      "searchPlaceholder": "Make and model, e.g. VW Golf 1.6 TDI",
+      "searchCta": "Search",
+      "clear": "Clear",
+      "examples": "Examples:",
+      "coversTitle": "Recommendations for every component",
+      "covers": {
+        "engine": "Engine",
+        "gearbox": "Gearbox",
+        "axle": "Axles, differential",
+        "brakes": "Brakes, steering",
+        "cooling": "Cooling",
+        "intervals": "Capacities, intervals"
+      },
+      "categoriesTitle": "Vehicle types",
+      "categories": {
+        "cars": "Cars",
+        "classic": "Classic cars",
+        "vans": "Vans",
+        "moto": "Motorcycles, ATV",
+        "trucks": "Trucks, buses",
+        "agri": "Agriculture",
+        "construction": "Construction"
+      },
+      "frameTitle": "Divinol lubricant advisor",
+      "frameSource": "Zeller+Gmelin · data: Olyslager",
+      "openFull": "Open in new window",
+      "restart": "Start over",
+      "loading": "Loading catalogue…",
+      "langNote": "",
+      "bridgeEyebrow": "Buy in our shop",
+      "bridgeTitle": "Found the recommended product?",
+      "bridgeText": "Type the product name or article code from the catalogue and we'll show it in our shop with the price.",
+      "bridgePlaceholder": "e.g. Syntholight DPF 5W30 or 49180",
+      "bridgeResults": "Found: {count}",
+      "bridgePopular": "Popular engine oils",
+      "bridgeEmpty": "This product was not found in our shop.",
+      "bridgeAsk": "Ask a specialist",
+      "bridgeHint": "Not sure which to choose? Fill in the form below — a specialist will help for free.",
+      "from": "from"
+    }
   },
   "calc": {
     "metaTitle": "Oil calculators — quantity, cost, mixing ratios",

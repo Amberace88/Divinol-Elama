@@ -1,25 +1,26 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { ExternalLink, Headset, Search } from "lucide-react";
+import { ArrowRight, CarFront, Headset } from "lucide-react";
 import { buttonClass } from "@/components/ui/Button";
 import { Field, InquiryForm, PrivacyNote, SubmitButton } from "@/components/pages/FormBits";
 import { field } from "@/components/pages/inquiry";
 import type { FinderInput } from "@/lib/finder";
 
-const ADVISOR_URL = "https://zellergmelin.lubricantadvisor.com/eng/";
-
 export function ExpertForm({
   selection,
   recommended,
+  advisor = true,
 }: {
   selection: (FinderInput & { labels: string[] }) | null;
   recommended: string[];
+  /** show the "precise selection by vehicle model" promo next to the form */
+  advisor?: boolean;
 }) {
   const t = useTranslations("finder");
 
   return (
-    <section id="expert" aria-labelledby="expert-title" className="grid scroll-mt-28 gap-6 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)]">
+    <section id="expert" aria-labelledby="expert-title" className={advisor ? "grid scroll-mt-28 gap-6 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)]" : "grid scroll-mt-28 gap-6"}>
       <div className="card p-6 sm:p-8">
         <div className="flex items-start gap-4">
           <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-brand-400 text-navy-900">
@@ -85,22 +86,24 @@ export function ExpertForm({
         </InquiryForm>
       </div>
 
+      {advisor && (
       <aside className="relative isolate flex flex-col overflow-hidden rounded-2xl bg-navy-800 p-6 text-white shadow-lift sm:p-8">
         <div aria-hidden className="grid-bg absolute inset-0 -z-10 opacity-60" />
         <div aria-hidden className="absolute -right-16 -bottom-16 -z-10 size-64 rounded-full bg-brand-400/20 blur-3xl" />
         <span className="grid size-12 place-items-center rounded-xl bg-white/10 text-brand-400 ring-1 ring-white/15">
-          <Search className="size-6" aria-hidden />
+          <CarFront className="size-6" aria-hidden />
         </span>
         <p className="eyebrow mt-5 text-brand-300">{t("advisorEyebrow")}</p>
         <h2 className="h-display mt-1 text-2xl">{t("advisorTitle")}</h2>
         <p className="mt-3 text-[15px] leading-6 text-white/70">{t("advisorText")}</p>
         <div className="mt-auto pt-8">
-          <a href={ADVISOR_URL} target="_blank" rel="noopener noreferrer" className={buttonClass("primary", "md", "w-full sm:w-auto")}>
+          <a href="#model" className={buttonClass("primary", "md", "w-full sm:w-auto")}>
             {t("advisorCta")}
-            <ExternalLink className="size-4" aria-hidden />
+            <ArrowRight className="size-4" aria-hidden />
           </a>
         </div>
       </aside>
+      )}
     </section>
   );
 }

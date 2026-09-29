@@ -47,20 +47,62 @@
       "industry": "Hüdraulika, reduktorid, kompressorid, ketid"
     },
     "apps": {
-      "street": { "label": "Maantee mootorratas", "hint": "Igapäeva- ja turismi 4T mootorrattad märja siduriga" },
-      "sport": { "label": "Spordimootorratas", "hint": "Kõrgete pööretega ja võidusõidumootorid" },
-      "heavy": { "label": "Suure kubatuuriga / tšopper", "hint": "Õhkjahutusega V-mootorid, nt Harley-Davidson" },
-      "quad": { "label": "Neliratas / UTV", "hint": "Maastikutehnika ühise mootori- ja siduriõliga" },
-      "twoStroke": { "label": "2T mopeed / motokross", "hint": "Kaktaktilised mootorid eraldi õlipaagi või seguga" },
-      "chainsaw": { "label": "Mootorsaag", "hint": "2T segueli ja ketiõli" },
-      "trimmer": { "label": "Trimmer / puhur", "hint": "Kaktaktiline aiatehnika" },
-      "mower": { "label": "Muruniiduk (4T)", "hint": "Neljataktilised mootorid muruniidukites ja aiatraktorites" },
-      "chainOil": { "label": "Keti õlitamine", "hint": "Saeketi ja liistu õlitamine" },
-      "hydraulic": { "label": "Tööstuslik hüdraulika", "hint": "Pressid, tööpingid, statsionaarsed süsteemid (HLP)" },
-      "hydraulicHv": { "label": "Mobiilne hüdraulika", "hint": "Ekskavaatorid, laadurid, välitingimustes töötav tehnika (HVLP)" },
-      "gear": { "label": "Reduktorid", "hint": "Suletud tööstuslikud käigukastid (CLP)" },
-      "compressor": { "label": "Kompressorid", "hint": "Kolb- ja rootorkompressorid" },
-      "chain": { "label": "Ketid ja konveierid", "hint": "Kettide ja juhikute õlitamine" }
+      "street": {
+        "label": "Maantee mootorratas",
+        "hint": "Igapäeva- ja turismi 4T mootorrattad märja siduriga"
+      },
+      "sport": {
+        "label": "Spordimootorratas",
+        "hint": "Kõrgete pööretega ja võidusõidumootorid"
+      },
+      "heavy": {
+        "label": "Suure kubatuuriga / tšopper",
+        "hint": "Õhkjahutusega V-mootorid, nt Harley-Davidson"
+      },
+      "quad": {
+        "label": "Neliratas / UTV",
+        "hint": "Maastikutehnika ühise mootori- ja siduriõliga"
+      },
+      "twoStroke": {
+        "label": "2T mopeed / motokross",
+        "hint": "Kaktaktilised mootorid eraldi õlipaagi või seguga"
+      },
+      "chainsaw": {
+        "label": "Mootorsaag",
+        "hint": "2T segueli ja ketiõli"
+      },
+      "trimmer": {
+        "label": "Trimmer / puhur",
+        "hint": "Kaktaktiline aiatehnika"
+      },
+      "mower": {
+        "label": "Muruniiduk (4T)",
+        "hint": "Neljataktilised mootorid muruniidukites ja aiatraktorites"
+      },
+      "chainOil": {
+        "label": "Keti õlitamine",
+        "hint": "Saeketi ja liistu õlitamine"
+      },
+      "hydraulic": {
+        "label": "Tööstuslik hüdraulika",
+        "hint": "Pressid, tööpingid, statsionaarsed süsteemid (HLP)"
+      },
+      "hydraulicHv": {
+        "label": "Mobiilne hüdraulika",
+        "hint": "Ekskavaatorid, laadurid, välitingimustes töötav tehnika (HVLP)"
+      },
+      "gear": {
+        "label": "Reduktorid",
+        "hint": "Suletud tööstuslikud käigukastid (CLP)"
+      },
+      "compressor": {
+        "label": "Kompressorid",
+        "hint": "Kolb- ja rootorkompressorid"
+      },
+      "chain": {
+        "label": "Ketid ja konveierid",
+        "hint": "Kettide ja juhikute õlitamine"
+      }
     },
     "brandOther": "Muu tootja",
     "brandOtherHint": "Valime ACEA/API spetsifikatsiooni järgi",
@@ -130,10 +172,10 @@
     "comment": "Kommentaar",
     "expertCta": "Saa soovitus",
     "sent": "Aitäh! Spetsialist vastab järgmisel tööpäeval.",
-    "advisorEyebrow": "Tootja andmebaas",
-    "advisorTitle": "Ametlik Divinol Lubricant Advisor",
-    "advisorText": "Zeller+Gmelini andmebaas tuhandete sõidukimudelite, mootorite ja määrimispunktidega (inglise keeles).",
-    "advisorCta": "Ava Lubricant Advisor",
+    "advisorEyebrow": "Täpselt mudeli järgi",
+    "advisorTitle": "Teate täpset mudelit?",
+    "advisorText": "Zeller+Gmelini ametlikus kataloogis on lisaks mootoriõlile ka käigukasti-, silla-, piduri- ja jahutusvedelikud, mahud ja vahetusvälbad.",
+    "advisorCta": "Vali mudeli järgi",
     "faq": [
       {
         "q": "Kuidas valida oma autole õige mootoriõli?",
@@ -159,7 +201,58 @@
         "q": "Kas eri mootoriõlisid tohib segada?",
         "a": "Kvaliteetsed sama viskoossuse ja spetsifikatsiooniga õlid on tavaliselt omavahel ühilduvad, seega hädaolukorras võib lisamiseks kasutada teist õli. Parima kaitse ja heakskiidu säilitamise huvides on siiski soovitatav lisada sama õli, mis on juba mootoris."
       }
-    ]
+    ],
+    "model": {
+      "tabsLabel": "Õli valimise viis",
+      "tabQuick": "Kiirvalik",
+      "tabQuickHint": "3 sammu: sõiduk, tootja, mootor",
+      "tabModel": "Täpselt mudeli järgi",
+      "tabModelHint": "Mark → mudel → versioon: mootor, käigukast, pidurid, jahutus",
+      "tabModelBadge": "Ametlik",
+      "eyebrow": "Zeller+Gmelini määrdeainete kataloog",
+      "title": "Täpne valik sõiduki mudeli järgi",
+      "text": "Divinoli tootja ametlik kataloog kümnete tuhandete mudelitega. Valige mark, mudel ja versioon — näete soovitatud tooteid iga sõlme jaoks, mahtusid ja vahetusvälpasid.",
+      "searchLabel": "Mark ja mudel",
+      "searchPlaceholder": "Mark ja mudel, nt VW Golf 1.6 TDI",
+      "searchCta": "Otsi",
+      "clear": "Tühjenda",
+      "examples": "Näited:",
+      "coversTitle": "Soovitused kõigile sõlmedele",
+      "covers": {
+        "engine": "Mootor",
+        "gearbox": "Käigukast",
+        "axle": "Sillad, diferentsiaal",
+        "brakes": "Pidurid, rool",
+        "cooling": "Jahutus",
+        "intervals": "Mahud, välbad"
+      },
+      "categoriesTitle": "Sõidukite liigid",
+      "categories": {
+        "cars": "Sõiduautod",
+        "classic": "Klassikalised autod",
+        "vans": "Kaubikud",
+        "moto": "Mootorrattad, ATV",
+        "trucks": "Veokid, bussid",
+        "agri": "Põllumajandus",
+        "construction": "Ehitustehnika"
+      },
+      "frameTitle": "Divinoli määrdeainete kataloog",
+      "frameSource": "Zeller+Gmelin · andmed: Olyslager",
+      "openFull": "Ava uues aknas",
+      "restart": "Alusta uuesti",
+      "loading": "Kataloogi laadimine…",
+      "langNote": "Kataloog on saadaval inglise keeles — tootenimed ja pakendid on samad mis meie poes.",
+      "bridgeEyebrow": "Osta meie poest",
+      "bridgeTitle": "Leidsite soovitatud toote?",
+      "bridgeText": "Sisestage kataloogist toote nimi või artiklikood — näitame seda meie poes koos hinnaga.",
+      "bridgePlaceholder": "nt Syntholight DPF 5W30 või 49180",
+      "bridgeResults": "Leitud: {count}",
+      "bridgePopular": "Populaarsed mootoriõlid",
+      "bridgeEmpty": "Sellist toodet meie poest ei leitud.",
+      "bridgeAsk": "Küsige spetsialistilt",
+      "bridgeHint": "Ei tea, mida valida? Täitke allolev vorm — spetsialist aitab tasuta.",
+      "from": "alates"
+    }
   },
   "calc": {
     "metaTitle": "Õlikalkulaatorid — kogus, maksumus, segud",

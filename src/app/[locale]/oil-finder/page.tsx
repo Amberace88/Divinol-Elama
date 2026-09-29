@@ -8,7 +8,7 @@ import { JsonLd } from "@/components/ui/JsonLd";
 import { PageHero, SectionHeading } from "@/components/pages/PageHero";
 import { Faq } from "@/components/pages/Faq";
 import { faqJsonLd, pageBreadcrumbLd, pageMetadata } from "@/components/pages/meta";
-import { OilFinder } from "@/components/tools/finder/OilFinder";
+import { FinderModes } from "@/components/tools/finder/FinderModes";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/oil-finder">): Promise<Metadata> {
   const { locale } = await params;
@@ -25,7 +25,8 @@ export default async function OilFinderPage({ params }: PageProps<"/[locale]/oil
     getTranslations({ locale, namespace: "pagesUi" }),
     getProducts(),
   ]);
-  const summaries = products.filter((p) => FINDER_CATEGORIES.includes(p.category)).map((p) => summarize(p, locale));
+  const all = products.map((p) => summarize(p, locale));
+  const summaries = all.filter((p) => FINDER_CATEGORIES.includes(p.category));
   const faq = t.raw("faq") as { q: string; a: string }[];
 
   return (
@@ -46,7 +47,7 @@ export default async function OilFinderPage({ params }: PageProps<"/[locale]/oil
       <section aria-label={t("title")} className="relative bg-canvas pb-20">
         <div aria-hidden className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-navy-950/[0.06] to-transparent" />
         <div className="container-x relative -mt-2 pt-10 sm:pt-12">
-          <OilFinder products={summaries} />
+          <FinderModes finderProducts={summaries} allProducts={all} />
         </div>
       </section>
 

@@ -47,20 +47,62 @@
       "industry": "Hidraulika, reduktoriai, kompresoriai, grandinės"
     },
     "apps": {
-      "street": { "label": "Kelių motociklas", "hint": "Kasdieniai ir turistiniai 4T motociklai su šlapia sankaba" },
-      "sport": { "label": "Sportinis motociklas", "hint": "Aukštų apsukų ir lenktyniniai varikliai" },
-      "heavy": { "label": "Didelės kubatūros / čoperis", "hint": "Oru aušinami V formos varikliai, pvz., Harley-Davidson" },
-      "quad": { "label": "Keturratis / UTV", "hint": "Bekelės technika su bendra variklio ir sankabos alyva" },
-      "twoStroke": { "label": "2T motoroleris / kroso motociklas", "hint": "Dvitakčiai varikliai su atskiru alyvos baku arba mišiniu" },
-      "chainsaw": { "label": "Motorinis pjūklas", "hint": "2T mišinio alyva ir grandinės alyva" },
-      "trimmer": { "label": "Trimeris / pūstuvas", "hint": "Dvitaktė sodo technika" },
-      "mower": { "label": "Vejapjovė (4T)", "hint": "Keturtakčiai varikliai vejapjovėse ir sodo traktoriukuose" },
-      "chainOil": { "label": "Grandinės tepimas", "hint": "Pjūklo grandinės ir kreipiančiosios tepimas" },
-      "hydraulic": { "label": "Pramoninė hidraulika", "hint": "Presai, staklės, stacionarios sistemos (HLP)" },
-      "hydraulicHv": { "label": "Mobilioji hidraulika", "hint": "Ekskavatoriai, krautuvai, lauko technika (HVLP)" },
-      "gear": { "label": "Reduktoriai", "hint": "Uždaros pramoninės pavarų dėžės (CLP)" },
-      "compressor": { "label": "Kompresoriai", "hint": "Stūmokliniai ir rotaciniai kompresoriai" },
-      "chain": { "label": "Grandinės ir konvejeriai", "hint": "Grandinių ir kreipiančiųjų tepimas" }
+      "street": {
+        "label": "Kelių motociklas",
+        "hint": "Kasdieniai ir turistiniai 4T motociklai su šlapia sankaba"
+      },
+      "sport": {
+        "label": "Sportinis motociklas",
+        "hint": "Aukštų apsukų ir lenktyniniai varikliai"
+      },
+      "heavy": {
+        "label": "Didelės kubatūros / čoperis",
+        "hint": "Oru aušinami V formos varikliai, pvz., Harley-Davidson"
+      },
+      "quad": {
+        "label": "Keturratis / UTV",
+        "hint": "Bekelės technika su bendra variklio ir sankabos alyva"
+      },
+      "twoStroke": {
+        "label": "2T motoroleris / kroso motociklas",
+        "hint": "Dvitakčiai varikliai su atskiru alyvos baku arba mišiniu"
+      },
+      "chainsaw": {
+        "label": "Motorinis pjūklas",
+        "hint": "2T mišinio alyva ir grandinės alyva"
+      },
+      "trimmer": {
+        "label": "Trimeris / pūstuvas",
+        "hint": "Dvitaktė sodo technika"
+      },
+      "mower": {
+        "label": "Vejapjovė (4T)",
+        "hint": "Keturtakčiai varikliai vejapjovėse ir sodo traktoriukuose"
+      },
+      "chainOil": {
+        "label": "Grandinės tepimas",
+        "hint": "Pjūklo grandinės ir kreipiančiosios tepimas"
+      },
+      "hydraulic": {
+        "label": "Pramoninė hidraulika",
+        "hint": "Presai, staklės, stacionarios sistemos (HLP)"
+      },
+      "hydraulicHv": {
+        "label": "Mobilioji hidraulika",
+        "hint": "Ekskavatoriai, krautuvai, lauko technika (HVLP)"
+      },
+      "gear": {
+        "label": "Reduktoriai",
+        "hint": "Uždaros pramoninės pavarų dėžės (CLP)"
+      },
+      "compressor": {
+        "label": "Kompresoriai",
+        "hint": "Stūmokliniai ir rotaciniai kompresoriai"
+      },
+      "chain": {
+        "label": "Grandinės ir konvejeriai",
+        "hint": "Grandinių ir kreipiančiųjų tepimas"
+      }
     },
     "brandOther": "Kitas gamintojas",
     "brandOtherHint": "Parinksime pagal ACEA/API specifikaciją",
@@ -130,10 +172,10 @@
     "comment": "Komentaras",
     "expertCta": "Gauti rekomendaciją",
     "sent": "Ačiū! Specialistas atsakys artimiausią darbo dieną.",
-    "advisorEyebrow": "Gamintojo duomenų bazė",
-    "advisorTitle": "Oficialus Divinol Lubricant Advisor",
-    "advisorText": "Zeller+Gmelin duomenų bazė su tūkstančiais transporto priemonių modelių, variklių ir tepimo taškų (anglų kalba).",
-    "advisorCta": "Atidaryti Lubricant Advisor",
+    "advisorEyebrow": "Tiksliai pagal modelį",
+    "advisorTitle": "Žinote tikslų modelį?",
+    "advisorText": "Oficialiame Zeller+Gmelin kataloge rasite ne tik variklio alyvą, bet ir pavarų dėžės, tilto, stabdžių ir aušinimo skysčius, talpas bei keitimo intervalus.",
+    "advisorCta": "Pasirinkti pagal modelį",
     "faq": [
       {
         "q": "Kaip išsirinkti tinkamą variklio alyvą savo automobiliui?",
@@ -159,7 +201,58 @@
         "q": "Ar galima maišyti skirtingas variklio alyvas?",
         "a": "Kokybiškos alyvos su vienodu klampumu ir specifikacija paprastai yra suderinamos, todėl papildymui ekstremaliu atveju galima naudoti kitą alyvą. Tačiau geriausiai apsaugai ir patvirtinimo išlaikymui rekomenduojama papildyti ta pačia alyva, kuri jau įpilta į variklį."
       }
-    ]
+    ],
+    "model": {
+      "tabsLabel": "Alyvos parinkimo būdas",
+      "tabQuick": "Greitas parinkimas",
+      "tabQuickHint": "3 žingsniai: technika, gamintojas, variklis",
+      "tabModel": "Tiksliai pagal modelį",
+      "tabModelHint": "Markė → modelis → versija: variklis, pavarų dėžė, stabdžiai, aušinimas",
+      "tabModelBadge": "Oficialiai",
+      "eyebrow": "Zeller+Gmelin tepalų katalogas",
+      "title": "Tikslus parinkimas pagal transporto priemonės modelį",
+      "text": "Oficialus Divinol gamintojo katalogas su dešimtimis tūkstančių modelių. Pasirinkite markę, modelį ir versiją — pamatysite rekomenduojamus produktus kiekvienam mazgui, talpas ir keitimo intervalus.",
+      "searchLabel": "Markė ir modelis",
+      "searchPlaceholder": "Markė ir modelis, pvz. VW Golf 1.6 TDI",
+      "searchCta": "Ieškoti",
+      "clear": "Išvalyti",
+      "examples": "Pavyzdžiai:",
+      "coversTitle": "Rekomendacijos visiems mazgams",
+      "covers": {
+        "engine": "Variklis",
+        "gearbox": "Pavarų dėžė",
+        "axle": "Tiltai, diferencialas",
+        "brakes": "Stabdžiai, vairas",
+        "cooling": "Aušinimas",
+        "intervals": "Talpos, intervalai"
+      },
+      "categoriesTitle": "Technikos rūšys",
+      "categories": {
+        "cars": "Lengvieji",
+        "classic": "Klasikiniai",
+        "vans": "Mikroautobusai",
+        "moto": "Motociklai, ATV",
+        "trucks": "Sunkvežimiai, autobusai",
+        "agri": "Žemės ūkis",
+        "construction": "Statybinė technika"
+      },
+      "frameTitle": "Divinol tepalų katalogas",
+      "frameSource": "Zeller+Gmelin · duomenys: Olyslager",
+      "openFull": "Atidaryti naujame lange",
+      "restart": "Pradėti iš naujo",
+      "loading": "Kraunamas katalogas…",
+      "langNote": "Katalogas pateikiamas anglų kalba — produktų pavadinimai ir pakuotės tokie patys kaip mūsų parduotuvėje.",
+      "bridgeEyebrow": "Pirkti mūsų parduotuvėje",
+      "bridgeTitle": "Radote rekomenduojamą produktą?",
+      "bridgeText": "Įveskite produkto pavadinimą arba artikulo kodą iš katalogo — parodysime jį mūsų parduotuvėje su kaina.",
+      "bridgePlaceholder": "pvz. Syntholight DPF 5W30 arba 49180",
+      "bridgeResults": "Rasta: {count}",
+      "bridgePopular": "Populiarios variklio alyvos",
+      "bridgeEmpty": "Tokio produkto mūsų parduotuvėje nerasta.",
+      "bridgeAsk": "Klauskite specialisto",
+      "bridgeHint": "Nežinote, ką rinktis? Užpildykite formą žemiau — specialistas padės nemokamai.",
+      "from": "nuo"
+    }
   },
   "calc": {
     "metaTitle": "Alyvos skaičiuoklės — kiekis, išlaidos, mišiniai",

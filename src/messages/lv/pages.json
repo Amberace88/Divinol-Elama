@@ -47,20 +47,62 @@
       "industry": "Hidraulika, reduktori, kompresori, ķēdes"
     },
     "apps": {
-      "street": { "label": "Ceļa motocikls", "hint": "Ikdienas un tūrisma 4T motocikli ar slapjo sajūgu" },
-      "sport": { "label": "Sporta motocikls", "hint": "Augstu apgriezienu un sacīkšu dzinēji" },
-      "heavy": { "label": "Lielas kubatūras / čoperis", "hint": "Gaisa dzesēšanas V-dzinēji, piem. Harley-Davidson" },
-      "quad": { "label": "Kvadricikls / UTV", "hint": "Bezceļa tehnika ar kopīgu dzinēja un sajūga eļļu" },
-      "twoStroke": { "label": "2T motorollers / krosa moto", "hint": "Divtaktu dzinēji ar atsevišķu eļļas tvertni vai maisījumu" },
-      "chainsaw": { "label": "Motorzāģis", "hint": "2T maisījuma eļļa un ķēžeļļa" },
-      "trimmer": { "label": "Trimmeris / pūtējs", "hint": "Divtaktu dārza tehnika" },
-      "mower": { "label": "Zāles pļāvējs (4T)", "hint": "Četrtaktu dzinēji zāles pļāvējos un dārza traktoros" },
-      "chainOil": { "label": "Ķēdes eļļošana", "hint": "Zāģa ķēdes un sliedes eļļošana" },
-      "hydraulic": { "label": "Rūpnieciskā hidraulika", "hint": "Preses, darbgaldi, stacionāras sistēmas (HLP)" },
-      "hydraulicHv": { "label": "Mobilā hidraulika", "hint": "Ekskavatori, iekrāvēji, ārā strādājoša tehnika (HVLP)" },
-      "gear": { "label": "Reduktori", "hint": "Slēgtas rūpnieciskās pārnesumkārbas (CLP)" },
-      "compressor": { "label": "Kompresori", "hint": "Virzuļu un rotācijas kompresori" },
-      "chain": { "label": "Ķēdes un konveijeri", "hint": "Ķēžu un vadotņu eļļošana" }
+      "street": {
+        "label": "Ceļa motocikls",
+        "hint": "Ikdienas un tūrisma 4T motocikli ar slapjo sajūgu"
+      },
+      "sport": {
+        "label": "Sporta motocikls",
+        "hint": "Augstu apgriezienu un sacīkšu dzinēji"
+      },
+      "heavy": {
+        "label": "Lielas kubatūras / čoperis",
+        "hint": "Gaisa dzesēšanas V-dzinēji, piem. Harley-Davidson"
+      },
+      "quad": {
+        "label": "Kvadricikls / UTV",
+        "hint": "Bezceļa tehnika ar kopīgu dzinēja un sajūga eļļu"
+      },
+      "twoStroke": {
+        "label": "2T motorollers / krosa moto",
+        "hint": "Divtaktu dzinēji ar atsevišķu eļļas tvertni vai maisījumu"
+      },
+      "chainsaw": {
+        "label": "Motorzāģis",
+        "hint": "2T maisījuma eļļa un ķēžeļļa"
+      },
+      "trimmer": {
+        "label": "Trimmeris / pūtējs",
+        "hint": "Divtaktu dārza tehnika"
+      },
+      "mower": {
+        "label": "Zāles pļāvējs (4T)",
+        "hint": "Četrtaktu dzinēji zāles pļāvējos un dārza traktoros"
+      },
+      "chainOil": {
+        "label": "Ķēdes eļļošana",
+        "hint": "Zāģa ķēdes un sliedes eļļošana"
+      },
+      "hydraulic": {
+        "label": "Rūpnieciskā hidraulika",
+        "hint": "Preses, darbgaldi, stacionāras sistēmas (HLP)"
+      },
+      "hydraulicHv": {
+        "label": "Mobilā hidraulika",
+        "hint": "Ekskavatori, iekrāvēji, ārā strādājoša tehnika (HVLP)"
+      },
+      "gear": {
+        "label": "Reduktori",
+        "hint": "Slēgtas rūpnieciskās pārnesumkārbas (CLP)"
+      },
+      "compressor": {
+        "label": "Kompresori",
+        "hint": "Virzuļu un rotācijas kompresori"
+      },
+      "chain": {
+        "label": "Ķēdes un konveijeri",
+        "hint": "Ķēžu un vadotņu eļļošana"
+      }
     },
     "brandOther": "Cits ražotājs",
     "brandOtherHint": "Atlasīsim pēc ACEA/API specifikācijas",
@@ -130,10 +172,10 @@
     "comment": "Komentārs",
     "expertCta": "Saņemt ieteikumu",
     "sent": "Paldies! Speciālists atbildēs tuvākajā darba dienā.",
-    "advisorEyebrow": "Ražotāja datubāze",
-    "advisorTitle": "Oficiālais Divinol Lubricant Advisor",
-    "advisorText": "Zeller+Gmelin datubāze ar tūkstošiem transportlīdzekļu modeļu, dzinēju un eļļošanas punktu (angļu valodā).",
-    "advisorCta": "Atvērt Lubricant Advisor",
+    "advisorEyebrow": "Precīzi pēc modeļa",
+    "advisorTitle": "Zināt precīzu auto modeli?",
+    "advisorText": "Oficiālajā Zeller+Gmelin katalogā atradīsiet ne tikai motoreļļu, bet arī pārnesumkārbas, tilta, bremžu un dzesēšanas šķidrumus, ietilpības un maiņas intervālus.",
+    "advisorCta": "Izvēlēties pēc modeļa",
     "faq": [
       {
         "q": "Kā izvēlēties pareizo motoreļļu savam auto?",
@@ -159,7 +201,58 @@
         "q": "Vai drīkst sajaukt dažādas motoreļļas?",
         "a": "Kvalitatīvas eļļas ar vienādu viskozitāti un specifikāciju parasti ir savietojamas, tāpēc papildināšanai ārkārtas gadījumā var izmantot citu eļļu. Tomēr labākās aizsardzības un apstiprinājuma saglabāšanai ieteicams papildināt ar to pašu eļļu, kas ielieta dzinējā."
       }
-    ]
+    ],
+    "model": {
+      "tabsLabel": "Eļļas izvēles veids",
+      "tabQuick": "Ātrā izvēle",
+      "tabQuickHint": "3 soļi: tehnika, ražotājs, dzinējs",
+      "tabModel": "Precīzi pēc modeļa",
+      "tabModelHint": "Marka → modelis → versija: dzinējs, kārba, bremzes, dzesēšana",
+      "tabModelBadge": "Oficiāli",
+      "eyebrow": "Zeller+Gmelin eļļošanas katalogs",
+      "title": "Precīza izvēle pēc transportlīdzekļa modeļa",
+      "text": "Oficiālais Divinol ražotāja katalogs ar desmitiem tūkstošu modeļu. Izvēlieties marku, modeli un versiju — redzēsiet ieteicamos produktus katram mezglam, ietilpības un maiņas intervālus.",
+      "searchLabel": "Marka un modelis",
+      "searchPlaceholder": "Marka un modelis, piem. VW Golf 1.6 TDI",
+      "searchCta": "Meklēt",
+      "clear": "Notīrīt",
+      "examples": "Piemēri:",
+      "coversTitle": "Ieteikumi visiem mezgliem",
+      "covers": {
+        "engine": "Dzinējs",
+        "gearbox": "Pārnesumkārba",
+        "axle": "Tilti, diferenciālis",
+        "brakes": "Bremzes, stūre",
+        "cooling": "Dzesēšana",
+        "intervals": "Ietilpības, intervāli"
+      },
+      "categoriesTitle": "Tehnikas veidi",
+      "categories": {
+        "cars": "Vieglie auto",
+        "classic": "Klasiskie auto",
+        "vans": "Mikroautobusi",
+        "moto": "Moto, kvadricikli",
+        "trucks": "Kravas auto, autobusi",
+        "agri": "Lauksaimniecība",
+        "construction": "Būvtehnika"
+      },
+      "frameTitle": "Divinol eļļošanas katalogs",
+      "frameSource": "Zeller+Gmelin · dati: Olyslager",
+      "openFull": "Atvērt jaunā logā",
+      "restart": "Sākt no jauna",
+      "loading": "Ielādē katalogu…",
+      "langNote": "Katalogs pieejams angļu valodā — produktu nosaukumi un izmēri ir tādi paši kā mūsu veikalā.",
+      "bridgeEyebrow": "Pirkt mūsu veikalā",
+      "bridgeTitle": "Atradāt ieteikto produktu?",
+      "bridgeText": "Ierakstiet produkta nosaukumu vai artikula kodu no kataloga — parādīsim to mūsu veikalā ar cenu.",
+      "bridgePlaceholder": "piem. Syntholight DPF 5W30 vai 49180",
+      "bridgeResults": "Atrasts: {count}",
+      "bridgePopular": "Populāras motoreļļas",
+      "bridgeEmpty": "Šāds produkts mūsu veikalā nav atrasts.",
+      "bridgeAsk": "Pajautājiet speciālistam",
+      "bridgeHint": "Nezināt, kuru izvēlēties? Aizpildiet formu zemāk — speciālists palīdzēs bez maksas.",
+      "from": "no"
+    }
   },
   "calc": {
     "metaTitle": "Eļļas kalkulatori — daudzums, izmaksas, maisījumi",
