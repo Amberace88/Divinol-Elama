@@ -37,6 +37,16 @@ function noindexPreview(request: NextRequest, response: NextResponse) {
 export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // www.divinol.lv / www.divinol.ee → bare domain (the shop language is chosen by the domain)
+  const host = (request.headers.get("host") ?? "").split(":")[0];
+  if (/^www\.divinol\.(lv|ee)$/i.test(host)) {
+    const url = request.nextUrl.clone();
+    url.host = host.slice(4);
+    url.port = "";
+    url.protocol = "https:";
+    return NextResponse.redirect(url, 301);
+  }
+
   // URLs of the old websites → matching page of the new shop (301)
   const lang = siteLangForHost(request.headers.get("host"));
   const legacy = legacyTarget(pathname, lang);
