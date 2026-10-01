@@ -5,3 +5,16 @@
 [build.environment]
   NODE_VERSION = "22"
   NEXT_TELEMETRY_DISABLED = "1"
+
+# www → apex (the shop's language is chosen by the domain, so it must be served on the bare domain)
+[[redirects]]
+  from = "https://www.divinol.ee/*"
+  to = "https://divinol.ee/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.divinol.lv/*"
+  to = "https://divinol.lv/:splat"
+  status = 301
+  force = true

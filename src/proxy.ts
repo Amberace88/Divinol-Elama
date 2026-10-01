@@ -2,6 +2,7 @@ import createMiddleware from "next-intl/middleware";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { routing } from "./i18n/routing";
+import { legacyTarget, siteLangForHost } from "./lib/legacy";
 
 const intl = createMiddleware(routing);
 
@@ -26,8 +27,31 @@ async function withSession(request: NextRequest, response: NextResponse) {
   return { response, user: data.user };
 }
 
+/** The *.netlify.app address stays reachable for testing but must not be indexed next to divinol.lv / divinol.ee. */
+function noindexPreview(request: NextRequest, response: NextResponse) {
+  const host = request.headers.get("host") ?? "";
+  if (host.endsWith(".netlify.app")) response.headers.set("X-Robots-Tag", "noindex, nofollow");
+  return response;
+}
+
 export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // URLs of the old websites → matching page of the new shop (301)
+  const lang = siteLangForHost(request.headers.get("host"));
+  const legacy = legacyTarget(pathname, lang);
+  if (legacy) {
+    const url = request.nextUrl.clone();
+    url.search = "";
+    if (legacy.startsWith("product:")) {
+      url.pathname = "/api/legacy/product";
+      url.searchParams.set("slug", legacy.slice(8));
+      url.searchParams.set("l", lang);
+    } else {
+      url.pathname = legacy;
+    }
+    return NextResponse.redirect(url, 301);
+  }
 
   // Admin panel: not localized, requires a session (role is verified again in the admin layout).
   if (pathname.startsWith("/admin")) {
@@ -38,12 +62,12 @@ export default async function proxy(request: NextRequest) {
       url.searchParams.set("next", pathname);
       return NextResponse.redirect(url);
     }
-    return response;
+    return noindexPreview(request, response);
   }
 
   const response = intl(request);
   const { response: res } = await withSession(request, response);
-  return res;
+  return noindexPreview(request, res);
 }
 
 export const config = {
