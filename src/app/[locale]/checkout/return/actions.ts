@@ -1,7 +1,15 @@
 "use server";
 
-import { isMontonioConfigured } from "@/lib/payments/montonio";
-import { isOnlineMethod, loadPaymentOrder, startPayment, switchToBankTransfer, verifyOrderSignature } from "@/lib/payments/service";
+import {
+  isMethodConfigured,
+  isOnlineMethod,
+  isOnlinePaymentsConfigured,
+  loadPaymentOrder,
+  startPayment,
+  switchToBankTransfer,
+  verifyOrderSignature,
+  type OnlineMethod,
+} from "@/lib/payments/service";
 
 export type RetryResult = { ok: true; paymentUrl: string } | { ok: false; code: "forbidden" | "not_allowed" | "payment_failed" };
 export type SwitchResult =
@@ -9,15 +17,15 @@ export type SwitchResult =
   | { ok: false; code: "forbidden" | "not_allowed" | "generic" };
 
 /** "Pay again" for an unpaid online order (signed return link required). */
-export async function retryPayment(orderId: string, sig: string, method: "montonio_bank" | "montonio_card", locale: string): Promise<RetryResult> {
-  if (!isMontonioConfigured() || !verifyOrderSignature(orderId, sig)) return { ok: false, code: "forbidden" };
-  if (!isOnlineMethod(method)) return { ok: false, code: "not_allowed" };
+export async function retryPayment(orderId: string, sig: string, method: OnlineMethod, locale: string): Promise<RetryResult> {
+  if (!isOnlinePaymentsConfigured() || !verifyOrderSignature(orderId, sig)) return { ok: false, code: "forbidden" };
+  if (!isOnlineMethod(method) || !isMethodConfigured(method)) return { ok: false, code: "not_allowed" };
   const order = await loadPaymentOrder(orderId).catch(() => null);
   if (!order || order.status === "cancelled" || !isOnlineMethod(order.payment_method) || !["pending", "failed"].includes(order.payment_status)) {
     return { ok: false, code: "not_allowed" };
   }
   try {
-    // no preselected bank on a retry — Montonio shows its own bank list
+    // no preselected bank on a retry — Montonio shows its own bank list; Stripe shows its own payment methods
     const paymentUrl = await startPayment(orderId, method, { locale: String(locale).slice(0, 5) });
     return { ok: true, paymentUrl };
   } catch (e) {
@@ -28,7 +36,7 @@ export async function retryPayment(orderId: string, sig: string, method: "monton
 
 /** "Pay by bank transfer instead": proforma issued + e-mailed, order stays reserved. */
 export async function payByBankTransfer(orderId: string, sig: string): Promise<SwitchResult> {
-  if (!isMontonioConfigured() || !verifyOrderSignature(orderId, sig)) return { ok: false, code: "forbidden" };
+  if (!isOnlinePaymentsConfigured() || !verifyOrderSignature(orderId, sig)) return { ok: false, code: "forbidden" };
   try {
     const r = await switchToBankTransfer(orderId);
     return { ok: true, number: r.number, total: Number(r.total_gross), invoice: r.invoice_number };

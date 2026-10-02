@@ -4,6 +4,7 @@ import { LockKeyhole } from "lucide-react";
 import type { Locale } from "@/i18n/routing";
 import { CheckoutForm } from "@/components/checkout/CheckoutForm";
 import { isMontonioConfigured } from "@/lib/payments/montonio";
+import { isStripeConfigured } from "@/lib/payments/stripe";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -27,7 +28,7 @@ export default async function CheckoutPage({ params }: Props) {
             {t("secure")}
           </p>
         </div>
-        <CheckoutForm onlinePayments={isMontonioConfigured()} />
+        <CheckoutForm onlinePayments={isMontonioConfigured()} stripe={isStripeConfigured()} />
       </div>
     </div>
   );

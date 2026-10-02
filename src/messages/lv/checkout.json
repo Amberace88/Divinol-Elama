@@ -70,6 +70,8 @@
     "billingSame": "Rēķina adrese sakrīt ar piegādes adresi",
     "billingTitle": "Juridiskā / rēķina adrese",
     "payments": {
+      "stripe": "Karte, Apple Pay vai Google Pay",
+      "stripeText": "Visa, Mastercard un citi — drošā Stripe maksājuma lapā. Maksājums tiek apstiprināts uzreiz.",
       "card": "Bankas karte",
       "cardText": "Visa, Mastercard, Apple Pay, Google Pay",
       "cardSoon": "Drīzumā",
@@ -87,7 +89,8 @@
       "instant": "Uzreiz",
       "chooseBank": "Izvēlies savu banku",
       "bankHint": "Ja banku neizvēlēsies, to varēsi izvēlēties maksājuma lapā.",
-      "secureMontonio": "Drošs maksājums caur Montonio — kartes un bankas dati netiek glabāti mūsu veikalā."
+      "secureMontonio": "Drošs maksājums caur Montonio — kartes un bankas dati netiek glabāti mūsu veikalā.",
+      "secureStripe": "Drošs maksājums caur Stripe — kartes dati netiek glabāti mūsu veikalā (PCI DSS 1. līmenis, 3-D Secure)."
     },
     "notes": "Piezīmes pasūtījumam",
     "notesPlaceholder": "piem. vēlamais piegādes laiks vai auto informācija",

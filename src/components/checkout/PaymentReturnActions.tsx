@@ -8,16 +8,29 @@ import { useRouter } from "@/i18n/navigation";
 import { buttonClass } from "@/components/ui/Button";
 import { payByBankTransfer, retryPayment } from "@/app/[locale]/checkout/return/actions";
 
-type Method = "montonio_bank" | "montonio_card";
+type Method = "stripe" | "montonio_bank" | "montonio_card";
 
 /** Return page actions for an unpaid online order: pay again (same / other method), bank transfer, re-check. */
-export function PaymentReturnActions({ orderId, sig, method, pending }: { orderId: string; sig: string; method: Method; pending: boolean }) {
+export function PaymentReturnActions({
+  orderId,
+  sig,
+  method,
+  available,
+  pending,
+}: {
+  orderId: string;
+  sig: string;
+  method: Method;
+  /** online methods currently configured (the "other method" button only offers one of these) */
+  available: Method[];
+  pending: boolean;
+}) {
   const t = useTranslations("checkout.paymentReturn");
   const locale = useLocale();
   const router = useRouter();
   const [busy, setBusy] = useState<string | null>(null);
   const [, start] = useTransition();
-  const other: Method = method === "montonio_bank" ? "montonio_card" : "montonio_bank";
+  const other: Method | null = available.find((m) => m !== method) ?? null;
 
   const pay = (m: Method) => {
     setBusy(m);
@@ -59,11 +72,13 @@ export function PaymentReturnActions({ orderId, sig, method, pending }: { orderI
         {busy === method ? spin : <RotateCcw className="size-5" aria-hidden />}
         {t("retry")}
       </button>
-      <div className="grid gap-2.5 sm:grid-cols-2">
-        <button type="button" className={buttonClass("outline", "md", "w-full")} disabled={disabled} onClick={() => pay(other)}>
-          {busy === other ? spin : other === "montonio_card" ? <CreditCard className="size-4" aria-hidden /> : <Landmark className="size-4" aria-hidden />}
-          {t(other === "montonio_card" ? "payByCard" : "payByBank")}
-        </button>
+      <div className={other ? "grid gap-2.5 sm:grid-cols-2" : "grid"}>
+        {other && (
+          <button type="button" className={buttonClass("outline", "md", "w-full")} disabled={disabled} onClick={() => pay(other)}>
+            {busy === other ? spin : other === "montonio_bank" ? <Landmark className="size-4" aria-hidden /> : <CreditCard className="size-4" aria-hidden />}
+            {t(other === "montonio_bank" ? "payByBank" : "payByCard")}
+          </button>
+        )}
         <button type="button" className={buttonClass("outline", "md", "w-full")} disabled={disabled} onClick={transfer}>
           {busy === "transfer" ? spin : <FileText className="size-4" aria-hidden />}
           {t("payByTransfer")}

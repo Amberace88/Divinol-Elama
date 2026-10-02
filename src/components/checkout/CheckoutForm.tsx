@@ -41,11 +41,29 @@ import { OrderSummary, type SummaryTotals } from "./OrderSummary";
 import { ParcelLockerPicker } from "./ParcelLockerPicker";
 import type { ParcelLocker } from "./lockers";
 
-type PaymentId = "montonio_bank" | "montonio_card" | "card" | "bank_transfer" | "invoice" | "cash_on_pickup";
-const PAYMENTS: PaymentId[] = ["card", "bank_transfer", "invoice", "cash_on_pickup"];
-/** With online payments (Montonio) configured: bank links + cards replace the "card — soon" placeholder. */
-const ONLINE_PAYMENTS: PaymentId[] = ["montonio_bank", "montonio_card", "bank_transfer", "invoice", "cash_on_pickup"];
-const isOnline = (p: PaymentId | null) => p === "montonio_bank" || p === "montonio_card";
+type PaymentId = "stripe" | "montonio_bank" | "montonio_card" | "card" | "bank_transfer" | "invoice" | "cash_on_pickup";
+const OFFLINE_PAYMENTS: PaymentId[] = ["bank_transfer", "invoice", "cash_on_pickup"];
+/** Online methods first (Stripe: card / Apple Pay / Google Pay; Montonio: bank links + cards); with neither the "card — soon" placeholder. */
+const paymentList = (stripe: boolean, montonio: boolean): PaymentId[] => [
+  ...(stripe ? (["stripe"] as const) : []),
+  ...(montonio ? (["montonio_bank", "montonio_card"] as const) : []),
+  ...(!stripe && !montonio ? (["card"] as const) : []),
+  ...OFFLINE_PAYMENTS,
+];
+const isOnline = (p: PaymentId | null) => p === "stripe" || p === "montonio_bank" || p === "montonio_card";
+
+/** Small brand chips under the Stripe option (text only — no third-party logo files). */
+function WalletChips() {
+  return (
+    <span className="mt-2 flex flex-wrap gap-1">
+      {["VISA", "Mastercard", "Apple Pay", "Google Pay"].map((w) => (
+        <span key={w} className="rounded-md bg-white px-1.5 py-0.5 text-[10px] font-extrabold tracking-wide text-slate-700 ring-1 ring-line">
+          {w}
+        </span>
+      ))}
+    </span>
+  );
+}
 
 type Bank = { code: string; name: string; logoUrl: string | null };
 type OnlineMethods = { status: "loading" | "ready" | "error"; country: string; banks: Bank[]; card: boolean; wallets: boolean };
@@ -107,6 +125,7 @@ const METHOD_ICON: Record<ShipMethodId, React.ReactNode> = {
   freight: <Truck className="size-5" aria-hidden />,
 };
 const PAY_ICON: Record<PaymentId, React.ReactNode> = {
+  stripe: <CreditCard className="size-5" aria-hidden />,
   montonio_bank: <Landmark className="size-5" aria-hidden />,
   montonio_card: <CreditCard className="size-5" aria-hidden />,
   card: <CreditCard className="size-5" aria-hidden />,
@@ -170,7 +189,7 @@ function Field({
 
 const inputCls = (err?: string) => cn("input mt-1.5 mb-1.5 font-normal", err && "border-danger ring-4 ring-red-100");
 
-export function CheckoutForm({ onlinePayments = false }: { onlinePayments?: boolean }) {
+export function CheckoutForm({ onlinePayments = false, stripe = false }: { onlinePayments?: boolean; stripe?: boolean }) {
   const t = useTranslations("checkout");
   const tm = useTranslations("market");
   const tc = useTranslations("cart");
@@ -240,21 +259,23 @@ export function CheckoutForm({ onlinePayments = false }: { onlinePayments?: bool
   const needsFreight = quotes.find((q) => q.id === "freight")?.available ?? false;
 
   const payAvailable = (p: PaymentId) =>
-    p === "montonio_bank"
+    p === "stripe"
+      ? stripe
+      : p === "montonio_bank"
       ? onlineReady && (banksLoading || banks.length > 0 || online?.status !== "ready")
       : p === "montonio_card"
         ? onlineReady && (banksLoading || Boolean(online?.card))
         : p === "card"
-          ? CARD_ENABLED && !onlineReady
+          ? CARD_ENABLED && !onlineReady && !stripe
           : p === "invoice"
             ? pricing.b2b
             : p === "cash_on_pickup"
               ? method === "pickup"
               : true;
-  const defaultPayment: PaymentId = pricing.b2b ? "invoice" : onlineReady ? "montonio_bank" : "bank_transfer";
+  const defaultPayment: PaymentId = pricing.b2b ? "invoice" : stripe ? "stripe" : onlineReady ? "montonio_bank" : "bank_transfer";
   const wanted = form.payment ?? defaultPayment;
   const payment: PaymentId = payAvailable(wanted) ? wanted : payAvailable(defaultPayment) ? defaultPayment : "bank_transfer";
-  const visiblePayments = (onlineReady ? ONLINE_PAYMENTS : PAYMENTS)
+  const visiblePayments = paymentList(stripe, onlineReady)
     .filter((p) => p !== "invoice" || pricing.b2b)
     .filter((p) => p !== "cash_on_pickup" || method === "pickup")
     .filter((p) => !isOnline(p) || payAvailable(p));
@@ -645,11 +666,22 @@ export function CheckoutForm({ onlinePayments = false }: { onlinePayments?: bool
                 onChange={(v) => set("payment", v as PaymentId)}
                 icon={PAY_ICON[p]}
                 title={t(`payments.${p}`)}
-                text={p === "montonio_card" && online?.status === "ready" && !online.wallets ? t("payments.montonio_cardTextNoWallets") : t(`payments.${p}Text`)}
+                text={
+                  p === "stripe" ? (
+                    <>
+                      {t("payments.stripeText")}
+                      <WalletChips />
+                    </>
+                  ) : p === "montonio_card" && online?.status === "ready" && !online.wallets ? (
+                    t("payments.montonio_cardTextNoWallets")
+                  ) : (
+                    t(`payments.${p}Text`)
+                  )
+                }
                 badge={
                   p === "card" && !CARD_ENABLED ? (
                     <span className="rounded-full bg-brand-100 px-2 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wide text-brand-700">{t("payments.cardSoon")}</span>
-                  ) : p === "montonio_bank" ? (
+                  ) : p === "montonio_bank" || p === "stripe" ? (
                     <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wide text-emerald-700 ring-1 ring-emerald-200">
                       {t("payments.instant")}
                     </span>
@@ -712,7 +744,7 @@ export function CheckoutForm({ onlinePayments = false }: { onlinePayments?: bool
           {isOnline(payment) && (
             <p className="mt-4 flex items-center gap-2 text-[12px] text-muted">
               <LockKeyhole className="size-3.5 shrink-0" aria-hidden />
-              {t("payments.secureMontonio")}
+              {payment === "stripe" ? t("payments.secureStripe") : t("payments.secureMontonio")}
             </p>
           )}
         </Step>

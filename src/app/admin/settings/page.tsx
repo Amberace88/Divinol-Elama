@@ -7,8 +7,10 @@ import { SettingsForms, type SettingsInit } from "@/components/admin/settings/Se
 import { EmailSettingsCard } from "@/components/admin/settings/EmailSettingsCard";
 import { emailStatus } from "@/lib/email/send";
 import { MontonioSettingsCard } from "@/components/admin/settings/MontonioSettingsCard";
-import { montonioAdminStatus } from "@/lib/payments/montonio";
-import { notificationUrl } from "@/lib/payments/service";
+import { isMontonioConfigured, montonioAdminStatus } from "@/lib/payments/montonio";
+import { stripeAdminStatus } from "@/lib/payments/stripe";
+import { notificationUrl, stripeWebhookUrl } from "@/lib/payments/service";
+import { StripeSettingsCard } from "@/components/admin/settings/StripeSettingsCard";
 import { ErrorNote, PageHeader } from "@/components/admin/ui";
 
 export const metadata = { title: "Iestatījumi" };
@@ -44,8 +46,15 @@ export default async function SettingsPage() {
       </div>
       <div className="mt-6 grid gap-6 lg:grid-cols-[200px_minmax(0,1fr)]">
         <div className="hidden lg:block" />
-        <MontonioSettingsCard status={{ ...(await montonioAdminStatus()), webhookUrl: notificationUrl() }} developer={developer} />
+        <StripeSettingsCard status={{ ...(await stripeAdminStatus()), webhookUrl: stripeWebhookUrl() }} developer={developer} />
       </div>
+      {/* Montonio stays available as a second provider, shown only once it has keys */}
+      {isMontonioConfigured() && (
+        <div className="mt-6 grid gap-6 lg:grid-cols-[200px_minmax(0,1fr)]">
+          <div className="hidden lg:block" />
+          <MontonioSettingsCard status={{ ...(await montonioAdminStatus()), webhookUrl: notificationUrl() }} developer={developer} />
+        </div>
+      )}
     </>
   );
 }

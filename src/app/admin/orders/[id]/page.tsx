@@ -103,7 +103,10 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
   const pm = (order.payment_meta ?? {}) as Record<string, unknown>;
   const metaStr = (k: string) => (typeof pm[k] === "string" && pm[k] ? (pm[k] as string) : null);
   const isMontonio = order.payment_provider === "montonio";
-  const paymentEvents = events.filter((e) => e.type === "payment" || (e.type === "invoice" && isMontonio)).slice(0, 8);
+  const isStripe = order.payment_provider === "stripe";
+  const isOnlinePay = isMontonio || isStripe;
+  const paymentEvents = events.filter((e) => e.type === "payment" || (e.type === "invoice" && isOnlinePay)).slice(0, 8);
+  const stripeBase = metaStr("env") === "live" ? "https://dashboard.stripe.com" : "https://dashboard.stripe.com/test";
 
   return (
     <>
@@ -298,10 +301,38 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
                         ...(Number(pm.attempts) > 1 ? ([["Mēģinājumi", String(pm.attempts)]] as [string, string][]) : []),
                       ] as [string, React.ReactNode][])
                     : []),
+                  ...(isStripe
+                    ? ([
+                        ["Sistēma", `Stripe${metaStr("env") === "live" ? "" : " (testa režīms)"}`],
+                        ...(metaStr("method_label") ? ([["Samaksāts ar", metaStr("method_label")]] as [string, string][]) : []),
+                        ...(metaStr("sender_name") ? ([["Maksātājs", metaStr("sender_name")]] as [string, string][]) : []),
+                        [
+                          "Stripe",
+                          metaStr("payment_intent") ? (
+                            <a
+                              key="pi"
+                              href={`${stripeBase}/payments/${metaStr("payment_intent")}`}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="font-semibold text-navy-600 underline-offset-2 hover:underline"
+                            >
+                              Atvērt maksājumu Stripe ↗
+                            </a>
+                          ) : order.payment_ref ? (
+                            <code key="ref" className="break-all text-[12px]">{order.payment_ref}</code>
+                          ) : (
+                            "—"
+                          ),
+                        ],
+                        ...(metaStr("stripe_status") ? ([["Stripe statuss", metaStr("stripe_status")]] as [string, string][]) : []),
+                        ...(metaStr("refunded_eur") ? ([["Atmaksāts", `${metaStr("refunded_eur")} €`]] as [string, string][]) : []),
+                        ...(Number(pm.attempts) > 1 ? ([["Mēģinājumi", String(pm.attempts)]] as [string, string][]) : []),
+                      ] as [string, React.ReactNode][])
+                    : []),
                 ]}
               />
               <PaymentControl orderId={order.id} paymentStatus={order.payment_status} />
-              {isMontonio && (
+              {isOnlinePay && (
                 <div className="mt-3 space-y-3">
                   <PaymentRecheckButton orderId={order.id} />
                   {paymentEvents.length > 0 && (
@@ -310,7 +341,7 @@ export default async function OrderPage({ params }: { params: Promise<{ id: stri
                         <li key={e.id} className="relative text-[12px]">
                           <span
                             className={`absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full ring-4 ring-white ${
-                              /UZMANĪBU|neizdevās|netika|anulēja/i.test(e.message ?? "") ? "bg-red-500" : /Apmaksāts|ELA-/.test(e.message ?? "") ? "bg-emerald-500" : "bg-slate-300"
+                              /UZMANĪBU|neizdevās|netika|anulēja|anulēts/i.test(e.message ?? "") ? "bg-red-500" : /Apmaksāts|ELA-/.test(e.message ?? "") ? "bg-emerald-500" : "bg-slate-300"
                             }`}
                             aria-hidden
                           />

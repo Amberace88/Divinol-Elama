@@ -54,7 +54,8 @@
         "invoice": "Rēķins ar pēcapmaksu",
         "cash_on_pickup": "Apmaksa saņemot",
         "montonio_bank": "Bankas saite (internetbanka)",
-        "montonio_card": "Maksājumu karte / Apple Pay / Google Pay"
+        "montonio_card": "Maksājumu karte / Apple Pay / Google Pay",
+        "stripe": "Maksājumu karte / Apple Pay / Google Pay"
       },
       "bankIntro": "Lūdzam apmaksāt pasūtījumu ar bankas pārskaitījumu uz šiem rekvizītiem:",
       "recipient": "Saņēmējs",

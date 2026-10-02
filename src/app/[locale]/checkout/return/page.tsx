@@ -6,10 +6,13 @@ import { redirect } from "@/i18n/navigation";
 import { formatMoney } from "@/lib/commerce";
 import { getStoreSettings } from "@/lib/settings";
 import { isMontonioConfigured, verifyToken } from "@/lib/payments/montonio";
+import { isStripeConfigured } from "@/lib/payments/stripe";
 import {
   applyPaymentStatus,
   finalInvoiceOf,
   isOnlineMethod,
+  isOnlinePaymentsConfigured,
+  type OnlineMethod,
   loadPaymentOrder,
   syncPayment,
   verifyOrderSignature,
@@ -35,9 +38,10 @@ const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
 type View = "paid" | "pending" | "failed" | "cancelled" | "invalid";
 
 /**
- * Montonio redirects the customer here: /checkout/return?o=<order id>&s=<signature>&order-token=<JWT>.
+ * Stripe / Montonio redirect the customer here: /checkout/return?o=<order id>&s=<signature>
+ *   Stripe: …&session_id=cs_… (paid) or …&cancelled=1 (customer went back); Montonio: …&order-token=<JWT>.
  * The link is HMAC-signed by us (guests have no session). The status shown comes from our DB after syncing it
- * with Montonio (GET /orders/:uuid) — the webhook usually got there first; both paths are idempotent.
+ * with the provider (Stripe session / Montonio order) — the webhook usually got there first; both are idempotent.
  */
 export default async function PaymentReturnPage({ params, searchParams }: Props) {
   const { locale: l } = await params;
@@ -54,15 +58,15 @@ export default async function PaymentReturnPage({ params, searchParams }: Props)
   const c = settings.company;
 
   let order: PaymentOrderRow | null = null;
-  if (isMontonioConfigured() && verifyOrderSignature(orderId, sig)) {
+  if (isOnlinePaymentsConfigured() && verifyOrderSignature(orderId, sig)) {
     order = await loadPaymentOrder(orderId).catch(() => null);
-    if (order && order.payment_provider === "montonio" && ["pending", "failed"].includes(order.payment_status)) {
+    if (order && (order.payment_provider === "montonio" || order.payment_provider === "stripe") && ["pending", "failed"].includes(order.payment_status)) {
       try {
         await syncPayment(order.id);
       } catch (e) {
-        console.error("[payment return] Montonio sync failed", e);
+        console.error(`[payment return] ${order.payment_provider} sync failed`, e);
         // API unreachable: fall back to the signed order-token Montonio appended to the return URL
-        const decoded = verifyToken(token);
+        const decoded = order.payment_provider === "montonio" && isMontonioConfigured() ? verifyToken(token) : null;
         if (decoded && decoded.merchantReference === order.number) {
           await applyPaymentStatus(order.id, {
             ref: decoded.uuid ?? null,
@@ -98,7 +102,8 @@ export default async function PaymentReturnPage({ params, searchParams }: Props)
     });
   }
 
-  const view: View = !order
+  const customerCancelled = one(sp.cancelled) === "1";
+  const baseView: View = !order
     ? "invalid"
     : ["paid", "refunded", "partially_refunded"].includes(order.payment_status)
       ? "paid"
@@ -107,11 +112,18 @@ export default async function PaymentReturnPage({ params, searchParams }: Props)
         : order.payment_status === "failed"
           ? "failed"
           : "pending";
+  // back from Stripe without paying → "not completed, try again" (the session stays open until it expires)
+  const view: View = baseView === "pending" && customerCancelled ? "failed" : baseView;
 
   const total = order ? Number(order.total_gross) : null;
   const invoice = order && view === "paid" ? await finalInvoiceOf(order.id).catch(() => null) : null;
   const method = order && isOnlineMethod(order.payment_method) ? order.payment_method : null;
-  const bankName = typeof order?.payment_meta?.provider_name === "string" ? (order.payment_meta.provider_name as string) : null;
+  const metaText = (k: string) => (typeof order?.payment_meta?.[k] === "string" && order.payment_meta[k] ? (order.payment_meta[k] as string) : null);
+  const bankName = metaText("provider_name") ?? metaText("method_label");
+  const available: OnlineMethod[] = [
+    ...(isStripeConfigured() ? (["stripe"] as const) : []),
+    ...(isMontonioConfigured() ? (["montonio_bank", "montonio_card"] as const) : []),
+  ];
 
   const icon =
     view === "paid" ? null : view === "pending" ? (
@@ -164,7 +176,7 @@ export default async function PaymentReturnPage({ params, searchParams }: Props)
               <div className="bg-surface p-4">
                 <dt className="text-[11px] font-bold uppercase tracking-wider text-muted">{t("payment")}</dt>
                 <dd className="mt-1 flex items-center gap-1.5 text-[14px] font-bold text-ink">
-                  {method === "montonio_card" ? <CreditCard className="size-4 text-navy-500" aria-hidden /> : <Landmark className="size-4 text-navy-500" aria-hidden />}
+                  {method && method !== "montonio_bank" ? <CreditCard className="size-4 text-navy-500" aria-hidden /> : <Landmark className="size-4 text-navy-500" aria-hidden />}
                   {method ? tp(method) : "—"}
                 </dd>
                 {bankName && view === "paid" && <dd className="text-[12px] text-muted">{bankName}</dd>}
@@ -191,7 +203,7 @@ export default async function PaymentReturnPage({ params, searchParams }: Props)
 
           {order && (view === "pending" || view === "failed") && method && (
             <div className="mt-8">
-              <PaymentReturnActions orderId={order.id} sig={sig} method={method} pending={view === "pending"} />
+              <PaymentReturnActions orderId={order.id} sig={sig} method={method} available={available} pending={view === "pending" && !customerCancelled} />
             </div>
           )}
 

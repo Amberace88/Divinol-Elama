@@ -5,8 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { deferEmail } from "@/lib/email/send";
 import { notifyOrderPlaced, type PlacedOrderRpc } from "@/lib/email/notify";
-import { isMontonioConfigured } from "@/lib/payments/montonio";
-import { applyPaymentStatus, isOnlineMethod, startPayment } from "@/lib/payments/service";
+import { applyPaymentStatus, isMethodConfigured, isOnlineMethod, startPayment } from "@/lib/payments/service";
 
 const address = z
   .object({
@@ -41,7 +40,7 @@ const schema = z.object({
     .nullable(),
   shipping_address: address,
   billing_address: address,
-  payment_method: z.enum(["bank_transfer", "card", "invoice", "cash_on_pickup", "montonio_bank", "montonio_card"]),
+  payment_method: z.enum(["bank_transfer", "card", "invoice", "cash_on_pickup", "stripe", "montonio_bank", "montonio_card"]),
   /** Montonio bank (BIC code from GET /stores/payment-methods) preselected in the checkout — bank link only */
   bank: z.string().trim().max(40).regex(/^[\w-]*$/).nullable().optional(),
   notes: z.string().max(2000).nullable(),
@@ -91,7 +90,7 @@ export async function placeOrder(input: PlaceOrderPayload): Promise<PlaceOrderRe
   }
   const { bank, ...orderPayload } = parsed.data;
   const online = isOnlineMethod(orderPayload.payment_method);
-  if (online && !isMontonioConfigured()) return { ok: false, code: "invalid_payment" };
+  if (online && !isMethodConfigured(orderPayload.payment_method as "stripe")) return { ok: false, code: "invalid_payment" };
   try {
     const supabase = await createClient();
     const { data, error } = await supabase.rpc("place_order", { payload: orderPayload });
@@ -105,9 +104,10 @@ export async function placeOrder(input: PlaceOrderPayload): Promise<PlaceOrderRe
     const r = data as PlacedOrderRpc;
 
     if (online) {
-      // Online payment: no e-mails yet (sent when Montonio confirms the payment) → create the Montonio order.
+      // Online payment: no e-mails yet (sent when the provider confirms the payment) → create the Stripe / Montonio payment.
+      const provider = orderPayload.payment_method === "stripe" ? "Stripe" : "Montonio";
       try {
-        const paymentUrl = await startPayment(r.id, orderPayload.payment_method as "montonio_bank" | "montonio_card", {
+        const paymentUrl = await startPayment(r.id, orderPayload.payment_method as "stripe" | "montonio_bank" | "montonio_card", {
           preferredProvider: orderPayload.payment_method === "montonio_bank" ? bank || null : null,
           locale: orderPayload.locale,
         });
@@ -121,13 +121,13 @@ export async function placeOrder(input: PlaceOrderPayload): Promise<PlaceOrderRe
           paymentUrl,
         };
       } catch (e) {
-        console.error("[checkout] Montonio order failed", e);
+        console.error(`[checkout] ${provider} payment failed`, e);
         // the payment could not even start → cancel the order (stock restored) and let the customer retry / pick another method
         await applyPaymentStatus(r.id, {
           ref: null,
           status: "ABANDONED",
-          meta: { reason: "Neizdevās izveidot Montonio maksājumu — pasūtījums atcelts automātiski" },
-        }).catch((err) => console.error("[checkout] could not cancel order after Montonio failure", err));
+          meta: { reason: `Neizdevās izveidot ${provider} maksājumu — pasūtījums atcelts automātiski` },
+        }).catch((err) => console.error(`[checkout] could not cancel order after ${provider} failure`, err));
         return { ok: false, code: "payment_failed" };
       }
     }

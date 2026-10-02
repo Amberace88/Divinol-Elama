@@ -64,8 +64,8 @@ export function renderOrderConfirmation(ctx: EmailContext, input: OrderConfirmat
       payHtml.push(p(`&#128206;&nbsp; ${esc(t("payment.invoiceAttached"))}`, { muted: true, size: 13, margin: "10px 0 0" }));
       payText.push(t("payment.invoiceAttached"));
     }
-  } else if (o.payment_method === "montonio_bank" || o.payment_method === "montonio_card") {
-    // online payment (Montonio) — this e-mail is sent once the payment has arrived
+  } else if (o.payment_method === "montonio_bank" || o.payment_method === "montonio_card" || o.payment_method === "stripe") {
+    // online payment (Stripe / Montonio) — this e-mail is sent once the payment has arrived
     const msg = paid ? t("payment.paidOnline", { amount: total }) : t("payment.onlinePending");
     payHtml.push(p(`${paid ? "&#10003;&nbsp; " : ""}${esc(msg)}`, { margin: "0" }));
     payText.push(msg);

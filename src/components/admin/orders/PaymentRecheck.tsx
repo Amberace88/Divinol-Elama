@@ -8,7 +8,7 @@ import { btn } from "../styles";
 export function PaymentRecheckButton({ orderId }: { orderId: string }) {
   const { run, pending } = useActionRunner();
   return (
-    <button type="button" className={btn("outline", "md", "w-full")} disabled={pending} onClick={() => run(() => recheckPayment(orderId), { loading: "Pārbauda Montonio…" })}>
+    <button type="button" className={btn("outline", "md", "w-full")} disabled={pending} onClick={() => run(() => recheckPayment(orderId), { loading: "Pārbauda maksājumu…" })}>
       {pending ? <Spinner /> : <RefreshCw className="h-4 w-4" />} Atkārtoti pārbaudīt maksājumu
     </button>
   );

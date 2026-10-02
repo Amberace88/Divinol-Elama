@@ -6,24 +6,45 @@ import { absoluteUrl, siteUrl } from "@/lib/seo";
 import { createServiceClient } from "@/lib/supabase/service";
 import { deferEmail } from "@/lib/email/send";
 import { notifyOnlinePaymentReceived, notifyOrderSwitchedToTransfer } from "@/lib/email/notify";
-import { createPaymentOrder, getPaymentOrder, isMontonioConfigured, MontonioError, type OnlineMethod } from "./montonio";
+import { createPaymentOrder, getPaymentOrder, isMontonioConfigured, type OnlineMethod as MontonioMethod } from "./montonio";
+import { createCheckoutSession, expireSession, isStripeConfigured, retrieveSession, sessionMeta, sessionStatus } from "./stripe";
 
 /**
- * Glue between orders (Supabase, service role) and Montonio. All state changes go through the SQL functions of
- * migration 0011, which are idempotent and serialised by a row lock, so the webhook, the return page and the admin
- * "re-check" button may all run for the same payment in any order and any number of times.
+ * Glue between orders (Supabase, service role) and the online payment providers — Stripe (primary) and Montonio.
+ * All state changes go through the SQL functions of migrations 0011 / 0015, which are idempotent and serialised by
+ * a row lock, so the webhook, the return page and the admin "re-check" button may all run for the same payment in
+ * any order and any number of times.
  */
 
-export const ONLINE_METHODS: OnlineMethod[] = ["montonio_bank", "montonio_card"];
-export const isOnlineMethod = (m: string | null | undefined): m is OnlineMethod => m === "montonio_bank" || m === "montonio_card";
+export type OnlineMethod = MontonioMethod | "stripe";
+export const ONLINE_METHODS: OnlineMethod[] = ["stripe", "montonio_bank", "montonio_card"];
+export const isOnlineMethod = (m: string | null | undefined): m is OnlineMethod => m === "stripe" || m === "montonio_bank" || m === "montonio_card";
+
+/** Is the provider behind this online method configured (keys + service role)? */
+export function isMethodConfigured(m: OnlineMethod) {
+  return m === "stripe" ? isStripeConfigured() : isMontonioConfigured();
+}
+
+/** Any online payment provider configured (return page / pay-again links work). */
+export function isOnlinePaymentsConfigured() {
+  return isStripeConfigured() || isMontonioConfigured();
+}
+
+export class PaymentError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "PaymentError";
+  }
+}
 
 // ───────────────────────── signed return links ─────────────────────────
 // The return page / "pay again" / "switch to bank transfer" act on an order without a user session (guests), so
 // they require ?o=<order id>&s=<HMAC(secret, order id)> — only links we generated can touch an order.
 
 function secret() {
-  const s = process.env.MONTONIO_SECRET_KEY?.trim();
-  if (!s) throw new MontonioError("Montonio is not configured");
+  // a dedicated secret survives switching / rotating provider keys; otherwise any configured provider secret
+  const s = process.env.PAYMENT_LINK_SECRET?.trim() || process.env.MONTONIO_SECRET_KEY?.trim() || process.env.STRIPE_SECRET_KEY?.trim();
+  if (!s) throw new PaymentError("Online payments are not configured");
   return s;
 }
 
@@ -47,6 +68,10 @@ const toLocale = (v: string | null | undefined): Locale => (v && hasLocale(routi
 export function paymentReturnUrl(orderId: string, locale: string) {
   const base = absoluteUrl("/checkout/return", toLocale(locale));
   return `${base}?o=${encodeURIComponent(orderId)}&s=${orderSignature(orderId)}`;
+}
+
+export function stripeWebhookUrl() {
+  return `${siteUrl("lv").replace(/\/$/, "")}/api/payments/stripe/webhook`;
 }
 
 export function notificationUrl() {
@@ -121,16 +146,17 @@ const num = (v: unknown) => {
 };
 
 /**
- * Creates a Montonio order for an unpaid online order and records it (payment_attach). Returns the payment URL.
- * Throws MontonioError / DB errors — the caller decides what to do with the order.
+ * Creates the provider payment (Stripe Checkout Session / Montonio order) for an unpaid online order and records it
+ * (payment_attach). Returns the URL of the provider's hosted payment page.
+ * Throws PaymentError / provider errors / DB errors — the caller decides what to do with the order.
  */
 export async function startPayment(orderId: string, method: OnlineMethod, opts: { preferredProvider?: string | null; locale?: string } = {}) {
-  if (!isMontonioConfigured()) throw new MontonioError("Montonio is not configured");
+  if (!isMethodConfigured(method)) throw new PaymentError(`${method} is not configured`);
   const db = createServiceClient();
   const order = await loadPaymentOrder(orderId);
-  if (!order) throw new MontonioError("Order not found");
+  if (!order) throw new PaymentError("Order not found");
   if (order.status === "cancelled" || !["pending", "failed"].includes(order.payment_status) || !isOnlineMethod(order.payment_method)) {
-    throw new MontonioError("payment_not_allowed");
+    throw new PaymentError("payment_not_allowed");
   }
   const { data: items } = await db.from("order_items").select("name, pack_label, qty, line_net").eq("order_id", orderId).order("name");
   const vat = num(order.vat_rate);
@@ -143,14 +169,42 @@ export async function startPayment(orderId: string, method: OnlineMethod, opts: 
   // quantity 1 with the line total keeps the sum exact; lines are only sent if they add up (see createPaymentOrder)
   if (num(order.shipping_net) > 0) lineItems.push({ name: "Piegāde", quantity: 1, finalPrice: gross(num(order.shipping_net)) });
 
-  const addr = order.billing_address ?? order.shipping_address ?? null;
   const locale = opts.locale || order.locale;
+
+  if (method === "stripe") {
+    // "pay again": close the previous, still open session so the customer cannot pay twice
+    if (order.payment_provider === "stripe" && order.payment_ref) {
+      await expireSession(order.payment_ref).catch(() => null);
+    }
+    const returnUrl = paymentReturnUrl(order.id, locale);
+    const session = await createCheckoutSession({
+      orderId: order.id,
+      orderNumber: order.number,
+      email: order.email,
+      locale,
+      total: num(order.total_gross),
+      lines: lineItems.map((l) => ({ name: l.name, amount: l.finalPrice })),
+      successUrl: `${returnUrl}&session_id={CHECKOUT_SESSION_ID}`,
+      cancelUrl: `${returnUrl}&cancelled=1`,
+      description: `Divinol ${order.number}`,
+    });
+    const { error } = await db.rpc("payment_attach", {
+      p_order: order.id,
+      p_ref: session.id,
+      p_method: "stripe",
+      p_meta: { method: "stripe", env: process.env.STRIPE_SECRET_KEY?.trim().match(/^(sk|rk)_live_/) ? "live" : "test" },
+    });
+    if (error) throw error;
+    return session.url as string;
+  }
+
+  const addr = order.billing_address ?? order.shipping_address ?? null;
   const created = await createPaymentOrder({
     merchantReference: order.number,
     grandTotal: num(order.total_gross),
     locale,
     country: order.market,
-    method,
+    method: method as MontonioMethod,
     preferredProvider: method === "montonio_bank" ? opts.preferredProvider ?? null : null,
     returnUrl: paymentReturnUrl(order.id, locale),
     notificationUrl: notificationUrl(),
@@ -218,10 +272,22 @@ export async function applyPaymentStatus(
   return r;
 }
 
-/** Fetches the authoritative status from Montonio (GET /orders/:uuid) and applies it. */
-export async function syncPayment(orderId: string): Promise<ApplyResult & { montonioStatus?: string }> {
+/** Fetches the authoritative status from the provider (Stripe session / Montonio order) and applies it. */
+export async function syncPayment(orderId: string): Promise<ApplyResult & { providerStatus?: string }> {
   const order = await loadPaymentOrder(orderId);
   if (!order) return { found: false, changed: false };
+  if (order.payment_provider === "stripe" && order.payment_ref) {
+    const session = await retrieveSession(order.payment_ref);
+    const m = sessionStatus(session);
+    const label = `${session.status ?? "?"} / ${session.payment_status}`;
+    if (m.status === "PENDING") return { found: true, changed: false, payment_status: order.payment_status, status: order.status, providerStatus: label };
+    // a refunded session was PAID first — make sure "paid" (and the final invoice) is recorded before the refund
+    if (m.status === "REFUNDED" || m.status === "PARTIALLY_REFUNDED") {
+      await applyPaymentStatus(order.id, { ref: session.id, status: "PAID", amount: m.amount, currency: m.currency, meta: sessionMeta(session) });
+    }
+    const r = await applyPaymentStatus(order.id, { ref: session.id, status: m.status, amount: m.amount, currency: m.currency, meta: sessionMeta(session) });
+    return { ...r, providerStatus: label };
+  }
   if (order.payment_provider !== "montonio" || !order.payment_ref) return { found: true, changed: false, payment_status: order.payment_status, status: order.status };
   const m = await getPaymentOrder(order.payment_ref);
   const paidIntent = m.paymentIntents?.find((i) => i.status === "PAID");
@@ -232,7 +298,7 @@ export async function syncPayment(orderId: string): Promise<ApplyResult & { mont
     currency: m.currency ?? null,
     meta: { payment_method_type: paidIntent?.paymentMethodType ?? m.paymentMethodType },
   });
-  return { ...r, montonioStatus: m.paymentStatus };
+  return { ...r, providerStatus: m.paymentStatus };
 }
 
 /** "Pay by bank transfer instead" → proforma issued; the order confirmation (with proforma PDF) is e-mailed. */

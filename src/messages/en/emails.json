@@ -54,7 +54,8 @@
         "invoice": "Invoice (deferred payment)",
         "cash_on_pickup": "Pay on pickup",
         "montonio_bank": "Bank link (online banking)",
-        "montonio_card": "Card / Apple Pay / Google Pay"
+        "montonio_card": "Card / Apple Pay / Google Pay",
+        "stripe": "Card / Apple Pay / Google Pay"
       },
       "bankIntro": "Please pay for the order by bank transfer using these details:",
       "recipient": "Beneficiary",

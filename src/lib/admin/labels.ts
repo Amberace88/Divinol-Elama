@@ -31,6 +31,7 @@ export const PAYMENT_METHOD: Record<string, string> = {
   cash_on_pickup: "Maksa saņemot",
   montonio_bank: "Bankas saite (Montonio)",
   montonio_card: "Karte / Apple Pay / Google Pay (Montonio)",
+  stripe: "Karte / Apple Pay / Google Pay (Stripe)",
 };
 
 export const SHIPPING_METHOD: Record<string, string> = {

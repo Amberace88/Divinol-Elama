@@ -70,6 +70,8 @@
     "billingSame": "Sąskaitos adresas sutampa su pristatymo adresu",
     "billingTitle": "Juridinis / sąskaitos adresas",
     "payments": {
+      "stripe": "Kortelė, Apple Pay arba Google Pay",
+      "stripeText": "Visa, Mastercard ir kt. — saugiame Stripe mokėjimo puslapyje. Mokėjimas patvirtinamas iškart.",
       "card": "Banko kortelė",
       "cardText": "Visa, Mastercard, Apple Pay, Google Pay",
       "cardSoon": "Netrukus",
@@ -87,7 +89,8 @@
       "instant": "Iš karto",
       "chooseBank": "Pasirinkite banką",
       "bankHint": "Jei banko čia nepasirinksite, galėsite jį pasirinkti mokėjimo puslapyje.",
-      "secureMontonio": "Saugus mokėjimas per Montonio — kortelės ir banko duomenys mūsų parduotuvėje nesaugomi."
+      "secureMontonio": "Saugus mokėjimas per Montonio — kortelės ir banko duomenys mūsų parduotuvėje nesaugomi.",
+      "secureStripe": "Saugus mokėjimas per Stripe — kortelės duomenys mūsų parduotuvėje nesaugomi (PCI DSS 1 lygis, 3-D Secure)."
     },
     "notes": "Pastabos užsakymui",
     "notesPlaceholder": "pvz., pageidaujamas pristatymo laikas arba automobilio informacija",

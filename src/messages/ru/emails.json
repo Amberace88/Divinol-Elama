@@ -54,7 +54,8 @@
         "invoice": "Счёт с отсрочкой платежа",
         "cash_on_pickup": "Оплата при получении",
         "montonio_bank": "Банковская ссылка (интернет-банк)",
-        "montonio_card": "Карта / Apple Pay / Google Pay"
+        "montonio_card": "Карта / Apple Pay / Google Pay",
+        "stripe": "Банковская карта / Apple Pay / Google Pay"
       },
       "bankIntro": "Пожалуйста, оплатите заказ банковским переводом по следующим реквизитам:",
       "recipient": "Получатель",

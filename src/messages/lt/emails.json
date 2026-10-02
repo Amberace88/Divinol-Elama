@@ -54,7 +54,8 @@
         "invoice": "Sąskaita su atidėtu mokėjimu",
         "cash_on_pickup": "Apmokėjimas atsiimant",
         "montonio_bank": "Banko nuoroda (internetinė bankininkystė)",
-        "montonio_card": "Kortelė / Apple Pay / Google Pay"
+        "montonio_card": "Kortelė / Apple Pay / Google Pay",
+        "stripe": "Mokėjimo kortelė / Apple Pay / Google Pay"
       },
       "bankIntro": "Prašome apmokėti užsakymą banko pavedimu šiais rekvizitais:",
       "recipient": "Gavėjas",

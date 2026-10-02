@@ -70,6 +70,8 @@
     "billingSame": "Arve aadress ühtib tarneaadressiga",
     "billingTitle": "Juriidiline / arve aadress",
     "payments": {
+      "stripe": "Kaart, Apple Pay või Google Pay",
+      "stripeText": "Visa, Mastercard jt — turvalisel Stripe'i makselehel. Makse kinnitatakse kohe.",
       "card": "Pangakaart",
       "cardText": "Visa, Mastercard, Apple Pay, Google Pay",
       "cardSoon": "Peagi",
@@ -87,7 +89,8 @@
       "instant": "Kohe",
       "chooseBank": "Vali oma pank",
       "bankHint": "Kui panka siin ei vali, saad selle valida makselehel.",
-      "secureMontonio": "Turvaline makse Montonio kaudu — kaardi- ja pangaandmeid meie poes ei säilitata."
+      "secureMontonio": "Turvaline makse Montonio kaudu — kaardi- ja pangaandmeid meie poes ei säilitata.",
+      "secureStripe": "Turvaline makse Stripe'i kaudu — kaardiandmeid meie poes ei salvestata (PCI DSS tase 1, 3-D Secure)."
     },
     "notes": "Märkused tellimusele",
     "notesPlaceholder": "nt soovitud tarneaeg või auto andmed",

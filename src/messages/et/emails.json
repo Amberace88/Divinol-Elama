@@ -54,7 +54,8 @@
         "invoice": "Arve järelmaksuga",
         "cash_on_pickup": "Tasumine kättesaamisel",
         "montonio_bank": "Pangalink (internetipank)",
-        "montonio_card": "Kaart / Apple Pay / Google Pay"
+        "montonio_card": "Kaart / Apple Pay / Google Pay",
+        "stripe": "Pangakaart / Apple Pay / Google Pay"
       },
       "bankIntro": "Palun tasu tellimuse eest pangaülekandega järgmistel rekvisiitidel:",
       "recipient": "Saaja",
