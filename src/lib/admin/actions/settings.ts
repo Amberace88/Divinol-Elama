@@ -35,6 +35,17 @@ const schemas = {
         max_item: z.number().positive().max(10000).nullable().optional(),
         free_over: z.boolean().optional(),
         surcharge: z.object({ LV: money, EE: money, LT: money }).partial().optional(),
+        tiers: z
+          .array(
+            z.object({
+              id: z.string().trim().min(1).max(20),
+              label: z.string().trim().min(1, "Norādiet nosaukumu").max(60),
+              max_kg: z.number({ error: "Norādiet svaru" }).positive("Svaram jābūt > 0").max(2000),
+              price_net: z.object({ LV: money, EE: money, LT: money }).partial(),
+            }),
+          )
+          .max(12)
+          .optional(),
       }),
     ),
   }),

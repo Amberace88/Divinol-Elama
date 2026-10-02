@@ -595,7 +595,9 @@
         "q": "Vai piegādājat uz Igauniju un Lietuvu?",
         "a": "Jā. Uz Igauniju un Lietuvu piegādājam ar pakomātu, kurjeru vai kravas pārvadātāju. Cenas tiek aprēķinātas ar attiecīgās valsts PVN likmi, un bezmaksas piegādes slieksnis ir norādīts tabulā augstāk."
       }
-    ]
+    ],
+    "fromPrice": "no {amount}",
+    "bySize": "Cena atkarīga no sūtījuma izmēra"
   },
   "legal": {
     "termsMetaTitle": "Lietošanas un pirkšanas noteikumi",

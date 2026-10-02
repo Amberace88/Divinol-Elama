@@ -595,7 +595,9 @@
         "q": "Kas tarnite ka Lätisse ja Leetu?",
         "a": "Jah. Lätisse ja Leetu tarnime pakiautomaadi, kulleri või veoautoga. Hinnad arvutatakse vastavalt sihtriigi käibemaksumäärale ning tasuta tarne lävi on toodud ülal olevas tabelis."
       }
-    ]
+    ],
+    "fromPrice": "alates {amount}",
+    "bySize": "Hind sõltub saadetise suurusest"
   },
   "legal": {
     "termsMetaTitle": "Kasutus- ja ostutingimused",

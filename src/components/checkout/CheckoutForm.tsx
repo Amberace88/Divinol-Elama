@@ -570,7 +570,9 @@ export function CheckoutForm({ onlinePayments = false }: { onlinePayments?: bool
                           : t("unavailableSize")
                       : q.id === "pickup"
                         ? `${settings.company.warehouse}${settings.company.hours ? ` · ${settings.company.hours}` : ""}`
-                        : t(`methods.${q.id}Text`)
+                        : q.tier
+                          ? `${t(`methods.${q.id}Text`)} · ${t("sizeTier", { size: q.tier.id })}`
+                          : t(`methods.${q.id}Text`)
                   }
                   aside={q.available ? shipText(q) : undefined}
                 />

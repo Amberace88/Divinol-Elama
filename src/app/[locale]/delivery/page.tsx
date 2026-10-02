@@ -45,12 +45,14 @@ export default async function DeliveryPage({ params }: PageProps<"/[locale]/deli
       rows: MARKETS.map((mk: Market) => {
         if (!m.markets.includes(mk)) return { market: mk, label: t("notAvailable"), muted: true, free: null as string | null };
         if (m.price_net == null) return { market: mk, label: t("onRequest"), muted: false, free: null };
-        const net = m.price_net + (m.surcharge?.[mk] ?? 0);
-        if (net === 0) return { market: mk, label: t("freeShort"), muted: false, free: null };
+        const tierNets = (m.tiers ?? []).map((tr) => tr.price_net?.[mk]).filter((n): n is number => n != null);
+        const net = tierNets.length ? Math.min(...tierNets) : m.price_net + (m.surcharge?.[mk] ?? 0);
+        const varies = tierNets.length > 1 && Math.max(...tierNets) > Math.min(...tierNets);
+        if (net === 0 && !varies) return { market: mk, label: t("freeShort"), muted: false, free: null };
         const threshold = shipping.free_threshold?.[mk];
         return {
           market: mk,
-          label: money(gross(net, vat[mk])),
+          label: varies ? t("fromPrice", { amount: money(gross(net, vat[mk])) }) : money(gross(net, vat[mk])),
           muted: false,
           free: m.free_over && threshold ? t("free", { amount: money(threshold) }) : null,
         };

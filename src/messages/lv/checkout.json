@@ -131,7 +131,8 @@
       "shippingMethod": "Izvēlies piegādes veidu.",
       "paymentMethod": "Izvēlies apmaksas veidu.",
       "terms": "Lūdzu, apstiprini lietošanas noteikumus.",
-      "payment_failed": "Tiešsaistes maksājumu šobrīd neizdevās uzsākt. Pasūtījums netika izveidots — mēģini vēlreiz vai izvēlies bankas pārskaitījumu."
+      "payment_failed": "Tiešsaistes maksājumu šobrīd neizdevās uzsākt. Pasūtījums netika izveidots — mēģini vēlreiz vai izvēlies bankas pārskaitījumu.",
+      "shipping_too_heavy": "Sūtījums ir par smagu šim piegādes veidam. Izvēlies kurjeru, kravas piegādi vai saņemšanu noliktavā."
     },
     "success": {
       "metaTitle": "Paldies par pasūtījumu",
@@ -215,6 +216,7 @@
         "title": "Pasūtījums nav atrasts",
         "text": "Saite nav derīga vai ir novecojusi. Ja veici maksājumu, apstiprinājumu saņemsi e-pastā."
       }
-    }
+    },
+    "sizeTier": "Izmērs {size}"
   }
 }

@@ -10,6 +10,8 @@ import { FilterBar } from "@/components/admin/FilterBar";
 import { PageHeader, Panel, Segmented } from "@/components/admin/ui";
 import { Calculator } from "@/components/admin/shipping/Calculator";
 import { CarrierSettings } from "@/components/admin/shipping/CarrierSettings";
+import { OmnivaOverview, type OmnivaPriceRow } from "@/components/admin/shipping/OmnivaOverview";
+import { getStoreSettings } from "@/lib/settings";
 import { RatesEditor } from "@/components/admin/shipping/RatesEditor";
 import { ShipmentsTable, type ShipmentListRow } from "@/components/admin/shipping/ShipmentsTable";
 import { ToShipTable, type ToShipRow } from "@/components/admin/shipping/ToShipTable";
@@ -48,6 +50,7 @@ export default async function ShippingPage({ searchParams }: { searchParams: Pro
 
   const [carriers, rates] = await Promise.all([loadCarriers(supabase), loadRates(supabase)]);
   const caps = allCapabilities(carriers.map((c) => c.code));
+  const omniva = tab === "rates" ? await omnivaOverview(rates, carriers.find((c) => c.code === "omniva")?.checkout_enabled ?? false, caps.omniva?.api ?? false) : null;
   const carrierInfo = carriers.map((c) => ({ code: c.code, name: c.name, tracking_url_template: c.tracking_url_template, api: caps[c.code]?.api ?? false, tracking: caps[c.code]?.tracking ?? false }));
   const apiCarriers = carrierInfo.filter((c) => c.api && carriers.find((x) => x.code === c.code)?.enabled).map((c) => c.code);
   const activeRates = rates.filter((r) => r.active);
@@ -114,6 +117,7 @@ export default async function ShippingPage({ searchParams }: { searchParams: Pro
 
       {tab === "rates" && (
         <div className="space-y-6">
+          {omniva && <OmnivaOverview {...omniva} />}
           <Panel title="Pārvadātāji" description={developer ? "API atslēgas glabājas tikai Netlify vides mainīgajos — šeit redzams, vai tās ir iestatītas." : "Ieslēdziet vai izslēdziet pārvadātājus un izvēlieties, kuru pakomātus piedāvāt klientiem. Pieslēgumus iestata izstrādātājs."} bodyClassName="p-0">
             <CarrierSettings carriers={carriers} caps={caps} developer={developer} />
           </Panel>
@@ -207,4 +211,39 @@ async function ShipmentsTab({
       <ShipmentsTable rows={rows} carriers={carrierInfo} filtered={Boolean(status || carrier || q)} />
     </div>
   );
+}
+
+async function omnivaOverview(rates: Awaited<ReturnType<typeof loadRates>>, offered: boolean, api: boolean) {
+  const settings = await getStoreSettings();
+  const m = settings.shipping.methods?.parcel_locker;
+  if (!m) return null;
+  const markets = ["LV", "EE", "LT"] as const;
+  const r2 = (n: number) => Math.round((n + Number.EPSILON) * 100) / 100;
+  const tiers = m.tiers?.length
+    ? [...m.tiers].sort((a, b) => a.max_kg - b.max_kg)
+    : [{ id: "all", label: "Visi izmēri", max_kg: null as number | null, price_net: Object.fromEntries(markets.map((mk) => [mk, (m.price_net ?? 0) + (m.surcharge?.[mk] ?? 0)])) }];
+  const lockerRates = rates.filter((r) => r.carrier === "omniva" && r.type === "locker" && r.active && r.price_net != null);
+  const rows: OmnivaPriceRow[] = tiers.map((t) => {
+    const net: Partial<Record<(typeof markets)[number], number>> = {};
+    const gross: Partial<Record<(typeof markets)[number], number>> = {};
+    const cost: Partial<Record<(typeof markets)[number], number>> = {};
+    for (const mk of markets) {
+      const n = t.price_net?.[mk] ?? (m.price_net == null ? undefined : m.price_net + (m.surcharge?.[mk] ?? 0));
+      if (n != null) {
+        net[mk] = r2(n);
+        gross[mk] = r2(n * (1 + (settings.vat[mk] ?? 21) / 100));
+      }
+      const rate = lockerRates.find((r) => r.country === mk && (t.id === "all" ? true : r.size_code === t.id));
+      if (rate?.price_net != null) cost[mk] = rate.price_net;
+    }
+    return { id: t.id, label: t.label, max_kg: t.max_kg, gross, net, cost };
+  });
+  return {
+    api,
+    enabled: m.enabled !== false && offered,
+    markets: m.markets,
+    freeOver: Boolean(m.free_over),
+    thresholds: settings.shipping.free_threshold ?? {},
+    rows,
+  };
 }

@@ -8,10 +8,19 @@ import { MARKET, MARKETS, SHIPPING_METHOD } from "@/lib/admin/labels";
 import { cn } from "@/lib/utils";
 import { Field, Spinner, Switch, useActionRunner } from "../client-ui";
 import { btn, inputCls, textareaCls } from "../styles";
+import { CarrierLogo } from "@/components/shipping/CarrierLogo";
 
 type Market = (typeof MARKETS)[number];
 type Company = { name: string; reg_no: string; vat_no: string; address: string; warehouse: string; phone: string; email: string; bank_name: string; iban: string; swift: string; hours: string };
-type Method = { enabled: boolean; price_net: number | null; markets: Market[]; max_item?: number | null; free_over?: boolean; surcharge?: Partial<Record<Market, number>> };
+type Method = {
+  enabled: boolean;
+  price_net: number | null;
+  markets: Market[];
+  max_item?: number | null;
+  free_over?: boolean;
+  surcharge?: Partial<Record<Market, number>>;
+  tiers?: { id: string; label: string; max_kg: number; price_net: Partial<Record<Market, number>> }[];
+};
 export type SettingsInit = {
   company: Company;
   vat: Record<Market, number>;
@@ -197,6 +206,24 @@ type MethodState = {
   surcharge: Record<Market, string>;
   /** customer price incl. VAT per country (parcel locker / courier) */
   gross: Record<Market, string>;
+  /** prices by size class (Omniva S / M / L …) */
+  tiered: boolean;
+  tiers: TierState[];
+};
+
+type TierState = { key: string; id: string; label: string; max_kg: string; gross: Record<Market, string> };
+
+const DEFAULT_TIERS: Record<string, { id: string; label: string; max_kg: number }[]> = {
+  parcel_locker: [
+    { id: "S", label: "S — mazā šūna (9 × 38 × 64 cm)", max_kg: 2 },
+    { id: "M", label: "M — vidējā šūna (19 × 38 × 64 cm)", max_kg: 6 },
+    { id: "L", label: "L — lielā šūna (39 × 38 × 64 cm)", max_kg: 30 },
+  ],
+  courier: [
+    { id: "S", label: "Maza paka", max_kg: 5 },
+    { id: "M", label: "Vidēja paka", max_kg: 15 },
+    { id: "L", label: "Liela paka", max_kg: 30 },
+  ],
 };
 
 function ShippingForm({ initial, vat, updated }: { initial: SettingsInit["shipping"]; vat: Record<Market, number>; updated?: string }) {
@@ -222,6 +249,19 @@ function ShippingForm({ initial, vat, updated }: { initial: SettingsInit["shippi
             gross: Object.fromEntries(
               MARKETS.map((mk) => [mk, m?.price_net == null ? "" : str(r2(r2(m.price_net + (m.surcharge?.[mk] ?? 0)) * (1 + (vat[mk] ?? 21) / 100)))]),
             ) as Record<Market, string>,
+            tiered: Boolean(m?.tiers?.length),
+            tiers: (m?.tiers ?? []).map((t, i) => ({
+              key: `t${i}-${t.id}`,
+              id: t.id,
+              label: t.label,
+              max_kg: str(t.max_kg),
+              gross: Object.fromEntries(
+                MARKETS.map((mk) => {
+                  const net = t.price_net?.[mk] ?? (m?.price_net == null ? null : m.price_net + (m.surcharge?.[mk] ?? 0));
+                  return [mk, net == null ? "" : str(r2(net * (1 + (vat[mk] ?? 21) / 100)))];
+                }),
+              ) as Record<Market, string>,
+            })),
           },
         ];
       }),
@@ -251,6 +291,19 @@ function ShippingForm({ initial, vat, updated }: { initial: SettingsInit["shippi
     for (const id of METHOD_IDS) {
       const m = methods[id];
       if (!PER_MARKET.has(id) || !m.enabled) continue;
+      if (m.tiered) {
+        if (!m.tiers.length) errs[`methods.${id}.tiers`] = "Pievienojiet vismaz vienu izmēru";
+        m.tiers.forEach((t, i) => {
+          if (!t.label.trim()) errs[`methods.${id}.tiers.${i}.label`] = "Nosaukums";
+          const kg = num(t.max_kg);
+          if (!Number.isFinite(kg) || kg <= 0) errs[`methods.${id}.tiers.${i}.max_kg`] = "Svars";
+          for (const mk of m.markets) {
+            const g = num(t.gross[mk]);
+            if (!Number.isFinite(g) || g < 0) errs[`methods.${id}.tiers.${i}.${mk}`] = "Cena";
+          }
+        });
+        continue;
+      }
       for (const mk of m.markets) {
         const g = num(m.gross[mk]);
         if (!Number.isFinite(g) || g < 0) errs[`methods.${id}.gross.${mk}`] = "Ievadiet cenu";
@@ -267,9 +320,32 @@ function ShippingForm({ initial, vat, updated }: { initial: SettingsInit["shippi
           if (m.max_item.trim()) out.max_item = num(m.max_item);
           if (id !== "pickup" && id !== "freight") out.free_over = m.free_over;
           if (PER_MARKET.has(id)) {
-            const { base, surcharge } = perMarketPrices(m);
-            out.price_net = base;
-            out.surcharge = surcharge;
+            if (m.tiered && m.tiers.length) {
+              const tiers = [...m.tiers]
+                .map((t) => ({
+                  id: t.id.trim() || t.label.trim().slice(0, 20),
+                  label: t.label.trim(),
+                  max_kg: num(t.max_kg),
+                  price_net: Object.fromEntries(
+                    MARKETS.flatMap((mk) => {
+                      const g = num(t.gross[mk]);
+                      return Number.isFinite(g) && g >= 0 ? [[mk, netForGross(g, vat[mk] ?? 21)]] : [];
+                    }),
+                  ),
+                }))
+                .sort((a, b) => a.max_kg - b.max_kg);
+              // fallback / "from" price = the smallest size
+              const first = tiers[0].price_net as Partial<Record<Market, number>>;
+              const nets = MARKETS.map((mk) => first[mk]).filter((n): n is number => n != null);
+              const base = nets.length ? Math.min(...nets) : 0;
+              out.price_net = base;
+              out.surcharge = Object.fromEntries(MARKETS.map((mk) => [mk, first[mk] == null ? 0 : r2(first[mk]! - base)]));
+              out.tiers = tiers;
+            } else {
+              const { base, surcharge } = perMarketPrices(m);
+              out.price_net = base;
+              out.surcharge = surcharge;
+            }
           }
           return [id, out];
         }),
@@ -309,7 +385,7 @@ function ShippingForm({ initial, vat, updated }: { initial: SettingsInit["shippi
               <legend className="sr-only">{SHIPPING_METHOD[id]}</legend>
               <div className="flex flex-wrap items-center gap-3">
                 <Switch checked={m.enabled} onChange={(x) => upd(id, { enabled: x })} label={`${SHIPPING_METHOD[id]}: ieslēgts`} />
-                <p className="flex-1 text-[14px] font-bold text-ink">{SHIPPING_METHOD[id]}</p>
+                <p className="flex-1 text-[14px] font-bold text-ink">{id === "parcel_locker" ? "Pakomāts — Omniva" : SHIPPING_METHOD[id]}</p>
                 <div className="flex gap-1.5" role="group" aria-label="Tirgi">
                   {MARKETS.map((mk) => {
                     const on = m.markets.includes(mk);
@@ -328,53 +404,13 @@ function ShippingForm({ initial, vat, updated }: { initial: SettingsInit["shippi
                 </div>
               </div>
               {m.enabled && PER_MARKET.has(id) && (
-                <div className="mt-4">
-                  <p className="mb-2 text-[13px] font-semibold text-ink/80">
-                    Cena klientam <span className="font-normal text-muted">(ar PVN — tieši tā summa, ko klients redz grozā)</span>
-                  </p>
-                  <div className="grid gap-3 sm:grid-cols-3">
-                    {MARKETS.map((mk) => {
-                      const on = m.markets.includes(mk);
-                      const g = num(m.gross[mk]);
-                      const vatMk = vat[mk] ?? 21;
-                      const net = Number.isFinite(g) ? netForGross(g, vatMk) : Number.NaN;
-                      const shown = Number.isFinite(net) ? r2(net * (1 + vatMk / 100)) : Number.NaN;
-                      return (
-                        <Field key={mk} label={`${MARKET[mk]}${on ? "" : " (izslēgts)"}`} htmlFor={`gr-${id}-${mk}`} error={errors[`methods.${id}.gross.${mk}`]}>
-                          <div className="relative">
-                            <input
-                              id={`gr-${id}-${mk}`}
-                              inputMode="decimal"
-                              className={cn(inputCls, "pr-8 font-semibold tabular-nums", !on && "opacity-60")}
-                              value={m.gross[mk]}
-                              onChange={(e) => upd(id, { gross: { ...m.gross, [mk]: e.target.value } })}
-                            />
-                            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[13px] text-muted">€</span>
-                          </div>
-                          <span className="mt-1 block text-[11.5px] text-muted tabular-nums">
-                            {Number.isFinite(net) ? (
-                              <>
-                                bez PVN {fmtMoney(net)} · PVN {vatMk}%
-                                {Math.abs(shown - g) > 0.001 && <span className="font-semibold text-orange-700"> · klients redzēs {fmtMoney(shown)}</span>}
-                              </>
-                            ) : (
-                              "—"
-                            )}
-                          </span>
-                        </Field>
-                      );
-                    })}
-                  </div>
-                  <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                    <Field label="Maks. vienības izmērs (L/kg)" htmlFor={`mx-${id}`} error={errors[`methods.${id}.max_item`]} hint="Tukšs = bez ierobežojuma">
-                      <input id={`mx-${id}`} inputMode="decimal" className={inputCls} value={m.max_item} onChange={(e) => upd(id, { max_item: e.target.value })} />
-                    </Field>
-                    <div className="flex items-center gap-2.5 pt-6">
-                      <Switch size="sm" checked={m.free_over} onChange={(x) => upd(id, { free_over: x })} label="Bezmaksas virs sliekšņa" />
-                      <span className="text-[13px] font-semibold text-ink/80">Bezmaksas virs sliekšņa</span>
-                    </div>
-                  </div>
-                </div>
+                <PerMarketPrices
+                  id={id}
+                  m={m}
+                  vat={vat}
+                  errors={errors}
+                  onChange={(patch) => upd(id, patch)}
+                />
               )}
               {m.enabled && !PER_MARKET.has(id) && (
                 <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -448,6 +484,213 @@ function ShippingForm({ initial, vat, updated }: { initial: SettingsInit["shippi
         })}
       </div>
     </Section>
+  );
+}
+
+/** Customer prices per country incl. VAT — one price, or by size class (Omniva S / M / L …). */
+function PerMarketPrices({
+  id,
+  m,
+  vat,
+  errors,
+  onChange,
+}: {
+  id: string;
+  m: MethodState;
+  vat: Record<Market, number>;
+  errors: Record<string, string>;
+  onChange: (patch: Partial<MethodState>) => void;
+}) {
+  const omniva = id === "parcel_locker";
+  const priceCell = (value: string, mk: Market, set: (v: string) => void, inputId: string, error?: string) => {
+    const g = num(value);
+    const vatMk = vat[mk] ?? 21;
+    const net = Number.isFinite(g) ? netForGross(g, vatMk) : Number.NaN;
+    const shown = Number.isFinite(net) ? r2(net * (1 + vatMk / 100)) : Number.NaN;
+    const on = m.markets.includes(mk);
+    return (
+      <div>
+        <div className="relative">
+          <input
+            id={inputId}
+            inputMode="decimal"
+            aria-label={`${MARKET[mk]} cena ar PVN`}
+            aria-invalid={Boolean(error)}
+            className={cn(inputCls, "pr-8 font-semibold tabular-nums", !on && "opacity-50", error && "border-red-400")}
+            value={value}
+            onChange={(e) => set(e.target.value)}
+          />
+          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[13px] text-muted">€</span>
+        </div>
+        <span className="mt-1 block text-[11px] text-muted tabular-nums">
+          {Number.isFinite(net) ? (
+            <>
+              bez PVN {fmtMoney(net)}
+              {Math.abs(shown - g) > 0.001 && <span className="font-semibold text-orange-700"> · klients redzēs {fmtMoney(shown)}</span>}
+            </>
+          ) : (
+            error ?? "—"
+          )}
+        </span>
+      </div>
+    );
+  };
+
+  const startTiers = () => {
+    const defs = DEFAULT_TIERS[id] ?? DEFAULT_TIERS.courier;
+    onChange({
+      tiered: true,
+      tiers: m.tiers.length ? m.tiers : defs.map((d, i) => ({ key: `n${i}-${d.id}`, id: d.id, label: d.label, max_kg: str(d.max_kg), gross: { ...m.gross } })),
+    });
+  };
+  const setTier = (i: number, patch: Partial<TierState>) => onChange({ tiers: m.tiers.map((t, j) => (j === i ? { ...t, ...patch } : t)) });
+
+  return (
+    <div className="mt-4">
+      {omniva && (
+        <div className="mb-4 flex flex-wrap items-center gap-3 rounded-xl bg-[linear-gradient(110deg,#fff4ed,#ffffff)] px-4 py-3 ring-1 ring-inset ring-orange-200">
+          <CarrierLogo code="omniva" name="Omniva" size="md" />
+          <div className="min-w-0 flex-1">
+            <p className="text-[14px] font-extrabold text-ink">Omniva pakomāti</p>
+            <p className="text-[12px] text-muted">Klients kasē izvēlas Omniva pakomātu. Šeit ievadītā cena ir tieši tā, ko viņš maksā (ar PVN).</p>
+          </div>
+        </div>
+      )}
+
+      <div className="mb-3 inline-flex rounded-xl bg-slate-100 p-1 text-[12.5px] font-bold">
+        <button type="button" onClick={() => onChange({ tiered: false })} className={cn("rounded-lg px-3 py-1.5 transition", !m.tiered ? "bg-white text-ink shadow-sm" : "text-muted hover:text-ink")}>
+          Viena cena visām pakām
+        </button>
+        <button type="button" onClick={startTiers} className={cn("rounded-lg px-3 py-1.5 transition", m.tiered ? "bg-white text-ink shadow-sm" : "text-muted hover:text-ink")}>
+          Cena pēc izmēra {omniva ? "(S / M / L)" : ""}
+        </button>
+      </div>
+
+      {!m.tiered ? (
+        <>
+          <p className="mb-2 text-[13px] font-semibold text-ink/80">
+            Cena klientam <span className="font-normal text-muted">(ar PVN — tieši tā summa, ko klients redz grozā)</span>
+          </p>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {MARKETS.map((mk) => (
+              <Field key={mk} label={`${MARKET[mk]}${m.markets.includes(mk) ? "" : " (izslēgts)"}`} htmlFor={`gr-${id}-${mk}`} error={errors[`methods.${id}.gross.${mk}`]}>
+                {priceCell(m.gross[mk], mk, (v) => onChange({ gross: { ...m.gross, [mk]: v } }), `gr-${id}-${mk}`)}
+              </Field>
+            ))}
+          </div>
+        </>
+      ) : (
+        <div>
+          <p className="mb-2 text-[12.5px] text-muted">
+            Izmēru nosaka automātiski pēc groza svara (1 L eļļas ≈ 0,95 kg, 1 kg ≈ 1,08 kg ar iepakojumu): tiek izmantots pirmais izmērs, kurā sūtījums ietilpst. Cenas ar PVN.
+          </p>
+          {errors[`methods.${id}.tiers`] && <p className="mb-2 text-[12px] font-semibold text-red-600">{errors[`methods.${id}.tiers`]}</p>}
+          <div className="overflow-x-auto rounded-xl border border-line">
+            <table className="w-full min-w-[720px] text-[13px]">
+              <thead className="bg-slate-50 text-[11px] font-bold uppercase tracking-[0.06em] text-muted">
+                <tr>
+                  <th className="px-3 py-2 text-left">Izmērs</th>
+                  <th className="w-28 px-3 py-2 text-left">Līdz, kg</th>
+                  {MARKETS.map((mk) => (
+                    <th key={mk} className="w-36 px-3 py-2 text-left">
+                      {MARKET[mk]}
+                    </th>
+                  ))}
+                  <th className="w-10" />
+                </tr>
+              </thead>
+              <tbody>
+                {m.tiers.map((t, i) => {
+                  const kg = num(t.max_kg);
+                  return (
+                    <tr key={t.key} className="border-t border-line align-top">
+                      <td className="px-3 py-2">
+                        <input
+                          className={cn(inputCls, "font-semibold", errors[`methods.${id}.tiers.${i}.label`] && "border-red-400")}
+                          value={t.label}
+                          onChange={(e) => setTier(i, { label: e.target.value })}
+                          aria-label="Izmēra nosaukums"
+                        />
+                        {Number.isFinite(kg) && kg > 0 && <span className="mt-1 block text-[11px] text-muted">≈ līdz {Math.floor((kg / 0.95) * 10) / 10} L eļļas sūtījumā</span>}
+                      </td>
+                      <td className="px-3 py-2">
+                        <input
+                          inputMode="decimal"
+                          className={cn(inputCls, "tabular-nums", errors[`methods.${id}.tiers.${i}.max_kg`] && "border-red-400")}
+                          value={t.max_kg}
+                          onChange={(e) => setTier(i, { max_kg: e.target.value })}
+                          aria-label="Maksimālais svars kg"
+                        />
+                      </td>
+                      {MARKETS.map((mk) => (
+                        <td key={mk} className="px-3 py-2">
+                          {priceCell(t.gross[mk], mk, (v) => setTier(i, { gross: { ...t.gross, [mk]: v } }), `tr-${id}-${i}-${mk}`, errors[`methods.${id}.tiers.${i}.${mk}`])}
+                        </td>
+                      ))}
+                      <td className="px-1 py-2">
+                        <button
+                          type="button"
+                          className="mt-1 grid h-8 w-8 place-items-center rounded-lg text-muted hover:bg-red-50 hover:text-red-600"
+                          aria-label="Dzēst izmēru"
+                          onClick={() => onChange({ tiers: m.tiers.filter((_, j) => j !== i) })}
+                        >
+                          ×
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          <div className="mt-2 flex flex-wrap gap-2">
+            <button
+              type="button"
+              className={btn("outline", "sm")}
+              onClick={() =>
+                onChange({
+                  tiers: [
+                    ...m.tiers,
+                    { key: `n${Date.now()}`, id: `T${m.tiers.length + 1}`, label: "Jauns izmērs", max_kg: "", gross: { ...(m.tiers.at(-1)?.gross ?? m.gross) } },
+                  ],
+                })
+              }
+            >
+              + Pievienot izmēru
+            </button>
+            {omniva && (
+              <button
+                type="button"
+                className={btn("ghost", "sm")}
+                onClick={() =>
+                  onChange({
+                    tiers: DEFAULT_TIERS.parcel_locker.map((d, i) => ({
+                      key: `d${Date.now()}-${i}`,
+                      id: d.id,
+                      label: d.label,
+                      max_kg: str(d.max_kg),
+                      gross: { ...(m.tiers[i]?.gross ?? m.gross) },
+                    })),
+                  })
+                }
+              >
+                Atjaunot Omniva S / M / L
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+        <Field label="Maks. vienības izmērs (L/kg)" htmlFor={`mx-${id}`} error={errors[`methods.${id}.max_item`]} hint="Tukšs = bez ierobežojuma">
+          <input id={`mx-${id}`} inputMode="decimal" className={inputCls} value={m.max_item} onChange={(e) => onChange({ max_item: e.target.value })} />
+        </Field>
+        <div className="flex items-center gap-2.5 pt-6">
+          <Switch size="sm" checked={m.free_over} onChange={(x) => onChange({ free_over: x })} label="Bezmaksas virs sliekšņa" />
+          <span className="text-[13px] font-semibold text-ink/80">Bezmaksas virs sliekšņa</span>
+        </div>
+      </div>
+    </div>
   );
 }
 

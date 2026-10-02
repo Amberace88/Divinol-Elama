@@ -131,7 +131,8 @@
       "shippingMethod": "Vali tarneviis.",
       "paymentMethod": "Vali maksmisviis.",
       "terms": "Palun kinnita kasutustingimused.",
-      "payment_failed": "Veebimakset ei õnnestunud praegu alustada. Tellimust ei loodud — proovi uuesti või vali pangaülekanne."
+      "payment_failed": "Veebimakset ei õnnestunud praegu alustada. Tellimust ei loodud — proovi uuesti või vali pangaülekanne.",
+      "shipping_too_heavy": "Saadetis on selle tarneviisi jaoks liiga raske. Vali kuller, veotarne või kättesaamine laost."
     },
     "success": {
       "metaTitle": "Aitäh tellimuse eest",
@@ -215,6 +216,7 @@
         "title": "Tellimust ei leitud",
         "text": "Link on vigane või aegunud. Kui maksid, saad kinnituse e-postiga."
       }
-    }
+    },
+    "sizeTier": "Suurus {size}"
   }
 }

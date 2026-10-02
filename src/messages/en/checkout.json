@@ -131,7 +131,8 @@
       "shippingMethod": "Please choose a delivery method.",
       "paymentMethod": "Please choose a payment method.",
       "terms": "Please accept the terms of use.",
-      "payment_failed": "The online payment could not be started right now. The order was not placed — please try again or choose bank transfer."
+      "payment_failed": "The online payment could not be started right now. The order was not placed — please try again or choose bank transfer.",
+      "shipping_too_heavy": "The parcel is too heavy for this delivery method. Choose courier, freight or pickup."
     },
     "success": {
       "metaTitle": "Thank you for your order",
@@ -215,6 +216,7 @@
         "title": "Order not found",
         "text": "The link is invalid or has expired. If you paid, you will receive a confirmation by e-mail."
       }
-    }
+    },
+    "sizeTier": "Size {size}"
   }
 }

@@ -1,5 +1,5 @@
 import { estimateWeightKg, round2 } from "@/lib/commerce";
-import type { ShippingConfig } from "@/lib/settings";
+import type { ShippingConfig, ShippingTier } from "@/lib/settings";
 import type { Market } from "@/lib/types";
 
 export type ShipMethodId = "pickup" | "parcel_locker" | "courier" | "freight";
@@ -16,7 +16,20 @@ export type ShipQuote = {
   price_net: number | null;
   free: boolean;
   reason?: "market" | "size" | "weight" | "disabled";
+  /** size class used for the price (methods with size-based prices) */
+  tier?: { id: string; label: string; max_kg: number };
 };
+
+/** Parcel weight estimate — the same formula as place_order (kg ≈ 1.08 × kg, L ≈ 0.95 × L, unknown 0.5 kg), 3 decimals. */
+export function parcelWeight(items: { size: number | null; unit: string; qty: number }[]) {
+  return Math.round(items.reduce((s, i) => s + estimateWeightKg(i) * i.qty, 0) * 1000) / 1000;
+}
+
+/** First size class the parcel fits in (tiers sorted by max_kg), or null when it is too heavy for all of them. */
+export function pickTier(tiers: ShippingTier[] | undefined, weight: number) {
+  if (!tiers?.length) return undefined;
+  return [...tiers].sort((a, b) => a.max_kg - b.max_kg).find((t) => weight <= t.max_kg) ?? null;
+}
 
 export function isFreightItem(i: { size: number | null; unit: string }) {
   return i.unit !== "pcs" && Number(i.size ?? 0) > FREIGHT_ITEM_SIZE;
@@ -33,7 +46,7 @@ export function quoteShippingFromSettings(
   subtotalGross: number,
 ): ShipQuote[] {
   const maxItem = Math.max(0, ...items.map((i) => (i.size ? Number(i.size) : 0)));
-  const weight = items.reduce((s, i) => s + estimateWeightKg(i) * i.qty, 0);
+  const weight = parcelWeight(items);
   const threshold = cfg.free_threshold?.[market] ?? Infinity;
   const needsFreight = items.some(isFreightItem);
   return SHIP_ORDER.map((id) => {
@@ -53,9 +66,15 @@ export function quoteShippingFromSettings(
       available = false;
       reason = "size";
     }
+    const tier = pickTier(m.tiers, weight);
+    if (available && tier === null) {
+      available = false;
+      reason = "weight";
+    }
     if (m.price_net == null) return { id, available, price_net: null, free: false, reason };
     const free = Boolean(m.free_over) && subtotalGross >= threshold;
-    const price = free ? 0 : round2(m.price_net + (m.surcharge?.[market] ?? 0));
-    return { id, available, price_net: price, free, reason };
+    const base = tier?.price_net?.[market] ?? m.price_net + (m.surcharge?.[market] ?? 0);
+    const price = free ? 0 : round2(base);
+    return { id, available, price_net: price, free, reason, ...(tier ? { tier: { id: tier.id, label: tier.label, max_kg: tier.max_kg } } : {}) };
   });
 }

@@ -75,6 +75,7 @@ const KNOWN = new Set([
   "invalid_shipping",
   "shipping_not_available",
   "shipping_item_too_large",
+  "shipping_too_heavy",
   "shipping_point_required",
   "address_required",
   "payment_failed",

@@ -131,7 +131,8 @@
       "shippingMethod": "Pasirink pristatymo būdą.",
       "paymentMethod": "Pasirink apmokėjimo būdą.",
       "terms": "Patvirtink, kad sutinki su naudojimo taisyklėmis.",
-      "payment_failed": "Šiuo metu nepavyko pradėti internetinio mokėjimo. Užsakymas nesukurtas — bandykite dar kartą arba pasirinkite banko pavedimą."
+      "payment_failed": "Šiuo metu nepavyko pradėti internetinio mokėjimo. Užsakymas nesukurtas — bandykite dar kartą arba pasirinkite banko pavedimą.",
+      "shipping_too_heavy": "Siunta per sunki šiam pristatymo būdui. Pasirink kurjerį, krovininį pristatymą arba atsiėmimą sandėlyje."
     },
     "success": {
       "metaTitle": "Ačiū už užsakymą",
@@ -215,6 +216,7 @@
         "title": "Užsakymas nerastas",
         "text": "Nuoroda neteisinga arba pasenusi. Jei sumokėjote, patvirtinimą gausite el. paštu."
       }
-    }
+    },
+    "sizeTier": "Dydis {size}"
   }
 }

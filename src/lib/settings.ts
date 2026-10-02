@@ -19,11 +19,23 @@ export type CompanySettings = {
   hours?: string;
 };
 
+/** Size / weight class with its own customer price (e.g. Omniva parcel locker S / M / L). Prices are net. */
+export type ShippingTier = { id: string; label: string; max_kg: number; price_net: Partial<Record<Market, number>> };
+
 export type ShippingConfig = {
   free_threshold: Record<Market, number>;
   methods: Record<
     string,
-    { price_net: number | null; markets: Market[]; max_item?: number; free_over?: boolean; enabled?: boolean; surcharge?: Partial<Record<Market, number>> }
+    {
+      price_net: number | null;
+      markets: Market[];
+      max_item?: number;
+      free_over?: boolean;
+      enabled?: boolean;
+      surcharge?: Partial<Record<Market, number>>;
+      /** when set, the price depends on the parcel weight: first tier with weight ≤ max_kg (place_order does the same) */
+      tiers?: ShippingTier[];
+    }
   >;
 };
 

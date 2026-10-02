@@ -595,7 +595,9 @@
         "q": "Ar pristatote į Estiją ir Lietuvą?",
         "a": "Taip. Į Estiją ir Lietuvą pristatome paštomatu, kurjeriu arba krovininiu vežėju. Kainos apskaičiuojamos pagal atitinkamos šalies PVM tarifą, o nemokamo pristatymo riba nurodyta lentelėje aukščiau."
       }
-    ]
+    ],
+    "fromPrice": "nuo {amount}",
+    "bySize": "Kaina priklauso nuo siuntos dydžio"
   },
   "legal": {
     "termsMetaTitle": "Naudojimo ir pirkimo taisyklės",

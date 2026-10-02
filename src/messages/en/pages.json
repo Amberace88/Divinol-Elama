@@ -595,7 +595,9 @@
         "q": "Do you deliver to Estonia and Lithuania?",
         "a": "Yes. We deliver to Estonia and Lithuania by parcel locker, courier or freight carrier. Prices are calculated with the VAT rate of the destination country, and the free delivery threshold is shown in the table above."
       }
-    ]
+    ],
+    "fromPrice": "from {amount}",
+    "bySize": "Price depends on the parcel size"
   },
   "legal": {
     "termsMetaTitle": "Terms and conditions of sale",
