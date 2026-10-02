@@ -1,7 +1,8 @@
 "use client";
 
-import { Mail, Send } from "lucide-react";
-import { sendTestEmail } from "@/lib/admin/actions/email";
+import { useState } from "react";
+import { Mail, MailCheck, Send } from "lucide-react";
+import { sendAllTestEmails, sendTestEmail } from "@/lib/admin/actions/email";
 import { cn } from "@/lib/utils";
 import { Spinner, useActionRunner } from "../client-ui";
 import { btn } from "../styles";
@@ -35,6 +36,7 @@ function State({ ok, okLabel = "Iestatīts", offLabel = "Nav iestatīts" }: { ok
 /** Iestatījumi → E-pasti: Resend configuration status (values never shown) + "send test e-mail". */
 export function EmailSettingsCard({ status, developer = false }: { status: EmailStatus; developer?: boolean }) {
   const { run, pending } = useActionRunner();
+  const [testTo, setTestTo] = useState(status.notify.split(/[,;]/)[0]?.trim() || status.adminEmail || "");
   const rows: [string, React.ReactNode][] = [
     developer
       ? ["Sūtīšanas veids", <State key="k" ok={status.apiKey} okLabel={status.transport === "smtp" ? "Google / SMTP pastkaste" : "Resend"} offLabel="Nav pieslēgts" />]
@@ -68,20 +70,41 @@ export function EmailSettingsCard({ status, developer = false }: { status: Email
           </div>
         ))}
       </dl>
-      <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-line bg-slate-50/60 px-5 py-3">
-        <span className="text-[12px] text-muted">
-          {status.apiKey
-            ? `Parauga pasūtījuma apstiprinājums tiks nosūtīts uz ${status.adminEmail ?? "jūsu e-pastu"}.`
-            : "Kamēr e-pasta sūtīšana nav pieslēgta, e-pasti netiek sūtīti (pasūtījumi strādā kā parasti)."}
-        </span>
-        <button
-          type="button"
-          className={btn("dark")}
-          disabled={pending || !status.apiKey}
-          onClick={() => run(() => sendTestEmail(), { loading: "Sūta testa e-pastu…" })}
-        >
-          {pending ? <Spinner /> : <Send className="h-4 w-4" />} Nosūtīt testa e-pastu
-        </button>
+      <footer className="space-y-3 border-t border-line bg-slate-50/60 px-5 py-4">
+        {status.apiKey ? (
+          <>
+            <div>
+              <p className="text-[13px] font-semibold text-ink">Pārbaudīt visus e-pastus</p>
+              <p className="text-[12px] text-muted">
+                Nosūta 10 paraugus ar izdomātiem datiem: pasūtījuma apstiprinājums (pārskaitījums, karte, B2B igauniski), nosūtīts, atcelts, rēķins, B2B
+                apstiprinājums un 3 paziņojumi veikalam. Datubāzē nekas nemainās.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <input
+                type="email"
+                value={testTo}
+                onChange={(e) => setTestTo(e.target.value)}
+                placeholder="e-pasta adrese"
+                aria-label="Testa e-pastu saņēmējs"
+                className="h-10 min-w-0 flex-1 rounded-lg border border-line bg-white px-3 text-[13px] text-ink outline-none focus:border-navy-400 focus:ring-4 focus:ring-navy-100 sm:max-w-xs"
+              />
+              <button
+                type="button"
+                className={btn("dark")}
+                disabled={pending || !testTo.trim()}
+                onClick={() => run(() => sendAllTestEmails(testTo.trim()), { loading: "Sūta 10 testa e-pastus (~10 s)…" })}
+              >
+                {pending ? <Spinner /> : <MailCheck className="h-4 w-4" />} Nosūtīt visus testa e-pastus
+              </button>
+              <button type="button" className={btn("outline")} disabled={pending} onClick={() => run(() => sendTestEmail(), { loading: "Sūta testa e-pastu…" })}>
+                <Send className="h-4 w-4" /> Tikai vienu sev
+              </button>
+            </div>
+          </>
+        ) : (
+          <span className="text-[12px] text-muted">Kamēr e-pasta sūtīšana nav pieslēgta, e-pasti netiek sūtīti (pasūtījumi strādā kā parasti).</span>
+        )}
       </footer>
     </section>
   );

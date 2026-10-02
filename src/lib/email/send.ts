@@ -62,6 +62,15 @@ export async function emailStatus() {
   };
 }
 
+/** The same sender on the other shop domain (used only when Resend rejects the first one as unverified). */
+export function fallbackFrom(from: string) {
+  const alt = env("EMAIL_FROM_FALLBACK");
+  if (alt) return alt === from ? null : alt;
+  if (/@divinol\.lv>?$/i.test(from)) return from.replace(/@divinol\.lv/i, "@divinol.ee");
+  if (/@divinol\.ee>?$/i.test(from)) return from.replace(/@divinol\.ee/i, "@divinol.lv");
+  return null;
+}
+
 export function emailFrom() {
   if (env("EMAIL_FROM")) return env("EMAIL_FROM");
   // Gmail / Workspace SMTP only allows sending as the mailbox itself (or its verified aliases).
@@ -177,9 +186,22 @@ export async function sendEmail(msg: EmailMessage): Promise<SendResult> {
   const headers: Record<string, string> = { Authorization: `Bearer ${key}`, "Content-Type": "application/json" };
   if (msg.idempotencyKey) headers["Idempotency-Key"] = msg.idempotencyKey.slice(0, 256);
 
+  let fellBack = false;
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
       const res = await fetch(RESEND_URL, { method: "POST", headers, body: JSON.stringify(body), signal: AbortSignal.timeout(15_000), cache: "no-store" });
+      // sender domain not (yet) verified in Resend → retry once from the other shop domain (divinol.lv ⇄ divinol.ee)
+      if (res.status === 403 && !fellBack) {
+        const detail403 = await res.clone().text().catch(() => "");
+        const alt = fallbackFrom(String(body.from));
+        if (alt && /domain|verif/i.test(detail403)) {
+          console.warn(`[email] sender domain not verified — retrying from ${alt}`);
+          body.from = alt;
+          fellBack = true;
+          attempt--;
+          continue;
+        }
+      }
       if (res.ok) {
         const data = (await res.json().catch(() => ({}))) as { id?: string };
         return { ok: true, id: data.id ?? null };
