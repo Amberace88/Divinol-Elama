@@ -11,7 +11,12 @@
       "viewOrder": "Peržiūrėti užsakymą",
       "questions": "Klausimų? Atsakykite į šį laišką, rašykite {email} arba skambinkite {phone}.",
       "footerAuto": "Automatinis pranešimas apie jūsų užsakymą",
-      "logoAlt": "ELAMA — Divinol alyvos ir tepalai"
+      "logoAlt": "ELAMA — Divinol alyvos ir tepalai",
+      "tagline": "Oficialus Divinol atstovas Baltijos šalyse",
+      "contact": "Kontaktai",
+      "billingAddress": "Sąskaitos adresas",
+      "total": "Suma",
+      "itemsCount": "{count} vnt."
     },
     "items": {
       "title": "Prekės",
@@ -79,7 +84,9 @@
       "next": "Kai užsakymas bus išsiųstas, gausite laišką su siuntos sekimo nuoroda.",
       "cta": "Peržiūrėti užsakymą paskyroje",
       "guestNote": "Susikurkite paskyrą su šiuo el. pašto adresu ir sekite užsakymus bei sąskaitas vienoje vietoje.",
-      "register": "Sukurti paskyrą"
+      "register": "Sukurti paskyrą",
+      "eyebrow": "Užsakymas gautas",
+      "nextTitle": "Kas bus toliau"
     },
     "orderShipped": {
       "subject": "Užsakymas {number} išsiųstas",
@@ -92,7 +99,9 @@
       "toLocker": "Paštomatas",
       "toAddress": "Pristatymo adresas",
       "lockerNote": "Kai siunta pasieks paštomatą, vežėjas atsiųs SMS arba el. laišką su atsiėmimo kodu.",
-      "noTracking": "Jei turite klausimų dėl pristatymo, tiesiog atsakykite į šį laišką."
+      "noTracking": "Jei turite klausimų dėl pristatymo, tiesiog atsakykite į šį laišką.",
+      "eyebrow": "Jau pakeliui",
+      "itemsTitle": "Siuntoje"
     },
     "orderCancelled": {
       "subject": "Užsakymas {number} atšauktas",
@@ -103,7 +112,8 @@
       "refund": "Kadangi užsakymas jau buvo apmokėtas, pinigus grąžinsime į sąskaitą, iš kurios buvo atliktas mokėjimas, per 5 darbo dienas.",
       "unpaid": "Jei užsakymui buvo išrašyta sąskaita, jos apmokėti nebereikia.",
       "mistake": "Jei atšaukimas yra klaida arba norite užsakymą atnaujinti, atsakykite į šį laišką — mielai padėsime.",
-      "cta": "Tęsti apsipirkimą"
+      "cta": "Tęsti apsipirkimą",
+      "eyebrow": "Užsakymas atšauktas"
     },
     "invoiceIssued": {
       "subject": "{type} {number}",
@@ -123,7 +133,8 @@
       "creditNote": "Kreditinė sąskaita sumažina anksčiau išrašytos sąskaitos sumą — papildomų veiksmų nereikia.",
       "attached": "Dokumentas prisegtas (PDF).",
       "noAttachment": "Šį kartą PDF prisegti nepavyko — dokumentą rasite savo paskyroje arba atsiųsime jį paprašius.",
-      "cta": "Mano sąskaitos"
+      "cta": "Mano sąskaitos",
+      "eyebrow": "Naujas dokumentas"
     },
     "b2b": {
       "yourCompany": "jūsų įmonės"
@@ -136,14 +147,37 @@
       "discount": "Jūsų nuolaida: {percent}% visoms kainoms.",
       "terms": "Apmokėjimas pagal sąskaitą — {days} d. terminas.",
       "reverse": "Pristatymams į Estiją ir Lietuvą su galiojančiu ES PVM kodu taikomas atvirkštinis apmokestinimas.",
-      "cta": "Į katalogą"
+      "cta": "Į katalogą",
+      "eyebrow": "B2B paskyra"
     },
     "b2bRejected": {
       "subject": "Dėl jūsų B2B paraiškos",
       "title": "B2B paraiška nepatvirtinta",
       "intro": "Ačiū už susidomėjimą! Deja, šiuo metu negalime patvirtinti {company} B2B paraiškos.",
       "text": "Jūs vis dar galite pirkti kaip privatus asmuo. Jei norite patikslinti rekvizitus ar sužinoti daugiau, atsakykite į šį laišką arba susisiekite su mumis.",
-      "cta": "Susisiekti"
+      "cta": "Susisiekti",
+      "eyebrow": "B2B paraiška"
+    },
+    "footer": {
+      "catalog": "Katalogas",
+      "oilFinder": "Alyvos parinkimas",
+      "account": "Mano paskyra",
+      "contact": "Kontaktai",
+      "trust1": "Pagaminta Vokietijoje nuo 1866",
+      "trust2": "Originalūs Zeller+Gmelin produktai",
+      "trust3": "Pristatymas visose Baltijos šalyse"
+    },
+    "help": {
+      "title": "Reikia pagalbos?",
+      "text": "Padėsime dėl užsakymo, pristatymo ar tinkamiausios alyvos pasirinkimo.",
+      "hours": "Darbo laikas: {hours}",
+      "reply": "Arba tiesiog atsakykite į šį laišką."
+    },
+    "progress": {
+      "placed": "Gautas",
+      "processing": "Ruošiame",
+      "shipped": "Išsiųstas",
+      "delivered": "Pristatytas"
     }
   }
 }

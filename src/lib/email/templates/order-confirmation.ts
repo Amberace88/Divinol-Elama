@@ -1,5 +1,5 @@
-import { button, divider, esc, escMultiline, h1, h2, itemsTable, kvTable, layout, money, num, p, panel, TextDoc, textFooter, totalsTable, type EmailContext, type RenderedEmail } from "./layout";
-import { customerLines, escJoin, itemRows, paymentLabel, shippingSummary, totalRows, type OrderEmailData } from "./order-parts";
+import { buttons, esc, escMultiline, h2, infoCards, itemsTable, kvTable, layout, money, num, p, panel, progress, statCards, TextDoc, textFooter, totalsTable, type EmailContext, type RenderedEmail } from "./layout";
+import { customerLines, escJoin, formatAddress, itemRows, paymentLabel, shippingSummary, totalRows, type OrderEmailData } from "./order-parts";
 
 export type OrderConfirmationInput = {
   order: OrderEmailData;
@@ -21,6 +21,8 @@ export function renderOrderConfirmation(ctx: EmailContext, input: OrderConfirmat
   const ship = shippingSummary(o, ctx);
   const name = o.customer?.name?.trim();
   const greeting = name ? t("common.greeting", { name }) : t("common.greetingAnon");
+  const paid = o.payment_status === "paid";
+  const itemCount = o.items.reduce((s, i) => s + num(i.qty), 0);
 
   // ── payment instructions ──
   const payHtml: string[] = [];
@@ -36,7 +38,13 @@ export function renderOrderConfirmation(ctx: EmailContext, input: OrderConfirmat
         [t("payment.reference"), o.number],
         [t("payment.amount"), total],
       ];
-      payHtml.push(p(esc(t("payment.bankIntro")), { margin: "0 0 10px" }), kvTable(rows.map(([k, v]) => [k, esc(v)]), { labelWidth: 150 }));
+      payHtml.push(
+        p(esc(t("payment.bankIntro")), { margin: "0 0 6px", size: 14 }),
+        kvTable(
+          rows.map(([k, v]) => [k, k === t("payment.iban") || k === t("payment.reference") || k === t("payment.amount") ? `<span style="font-weight:800;letter-spacing:0.02em;">${esc(v)}</span>` : esc(v)]),
+          { labelWidth: 150 },
+        ),
+      );
       payText.push(t("payment.bankIntro"), ...rows.filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`));
       payHtml.push(p(esc(t("payment.afterPayment")), { muted: true, size: 13, margin: "12px 0 0" }));
       payText.push(t("payment.afterPayment"));
@@ -45,7 +53,7 @@ export function renderOrderConfirmation(ctx: EmailContext, input: OrderConfirmat
       payText.push(t("payment.invoiceFollows", { number: o.number }));
     }
     if (input.invoiceNumber && input.invoiceAttached) {
-      payHtml.push(p(esc(t("payment.proformaAttached", { invoice: input.invoiceNumber })), { muted: true, size: 13, margin: "10px 0 0" }));
+      payHtml.push(p(`&#128206;&nbsp; ${esc(t("payment.proformaAttached", { invoice: input.invoiceNumber }))}`, { muted: true, size: 13, margin: "10px 0 0" }));
       payText.push(t("payment.proformaAttached", { invoice: input.invoiceNumber }));
     }
   } else if (o.payment_method === "invoice") {
@@ -53,16 +61,16 @@ export function renderOrderConfirmation(ctx: EmailContext, input: OrderConfirmat
     payHtml.push(p(esc(msg), { margin: "0" }));
     payText.push(msg);
     if (input.invoiceNumber && input.invoiceAttached) {
-      payHtml.push(p(esc(t("payment.invoiceAttached")), { muted: true, size: 13, margin: "10px 0 0" }));
+      payHtml.push(p(`&#128206;&nbsp; ${esc(t("payment.invoiceAttached"))}`, { muted: true, size: 13, margin: "10px 0 0" }));
       payText.push(t("payment.invoiceAttached"));
     }
   } else if (o.payment_method === "montonio_bank" || o.payment_method === "montonio_card") {
     // online payment (Montonio) — this e-mail is sent once the payment has arrived
-    const msg = o.payment_status === "paid" ? t("payment.paidOnline", { amount: total }) : t("payment.onlinePending");
-    payHtml.push(p(esc(msg), { margin: "0" }));
+    const msg = paid ? t("payment.paidOnline", { amount: total }) : t("payment.onlinePending");
+    payHtml.push(p(`${paid ? "&#10003;&nbsp; " : ""}${esc(msg)}`, { margin: "0" }));
     payText.push(msg);
     if (input.invoiceNumber && input.invoiceAttached) {
-      payHtml.push(p(esc(t("payment.paidInvoiceAttached", { invoice: input.invoiceNumber })), { muted: true, size: 13, margin: "10px 0 0" }));
+      payHtml.push(p(`&#128206;&nbsp; ${esc(t("payment.paidInvoiceAttached", { invoice: input.invoiceNumber }))}`, { muted: true, size: 13, margin: "10px 0 0" }));
       payText.push(t("payment.paidInvoiceAttached", { invoice: input.invoiceNumber }));
     }
   } else if (o.payment_method === "cash_on_pickup") {
@@ -74,37 +82,61 @@ export function renderOrderConfirmation(ctx: EmailContext, input: OrderConfirmat
     payText.push(t("payment.card"));
   }
 
-  // ── HTML ──
-  const summary = kvTable([
-    [t("common.orderNumber"), `<span style="font-weight:800;">${esc(o.number)}</span>`],
-    [t("common.date"), esc(fmtDateSafe(o.created_at, locale))],
-    [t("common.customer"), escJoin([...customerLines(o), o.customer?.reg_no && `${t("common.regNo")} ${o.customer.reg_no}`, o.customer?.vat_no && `${t("common.vatNo")} ${o.customer.vat_no}`])],
-    [t("shipping.title"), `${esc(ship.method)}${ship.detail ? `<br><span style="font-weight:400;">${esc(ship.detail)}</span>` : ""}`],
-    [t("payment.title"), esc(paymentLabel(o, ctx))],
+  // ── info cards ──
+  const c = o.customer ?? {};
+  const billing = formatAddress(o.billing_address ?? null, locale);
+  const customerCard = escJoin([
+    ...customerLines(o),
+    c.reg_no && `${t("common.regNo")} ${c.reg_no}`,
+    c.vat_no && `${t("common.vatNo")} ${c.vat_no}`,
+    o.email,
+    o.phone,
   ]);
+  const shipCard = `<strong>${esc(ship.method)}</strong>${ship.detail ? `<br>${esc(ship.detail)}` : ""}`;
+  const payCard = `<strong>${esc(paymentLabel(o, ctx))}</strong>${input.invoiceNumber ? `<br>${esc(input.invoiceNumber)}` : ""}`;
 
+  // ── HTML ──
   const body = [
-    h1(t("orderConfirmation.title")),
-    p(esc(greeting), { margin: "0 0 6px" }),
-    p(esc(t("orderConfirmation.intro", { number: o.number }))),
-    summary,
-    h2(t("items.title")),
+    p(esc(greeting), { margin: "0 0 18px", size: 16 }),
+    progress([
+      { label: t("progress.placed"), state: "done" },
+      { label: t("progress.processing"), state: "current" },
+      { label: t("progress.shipped"), state: "todo" },
+      { label: t("progress.delivered"), state: "todo" },
+    ]),
+    statCards([
+      { label: t("common.orderNumber"), value: o.number },
+      { label: t("common.date"), value: fmtDateSafe(o.created_at, locale) },
+      { label: t("common.total"), value: total, strong: true },
+    ]),
+    infoCards([
+      { title: t("common.customer"), body: customerCard + (billing ? `<br><span style="color:#5b6475;">${esc(t("common.billingAddress"))}: ${esc(billing)}</span>` : "") },
+      { title: t("shipping.title"), body: shipCard },
+      { title: t("payment.title"), body: payCard },
+    ]),
+    h2(`${t("items.title")} · ${t("common.itemsCount", { count: itemCount })}`),
     itemsTable(itemRows(o, ctx)),
     totalsTable(totalRows(o, ctx)),
     o.shipping_method === "freight" ? p(esc(t("shipping.freightNote")), { muted: true, size: 13, margin: "12px 0 0" }) : "",
     h2(t("payment.title")),
-    panel(payHtml.join("")),
-    o.notes ? h2(t("orderConfirmation.notes")) + p(escMultiline(o.notes), { muted: true, size: 14 }) : "",
-    p(esc(t("orderConfirmation.next")), { size: 14, margin: "18px 0 0" }),
-    input.accountUrl ? button(input.accountUrl, t("orderConfirmation.cta")) : "",
+    panel(payHtml.join(""), paid ? "success" : "default"),
+    o.notes ? h2(t("orderConfirmation.notes")) + panel(p(escMultiline(o.notes), { size: 14, margin: "0" }), "info") : "",
+    h2(t("orderConfirmation.nextTitle")),
+    p(esc(t("orderConfirmation.next")), { size: 14, margin: "0" }),
+    input.accountUrl ? buttons([{ href: input.accountUrl, label: t("orderConfirmation.cta") }]) : "",
     !input.accountUrl && input.registerUrl
-      ? divider("22px 0 14px") + p(`${esc(t("orderConfirmation.guestNote"))} <a href="${esc(input.registerUrl)}" style="color:#1e2d51;font-weight:700;">${esc(t("orderConfirmation.register"))}</a>`, { muted: true, size: 13, margin: "0" })
+      ? panel(p(`${esc(t("orderConfirmation.guestNote"))}<br><a href="${esc(input.registerUrl)}" style="color:#1e2d51;font-weight:800;">${esc(t("orderConfirmation.register"))}&nbsp;&rarr;</a>`, { size: 13, margin: "0" }), "info")
       : "",
-    p(esc(t("common.questions", { phone: company.phone, email: company.email })), { muted: true, size: 13, margin: "22px 0 0" }),
   ].join("\n");
 
   const subject = t("orderConfirmation.subject", { number: o.number });
-  const html = layout(ctx, { title: subject, preheader: t("orderConfirmation.preheader", { number: o.number, total }), body, footerNote: t("common.footerAuto") });
+  const html = layout(ctx, {
+    title: subject,
+    preheader: t("orderConfirmation.preheader", { number: o.number, total }),
+    hero: { eyebrow: t("orderConfirmation.eyebrow"), title: t("orderConfirmation.title"), intro: t("orderConfirmation.intro", { number: o.number }) },
+    body,
+    footerNote: t("common.footerAuto"),
+  });
 
   // ── text ──
   const doc = new TextDoc();
@@ -112,7 +144,10 @@ export function renderOrderConfirmation(ctx: EmailContext, input: OrderConfirmat
   doc.kv([
     [t("common.orderNumber"), o.number],
     [t("common.date"), fmtDateSafe(o.created_at, locale)],
-    [t("common.customer"), customerLines(o).join(", ")],
+    [t("common.total"), total],
+    [t("common.customer"), [...customerLines(o), c.reg_no && `${t("common.regNo")} ${c.reg_no}`, c.vat_no && `${t("common.vatNo")} ${c.vat_no}`].filter(Boolean).join(", ")],
+    [t("common.contact"), [o.email, o.phone].filter(Boolean).join(", ")],
+    [t("common.billingAddress"), billing],
     [t("shipping.title"), [ship.method, ship.detail].filter(Boolean).join(" — ")],
     [t("payment.title"), paymentLabel(o, ctx)],
   ]);
@@ -124,7 +159,7 @@ export function renderOrderConfirmation(ctx: EmailContext, input: OrderConfirmat
   doc.heading(t("payment.title"));
   payText.forEach((l) => doc.line(l));
   if (o.notes) doc.heading(t("orderConfirmation.notes")).line(o.notes);
-  doc.gap().line(t("orderConfirmation.next"));
+  doc.heading(t("orderConfirmation.nextTitle")).line(t("orderConfirmation.next"));
   if (input.accountUrl) doc.gap().line(`${t("orderConfirmation.cta")}: ${input.accountUrl}`);
   else if (input.registerUrl) doc.gap().line(`${t("orderConfirmation.guestNote")} ${input.registerUrl}`);
   doc.gap().line(t("common.questions", { phone: company.phone, email: company.email }));
@@ -136,7 +171,7 @@ function fmtDateSafe(v: string, locale: string) {
   try {
     return new Intl.DateTimeFormat({ lv: "lv-LV", et: "et-EE", lt: "lt-LT", en: "en-IE", ru: "ru-RU" }[locale] ?? "lv-LV", {
       day: "numeric",
-      month: "long",
+      month: "short",
       year: "numeric",
       hour: "2-digit",
       minute: "2-digit",

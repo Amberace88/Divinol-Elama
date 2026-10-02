@@ -11,7 +11,12 @@
       "viewOrder": "View order",
       "questions": "Questions? Reply to this e-mail, write to {email} or call {phone}.",
       "footerAuto": "Automatic notification about your order",
-      "logoAlt": "ELAMA — Divinol oils and lubricants"
+      "logoAlt": "ELAMA — Divinol oils and lubricants",
+      "tagline": "Official Divinol distributor in the Baltics",
+      "contact": "Contact",
+      "billingAddress": "Billing address",
+      "total": "Total",
+      "itemsCount": "{count} pcs"
     },
     "items": {
       "title": "Items",
@@ -79,7 +84,9 @@
       "next": "When the order is shipped, you will receive an e-mail with a tracking link.",
       "cta": "View order in your account",
       "guestNote": "Create an account with this e-mail address to keep track of your orders and invoices in one place.",
-      "register": "Create account"
+      "register": "Create account",
+      "eyebrow": "Order received",
+      "nextTitle": "What happens next"
     },
     "orderShipped": {
       "subject": "Order {number} has been shipped",
@@ -92,7 +99,9 @@
       "toLocker": "Parcel locker",
       "toAddress": "Delivery address",
       "lockerNote": "When the parcel arrives at the locker, the carrier will send you an SMS or e-mail with the pickup code.",
-      "noTracking": "If you have any questions about the delivery, just reply to this e-mail."
+      "noTracking": "If you have any questions about the delivery, just reply to this e-mail.",
+      "eyebrow": "On its way",
+      "itemsTitle": "In this shipment"
     },
     "orderCancelled": {
       "subject": "Order {number} has been cancelled",
@@ -103,7 +112,8 @@
       "refund": "As the order had already been paid, we will refund the money to the account the payment was made from within 5 business days.",
       "unpaid": "If an invoice was issued for this order, it no longer needs to be paid.",
       "mistake": "If the cancellation is a mistake or you would like to restore the order, reply to this e-mail — we are happy to help.",
-      "cta": "Continue shopping"
+      "cta": "Continue shopping",
+      "eyebrow": "Order cancelled"
     },
     "invoiceIssued": {
       "subject": "{type} {number}",
@@ -123,7 +133,8 @@
       "creditNote": "The credit note reduces the amount of a previously issued invoice — no further action is needed.",
       "attached": "The document is attached (PDF).",
       "noAttachment": "We could not attach the PDF this time — you will find the document in your account, or we can send it on request.",
-      "cta": "My invoices"
+      "cta": "My invoices",
+      "eyebrow": "New document"
     },
     "b2b": {
       "yourCompany": "your company"
@@ -136,14 +147,37 @@
       "discount": "Your discount: {percent}% on all prices.",
       "terms": "Payment by invoice — {days} days payment term.",
       "reverse": "For deliveries to Estonia and Lithuania with a valid EU VAT number, the reverse charge applies.",
-      "cta": "Go to catalogue"
+      "cta": "Go to catalogue",
+      "eyebrow": "B2B account"
     },
     "b2bRejected": {
       "subject": "About your B2B application",
       "title": "B2B application not approved",
       "intro": "Thank you for your interest! Unfortunately, we cannot approve the B2B application for {company} at this time.",
       "text": "You can still shop as a private customer. If you would like to update your company details or learn more, reply to this e-mail or contact us.",
-      "cta": "Contact us"
+      "cta": "Contact us",
+      "eyebrow": "B2B application"
+    },
+    "footer": {
+      "catalog": "Catalogue",
+      "oilFinder": "Oil finder",
+      "account": "My account",
+      "contact": "Contact",
+      "trust1": "Made in Germany since 1866",
+      "trust2": "Genuine Zeller+Gmelin products",
+      "trust3": "Delivery across the Baltics"
+    },
+    "help": {
+      "title": "Need help?",
+      "text": "We're happy to help with your order, delivery or choosing the right oil.",
+      "hours": "Opening hours: {hours}",
+      "reply": "Or simply reply to this e-mail."
+    },
+    "progress": {
+      "placed": "Received",
+      "processing": "Preparing",
+      "shipped": "Shipped",
+      "delivered": "Delivered"
     }
   }
 }

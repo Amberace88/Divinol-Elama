@@ -59,7 +59,19 @@ export function logoUrl() {
 export async function emailContext(localeInput: string | null | undefined): Promise<EmailContext> {
   const locale = emailLocale(localeInput);
   const [t, company] = await Promise.all([emailTranslator(locale), emailCompany()]);
-  return { locale, t, company, siteUrl: siteUrl(locale).replace(/\/$/, ""), logoUrl: logoUrl() };
+  return {
+    locale,
+    t,
+    company,
+    siteUrl: siteUrl(locale).replace(/\/$/, ""),
+    logoUrl: logoUrl(),
+    links: {
+      catalog: urlFor("/catalog", locale),
+      oilFinder: urlFor("/oil-finder", locale),
+      account: urlFor("/account", locale),
+      contact: urlFor("/contact", locale),
+    },
+  };
 }
 
 type Href = Parameters<typeof absoluteUrl>[0];

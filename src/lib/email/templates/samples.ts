@@ -20,8 +20,8 @@ export function sampleOrder(overrides: Partial<OrderEmailData> = {}): OrderEmail
     shipping_address: null,
     billing_address: null,
     items: [
-      { name: "Divinol Syntholight 5W-30", pack_label: "4 L", sku: "49530-4", qty: 2, unit_price_net: 28.84, line_net: 57.68 },
-      { name: "Divinol Multilight 10W-40", pack_label: "1 L", sku: "49110-1", qty: 3, unit_price_net: 6.9, line_net: 20.7 },
+      { name: "Divinol Syntholight 5W-30", pack_label: "4 L", sku: "49530-4", image: "/media/products/divinol-syntholight-03-5w-30-1-0l.webp", qty: 2, unit_price_net: 28.84, line_net: 57.68 },
+      { name: "Divinol Multilight 10W-40", pack_label: "1 L", sku: "49110-1", image: "/media/products/divinol-multilight-fo-2-5w-30-1-0l.webp", qty: 3, unit_price_net: 6.9, line_net: 20.7 },
       { name: "Divinol Kühlerfrostschutz KFS 12++", pack_label: "1,5 L", sku: "29190-1.5", qty: 1, unit_price_net: 7.4, line_net: 7.4 },
     ],
     subtotal_net: 85.78,

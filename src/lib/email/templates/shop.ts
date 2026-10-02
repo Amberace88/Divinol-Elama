@@ -1,4 +1,4 @@
-import { button, esc, escMultiline, h1, h2, itemsTable, kvTable, layout, money, num, p, TextDoc, textFooter, totalsTable, type EmailContext, type RenderedEmail } from "./layout";
+import { buttons, esc, escMultiline, h2, itemsTable, kvTable, layout, mailtoLink, money, num, p, panel, statCards, telLink, TextDoc, textFooter, totalsTable, type EmailContext, type RenderedEmail } from "./layout";
 import { itemRows, paymentLabel, shippingSummary, totalRows, type OrderEmailData } from "./order-parts";
 
 /**
@@ -9,14 +9,17 @@ import { itemRows, paymentLabel, shippingSummary, totalRows, type OrderEmailData
 const MARKET: Record<string, string> = { LV: "Latvija", EE: "Igaunija", LT: "Lietuva" };
 const LOCALE_NAME: Record<string, string> = { lv: "latviešu", et: "igauņu", lt: "lietuviešu", en: "angļu", ru: "krievu" };
 
-function mailto(email: string) {
-  if (!/^[^@\s<>"]+@[^@\s<>"]+$/.test(email)) return esc(email);
-  return `<a href="mailto:${esc(email)}" style="color:#1e2d51;font-weight:700;text-decoration:underline;">${esc(email)}</a>`;
-}
+const mailto = (email: string) => mailtoLink(email);
+const tel = (phone: string | null | undefined) => telLink(phone);
 
-function tel(phone: string | null | undefined) {
-  if (!phone) return "";
-  return `<a href="tel:${esc(phone.replace(/[^\d+]/g, ""))}" style="color:#1e2d51;font-weight:700;text-decoration:none;">${esc(phone)}</a>`;
+/** "Reply to customer" / "Call" quick actions (mailto / tel). */
+function replyHref(email: string | null | undefined, subject: string) {
+  if (!email || !/^[^@\s<>"]+@[^@\s<>"]+$/.test(email)) return null;
+  return `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+}
+function telHref(phone: string | null | undefined) {
+  const d = phone?.replace(/[^\d+]/g, "");
+  return d && d.length >= 6 ? `tel:${d}` : null;
 }
 
 export type ShopNewOrderInput = { order: OrderEmailData; adminUrl: string; invoiceNumber: string | null };
@@ -41,23 +44,44 @@ export function renderShopNewOrder(ctx: EmailContext, input: ShopNewOrderInput):
     ["Tirgus / valoda", esc(`${MARKET[o.market] ?? o.market} · ${LOCALE_NAME[o.locale] ?? o.locale}`)],
   ];
   const orderRows: [string, string][] = [
+    ["Pasūtīts", esc(new Date(o.created_at).toLocaleString("lv-LV", { timeZone: "Europe/Riga", dateStyle: "medium", timeStyle: "short" }))],
     ["Piegāde", `${esc(ship.method)}${ship.detail ? `<br><span style="font-weight:400;">${esc(ship.detail)}</span>` : ""}`],
     ["Apmaksa", esc(paymentLabel(o, ctx) + (input.invoiceNumber ? ` · ${input.invoiceNumber}` : ""))],
   ];
 
+  const count = o.items.reduce((s, i) => s + num(i.qty), 0);
   const body = [
-    h1(`Jauns pasūtījums ${o.number}`),
-    p(`<strong>${esc(who)}</strong> · ${esc(total)}`, { margin: "0 0 18px" }),
-    kvTable([...customerRows, ...orderRows], { labelWidth: 130 }),
-    h2(`Preces (${o.items.reduce((s, i) => s + i.qty, 0)} gab.)`),
+    statCards([
+      { label: "Pasūtījums", value: o.number },
+      { label: "Preces", value: `${count} gab.` },
+      { label: "Summa", value: total, strong: true },
+    ]),
+    buttons(
+      [
+        { href: input.adminUrl, label: "Atvērt adminā" },
+        { href: replyHref(o.email, `Pasūtījums ${o.number}`), label: "Rakstīt klientam" },
+        { href: telHref(o.phone), label: "Zvanīt" },
+      ],
+      "6px 0 14px",
+    ),
+    o.notes ? panel(`<div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#5b6475;margin-bottom:4px;">Klienta piezīme</div>${p(escMultiline(o.notes), { size: 14, margin: "0" })}`, "info") : "",
+    h2("Klients"),
+    kvTable(customerRows, { labelWidth: 140 }),
+    h2("Piegāde un apmaksa"),
+    kvTable(orderRows, { labelWidth: 140 }),
+    h2(`Preces · ${count} gab.`),
     itemsTable(itemRows(o, ctx)),
     totalsTable(totalRows(o, ctx)),
-    o.notes ? h2("Klienta piezīme") + p(escMultiline(o.notes), { size: 14 }) : "",
-    button(input.adminUrl, "Atvērt adminā"),
   ].join("\n");
 
   const subject = `Jauns pasūtījums ${o.number} — ${total} (${who})`;
-  const html = layout(ctx, { title: subject, preheader: `${who} · ${ship.method} · ${paymentLabel(o, ctx)}`, body });
+  const html = layout(ctx, {
+    title: subject,
+    preheader: `${who} · ${ship.method} · ${paymentLabel(o, ctx)}`,
+    hero: { eyebrow: `Jauns pasūtījums · ${b2b}`, title: who, intro: `${total} · ${ship.method} · ${paymentLabel(o, ctx)}` },
+    audience: "shop",
+    body,
+  });
 
   const doc = new TextDoc();
   doc.line(`Jauns pasūtījums ${o.number} — ${total}`).gap();
@@ -133,15 +157,28 @@ export function renderShopInquiry(ctx: EmailContext, input: ShopInquiryInput): R
     ["Valoda", esc(input.locale ? LOCALE_NAME[input.locale] ?? input.locale : "")],
     ...extra.map(([k, v]) => [k, esc(v)] as [string, string]),
   ];
-  const body = [
-    h1(kind),
-    p(`No <strong>${esc(input.name)}</strong>${input.company ? ` (${esc(input.company)})` : ""}. Atbildiet uz šo e-pastu, lai rakstītu klientam.`, { size: 14 }),
-    kvTable(rows, { labelWidth: 130 }),
-    input.message ? h2("Ziņa") + p(escMultiline(input.message), { size: 15 }) : "",
-    button(input.adminUrl, "Atvērt pieprasījumus"),
-  ].join("\n");
   const subject = `${kind}: ${input.name}${input.company ? ` (${input.company})` : ""}`;
-  const html = layout(ctx, { title: subject, preheader: (input.message ?? "").slice(0, 120), body });
+  const body = [
+    input.message ? panel(`<div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#5b6475;margin-bottom:6px;">Ziņa</div>${p(escMultiline(input.message), { size: 15, margin: "0" })}`, "info") : "",
+    buttons(
+      [
+        { href: replyHref(input.email, `Re: ${kind}`), label: "Atbildēt klientam" },
+        { href: telHref(input.phone), label: "Zvanīt" },
+        { href: input.adminUrl, label: "Atvērt pieprasījumus" },
+      ],
+      "6px 0 14px",
+    ),
+    p("Var arī vienkārši nospiest „Atbildēt” — atbilde aizies klientam.", { muted: true, size: 13, margin: "0 0 4px" }),
+    h2("Kontaktinformācija"),
+    kvTable(rows, { labelWidth: 140 }),
+  ].join("\n");
+  const html = layout(ctx, {
+    title: subject,
+    preheader: (input.message ?? "").slice(0, 120),
+    hero: { eyebrow: kind, title: input.name, intro: [input.company, input.email, input.phone].filter(Boolean).join(" · ") },
+    audience: "shop",
+    body,
+  });
 
   const doc = new TextDoc();
   doc.line(kind).gap();
@@ -186,13 +223,26 @@ export function renderShopBusinessApplication(ctx: EmailContext, input: ShopBusi
     ["Avots", esc(input.source === "signup" ? "Reģistrācija kā uzņēmums" : "Pieteikums klienta kontā")],
   ];
   const body = [
-    h1("Jauns B2B pieteikums"),
-    p(`<strong>${esc(who)}</strong> vēlas B2B cenas un apmaksu ar rēķinu. Pārbaudiet rekvizītus un apstipriniet vai noraidiet pieteikumu.`, { size: 14 }),
-    kvTable(rows, { labelWidth: 130 }),
-    button(input.adminUrl, "Atvērt klientu"),
+    panel(p(`<strong>${esc(who)}</strong> vēlas B2B cenas un apmaksu ar rēķinu. Pārbaudiet rekvizītus (piem. <a href="https://www.lursoft.lv" style="color:#1e2d51;font-weight:700;">Lursoft</a> / ES PVN <a href="https://ec.europa.eu/taxation_customs/vies/" style="color:#1e2d51;font-weight:700;">VIES</a>) un apstipriniet vai noraidiet pieteikumu klienta kartītē.`, { size: 14, margin: "0" }), "info"),
+    buttons(
+      [
+        { href: input.adminUrl, label: "Atvērt klientu" },
+        { href: replyHref(input.email, "Jūsu B2B pieteikums — Divinol"), label: "Rakstīt klientam" },
+        { href: telHref(input.phone), label: "Zvanīt" },
+      ],
+      "6px 0 14px",
+    ),
+    h2("Uzņēmuma dati"),
+    kvTable(rows, { labelWidth: 140 }),
   ].join("\n");
   const subject = `B2B pieteikums: ${who}`;
-  const html = layout(ctx, { title: subject, preheader: `${who} · ${input.regNo ?? ""}`, body });
+  const html = layout(ctx, {
+    title: subject,
+    preheader: `${who} · ${input.regNo ?? ""}`,
+    hero: { eyebrow: "Jauns B2B pieteikums", title: who, intro: [input.regNo && `Reģ. Nr. ${input.regNo}`, input.vatNo && `PVN ${input.vatNo}`, input.market && (MARKET[input.market] ?? input.market)].filter(Boolean).join(" · ") },
+    audience: "shop",
+    body,
+  });
   const doc = new TextDoc();
   doc.line("Jauns B2B pieteikums").gap();
   doc.kv([

@@ -11,7 +11,12 @@
       "viewOrder": "Skatīt pasūtījumu",
       "questions": "Jautājumi? Atbildi uz šo e-pastu, raksti {email} vai zvani {phone}.",
       "footerAuto": "Automātisks paziņojums par tavu pasūtījumu",
-      "logoAlt": "ELAMA — Divinol eļļas un smērvielas"
+      "logoAlt": "ELAMA — Divinol eļļas un smērvielas",
+      "tagline": "Oficiālais Divinol pārstāvis Baltijā",
+      "contact": "Kontakti",
+      "billingAddress": "Rēķina adrese",
+      "total": "Summa",
+      "itemsCount": "{count} gab."
     },
     "items": {
       "title": "Preces",
@@ -79,7 +84,9 @@
       "next": "Kad pasūtījums tiks nosūtīts, saņemsi e-pastu ar sūtījuma izsekošanas saiti.",
       "cta": "Skatīt pasūtījumu kontā",
       "guestNote": "Izveido kontu ar šo e-pasta adresi, lai sekotu pasūtījumiem un rēķiniem vienuviet.",
-      "register": "Izveidot kontu"
+      "register": "Izveidot kontu",
+      "eyebrow": "Pasūtījums saņemts",
+      "nextTitle": "Kas notiks tālāk"
     },
     "orderShipped": {
       "subject": "Pasūtījums {number} ir nosūtīts",
@@ -92,7 +99,9 @@
       "toLocker": "Pakomāts",
       "toAddress": "Piegādes adrese",
       "lockerNote": "Kad sūtījums būs pakomātā, pārvadātājs atsūtīs SMS vai e-pastu ar durvju kodu.",
-      "noTracking": "Ja rodas jautājumi par piegādi, atbildi uz šo e-pastu."
+      "noTracking": "Ja rodas jautājumi par piegādi, atbildi uz šo e-pastu.",
+      "eyebrow": "Ceļā pie tevis",
+      "itemsTitle": "Sūtījumā"
     },
     "orderCancelled": {
       "subject": "Pasūtījums {number} ir atcelts",
@@ -103,7 +112,8 @@
       "refund": "Tā kā pasūtījums jau bija apmaksāts, naudu atmaksāsim uz kontu, no kura tika veikts maksājums, 5 darba dienu laikā.",
       "unpaid": "Ja pasūtījumam bija izrakstīts rēķins, tas vairs nav jāapmaksā.",
       "mistake": "Ja atcelšana ir kļūda vai vēlies pasūtījumu atjaunot, atbildi uz šo e-pastu — labprāt palīdzēsim.",
-      "cta": "Turpināt iepirkties"
+      "cta": "Turpināt iepirkties",
+      "eyebrow": "Pasūtījums atcelts"
     },
     "invoiceIssued": {
       "subject": "{type} {number}",
@@ -123,7 +133,8 @@
       "creditNote": "Kredītrēķins samazina iepriekš izrakstītā rēķina summu — papildu darbības nav nepieciešamas.",
       "attached": "Dokuments pievienots pielikumā (PDF).",
       "noAttachment": "PDF šoreiz neizdevās pievienot — dokumentu atradīsi savā kontā vai nosūtīsim pēc pieprasījuma.",
-      "cta": "Mani rēķini"
+      "cta": "Mani rēķini",
+      "eyebrow": "Jauns dokuments"
     },
     "b2b": {
       "yourCompany": "tava uzņēmuma"
@@ -136,14 +147,37 @@
       "discount": "Tava atlaide: {percent}% no visām cenām.",
       "terms": "Apmaksa ar rēķinu — termiņš {days} dienas.",
       "reverse": "Piegādēm uz Igauniju un Lietuvu ar derīgu ES PVN numuru piemērojam apgriezto PVN.",
-      "cta": "Uz katalogu"
+      "cta": "Uz katalogu",
+      "eyebrow": "B2B konts"
     },
     "b2bRejected": {
       "subject": "Par tavu B2B pieteikumu",
       "title": "B2B pieteikums nav apstiprināts",
       "intro": "Paldies par interesi! Diemžēl pašlaik nevaram apstiprināt {company} B2B pieteikumu.",
       "text": "Tu joprojām vari iepirkties kā privātpersona. Ja vēlies precizēt rekvizītus vai uzzināt vairāk, atbildi uz šo e-pastu vai sazinies ar mums.",
-      "cta": "Sazināties"
+      "cta": "Sazināties",
+      "eyebrow": "B2B pieteikums"
+    },
+    "footer": {
+      "catalog": "Katalogs",
+      "oilFinder": "Eļļas izvēle",
+      "account": "Mans konts",
+      "contact": "Kontakti",
+      "trust1": "Ražots Vācijā kopš 1866",
+      "trust2": "Oriģināli Zeller+Gmelin produkti",
+      "trust3": "Piegāde visā Baltijā"
+    },
+    "help": {
+      "title": "Vajadzīga palīdzība?",
+      "text": "Palīdzēsim ar pasūtījumu, piegādi vai piemērotākās eļļas izvēli.",
+      "hours": "Darba laiks: {hours}",
+      "reply": "Vai vienkārši atbildi uz šo e-pastu."
+    },
+    "progress": {
+      "placed": "Saņemts",
+      "processing": "Sagatavojam",
+      "shipped": "Nosūtīts",
+      "delivered": "Piegādāts"
     }
   }
 }

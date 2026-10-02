@@ -15,10 +15,10 @@ const n = (v: unknown) => {
 };
 
 const ORDER_COLS =
-  "id, number, created_at, locale, email, phone, user_id, status, payment_status, customer, market, payment_method, shipping_method, shipping_point, shipping_address, billing_address, subtotal_net, shipping_net, vat_rate, vat_amount, total_gross, reverse_charge, notes, tracking_code, tracking_url, tracking_carrier, order_items(name, pack_label, sku, qty, unit_price_net, line_net)";
+  "id, number, created_at, locale, email, phone, user_id, status, payment_status, customer, market, payment_method, shipping_method, shipping_point, shipping_address, billing_address, subtotal_net, shipping_net, vat_rate, vat_amount, total_gross, reverse_charge, notes, tracking_code, tracking_url, tracking_carrier, order_items(name, pack_label, sku, image, qty, unit_price_net, line_net)";
 
 type OrderRow = Omit<OrderEmailData, "items"> & {
-  order_items: { name: string; pack_label: string | null; sku: string | null; qty: number; unit_price_net: number | string; line_net: number | string }[] | null;
+  order_items: { name: string; pack_label: string | null; sku: string | null; image?: string | null; qty: number; unit_price_net: number | string; line_net: number | string }[] | null;
 };
 
 export function normalizeOrder(row: OrderRow): OrderEmailData {
@@ -74,7 +74,7 @@ type RpcResult = {
 };
 
 type VariantRow = { sku: string | null; size: number | string | null; unit: string; price_net: number | string; is_active?: boolean };
-type ProductRow = { slug: string; i18n: Record<string, { name?: string }> | null; product_variants: VariantRow[] | null };
+type ProductRow = { slug: string; i18n: Record<string, { name?: string }> | null; images?: string[] | null; product_variants: VariantRow[] | null };
 
 /**
  * Guests cannot read their order back (RLS), so the confirmation is rebuilt from the validated checkout
@@ -83,7 +83,7 @@ type ProductRow = { slug: string; i18n: Record<string, { name?: string }> | null
  */
 export async function orderFromCheckout(db: Db, payload: CheckoutPayload, rpc: RpcResult): Promise<OrderEmailData> {
   const slugs = [...new Set(payload.items.map((i) => i.slug))];
-  const { data } = await db.from("products").select("slug, i18n, product_variants(sku, size, unit, price_net, is_active)").in("slug", slugs);
+  const { data } = await db.from("products").select("slug, i18n, images, product_variants(sku, size, unit, price_net, is_active)").in("slug", slugs);
   const products = (data ?? []) as unknown as ProductRow[];
   const items = payload.items.map((it) => {
     const p = products.find((x) => x.slug === it.slug);
@@ -98,6 +98,7 @@ export async function orderFromCheckout(db: Db, payload: CheckoutPayload, rpc: R
       name,
       pack_label: (v ? packLabel({ size: v.size == null ? null : n(v.size), unit: v.unit }) : packLabel({ size: it.size, unit: it.unit })) || null,
       sku: v?.sku ?? it.sku ?? null,
+      image: p?.images?.[0] ?? null,
       qty,
       unit_price_net: unit,
       line_net: Math.round(unit * qty * 100) / 100,

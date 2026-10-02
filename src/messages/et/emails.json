@@ -11,7 +11,12 @@
       "viewOrder": "Vaata tellimust",
       "questions": "Küsimusi? Vasta sellele kirjale, kirjuta {email} või helista {phone}.",
       "footerAuto": "Automaatne teavitus sinu tellimuse kohta",
-      "logoAlt": "ELAMA — Divinoli õlid ja määrdeained"
+      "logoAlt": "ELAMA — Divinoli õlid ja määrdeained",
+      "tagline": "Ametlik Divinol esindaja Baltikumis",
+      "contact": "Kontakt",
+      "billingAddress": "Arve aadress",
+      "total": "Summa",
+      "itemsCount": "{count} tk"
     },
     "items": {
       "title": "Tooted",
@@ -79,7 +84,9 @@
       "next": "Kui tellimus on teele saadetud, saad e-kirja jälgimislingiga.",
       "cta": "Vaata tellimust kontol",
       "guestNote": "Loo selle e-posti aadressiga konto, et hoida tellimused ja arved ühes kohas.",
-      "register": "Loo konto"
+      "register": "Loo konto",
+      "eyebrow": "Tellimus vastu võetud",
+      "nextTitle": "Mis edasi saab"
     },
     "orderShipped": {
       "subject": "Tellimus {number} on teele saadetud",
@@ -92,7 +99,9 @@
       "toLocker": "Pakiautomaat",
       "toAddress": "Tarneaadress",
       "lockerNote": "Kui saadetis jõuab pakiautomaati, saadab vedaja sulle SMS-i või e-kirja avamiskoodiga.",
-      "noTracking": "Kui sul on tarne kohta küsimusi, vasta lihtsalt sellele kirjale."
+      "noTracking": "Kui sul on tarne kohta küsimusi, vasta lihtsalt sellele kirjale.",
+      "eyebrow": "Teel sinu poole",
+      "itemsTitle": "Saadetises"
     },
     "orderCancelled": {
       "subject": "Tellimus {number} on tühistatud",
@@ -103,7 +112,8 @@
       "refund": "Kuna tellimus oli juba tasutud, kanname raha 5 tööpäeva jooksul tagasi kontole, millelt makse tehti.",
       "unpaid": "Kui tellimusele oli väljastatud arve, ei ole seda enam vaja tasuda.",
       "mistake": "Kui tühistamine on eksitus või soovid tellimuse taastada, vasta sellele kirjale — aitame hea meelega.",
-      "cta": "Jätka ostlemist"
+      "cta": "Jätka ostlemist",
+      "eyebrow": "Tellimus tühistatud"
     },
     "invoiceIssued": {
       "subject": "{type} {number}",
@@ -123,7 +133,8 @@
       "creditNote": "Kreeditarve vähendab varem väljastatud arve summat — lisatoiminguid pole vaja.",
       "attached": "Dokument on manuses (PDF).",
       "noAttachment": "PDF-i ei õnnestunud seekord lisada — dokumendi leiad oma kontolt või saadame selle soovi korral.",
-      "cta": "Minu arved"
+      "cta": "Minu arved",
+      "eyebrow": "Uus dokument"
     },
     "b2b": {
       "yourCompany": "sinu ettevõtte"
@@ -136,14 +147,37 @@
       "discount": "Sinu allahindlus: {percent}% kõikidelt hindadelt.",
       "terms": "Tasumine arvega — maksetähtaeg {days} päeva.",
       "reverse": "Tarnetele Eestisse ja Leetu kehtiva EL KMKR numbriga rakendame pöördmaksustamist.",
-      "cta": "Kataloogi"
+      "cta": "Kataloogi",
+      "eyebrow": "B2B konto"
     },
     "b2bRejected": {
       "subject": "Sinu B2B-taotlusest",
       "title": "B2B-taotlust ei kinnitatud",
       "intro": "Aitäh huvi eest! Kahjuks ei saa me praegu {company} B2B-taotlust kinnitada.",
       "text": "Saad jätkuvalt osta eraisikuna. Kui soovid rekvisiite täpsustada või rohkem teada saada, vasta sellele kirjale või võta meiega ühendust.",
-      "cta": "Võta ühendust"
+      "cta": "Võta ühendust",
+      "eyebrow": "B2B taotlus"
+    },
+    "footer": {
+      "catalog": "Kataloog",
+      "oilFinder": "Õlivalik",
+      "account": "Minu konto",
+      "contact": "Kontakt",
+      "trust1": "Toodetud Saksamaal alates 1866",
+      "trust2": "Originaalsed Zeller+Gmelin tooted",
+      "trust3": "Tarne üle Baltikumi"
+    },
+    "help": {
+      "title": "Vajad abi?",
+      "text": "Aitame tellimuse, tarne või sobiva õli valikuga.",
+      "hours": "Tööaeg: {hours}",
+      "reply": "Või lihtsalt vasta sellele kirjale."
+    },
+    "progress": {
+      "placed": "Vastu võetud",
+      "processing": "Komplekteerime",
+      "shipped": "Saadetud",
+      "delivered": "Kohale toimetatud"
     }
   }
 }

@@ -1,4 +1,4 @@
-import { esc, money, num, type EmailContext, type ItemRow, type TotalRow } from "./layout";
+import { emailImageUrl, esc, money, num, type EmailContext, type ItemRow, type TotalRow } from "./layout";
 
 /** Order snapshot used by all order e-mails (built from the `orders` row or from the checkout payload). */
 export type OrderEmailData = {
@@ -26,7 +26,7 @@ export type OrderEmailData = {
   shipping_point: { provider?: string | null; id?: string | null; name?: string | null; city?: string | null; address?: string | null } | null;
   shipping_address: { street?: string | null; city?: string | null; postal_code?: string | null; country?: string | null } | null;
   billing_address?: { street?: string | null; city?: string | null; postal_code?: string | null; country?: string | null } | null;
-  items: { name: string; pack_label: string | null; sku: string | null; qty: number; unit_price_net: number; line_net: number }[];
+  items: { name: string; pack_label: string | null; sku: string | null; image?: string | null; qty: number; unit_price_net: number; line_net: number }[];
   subtotal_net: number;
   shipping_net: number;
   vat_rate: number;
@@ -91,6 +91,7 @@ export function itemRows(o: OrderEmailData, ctx: EmailContext): ItemRow[] {
       meta: meta || null,
       qtyLine: ctx.t("items.qtyPrice", { qty: it.qty, price: money(unit, ctx.locale) }),
       total: money(line, ctx.locale),
+      image: emailImageUrl(it.image, ctx),
     };
   });
 }
