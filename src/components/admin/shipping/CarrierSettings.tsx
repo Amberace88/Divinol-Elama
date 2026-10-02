@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { CheckCircle2, CircleSlash, ExternalLink, KeyRound, PlugZap } from "lucide-react";
 import { testCarrierConnection, updateCarrier } from "@/lib/admin/actions/shipping";
@@ -79,7 +80,7 @@ function CarrierCard({ c, cap, developer }: { c: Carrier; cap?: CarrierCapabilit
       <label className="mb-3 flex items-center justify-between gap-3 rounded-xl border border-line px-3 py-2 text-[13px]">
         <span>
           <span className="font-semibold text-ink">Piedāvāt klientiem pie pakomātiem</span>
-          <span className="block text-[11.5px] text-muted">Cena klientam — no veikala iestatījumiem („Pakomāts”)</span>
+          <span className="block text-[11.5px] text-muted">Cena klientam — <Link href="/admin/settings#shipping" className="font-semibold text-navy-600 underline-offset-2 hover:underline">mainīt Iestatījumos → Piegāde</Link></span>
         </span>
         <Switch
           size="sm"

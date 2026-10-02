@@ -26,6 +26,16 @@ const num = (s: string) => {
   return t === "" ? Number.NaN : Number(t);
 };
 const str = (n: number | null | undefined) => (n == null ? "" : String(n).replace(".", ","));
+const r2 = (n: number) => Math.round((n + Number.EPSILON) * 100) / 100;
+/** Net price (2 decimals) whose gross with `vat` rounds exactly to `gross` when possible (the shop stores net prices). */
+function netForGross(gross: number, vat: number) {
+  const k = 1 + vat / 100;
+  const n0 = r2(gross / k);
+  for (const n of [n0, r2(n0 - 0.01), r2(n0 + 0.01)]) if (n >= 0 && r2(n * k) === r2(gross)) return n;
+  return n0;
+}
+/** Methods whose customer price is entered per country, incl. VAT (stored as price_net + per-market surcharge). */
+const PER_MARKET = new Set(["parcel_locker", "courier"]);
 
 function Section({
   id,
@@ -177,7 +187,17 @@ function VatForm({ initial, updated }: { initial: Record<Market, number>; update
   );
 }
 
-type MethodState = { enabled: boolean; price: string; manual: boolean; markets: Market[]; max_item: string; free_over: boolean; surcharge: Record<Market, string> };
+type MethodState = {
+  enabled: boolean;
+  price: string;
+  manual: boolean;
+  markets: Market[];
+  max_item: string;
+  free_over: boolean;
+  surcharge: Record<Market, string>;
+  /** customer price incl. VAT per country (parcel locker / courier) */
+  gross: Record<Market, string>;
+};
 
 function ShippingForm({ initial, vat, updated }: { initial: SettingsInit["shipping"]; vat: Record<Market, number>; updated?: string }) {
   const [thr, setThr] = useState<Record<Market, string>>({
@@ -199,15 +219,45 @@ function ShippingForm({ initial, vat, updated }: { initial: SettingsInit["shippi
             max_item: str(m?.max_item ?? null),
             free_over: Boolean(m?.free_over),
             surcharge: { LV: str(m?.surcharge?.LV ?? 0), EE: str(m?.surcharge?.EE ?? 0), LT: str(m?.surcharge?.LT ?? 0) },
+            gross: Object.fromEntries(
+              MARKETS.map((mk) => [mk, m?.price_net == null ? "" : str(r2(r2(m.price_net + (m.surcharge?.[mk] ?? 0)) * (1 + (vat[mk] ?? 21) / 100)))]),
+            ) as Record<Market, string>,
           },
         ];
       }),
     ),
   );
-  const { save, pending, errors } = useSave("shipping");
+  const { save, pending, errors: serverErrors } = useSave("shipping");
+  const [localErrors, setLocalErrors] = useState<Record<string, string>>({});
+  const errors = { ...serverErrors, ...localErrors };
   const upd = (id: string, patch: Partial<MethodState>) => setMethods((ms) => ({ ...ms, [id]: { ...ms[id], ...patch } }));
 
+  /** gross per country → { price_net: lowest net, surcharge: difference per country } (all ≥ 0, so place_order is unchanged) */
+  function perMarketPrices(m: MethodState) {
+    const nets = Object.fromEntries(
+      MARKETS.map((mk) => {
+        const g = num(m.gross[mk]);
+        return [mk, Number.isFinite(g) && g >= 0 ? netForGross(g, vat[mk] ?? 21) : Number.NaN];
+      }),
+    ) as Record<Market, number>;
+    const used = MARKETS.filter((mk) => Number.isFinite(nets[mk]));
+    const base = used.length ? Math.min(...used.map((mk) => nets[mk])) : 0;
+    const surcharge = Object.fromEntries(MARKETS.map((mk) => [mk, Number.isFinite(nets[mk]) ? r2(nets[mk] - base) : 0])) as Record<Market, number>;
+    return { base, surcharge, nets };
+  }
+
   function submit() {
+    const errs: Record<string, string> = {};
+    for (const id of METHOD_IDS) {
+      const m = methods[id];
+      if (!PER_MARKET.has(id) || !m.enabled) continue;
+      for (const mk of m.markets) {
+        const g = num(m.gross[mk]);
+        if (!Number.isFinite(g) || g < 0) errs[`methods.${id}.gross.${mk}`] = "Ievadiet cenu";
+      }
+    }
+    setLocalErrors(errs);
+    if (Object.keys(errs).length) return;
     save({
       free_threshold: { LV: num(thr.LV), EE: num(thr.EE), LT: num(thr.LT) },
       methods: Object.fromEntries(
@@ -216,9 +266,10 @@ function ShippingForm({ initial, vat, updated }: { initial: SettingsInit["shippi
           const out: Record<string, unknown> = { enabled: m.enabled, markets: m.markets, price_net: m.manual ? null : num(m.price) };
           if (m.max_item.trim()) out.max_item = num(m.max_item);
           if (id !== "pickup" && id !== "freight") out.free_over = m.free_over;
-          if (id === "courier" || id === "parcel_locker") {
-            const sc = { LV: num(m.surcharge.LV || "0"), EE: num(m.surcharge.EE || "0"), LT: num(m.surcharge.LT || "0") };
-            if (id === "courier" || sc.LV || sc.EE || sc.LT) out.surcharge = sc;
+          if (PER_MARKET.has(id)) {
+            const { base, surcharge } = perMarketPrices(m);
+            out.price_net = base;
+            out.surcharge = surcharge;
           }
           return [id, out];
         }),
@@ -276,7 +327,56 @@ function ShippingForm({ initial, vat, updated }: { initial: SettingsInit["shippi
                   })}
                 </div>
               </div>
-              {m.enabled && (
+              {m.enabled && PER_MARKET.has(id) && (
+                <div className="mt-4">
+                  <p className="mb-2 text-[13px] font-semibold text-ink/80">
+                    Cena klientam <span className="font-normal text-muted">(ar PVN — tieši tā summa, ko klients redz grozā)</span>
+                  </p>
+                  <div className="grid gap-3 sm:grid-cols-3">
+                    {MARKETS.map((mk) => {
+                      const on = m.markets.includes(mk);
+                      const g = num(m.gross[mk]);
+                      const vatMk = vat[mk] ?? 21;
+                      const net = Number.isFinite(g) ? netForGross(g, vatMk) : Number.NaN;
+                      const shown = Number.isFinite(net) ? r2(net * (1 + vatMk / 100)) : Number.NaN;
+                      return (
+                        <Field key={mk} label={`${MARKET[mk]}${on ? "" : " (izslēgts)"}`} htmlFor={`gr-${id}-${mk}`} error={errors[`methods.${id}.gross.${mk}`]}>
+                          <div className="relative">
+                            <input
+                              id={`gr-${id}-${mk}`}
+                              inputMode="decimal"
+                              className={cn(inputCls, "pr-8 font-semibold tabular-nums", !on && "opacity-60")}
+                              value={m.gross[mk]}
+                              onChange={(e) => upd(id, { gross: { ...m.gross, [mk]: e.target.value } })}
+                            />
+                            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[13px] text-muted">€</span>
+                          </div>
+                          <span className="mt-1 block text-[11.5px] text-muted tabular-nums">
+                            {Number.isFinite(net) ? (
+                              <>
+                                bez PVN {fmtMoney(net)} · PVN {vatMk}%
+                                {Math.abs(shown - g) > 0.001 && <span className="font-semibold text-orange-700"> · klients redzēs {fmtMoney(shown)}</span>}
+                              </>
+                            ) : (
+                              "—"
+                            )}
+                          </span>
+                        </Field>
+                      );
+                    })}
+                  </div>
+                  <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                    <Field label="Maks. vienības izmērs (L/kg)" htmlFor={`mx-${id}`} error={errors[`methods.${id}.max_item`]} hint="Tukšs = bez ierobežojuma">
+                      <input id={`mx-${id}`} inputMode="decimal" className={inputCls} value={m.max_item} onChange={(e) => upd(id, { max_item: e.target.value })} />
+                    </Field>
+                    <div className="flex items-center gap-2.5 pt-6">
+                      <Switch size="sm" checked={m.free_over} onChange={(x) => upd(id, { free_over: x })} label="Bezmaksas virs sliekšņa" />
+                      <span className="text-[13px] font-semibold text-ink/80">Bezmaksas virs sliekšņa</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {m.enabled && !PER_MARKET.has(id) && (
                 <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                   <Field label="Cena bez PVN" htmlFor={`pr-${id}`} error={err("price_net")}>
                     {id === "freight" || m.manual ? (
