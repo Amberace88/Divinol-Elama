@@ -23,6 +23,8 @@ import { Spinner, Switch, useActionRunner, useConfirm } from "../client-ui";
 import { btn } from "../styles";
 import { Thumb } from "../Thumb";
 import { Pill, TableWrap, td, th, trHover } from "../ui";
+import { PromoMarks } from "../promo/PromoMarks";
+import type { ProductPromo } from "@/lib/promo";
 import { BulkInventoryModal, type BulkItem, type BulkMode } from "./BulkInventory";
 import { InlineInput, PriceCell, StatusCell, StockCell, type PriceMode } from "./InventoryControls";
 import { VariantHistoryDrawer, type HistoryTarget } from "./VariantHistory";
@@ -38,6 +40,8 @@ export type ProductListItem = {
   image: string | null;
   is_active: boolean;
   is_featured: boolean;
+  badges?: string[];
+  promo?: ProductPromo | null;
   variants: InventoryVariant[];
 };
 
@@ -364,6 +368,7 @@ export function ProductTable({ rows, vat, highlight }: { rows: ProductListItem[]
                         <Link href={`/admin/products/${r.id}`} className="font-bold text-ink hover:text-navy-600 hover:underline">
                           {r.name}
                         </Link>
+                        <PromoMarks promo={r.promo} badges={r.badges} />
                         <p className="truncate text-[12px] text-muted">
                           {r.base_sku && <span className="font-mono">{r.base_sku} · </span>}
                           <button type="button" onClick={() => toggleExpand(r.id)} className="hover:text-navy-600 hover:underline">

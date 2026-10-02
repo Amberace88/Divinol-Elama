@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { BADGE_KEYS, PROMO_TYPES } from "@/lib/promo";
 
 /** Validation shared by admin client forms and Server Actions (client-safe). */
 const uuid = z.string().regex(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i, "Nederīgs ID");
@@ -47,6 +48,28 @@ export const variantSchema = z.object({
   sort: z.number().int(),
 });
 
+const isoTs = z.string().refine((v) => !Number.isNaN(Date.parse(v)), "Nederīgs datums");
+
+/** Shared promotion checks (product editor + bulk promotions). */
+export function promoRefine(
+  p: { promo_type: string | null; promo_percent: number | null; promo_starts_at: string | null; promo_ends_at: string | null },
+  ctx: z.RefinementCtx,
+) {
+  if ((p.promo_type === "sale" || p.promo_type === "clearance") && p.promo_percent == null)
+    ctx.addIssue({ code: "custom", path: ["promo_percent"], message: "Norādiet atlaidi (%)" });
+  if (p.promo_starts_at && p.promo_ends_at && Date.parse(p.promo_ends_at) <= Date.parse(p.promo_starts_at))
+    ctx.addIssue({ code: "custom", path: ["promo_ends_at"], message: "Beigu datumam jābūt pēc sākuma" });
+}
+
+export const promoSchema = z
+  .object({
+    promo_type: z.enum(PROMO_TYPES).nullable(),
+    promo_percent: z.number().min(1, "Atlaide 1–90%").max(90, "Atlaide 1–90%").nullable(),
+    promo_starts_at: isoTs.nullable(),
+    promo_ends_at: isoTs.nullable(),
+  })
+  .superRefine(promoRefine);
+
 export const productSchema = z
   .object({
     id: uuid.nullable().optional(),
@@ -70,10 +93,16 @@ export const productSchema = z
     sds_url: nullableText(1000),
     is_active: z.boolean(),
     is_featured: z.boolean(),
+    badges: z.array(z.enum(BADGE_KEYS)).max(BADGE_KEYS.length).default([]),
+    promo_type: z.enum(PROMO_TYPES).nullable().default(null),
+    promo_percent: z.number().min(1, "Atlaide 1–90%").max(90, "Atlaide 1–90%").nullable().default(null),
+    promo_starts_at: isoTs.nullable().default(null),
+    promo_ends_at: isoTs.nullable().default(null),
     sort: z.number().int().min(-100000).max(100000),
     variants: z.array(variantSchema).min(1, "Pievienojiet vismaz vienu variantu").max(50),
   })
   .superRefine((p, ctx) => {
+    promoRefine(p, ctx);
     const seen = new Map<string, number>();
     p.variants.forEach((v, i) => {
       if (!v.sku) return;

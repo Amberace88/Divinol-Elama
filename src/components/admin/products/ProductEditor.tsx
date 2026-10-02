@@ -14,6 +14,8 @@ import { DocField } from "./DocField";
 import { ImageManager } from "./ImageManager";
 import { TagInput } from "./TagInput";
 import { parseDec, VariantsEditor, type VariantState } from "./VariantsEditor";
+import { PromoEditor } from "../promo/PromoEditor";
+import { rigaDayEnd, rigaDayStart, type PromoType } from "@/lib/promo";
 
 export type ProductText = { name: string; type: string; short: string; description: string; meta_title: string; meta_description: string };
 
@@ -33,6 +35,13 @@ export type ProductFormInit = {
   sds_url: string;
   is_active: boolean;
   is_featured: boolean;
+  badges: string[];
+  promo_type: "" | PromoType;
+  /** % as typed */
+  promo_percent: string;
+  /** "YYYY-MM-DD" (Riga) — first / last day of the promotion */
+  promo_start: string;
+  promo_end: string;
   sort: number;
   variants: VariantState[];
   legacy_slugs: string[];
@@ -70,6 +79,11 @@ function toPayload(f: ProductFormInit): ProductPayload {
     sds_url: f.sds_url,
     is_active: f.is_active,
     is_featured: f.is_featured,
+    badges: f.badges as ProductPayload["badges"],
+    promo_type: f.promo_type || null,
+    promo_percent: f.promo_type ? num(f.promo_percent) : null,
+    promo_starts_at: f.promo_type ? rigaDayStart(f.promo_start) : null,
+    promo_ends_at: f.promo_type ? rigaDayEnd(f.promo_end) : null,
     sort: Math.round(Number(f.sort) || 0),
     variants: f.variants.map((v, i) => ({
       id: v.id,
@@ -343,6 +357,14 @@ export function ProductEditor({
             </div>
             <VariantsEditor variants={form.variants} onChange={(v) => set("variants", v)} images={form.images} vat={vat} errors={variantErrors} />
           </section>
+
+          <PromoEditor
+            value={{ promo_type: form.promo_type, promo_percent: form.promo_percent, promo_start: form.promo_start, promo_end: form.promo_end, badges: form.badges }}
+            onChange={(v) => setForm((f) => ({ ...f, ...v }))}
+            errors={errors}
+            variants={form.variants}
+            vat={vat}
+          />
 
           <section className="rounded-2xl border border-line bg-white p-5 shadow-card">
             <h2 className="mb-4 text-[15px] font-bold text-ink">Tehniskie dati</h2>

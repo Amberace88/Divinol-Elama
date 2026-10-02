@@ -26,6 +26,7 @@ export async function GET(req: NextRequest) {
         skus: [p.base_sku, ...s.variants.map((v) => v.sku)].filter((x): x is string => Boolean(x)),
         image: s.image,
         price_net: prices.length ? Math.min(...prices) : null,
+        promo_percent: s.promo?.percent ?? 0,
       };
     });
   } catch {

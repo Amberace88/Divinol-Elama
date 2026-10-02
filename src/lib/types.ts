@@ -1,4 +1,5 @@
 import type { Locale } from "@/i18n/routing";
+import type { ActivePromo, ProductPromo } from "./promo";
 
 export type I18nText = Partial<Record<Locale, string>>;
 
@@ -34,6 +35,8 @@ export type Variant = {
   lead_time_days?: number | null;
   stock?: number | null;
   image: string | null;
+  /** % discount of the product's running promotion (set by getProducts, 0/undefined = none) */
+  promo_percent?: number;
 };
 
 export type Product = {
@@ -50,6 +53,12 @@ export type Product = {
   variants: Variant[];
   i18n: Partial<Record<Locale, ProductI18n>>;
   is_featured?: boolean;
+  /** marketing badges (see lib/promo BADGE_KEYS) */
+  badges?: string[];
+  /** promotion as stored (may be scheduled / ended) */
+  promo?: ProductPromo | null;
+  /** promotion running right now (computed per request by getProducts) */
+  promo_active?: ActivePromo | null;
   tds_url?: string | null;
   sds_url?: string | null;
 };

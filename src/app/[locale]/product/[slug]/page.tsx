@@ -8,6 +8,7 @@ import { getCategory, getProduct, getProducts, productText, summarize, t18 } fro
 import { BASE_VAT, gross, packLabel } from "@/lib/commerce";
 import { absoluteUrl, alternates, breadcrumbJsonLd, siteUrl } from "@/lib/seo";
 import { ProductPurchase } from "@/components/product/ProductPurchase";
+import { ProductPageBadges } from "@/components/product/ProductBadges";
 import { PackCalculator } from "@/components/product/PackCalculator";
 import { AskExpertForm } from "@/components/product/AskExpertForm";
 import { SectionNav } from "@/components/product/SectionNav";
@@ -117,14 +118,15 @@ export default async function ProductPage({ params }: Props) {
     "@type": "Offer",
     sku: v.sku ?? undefined,
     name: `${tx.name} ${packLabel(v)}`.trim(),
-    price: gross(v.price_net, BASE_VAT).toFixed(2),
+    price: gross(v.price_net * (1 - (v.promo_percent ?? 0) / 100), BASE_VAT).toFixed(2),
+    ...(p.promo_active?.ends_at && v.promo_percent ? { priceValidUntil: p.promo_active.ends_at.slice(0, 10) } : {}),
     priceCurrency: "EUR",
     availability: v.in_stock ? "https://schema.org/InStock" : "https://schema.org/BackOrder",
     itemCondition: "https://schema.org/NewCondition",
     url: absoluteUrl(href, locale),
     seller: { "@id": `${siteUrl(locale)}/#organization` },
   }));
-  const prices = p.variants.map((v) => gross(v.price_net, BASE_VAT));
+  const prices = p.variants.map((v) => gross(v.price_net * (1 - (v.promo_percent ?? 0) / 100), BASE_VAT));
   const productLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -186,6 +188,7 @@ export default async function ProductPage({ params }: Props) {
     <div>
       {tx.type && <p className="eyebrow">{tx.type}</p>}
       <h1 className="h-display mt-2 text-[28px] leading-[1.1] text-ink sm:text-4xl">{tx.name}</h1>
+      <ProductPageBadges promo={s.promo} badges={s.badges} />
       {tx.short && <p className="mt-3 text-[15px] leading-relaxed text-ink/70">{tx.short}</p>}
       {(viscosity || keyApprovals.length > 0) && (
         <div className="mt-4 flex flex-wrap items-center gap-1.5">

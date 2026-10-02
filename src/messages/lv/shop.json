@@ -232,5 +232,30 @@
     "freightNote": "Grozā ir lielais iepakojums — piegāde ar kravas transportu vai saņemšana noliktavā.",
     "browse": "Uz katalogu",
     "finder": "Eļļas izvēle"
+  },
+  "promo": {
+    "types": {
+      "sale": "Akcija",
+      "clearance": "Izpārdošana",
+      "special": "Īpašais piedāvājums"
+    },
+    "badges": {
+      "new": "Jaunums",
+      "bestseller": "Pirktākais",
+      "recommended": "Iesakām",
+      "limited": "Ierobežots daudzums",
+      "seasonal": "Sezonas prece",
+      "bio": "Bioloģiski noārdāms",
+      "pro": "Profesionāļiem"
+    },
+    "endsIn": "Akcija beidzas pēc {days} d.",
+    "endsToday": "Akcija beidzas šodien",
+    "save": "Ietaupi {amount}",
+    "was": "Iepriekš",
+    "filter": "Akcijas un izpārdošana",
+    "filterHint": "Tikai preces ar atlaidi",
+    "homeEyebrow": "Akcijas",
+    "homeTitle": "Šobrīd par izdevīgāku cenu",
+    "homeLink": "Visas akcijas"
   }
 }

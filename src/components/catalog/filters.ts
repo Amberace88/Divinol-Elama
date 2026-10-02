@@ -13,10 +13,12 @@ export type Filters = {
   approval: string;
   pack: string[];
   stock: boolean;
+  /** only products with a running promotion */
+  sale: boolean;
   sort: SortKey;
 };
 
-export const EMPTY_FILTERS: Filters = { q: "", sae: [], iso: [], spec: [], approval: "", pack: [], stock: false, sort: "popular" };
+export const EMPTY_FILTERS: Filters = { q: "", sae: [], iso: [], spec: [], approval: "", pack: [], stock: false, sale: false, sort: "popular" };
 
 const list = (v: string | null) => (v ? v.split(",").map((s) => s.trim()).filter(Boolean) : []);
 
@@ -31,6 +33,7 @@ export function parseFilters(qs: string): Filters {
     approval: sp.get("approval") ?? "",
     pack: list(sp.get("pack")),
     stock: sp.get("stock") === "1",
+    sale: sp.get("sale") === "1",
     sort: sort && SORTS.includes(sort) ? sort : "popular",
   };
 }
@@ -44,12 +47,13 @@ export function serializeFilters(f: Filters): string {
   if (f.approval.trim()) sp.set("approval", f.approval);
   if (f.pack.length) sp.set("pack", f.pack.join(","));
   if (f.stock) sp.set("stock", "1");
+  if (f.sale) sp.set("sale", "1");
   if (f.sort !== "popular") sp.set("sort", f.sort);
   return sp.toString();
 }
 
 export function activeCount(f: Filters) {
-  return f.sae.length + f.iso.length + f.spec.length + f.pack.length + (f.approval.trim() ? 1 : 0) + (f.stock ? 1 : 0) + (f.q.trim() ? 1 : 0);
+  return f.sae.length + f.iso.length + f.spec.length + f.pack.length + (f.approval.trim() ? 1 : 0) + (f.stock ? 1 : 0) + (f.sale ? 1 : 0) + (f.q.trim() ? 1 : 0);
 }
 
 /** "ACEA A3/B4" and "ACEA A3 / B4" are the same spec. */
@@ -73,6 +77,8 @@ export type Facets = {
   iso: string[];
   specs: { acea: string[]; api: string[]; other: string[] };
   packs: { key: string; label: string }[];
+  /** products with a running promotion */
+  promos: number;
 };
 
 export function buildFacets(products: ProductSummary[], pcsLabel: string): Facets {
@@ -80,9 +86,11 @@ export function buildFacets(products: ProductSummary[], pcsLabel: string): Facet
   const iso = new Set<string>();
   const specs = new Set<string>();
   const packs = new Map<string, { key: string; label: string; unit: string; size: number }>();
+  let promos = 0;
   for (const p of products) {
     if (p.sae) sae.add(p.sae);
     if (p.iso_vg) iso.add(p.iso_vg);
+    if (p.promo) promos++;
     for (const s of p.specs) specs.add(normSpec(s));
     for (const v of p.variants) {
       const k = packKey(v);
@@ -102,6 +110,7 @@ export function buildFacets(products: ProductSummary[], pcsLabel: string): Facet
     packs: [...packs.values()]
       .sort((a, b) => (unitOrder[a.unit] ?? 3) - (unitOrder[b.unit] ?? 3) || a.size - b.size)
       .map(({ key, label }) => ({ key, label })),
+    promos,
   };
 }
 
@@ -142,6 +151,7 @@ export function applyFilters(products: ProductSummary[], f: Filters, ctx: PriceC
     if (specSet.size && !p.specs.some((s) => specSet.has(normSpec(s)))) return false;
     if (f.pack.length && !p.variants.some((v) => f.pack.includes(packKey(v)))) return false;
     if (f.stock && !p.variants.some((v) => v.in_stock)) return false;
+    if (f.sale && !p.promo) return false;
     if (approval && ![...p.approvals, ...p.specs].some((a) => compact(a).includes(approval))) return false;
     if (f.q.trim()) {
       const s = scoreDoc(searchable(p), f.q);
@@ -167,6 +177,7 @@ export function applyFilters(products: ProductSummary[], f: Filters, ctx: PriceC
         (a, b) =>
           (scores.get(b.slug) ?? 0) - (scores.get(a.slug) ?? 0) ||
           Number(b.featured) - Number(a.featured) ||
+          Number(Boolean(b.promo)) - Number(Boolean(a.promo)) ||
           (order.get(a.slug) ?? 0) - (order.get(b.slug) ?? 0),
       );
   }

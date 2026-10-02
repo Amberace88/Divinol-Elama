@@ -16,7 +16,7 @@ export function usePrice() {
   const money = useMoney();
   const t = useTranslations("price");
   const ctx = useMemo(() => ({ market, b2b, discountPercent }), [market, b2b, discountPercent]);
-  const price = useCallback((v: Pick<SummaryVariant, "price_net">) => displayPrice(v, ctx), [ctx]);
+  const price = useCallback((v: Pick<SummaryVariant, "price_net" | "promo_percent">) => displayPrice(v, ctx), [ctx]);
   return { price, money, ctx, vatLabel: b2b ? t("vatExcl") : t("vatIncl") };
 }
 
@@ -31,6 +31,7 @@ export function toCartItem(p: Pick<ProductSummary, "slug" | "name" | "image">, v
     size: v.size,
     unit: v.unit,
     price_net: v.price_net,
+    ...(v.promo_percent ? { promo_percent: v.promo_percent } : {}),
   };
 }
 

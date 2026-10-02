@@ -1,3 +1,4 @@
+import type { PromoType } from "@/lib/promo";
 import Link from "next/link";
 import { isDeveloperEmail } from "@/lib/admin/developer";
 import { PackageSearch, Plus } from "lucide-react";
@@ -25,6 +26,11 @@ type Row = {
   images: string[] | null;
   is_active: boolean;
   is_featured: boolean;
+  badges: string[] | null;
+  promo_type: string | null;
+  promo_percent: number | string | null;
+  promo_starts_at: string | null;
+  promo_ends_at: string | null;
   i18n: Record<string, { name?: string }> | null;
   categories: { i18n: Record<string, { name?: string }> | null; slug: string } | null;
   product_variants: {
@@ -51,7 +57,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
   const params = await searchParams;
   const q = sanitizeSearch(sp(params, "q"));
   const category = sp(params, "category");
-  const status = spEnum(params, "status", ["active", "inactive", "featured"] as const, null);
+  const status = spEnum(params, "status", ["active", "inactive", "featured", "promo"] as const, null);
   const stock = spEnum(params, "stock", STOCK_FILTERS, null);
   const sort = spEnum(params, "sort", Object.keys(SORTS) as (keyof typeof SORTS)[], "sort");
   const page = spInt(params, "page", 1);
@@ -85,7 +91,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
   let query = supabase
     .from("products")
     .select(
-      "id, slug, base_sku, sae, iso_vg, images, is_active, is_featured, i18n, categories(slug, i18n), product_variants(id, sku, size, unit, price_net, stock, availability, lead_time_days, low_stock_threshold, is_active, image, sort)",
+      "id, slug, base_sku, sae, iso_vg, images, is_active, is_featured, badges, promo_type, promo_percent, promo_starts_at, promo_ends_at, i18n, categories(slug, i18n), product_variants(id, sku, size, unit, price_net, stock, availability, lead_time_days, low_stock_threshold, is_active, image, sort)",
       { count: "exact" },
     );
   if (stock === "inactive") query = query.eq("is_active", false);
@@ -103,6 +109,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
   if (status === "active") query = query.eq("is_active", true);
   if (status === "inactive") query = query.eq("is_active", false);
   if (status === "featured") query = query.eq("is_featured", true);
+  if (status === "promo") query = query.not("promo_type", "is", null);
   query = query.order(SORTS[sort], { ascending: sort !== "updated" }).order("slug");
   const from = (page - 1) * PER;
 
@@ -131,6 +138,10 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
       image: p.images?.[0] ?? vs.find((v) => v.image)?.image ?? null,
       is_active: p.is_active,
       is_featured: p.is_featured,
+      badges: p.badges ?? [],
+      promo: p.promo_type
+        ? { type: p.promo_type as PromoType, percent: p.promo_percent == null ? null : Number(p.promo_percent), starts_at: p.promo_starts_at, ends_at: p.promo_ends_at }
+        : null,
       variants: vs.map((v) => ({
         id: v.id,
         sku: v.sku,
@@ -187,6 +198,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
                 { value: "active", label: "Aktīvie" },
                 { value: "inactive", label: "Paslēptie" },
                 { value: "featured", label: "Izceltie" },
+                { value: "promo", label: "Ar akciju" },
               ],
             },
             {

@@ -13,6 +13,7 @@ export type CartItem = {
   size: number | null;
   unit: string;
   price_net: number; // snapshot for display; re-validated on the server at checkout
+  promo_percent?: number; // running promotion when added (the server applies the current one)
   qty: number;
 };
 

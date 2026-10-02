@@ -5,7 +5,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Check, Plus } from "lucide-react";
 import type { ProductSummary } from "@/lib/catalog";
-import { displayPrice, packLabel, pricePerUnit } from "@/lib/commerce";
+import { displayPrice, packLabel, pricePerUnit, regularPrice } from "@/lib/commerce";
+import { CardBadges } from "@/components/product/ProductBadges";
 import { Link } from "@/i18n/navigation";
 import { usePricing } from "@/components/providers/PriceProvider";
 import { ProductImage } from "@/components/ui/ProductImage";
@@ -26,6 +27,7 @@ export function ProductCard({
 }) {
   const t = useTranslations("catalog");
   const ta = useTranslations("actions");
+  const tp = useTranslations("promo");
   const tu = useTranslations("units");
   const pricing = usePricing();
   const money = useMoney();
@@ -40,6 +42,9 @@ export function ProductCard({
   // Until a pack is picked the card shows the "from" price; picking a pack shows that pack's price, per-unit price, stock and image.
   const sel = selKey ? packs.find((v) => v.key === selKey) : undefined;
   const price = sel ? displayPrice(sel, pricing) : minPrice(p, pricing);
+  // price before the promotion for the shown pack (or for the cheapest pack when none is picked)
+  const cheapest = sel ?? [...p.variants].filter((v) => v.price_net > 0).sort((a, b) => displayPrice(a, pricing) - displayPrice(b, pricing))[0];
+  const was = cheapest ? regularPrice(cheapest, pricing) : null;
   const minPpu = minPerUnit(p, pricing);
   const selPpu = sel ? pricePerUnit(sel, pricing) : null;
   const ppu = sel ? (selPpu != null ? { price: selPpu, unit: sel.unit } : null) : minPpu;
@@ -85,6 +90,7 @@ export function ProductCard({
           </motion.div>
         </AnimatePresence>
         <div className="absolute left-3 top-3 flex flex-col items-start gap-1.5">
+          <CardBadges promo={p.promo} badges={p.badges} />
           {(p.sae || p.iso_vg) && (
             <span className="skew-tag bg-navy-700 text-[11px] font-extrabold text-brand-300 shadow-sm">
               <span>{p.sae ?? p.iso_vg}</span>
@@ -167,6 +173,12 @@ export function ProductCard({
 
         <div className="mt-auto flex items-end justify-between gap-3 pt-4">
           <div className="min-w-0">
+            {was != null && Number.isFinite(price) && (
+              <p className="mb-1 text-[12px] font-semibold tabular-nums text-muted">
+                <span className="sr-only">{tp("was")} </span>
+                <s className="decoration-rose-500/70 decoration-2">{money(was)}</s>
+              </p>
+            )}
             {Number.isFinite(price) && (
               <p className="flex items-baseline text-[19px] font-extrabold leading-none tracking-tight tabular-nums text-navy-700">
                 <AnimatePresence initial={false}>
@@ -183,7 +195,9 @@ export function ProductCard({
                     </motion.span>
                   )}
                 </AnimatePresence>
-                <RollingNumber value={price} format={money} />
+                <span className={cn(was != null && "text-rose-600")}>
+                  <RollingNumber value={price} format={money} />
+                </span>
               </p>
             )}
             {ppu && (

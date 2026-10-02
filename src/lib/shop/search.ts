@@ -13,6 +13,8 @@ export type SearchDoc = {
   image: string | null;
   /** cheapest net price */
   price_net: number | null;
+  /** running promotion % (0 = none) */
+  promo_percent?: number;
 };
 
 export function normalize(s: string) {

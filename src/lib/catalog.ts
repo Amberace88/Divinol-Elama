@@ -3,6 +3,7 @@ import { unstable_cache } from "next/cache";
 import seedProducts from "@/data/products.seed.json";
 import { categoriesSeed } from "@/data/categories";
 import { BASE_VAT } from "./commerce";
+import { activePromo, type ActivePromo, type ProductPromo, type PromoType } from "./promo";
 import { createPublicClient } from "./supabase/server";
 import { isSupabaseConfigured } from "./supabase/env";
 import type { Category, Product, ProductI18n, Variant } from "./types";
@@ -37,6 +38,7 @@ type DbProduct = {
   id: string; slug: string; base_sku: string | null; sae: string | null; iso_vg: string | null;
   specs: string[]; oem_approvals: string[]; performance: string[]; images: string[];
   i18n: Partial<Record<Locale, ProductI18n>>; is_featured: boolean; tds_url: string | null; sds_url: string | null;
+  badges: string[] | null; promo_type: string | null; promo_percent: number | string | null; promo_starts_at: string | null; promo_ends_at: string | null;
   sort: number; categories: { slug: string } | null; product_variants: DbVariant[];
 };
 
@@ -48,7 +50,7 @@ async function loadFromDb(): Promise<{ products: Product[]; categories: Category
       sb.from("categories").select("id, slug, icon, image, sort, i18n").eq("is_active", true).order("sort"),
       sb
         .from("products")
-        .select("id, slug, base_sku, sae, iso_vg, specs, oem_approvals, performance, images, i18n, is_featured, tds_url, sds_url, sort, categories(slug), product_variants(id, sku, size, unit, price_net, in_stock, stock, availability, lead_time_days, image, sort, is_active)")
+        .select("id, slug, base_sku, sae, iso_vg, specs, oem_approvals, performance, images, i18n, is_featured, badges, promo_type, promo_percent, promo_starts_at, promo_ends_at, tds_url, sds_url, sort, categories(slug), product_variants(id, sku, size, unit, price_net, in_stock, stock, availability, lead_time_days, image, sort, is_active)")
         .eq("is_active", true)
         .order("sort")
         .order("slug"),
@@ -71,6 +73,15 @@ async function loadFromDb(): Promise<{ products: Product[]; categories: Category
       images: p.images ?? [],
       i18n: p.i18n ?? {},
       is_featured: p.is_featured,
+      badges: p.badges ?? [],
+      promo: p.promo_type
+        ? {
+            type: p.promo_type as PromoType,
+            percent: p.promo_percent == null ? null : Number(p.promo_percent),
+            starts_at: p.promo_starts_at,
+            ends_at: p.promo_ends_at,
+          }
+        : null,
       tds_url: p.tds_url,
       sds_url: p.sds_url,
       variants: (p.product_variants ?? [])
@@ -106,8 +117,17 @@ export async function getCategories() {
   return (await getCatalog()).categories;
 }
 
+/** Applies promotions that are running right now (outside the cache, so start / end dates take effect immediately). */
+function withPromos(products: Product[], now = Date.now()): Product[] {
+  return products.map((p) => {
+    const promo = activePromo(p.promo as ProductPromo | null | undefined, now);
+    if (!promo && !p.promo_active) return p;
+    return { ...p, promo_active: promo, variants: p.variants.map((v) => ({ ...v, promo_percent: promo?.percent ?? 0 })) };
+  });
+}
+
 export async function getProducts() {
-  return (await getCatalog()).products;
+  return withPromos((await getCatalog()).products);
 }
 
 export async function getProduct(slug: string) {
@@ -142,7 +162,18 @@ export type ProductSummary = {
   approvals: string[];
   image: string | null;
   featured: boolean;
-  variants: { key: string; sku: string | null; size: number | null; unit: string; price_net: number; in_stock: boolean; image: string | null }[];
+  badges: string[];
+  promo: ActivePromo | null;
+  variants: {
+    key: string;
+    sku: string | null;
+    size: number | null;
+    unit: string;
+    price_net: number;
+    promo_percent?: number;
+    in_stock: boolean;
+    image: string | null;
+  }[];
 };
 
 export function summarize(p: Product, locale: Locale): ProductSummary {
@@ -159,12 +190,15 @@ export function summarize(p: Product, locale: Locale): ProductSummary {
     approvals: [...p.oem_approvals, ...p.performance],
     image: p.images[0] ?? p.variants.find((v) => v.image)?.image ?? null,
     featured: Boolean(p.is_featured),
+    badges: p.badges ?? [],
+    promo: p.promo_active ?? null,
     variants: p.variants.map((v) => ({
       key: v.sku ?? `${v.size ?? "x"}${v.unit}`,
       sku: v.sku,
       size: v.size,
       unit: v.unit,
       price_net: v.price_net,
+      ...(v.promo_percent ? { promo_percent: v.promo_percent } : {}),
       in_stock: v.in_stock,
       image: v.image,
     })),

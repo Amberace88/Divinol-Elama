@@ -48,18 +48,28 @@ export type PriceContext = {
 
 export const DEFAULT_PRICE_CONTEXT: PriceContext = { market: "LV", b2b: false, discountPercent: 0 };
 
-export function unitNet(variant: Pick<Variant, "price_net">, ctx: PriceContext) {
-  const d = ctx.b2b ? ctx.discountPercent : 0;
+type Priced = Pick<Variant, "price_net"> & { promo_percent?: number };
+
+/** Net unit price: list price − the better of the B2B discount and a running promotion (same rule as place_order). */
+export function unitNet(variant: Priced, ctx: PriceContext) {
+  const d = Math.max(ctx.b2b ? ctx.discountPercent : 0, Number(variant.promo_percent) || 0);
   return round2(variant.price_net * (1 - d / 100));
 }
 
 /** Price that is displayed to the visitor for one unit. */
-export function displayPrice(variant: Pick<Variant, "price_net">, ctx: PriceContext) {
+export function displayPrice(variant: Priced, ctx: PriceContext) {
   const net = unitNet(variant, ctx);
   return ctx.b2b ? net : gross(net, VAT_RATES[ctx.market]);
 }
 
-export function pricePerUnit(variant: Pick<Variant, "price_net" | "size" | "unit">, ctx: PriceContext) {
+/** Price before the promotion (null when the promotion does not lower this visitor's price). */
+export function regularPrice(variant: Priced, ctx: PriceContext) {
+  if (!variant.promo_percent) return null;
+  const before = displayPrice({ price_net: variant.price_net }, ctx);
+  return before > displayPrice(variant, ctx) ? before : null;
+}
+
+export function pricePerUnit(variant: Priced & Pick<Variant, "size" | "unit">, ctx: PriceContext) {
   if (!variant.size || variant.unit === "pcs") return null;
   return round2(displayPrice(variant, ctx) / Number(variant.size));
 }

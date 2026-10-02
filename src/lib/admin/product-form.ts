@@ -2,6 +2,7 @@ import "server-only";
 import type { ProductFormInit, ProductText } from "@/components/admin/products/ProductEditor";
 import type { VariantState } from "@/components/admin/products/VariantsEditor";
 import { BASE_VAT } from "@/lib/commerce";
+import { PROMO_TYPES, rigaDate, rigaEndDate, type PromoType } from "@/lib/promo";
 import { isAvailability } from "./inventory";
 import { LANGS } from "./labels";
 
@@ -38,6 +39,11 @@ export type DbProduct = {
   sds_url: string | null;
   is_active: boolean;
   is_featured: boolean;
+  badges: string[] | null;
+  promo_type: string | null;
+  promo_percent: number | string | null;
+  promo_starts_at: string | null;
+  promo_ends_at: string | null;
   sort: number;
   updated_at: string;
   product_variants: DbVariant[] | null;
@@ -97,6 +103,11 @@ export function dbToForm(p: DbProduct): ProductFormInit {
     sds_url: p.sds_url ?? "",
     is_active: p.is_active,
     is_featured: p.is_featured,
+    badges: p.badges ?? [],
+    promo_type: (PROMO_TYPES as readonly string[]).includes(p.promo_type ?? "") ? (p.promo_type as PromoType) : "",
+    promo_percent: p.promo_percent == null ? "" : String(Number(p.promo_percent)).replace(".", ","),
+    promo_start: rigaDate(p.promo_starts_at),
+    promo_end: rigaEndDate(p.promo_ends_at),
     sort: p.sort ?? 0,
     variants,
     legacy_slugs: p.legacy_slugs ?? [],
@@ -120,6 +131,11 @@ export function emptyForm(): ProductFormInit {
     sds_url: "",
     is_active: true,
     is_featured: false,
+    badges: [],
+    promo_type: "",
+    promo_percent: "",
+    promo_start: "",
+    promo_end: "",
     sort: 0,
     variants: [
       { key: "v-new-1", id: null, sku: "", size: "", unit: "l", gross: "", net: "", cost: "", stock: "", availability: "in_stock", lead: "", threshold: "3", is_active: true, image: null, weight_kg: null },
@@ -129,4 +145,4 @@ export function emptyForm(): ProductFormInit {
 }
 
 export const PRODUCT_SELECT =
-  "id, slug, base_sku, category_id, sae, iso_vg, specs, oem_approvals, performance, images, i18n, legacy_slugs, tds_url, sds_url, is_active, is_featured, sort, updated_at, product_variants(id, sku, size, unit, price_net, cost_net, stock, availability, lead_time_days, low_stock_threshold, is_active, image, weight_kg, sort)";
+  "id, slug, base_sku, category_id, sae, iso_vg, specs, oem_approvals, performance, images, i18n, legacy_slugs, tds_url, sds_url, is_active, is_featured, badges, promo_type, promo_percent, promo_starts_at, promo_ends_at, sort, updated_at, product_variants(id, sku, size, unit, price_net, cost_net, stock, availability, lead_time_days, low_stock_threshold, is_active, image, weight_kg, sort)";

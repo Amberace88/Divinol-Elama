@@ -58,6 +58,7 @@ const SORT_LABEL: Record<SortKey, string> = {
 function Browser({ products, categories, activeCategory, qs }: Props & { qs: string }) {
   const t = useTranslations("catalog");
   const tu = useTranslations("units");
+  const tp = useTranslations("promo");
   const pricing = usePricing();
   const [filters, setFilters] = useState<Filters>(() => parseFilters(qs));
   const [seenQs, setSeenQs] = useState(qs);
@@ -118,6 +119,7 @@ function Browser({ products, categories, activeCategory, qs }: Props & { qs: str
     })),
     ...(filters.approval.trim() ? [{ label: filters.approval.trim(), onRemove: () => update({ approval: "" }) }] : []),
     ...(filters.stock ? [{ label: t("inStockOnly"), onRemove: () => update({ stock: false }) }] : []),
+    ...(filters.sale ? [{ label: tp("filter"), onRemove: () => update({ sale: false }) }] : []),
   ];
 
   const panel = (

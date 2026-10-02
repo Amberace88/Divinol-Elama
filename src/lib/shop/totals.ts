@@ -1,6 +1,6 @@
 import { round2, unitNet, type PriceContext } from "@/lib/commerce";
 
-export type TotalsLine = { price_net: number; qty: number };
+export type TotalsLine = { price_net: number; qty: number; promo_percent?: number };
 
 /** Order totals computed the same way as the `place_order` SQL function. */
 export function computeTotals(

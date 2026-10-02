@@ -212,7 +212,7 @@ function SearchPanel({ onClose, categories }: { onClose: () => void; categories:
                   )}
                   {r.price_net != null && (
                     <span className="w-20 shrink-0 text-right text-[13px] font-extrabold tabular-nums text-navy-700">
-                      {money(displayPrice({ price_net: r.price_net }, pricing))}
+                      {money(displayPrice({ price_net: r.price_net, promo_percent: r.promo_percent }, pricing))}
                     </span>
                   )}
                   <CornerDownLeft

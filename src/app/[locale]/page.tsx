@@ -9,6 +9,7 @@ import { Hero } from "@/components/home/Hero";
 import { ApprovalMarquee } from "@/components/home/ApprovalMarquee";
 import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { FeaturedProducts } from "@/components/home/FeaturedProducts";
+import { PromoProducts } from "@/components/home/PromoProducts";
 import { FinderTeaser } from "@/components/home/FinderTeaser";
 import { ToolsTeaser } from "@/components/home/ToolsTeaser";
 import { B2BBlock } from "@/components/home/B2BBlock";
@@ -44,13 +45,19 @@ export default async function HomePage({ params }: Props) {
   const counts: Record<string, number> = {};
   for (const p of products) counts[p.category] = (counts[p.category] ?? 0) + 1;
 
-  // featured: hand-picked bestsellers, topped up with is_featured / first products
-  const picked = FEATURED_SLUGS.map((s) => bySlug.get(s)).filter((p): p is NonNullable<typeof p> => Boolean(p));
-  for (const p of [...products.filter((x) => x.is_featured), ...products]) {
+  // featured: products the shop marked "Izcelt sākumlapā" first, then hand-picked bestsellers, then the rest
+  const picked = products.filter((x) => x.is_featured).slice(0, 8);
+  for (const p of [...FEATURED_SLUGS.map((s) => bySlug.get(s)).filter((p): p is NonNullable<typeof p> => Boolean(p)), ...products]) {
     if (picked.length >= 8) break;
     if (!picked.includes(p)) picked.push(p);
   }
   const featured = picked.slice(0, 8).map((p) => summarize(p, locale));
+  // running promotions: biggest discount first
+  const promos = products
+    .filter((p) => p.promo_active)
+    .sort((a, b) => (b.promo_active?.percent ?? 0) - (a.promo_active?.percent ?? 0))
+    .slice(0, 8)
+    .map((p) => summarize(p, locale));
 
   const bottles = HERO_PRODUCTS.map((s) => bySlug.get(s))
     .filter((p): p is NonNullable<typeof p> => Boolean(p))
@@ -80,6 +87,7 @@ export default async function HomePage({ params }: Props) {
       <Hero bottles={bottles} productCount={products.length} packCount={packCount} />
       <ApprovalMarquee label={t("marqueeLabel")} />
       <CategoryGrid categories={homeCategories} />
+      <PromoProducts products={promos} />
       <FeaturedProducts products={featured} />
       <FinderTeaser />
       <ToolsTeaser />

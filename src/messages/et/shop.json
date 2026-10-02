@@ -232,5 +232,30 @@
     "freightNote": "Ostukorvis on suur pakend — tarne veokiga või kättesaamine laost.",
     "browse": "Kataloogi",
     "finder": "Õlivalik"
+  },
+  "promo": {
+    "types": {
+      "sale": "Kampaania",
+      "clearance": "Väljamüük",
+      "special": "Eripakkumine"
+    },
+    "badges": {
+      "new": "Uus",
+      "bestseller": "Enimmüüdud",
+      "recommended": "Soovitame",
+      "limited": "Piiratud kogus",
+      "seasonal": "Hooajatoode",
+      "bio": "Biolagunev",
+      "pro": "Professionaalidele"
+    },
+    "endsIn": "Kampaania lõpeb {days} päeva pärast",
+    "endsToday": "Kampaania lõpeb täna",
+    "save": "Säästad {amount}",
+    "was": "Varem",
+    "filter": "Kampaaniad ja väljamüük",
+    "filterHint": "Ainult soodushinnaga tooted",
+    "homeEyebrow": "Kampaaniad",
+    "homeTitle": "Praegu soodsama hinnaga",
+    "homeLink": "Kõik kampaaniad"
   }
 }

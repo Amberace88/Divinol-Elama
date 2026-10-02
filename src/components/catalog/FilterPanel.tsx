@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { Check, ChevronDown, LayoutGrid } from "lucide-react";
+import { Check, ChevronDown, LayoutGrid, Tag } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { CategoryIcon } from "@/components/ui/CategoryIcon";
 import { cn } from "@/lib/utils";
@@ -118,6 +118,7 @@ export function FilterPanel({
   onUpdate: (patch: Partial<Filters>) => void;
 }) {
   const t = useTranslations("catalog");
+  const tp = useTranslations("promo");
   const q = Object.fromEntries(new URLSearchParams(query));
   const total = categories.reduce((s, c) => s + c.count, 0);
   const specGroups = [
@@ -165,6 +166,26 @@ export function FilterPanel({
           })}
         </ul>
       </Section>
+
+      {(facets.promos > 0 || filters.sale) && (
+        <section className="border-b border-line py-4">
+          <label className="flex cursor-pointer items-center justify-between gap-3">
+            <span>
+              <span className="flex items-center gap-1.5 text-[13.5px] font-bold text-rose-700">
+                <Tag className="size-3.5" strokeWidth={2.75} aria-hidden />
+                {tp("filter")}
+                <span className="rounded-full bg-rose-100 px-1.5 text-[11px] font-extrabold tabular-nums text-rose-700">{facets.promos}</span>
+              </span>
+              <span className="block text-[11.5px] text-muted">{tp("filterHint")}</span>
+            </span>
+            <input type="checkbox" checked={filters.sale} onChange={(e) => onUpdate({ sale: e.target.checked })} className="peer sr-only" />
+            <span
+              aria-hidden
+              className="relative h-6 w-11 shrink-0 rounded-full bg-line transition peer-checked:bg-rose-500 peer-focus-visible:ring-4 peer-focus-visible:ring-navy-100 after:absolute after:left-0.5 after:top-0.5 after:size-5 after:rounded-full after:bg-white after:shadow after:transition peer-checked:after:translate-x-5"
+            />
+          </label>
+        </section>
+      )}
 
       <section className="border-b border-line py-4">
         <label className="flex cursor-pointer items-center justify-between gap-3">

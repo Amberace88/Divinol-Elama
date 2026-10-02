@@ -1,7 +1,8 @@
 "use server";
 
 import { z } from "zod";
-import { issuesToFieldErrors, productSchema, type ProductPayload } from "../schemas";
+import { BADGE_KEYS } from "@/lib/promo";
+import { issuesToFieldErrors, productSchema, promoSchema, type ProductPayload } from "../schemas";
 import { ActionError, adminAction, must, revalidateAdmin, revalidateCatalog, UUID_RE } from "../server";
 
 const id = z.string().regex(UUID_RE, "Nederīgs ID");
@@ -84,6 +85,11 @@ export async function saveProduct(input: ProductPayload) {
         sds_url: p.sds_url,
         is_active: p.is_active,
         is_featured: p.is_featured,
+        badges: [...new Set(p.badges)],
+        promo_type: p.promo_type,
+        promo_percent: p.promo_type ? p.promo_percent : null,
+        promo_starts_at: p.promo_type ? p.promo_starts_at : null,
+        promo_ends_at: p.promo_type ? p.promo_ends_at : null,
         sort: p.sort,
       };
 
@@ -139,4 +145,55 @@ export async function deleteProduct(productId: string) {
     revalidateCatalog();
     return null;
   }, "Produkts dzēsts");
+}
+
+// ───────────────────────── promotions & badges (bulk) ─────────────────────────
+
+/** Sets (or with `promo = null` removes) the same promotion on many products. */
+export async function bulkSetPromo(ids: string[], promo: z.input<typeof promoSchema> | null) {
+  return adminAction(
+    async ({ supabase }) => {
+      const list = z.array(id).min(1, "Nav atlasītu produktu").max(500).parse(ids);
+      let row: Record<string, unknown> = { promo_type: null, promo_percent: null, promo_starts_at: null, promo_ends_at: null };
+      if (promo) {
+        const parsed = promoSchema.safeParse(promo);
+        if (!parsed.success) throw new ActionError(parsed.error.issues[0]?.message ?? "Pārbaudiet akcijas laukus", issuesToFieldErrors(parsed.error.issues));
+        const p = parsed.data;
+        if (!p.promo_type) throw new ActionError("Izvēlieties akcijas veidu");
+        row = { promo_type: p.promo_type, promo_percent: p.promo_percent, promo_starts_at: p.promo_starts_at, promo_ends_at: p.promo_ends_at };
+      }
+      must(await supabase.from("products").update(row).in("id", list));
+      revalidateCatalog();
+      revalidateAdmin();
+      return { count: list.length, removed: !promo };
+    },
+    (d) => (d.removed ? `Akcija noņemta ${d.count} produktiem` : `Akcija piemērota ${d.count} produktiem`),
+  );
+}
+
+/** Adds or removes one badge on many products. */
+export async function bulkToggleBadge(ids: string[], badge: string, add: boolean) {
+  return adminAction(
+    async ({ supabase }) => {
+      const list = z.array(id).min(1, "Nav atlasītu produktu").max(500).parse(ids);
+      const b = z.enum(BADGE_KEYS).parse(badge);
+      const rows = (must(await supabase.from("products").select("id, badges").in("id", list)) ?? []) as { id: string; badges: string[] | null }[];
+      // group products by their resulting badge set → one update per distinct set
+      const groups = new Map<string, { badges: string[]; ids: string[] }>();
+      for (const r of rows) {
+        const cur = new Set(r.badges ?? []);
+        if (add) cur.add(b);
+        else cur.delete(b);
+        const next = BADGE_KEYS.filter((k) => cur.has(k));
+        const key = next.join(",");
+        if (!groups.has(key)) groups.set(key, { badges: next, ids: [] });
+        groups.get(key)!.ids.push(r.id);
+      }
+      for (const g of groups.values()) must(await supabase.from("products").update({ badges: g.badges }).in("id", g.ids));
+      revalidateCatalog();
+      revalidateAdmin();
+      return { count: rows.length };
+    },
+    (d) => `${add ? "Nozīmīte pievienota" : "Nozīmīte noņemta"} — ${d.count} produkti`,
+  );
 }

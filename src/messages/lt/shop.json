@@ -232,5 +232,30 @@
     "freightNote": "Krepšelyje yra didelė pakuotė — pristatymas krovininiu transportu arba atsiėmimas sandėlyje.",
     "browse": "Į katalogą",
     "finder": "Alyvos parinkimas"
+  },
+  "promo": {
+    "types": {
+      "sale": "Akcija",
+      "clearance": "Išpardavimas",
+      "special": "Specialus pasiūlymas"
+    },
+    "badges": {
+      "new": "Naujiena",
+      "bestseller": "Perkamiausias",
+      "recommended": "Rekomenduojame",
+      "limited": "Ribotas kiekis",
+      "seasonal": "Sezoninė prekė",
+      "bio": "Biologiškai skaidus",
+      "pro": "Profesionalams"
+    },
+    "endsIn": "Akcija baigsis po {days} d.",
+    "endsToday": "Akcija baigiasi šiandien",
+    "save": "Sutaupote {amount}",
+    "was": "Anksčiau",
+    "filter": "Akcijos ir išpardavimas",
+    "filterHint": "Tik prekės su nuolaida",
+    "homeEyebrow": "Akcijos",
+    "homeTitle": "Dabar pigiau",
+    "homeLink": "Visos akcijos"
   }
 }

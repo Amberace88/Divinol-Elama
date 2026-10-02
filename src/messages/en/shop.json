@@ -232,5 +232,30 @@
     "freightNote": "Your cart contains a large pack — delivery by freight or pickup at the warehouse.",
     "browse": "Browse catalogue",
     "finder": "Oil finder"
+  },
+  "promo": {
+    "types": {
+      "sale": "Sale",
+      "clearance": "Clearance",
+      "special": "Special offer"
+    },
+    "badges": {
+      "new": "New",
+      "bestseller": "Bestseller",
+      "recommended": "Recommended",
+      "limited": "Limited stock",
+      "seasonal": "Seasonal",
+      "bio": "Biodegradable",
+      "pro": "For professionals"
+    },
+    "endsIn": "Offer ends in {days} days",
+    "endsToday": "Offer ends today",
+    "save": "You save {amount}",
+    "was": "Was",
+    "filter": "Offers & clearance",
+    "filterHint": "Only discounted products",
+    "homeEyebrow": "Offers",
+    "homeTitle": "Better prices right now",
+    "homeLink": "All offers"
   }
 }

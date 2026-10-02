@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { ArrowDown, ArrowRight, ArrowUp, BadgePercent, Building2, Check, Info, ShieldCheck, ShoppingBag, Store, Truck } from "lucide-react";
 import type { ProductSummary } from "@/lib/catalog";
-import { displayPrice, packLabel, pricePerUnit, round2 } from "@/lib/commerce";
+import { displayPrice, packLabel, pricePerUnit, regularPrice, round2 } from "@/lib/commerce";
 import { FREIGHT_ITEM_SIZE } from "@/lib/shop/shipping";
 import { Link } from "@/i18n/navigation";
 import { usePricing } from "@/components/providers/PriceProvider";
@@ -31,6 +31,7 @@ export function ProductPurchase({
   badge?: React.ReactNode;
 }) {
   const t = useTranslations("product");
+  const tp = useTranslations("promo");
   const ta = useTranslations("actions");
   const tu = useTranslations("units");
   const pricing = usePricing();
@@ -71,6 +72,7 @@ export function ProductPurchase({
   };
 
   const price = selected ? displayPrice(selected, pricing) : 0;
+  const was = selected ? regularPrice(selected, pricing) : null;
   // Remember the previous price to show a short ▲/▼ difference chip when the pack changes.
   const [delta, setDelta] = useState<{ key: string; prev: number; diff: number } | null>(null);
   const [lastPrice, setLastPrice] = useState(price);
@@ -122,8 +124,17 @@ export function ProductPurchase({
           {/* price */}
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
+              {was != null && (
+                <p className="mb-1.5 flex flex-wrap items-center gap-2 text-[14px] font-semibold tabular-nums text-muted">
+                  <span className="sr-only">{tp("was")} </span>
+                  <s className="decoration-rose-500/70 decoration-2">{money(was)}</s>
+                  <span className="rounded-md bg-rose-50 px-1.5 py-0.5 text-[12px] font-extrabold text-rose-700 ring-1 ring-inset ring-rose-200">
+                    {tp("save", { amount: money(round2(was - price)) })}
+                  </span>
+                </p>
+              )}
               <div className="flex items-center gap-2.5">
-                <p className="text-[34px] font-extrabold leading-none tracking-tight tabular-nums text-navy-700">
+                <p className={cn("text-[34px] font-extrabold leading-none tracking-tight tabular-nums", was != null ? "text-rose-600" : "text-navy-700")}>
                   <RollingNumber value={price} format={money} stagger={0.04} />
                 </p>
                 <AnimatePresence mode="popLayout">
@@ -211,7 +222,10 @@ export function ProductPurchase({
                         <span className="text-[16px] font-extrabold tabular-nums text-ink">{packLabel(v) || tu("piece")}</span>
                         {active && <Check className="size-4 text-navy-700" strokeWidth={3} aria-hidden />}
                       </span>
-                      <span className="mt-0.5 text-[13px] font-bold tabular-nums text-navy-700">{money(displayPrice(v, pricing))}</span>
+                      <span className="mt-0.5 text-[13px] font-bold tabular-nums text-navy-700">
+                        {regularPrice(v, pricing) != null && <s className="mr-1 text-[11px] font-semibold text-muted">{money(regularPrice(v, pricing)!)}</s>}
+                        <span className={cn(regularPrice(v, pricing) != null && "text-rose-600")}>{money(displayPrice(v, pricing))}</span>
+                      </span>
                       {perUnit[i] != null && (
                         <span className="text-[11px] tabular-nums text-muted">
                           {money(perUnit[i]!)}/{unitLabel(v)}

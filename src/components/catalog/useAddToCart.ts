@@ -28,6 +28,7 @@ export function useAddToCart() {
           size: v.size,
           unit: v.unit,
           price_net: v.price_net,
+          ...(v.promo_percent ? { promo_percent: v.promo_percent } : {}),
         },
         qty,
       );
