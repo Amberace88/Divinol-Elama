@@ -5,6 +5,7 @@ import { z } from "zod";
 import { compareRates, recommend, type CompareOption } from "@/lib/shipping/compare";
 import { CarrierError } from "@/lib/shipping/adapter";
 import { getAdapter } from "@/lib/shipping/registry";
+import { checkOmnivaConnection } from "@/lib/shipping/omniva";
 import {
   compareForOrder,
   loadCarriers,
@@ -524,4 +525,21 @@ export async function updateCarrier(carrierCode: string, patch: z.input<typeof c
     revalidateAdmin();
     return null;
   }, "Pārvadātājs saglabāts");
+}
+
+/** Read-only API credential check for a carrier + sender address sanity check (nothing is created at the carrier). */
+export async function testCarrierConnection(carrier: string) {
+  return adminAction(
+    async () => {
+      const c = code.parse(carrier);
+      if (c !== "omniva") throw new ActionError("Savienojuma pārbaude pieejama tikai Omniva.");
+      const res = await checkOmnivaConnection();
+      if (!res.ok) throw new ActionError(res.message);
+      const s = await senderParty();
+      const missing = [!s.street && "iela", !s.city && "pilsēta", !s.postcode && "pasta indekss", !s.phone && "tālrunis"].filter(Boolean);
+      if (missing.length) throw new ActionError(`${res.message} Bet sūtītāja adresei trūkst: ${missing.join(", ")} (Iestatījumi → Uzņēmums → noliktavas adrese).`);
+      return `${res.message} Sūtītājs: ${s.name}, ${s.street}, ${s.postcode} ${s.city}.`;
+    },
+    (m) => m,
+  );
 }

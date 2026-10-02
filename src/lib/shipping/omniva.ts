@@ -167,6 +167,25 @@ async function labels(barcodes: string[]): Promise<Buffer[]> {
   return files.map((f) => Buffer.from(f, "base64"));
 }
 
+/**
+ * Read-only credential check: asks the OMX tracking endpoint about a barcode that does not exist.
+ * 401/403 → wrong username / password; anything else means the API accepted the login.
+ * Nothing is created and nothing is billed.
+ */
+export async function checkOmnivaConnection(): Promise<{ ok: boolean; message: string }> {
+  if (!omnivaConfigured()) return { ok: false, message: "Nav iestatīti OMNIVA_USERNAME / OMNIVA_PASSWORD / OMNIVA_CUSTOMER_CODE." };
+  let res: Response;
+  try {
+    res = await fetchWithTimeout(`${API()}shipments/CC000000000LV`, { method: "GET", headers: authHeaders(), cache: "no-store" });
+  } catch {
+    return { ok: false, message: "Omniva serveris neatbild — mēģiniet vēlāk." };
+  }
+  if (res.status === 401 || res.status === 403) return { ok: false, message: `Omniva noraidīja pieslēgšanos (HTTP ${res.status}) — pārbaudiet lietotājvārdu un paroli Netlify.` };
+  if (res.status === 429) return { ok: true, message: "Pieslēgšanās pieņemta (Omniva ierobežo pieprasījumu skaitu — atkārtota pārbaude pēc 5 min)." };
+  if (res.status >= 500) return { ok: false, message: `Omniva servera kļūda (HTTP ${res.status}) — mēģiniet vēlāk.` };
+  return { ok: true, message: `Pieslēgšanās Omniva API izdevās (HTTP ${res.status}).` };
+}
+
 /** Backward compatible single-parcel helpers. */
 export async function getOmnivaLabel(barcode: string): Promise<Buffer> {
   return (await labels([barcode]))[0];

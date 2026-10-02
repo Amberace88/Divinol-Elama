@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { CheckCircle2, CircleSlash, ExternalLink, KeyRound } from "lucide-react";
-import { updateCarrier } from "@/lib/admin/actions/shipping";
+import { CheckCircle2, CircleSlash, ExternalLink, KeyRound, PlugZap } from "lucide-react";
+import { testCarrierConnection, updateCarrier } from "@/lib/admin/actions/shipping";
 import type { Carrier, CarrierCapabilities } from "@/lib/shipping/types";
 import { cn } from "@/lib/utils";
 import { Spinner, Switch, useActionRunner } from "../client-ui";
@@ -98,6 +98,17 @@ function CarrierCard({ c, cap, developer }: { c: Carrier; cap?: CarrierCapabilit
           </span>
           <span className="text-muted">{cap?.api ? "Uzlīmes un kodi tiek veidoti automātiski" : "Sūtījumus noformē pārvadātāja portālā"}</span>
         </p>
+      )}
+
+      {cap?.api && c.code === "omniva" && (
+        <button
+          type="button"
+          className={btn("outline", "sm", "mb-3 self-start")}
+          disabled={pending}
+          onClick={() => run(() => testCarrierConnection(c.code), { loading: "Pārbauda savienojumu ar Omniva…" })}
+        >
+          {pending ? <Spinner /> : <PlugZap className="h-3.5 w-3.5" />} Pārbaudīt savienojumu
+        </button>
       )}
 
       {developer && (
