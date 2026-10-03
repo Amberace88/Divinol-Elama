@@ -22,6 +22,7 @@ import {
   ShoppingBag,
   Truck,
   Container,
+  ScrollText,
   BadgePercent,
   UserRound,
   Users,
@@ -69,11 +70,14 @@ export function AdminShell({
   counts,
   user,
   initialCollapsed,
+  auditLog = false,
 }: {
   children: React.ReactNode;
   counts: AdminCounts;
   user: { name: string; email: string };
   initialCollapsed: boolean;
+  /** "Darbību žurnāls" — only for the audit viewer account */
+  auditLog?: boolean;
 }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(initialCollapsed);
@@ -115,7 +119,7 @@ export function AdminShell({
             collapsed ? "w-[76px]" : "w-64",
           )}
         >
-          <SidebarContent pathname={pathname} counts={counts} collapsed={collapsed} layoutId="nav-desktop" />
+          <SidebarContent pathname={pathname} counts={counts} collapsed={collapsed} layoutId="nav-desktop" auditLog={auditLog} />
           <button
             type="button"
             onClick={toggle}
@@ -154,7 +158,7 @@ export function AdminShell({
                 >
                   <X className="h-5 w-5" />
                 </button>
-                <SidebarContent pathname={pathname} counts={counts} collapsed={false} layoutId="nav-mobile" />
+                <SidebarContent pathname={pathname} counts={counts} collapsed={false} layoutId="nav-mobile" auditLog={auditLog} />
               </motion.aside>
             </div>
           )}
@@ -220,7 +224,22 @@ export function AdminShell({
   );
 }
 
-function SidebarContent({ pathname, counts, collapsed, layoutId }: { pathname: string; counts: AdminCounts; collapsed: boolean; layoutId: string }) {
+const AUDIT_ITEM: NavItem = { href: "/admin/audit", label: "Darbību žurnāls", icon: ScrollText };
+
+function SidebarContent({
+  pathname,
+  counts,
+  collapsed,
+  layoutId,
+  auditLog = false,
+}: {
+  pathname: string;
+  counts: AdminCounts;
+  collapsed: boolean;
+  layoutId: string;
+  auditLog?: boolean;
+}) {
+  const items = auditLog ? [...NAV, AUDIT_ITEM] : NAV;
   return (
     <>
       <div className={cn("flex h-16 shrink-0 items-center gap-2.5 border-b border-white/5", collapsed ? "justify-center px-2" : "px-5")}>
@@ -241,7 +260,7 @@ function SidebarContent({ pathname, counts, collapsed, layoutId }: { pathname: s
       </div>
       <nav className="no-scrollbar flex-1 overflow-y-auto px-3 py-4" aria-label="Administrācijas sadaļas">
         <ul className="space-y-0.5">
-          {NAV.map((item) => {
+          {items.map((item) => {
             const active = isActive(pathname, item);
             const count = item.badge ? counts[item.badge] : 0;
             return (

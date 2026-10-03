@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import { getAdminSession } from "@/lib/admin/auth";
 import { AdminShell, type AdminCounts } from "@/components/admin/AdminShell";
 import { NoAccess } from "@/components/admin/NoAccess";
+import { isAuditViewer } from "@/lib/admin/audit";
 import "../globals.css";
 
 export const metadata: Metadata = {
@@ -38,12 +39,18 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   let body: React.ReactNode;
   if (session.status === "ok") {
-    const [counts, cookieStore] = await Promise.all([loadCounts(session.supabase), cookies()]);
+    const [counts, cookieStore] = await Promise.all([
+      loadCounts(session.supabase),
+      cookies(),
+      // activity log: "opened the admin" (the DB keeps at most one entry per 30 min per person); never blocks the page
+      Promise.resolve(session.supabase.rpc("audit_admin_visit", { p_path: "/admin" })).catch(() => null),
+    ]);
     body = (
       <AdminShell
         counts={counts}
         user={{ name: session.profile.full_name ?? "", email: session.profile.email }}
         initialCollapsed={cookieStore.get("admin_sidebar")?.value === "1"}
+        auditLog={isAuditViewer(session.profile.email)}
       >
         {children}
       </AdminShell>
