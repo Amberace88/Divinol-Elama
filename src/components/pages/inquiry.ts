@@ -14,6 +14,8 @@ export type InquiryPayload = {
   message?: string;
   locale: string;
   extra?: Record<string, unknown>;
+  /** anti-spam: honeypot value + ms the form was open before submit */
+  trap?: { hp?: string; ms?: number };
 };
 
 export class InquiryError extends Error {

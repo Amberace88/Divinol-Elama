@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "motion/react";
 import { CheckCircle2, Loader2, Send } from "lucide-react";
@@ -97,6 +97,10 @@ export function InquiryForm({
   const t = useTranslations();
   const [pending, setPending] = useState(false);
   const [done, setDone] = useState(false);
+  const shownAt = useRef<number | null>(null);
+  useEffect(() => {
+    shownAt.current = performance.now(); // anti-spam: bots submit instantly
+  }, []);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -110,7 +114,8 @@ export function InquiryForm({
     if (!payload) return;
     setPending(true);
     try {
-      await submitInquiry({ ...payload, locale });
+      const ms = shownAt.current === null ? -1 : Math.round(performance.now() - shownAt.current);
+      await submitInquiry({ ...payload, locale, trap: { hp: String(fd.get("website") ?? ""), ms } });
       form.reset();
       setDone(true);
       toast.success(successText);

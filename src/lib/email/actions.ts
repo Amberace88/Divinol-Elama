@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { notifyBusinessSignupIfNew, notifyInquiry } from "./notify";
 import { deferEmail } from "./send";
+import { checkInquirySpam } from "@/lib/spam";
 
 /** Public Server Actions that need a shop notification (the DB write itself goes through the same RPCs as before). */
 
@@ -21,6 +22,8 @@ const inquirySchema = z.object({
     .record(z.string().max(60), z.unknown())
     .optional()
     .refine((v) => !v || JSON.stringify(v).length <= 20_000, "too_large"),
+  /** anti-spam: honeypot value + ms between the form appearing and submit */
+  trap: z.object({ hp: z.string().max(200).optional(), ms: z.number().int().min(-1).max(86_400_000).optional() }).optional(),
 });
 
 export type InquiryActionResult = { ok: true } | { ok: false; code: "unavailable" | "invalid_email" | "failed" };
@@ -30,11 +33,22 @@ export async function submitInquiryAction(input: z.input<typeof inquirySchema>):
   if (!isSupabaseConfigured) return { ok: false, code: "unavailable" };
   const parsed = inquirySchema.safeParse(input);
   if (!parsed.success) return { ok: false, code: parsed.error.issues.some((i) => i.path[0] === "email") ? "invalid_email" : "failed" };
+  const { trap, ...d0 } = parsed.data;
+  // honeypot filled → a bot: pretend success, store nothing
+  if (trap?.hp) return { ok: true };
+  const extraText = d0.extra ? Object.values(d0.extra).filter((v) => typeof v === "string").join(" ") : null;
+  const check = checkInquirySpam({ name: d0.name, message: d0.message, company: d0.company, extraText, elapsedMs: trap?.ms ?? null });
   try {
     const supabase = await createClient();
-    const { data, error } = await supabase.rpc("submit_inquiry", { payload: parsed.data });
-    if (error) return { ok: false, code: /invalid_email/.test(error.message) ? "invalid_email" : "failed" };
-    const d = parsed.data;
+    const payload = check.spam ? { ...d0, spam: true, extra: { ...(d0.extra ?? {}), spam_reason: check.reason } } : d0;
+    const { data, error } = await supabase.rpc("submit_inquiry", { payload });
+    if (error) {
+      if (/rate_limited/.test(error.message)) return { ok: true }; // flood from one address: silently drop
+      return { ok: false, code: /invalid_email/.test(error.message) ? "invalid_email" : "failed" };
+    }
+    // spam is kept (status "spam", visible under the admin filter) but the shop is not e-mailed
+    if (check.spam) return { ok: true };
+    const d = d0;
     deferEmail("inquiry", () =>
       notifyInquiry({
         id: typeof data === "string" ? data : null,

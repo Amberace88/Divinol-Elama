@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { CircleCheck, LoaderCircle, MessageCircle, Send } from "lucide-react";
 import { toast } from "sonner";
 import { submitInquiry } from "@/components/pages/inquiry";
+import { Honeypot } from "@/components/pages/FormBits";
 import { usePricing } from "@/components/providers/PriceProvider";
 
 export function AskExpertForm({ slug, productName }: { slug: string; productName: string }) {
@@ -15,10 +16,18 @@ export function AskExpertForm({ slug, productName }: { slug: string; productName
   const { profile } = usePricing();
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
+  const shownAt = useRef<number | null>(null);
+  useEffect(() => {
+    shownAt.current = performance.now(); // anti-spam: bots submit instantly
+  }, []);
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
+    if (fd.get("website")) {
+      setSent(true); // honeypot: bots fill it, people don't
+      return;
+    }
     const email = String(fd.get("email") ?? "").trim();
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
       toast.error(te("email"));
@@ -36,6 +45,7 @@ export function AskExpertForm({ slug, productName }: { slug: string; productName
         message: [car && `${t("expertCar")}: ${car}`, question].filter(Boolean).join("\n\n") || productName,
         locale,
         extra: { product: slug, product_name: productName, car },
+        trap: { ms: shownAt.current === null ? -1 : Math.round(performance.now() - shownAt.current) },
       });
       setSent(true);
       toast.success(t("expertSent"));
@@ -63,7 +73,8 @@ export function AskExpertForm({ slug, productName }: { slug: string; productName
           {t("expertSent")}
         </p>
       ) : (
-        <form onSubmit={submit} className="mt-4 grid gap-2.5 [&_.input]:border-white/15 [&_.input]:bg-white/[0.07] [&_.input]:text-white [&_.input]:placeholder:text-white/40 [&_.input]:focus:border-brand-400 [&_.input]:focus:ring-brand-400/20">
+        <form onSubmit={submit} className="relative mt-4 grid gap-2.5 [&_.input]:border-white/15 [&_.input]:bg-white/[0.07] [&_.input]:text-white [&_.input]:placeholder:text-white/40 [&_.input]:focus:border-brand-400 [&_.input]:focus:ring-brand-400/20">
+          <Honeypot />
           <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
             <input name="name" required autoComplete="name" placeholder={t("expertName")} aria-label={t("expertName")} defaultValue={profile?.full_name ?? ""} className="input" />
             <input name="email" type="email" required autoComplete="email" placeholder={t("expertEmail")} aria-label={t("expertEmail")} defaultValue={profile?.email ?? ""} className="input" />
