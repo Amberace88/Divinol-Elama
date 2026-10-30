@@ -1,7 +1,7 @@
 import type { PromoType } from "@/lib/promo";
 import Link from "next/link";
 import { isDeveloperEmail } from "@/lib/admin/developer";
-import { PackageSearch, Plus } from "lucide-react";
+import { PackageSearch, Plus, Sparkles } from "lucide-react";
 import { requireAdmin } from "@/lib/admin/auth";
 import { PAGE_SIZE, sp, spEnum, spInt, withParams, type SP } from "@/lib/admin/params";
 import { errorMessage, sanitizeSearch, UUID_RE } from "@/lib/admin/server";
@@ -52,6 +52,10 @@ type Row = {
 type LevelRow = { product_id: string; stock_level: StockLevel; is_active: boolean };
 
 const SORTS = { sort: "sort", name: "i18n->lv->>name", updated: "updated_at" } as const;
+
+function daysAgo(n: number) {
+  return new Date(Date.now() - n * 86_400_000).toISOString();
+}
 
 export default async function ProductsPage({ searchParams }: { searchParams: Promise<SP> }) {
   const params = await searchParams;
@@ -113,13 +117,17 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
   query = query.order(SORTS[sort], { ascending: sort !== "updated" }).order("slug");
   const from = (page - 1) * PER;
 
-  const [listRes, catsRes, totalRes, inactiveRes, settings] = await Promise.all([
+  const recentSince = daysAgo(30);
+  const [listRes, catsRes, totalRes, inactiveRes, settings, recentRes] = await Promise.all([
     query.range(from, from + PER - 1),
     supabase.from("categories").select("id, slug, i18n, sort").order("sort"),
     supabase.from("products").select("id", { count: "exact", head: true }),
     supabase.from("products").select("id", { count: "exact", head: true }).eq("is_active", false),
     getStoreSettings(),
+    supabase.from("products").select("is_active").gte("created_at", recentSince),
   ]);
+  const recent = (recentRes.data ?? []) as { is_active: boolean }[];
+  const recentDrafts = recent.filter((r) => !r.is_active).length;
 
   const dbTotal = totalRes.count ?? 0;
   const cats = (catsRes.data ?? []) as { id: string; slug: string; i18n: Record<string, { name?: string }> | null }[];
@@ -168,6 +176,11 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
         description={`${dbTotal} produkti katalogā`}
         actions={
           <>
+            {recent.length > 0 && (
+              <Link href="/admin/products/recent" className={btn("outline")}>
+                <Sparkles className="h-4 w-4 text-brand-500" /> Jaunie ({recent.length})
+              </Link>
+            )}
             {dbTotal > 0 && <InventoryCsvButtons />}
             {dbTotal > 0 && developer && <CatalogImportButton />}
             <Link href="/admin/products/new" className={btn("primary")}>
@@ -178,6 +191,21 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
       />
 
       {!totalRes.error && dbTotal === 0 && developer && <CatalogImportHero productCount={dbTotal} />}
+
+      {recentDrafts > 0 && (
+        <Link
+          href="/admin/products/recent?view=draft"
+          className="mb-5 flex items-center gap-3 rounded-2xl border border-brand-200 bg-brand-50 px-4 py-3 text-[13.5px] text-ink shadow-card transition hover:border-brand-300"
+        >
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-400 text-navy-900">
+            <Sparkles className="h-4 w-4" />
+          </span>
+          <span className="min-w-0 flex-1">
+            <strong>{recentDrafts} jauni produkti gaida pārbaudi.</strong> Tie veikalā vēl nav redzami — pārbaudiet aprakstus, ievadiet cenas un publicējiet.
+          </span>
+          <span className={btn("dark", "sm")}>Pārbaudīt</span>
+        </Link>
+      )}
 
       <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-card">
         <FilterBar

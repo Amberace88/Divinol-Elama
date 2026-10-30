@@ -197,3 +197,28 @@ export async function bulkToggleBadge(ids: string[], badge: string, add: boolean
     (d) => `${add ? "Nozīmīte pievienota" : "Nozīmīte noņemta"} — ${d.count} produkti`,
   );
 }
+
+// ───────────────────────── new products review (Produkti → Jaunie) ─────────────────────────
+
+/**
+ * Publishes products (is_active = true) — but only those that are ready to sell: at least one active pack with a
+ * price above zero. Products that are not ready are skipped and reported back, so a draft can never go live at 0 €.
+ */
+export async function publishProducts(ids: string[]) {
+  return adminAction(
+    async ({ supabase }) => {
+      const list = z.array(id).min(1, "Nav atlasītu produktu").max(500).parse(ids);
+      const rows = (must(
+        await supabase.from("products").select("id, i18n, product_variants(price_net, is_active)").in("id", list),
+      ) ?? []) as { id: string; i18n: Record<string, { name?: string }> | null; product_variants: { price_net: number | string; is_active: boolean }[] }[];
+      const ready = rows.filter((r) => r.product_variants.some((v) => v.is_active && Number(v.price_net) > 0));
+      const skipped = rows.filter((r) => !ready.includes(r)).map((r) => r.i18n?.lv?.name ?? r.id);
+      if (!ready.length) throw new ActionError("Nevienam atlasītajam produktam nav ievadīta cena — vispirms ievadiet cenas.");
+      must(await supabase.from("products").update({ is_active: true }).in("id", ready.map((r) => r.id)));
+      revalidateCatalog();
+      revalidateAdmin();
+      return { published: ready.length, skipped };
+    },
+    (d) => (d.skipped.length ? `Publicēti ${d.published}. Bez cenas (nepublicēti): ${d.skipped.length}` : `Publicēti ${d.published} produkti`),
+  );
+}
