@@ -7,6 +7,8 @@ import { getAdminSession } from "@/lib/admin/auth";
 import { AdminShell, type AdminCounts } from "@/components/admin/AdminShell";
 import { NoAccess } from "@/components/admin/NoAccess";
 import { isAuditViewer } from "@/lib/admin/audit";
+import { bankStatus, type BankStatus } from "@/lib/admin/bank-details";
+import { BankDetailsAlert } from "@/components/admin/BankDetailsAlert";
 import "../globals.css";
 
 export const metadata: Metadata = {
@@ -39,9 +41,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   let body: React.ReactNode;
   if (session.status === "ok") {
-    const [counts, cookieStore] = await Promise.all([
+    const [counts, cookieStore, bank] = await Promise.all([
       loadCounts(session.supabase),
       cookies(),
+      bankStatus(session.supabase).catch((): BankStatus => ({ ibanMissing: false, affected: 0, toResend: [] })),
       // activity log: "opened the admin" (the DB keeps at most one entry per 30 min per person); never blocks the page
       Promise.resolve(session.supabase.rpc("audit_admin_visit", { p_path: "/admin" })).catch(() => null),
     ]);
@@ -52,6 +55,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         initialCollapsed={cookieStore.get("admin_sidebar")?.value === "1"}
         auditLog={isAuditViewer(session.profile.email)}
       >
+        <BankDetailsAlert status={bank} />
         {children}
       </AdminShell>
     );

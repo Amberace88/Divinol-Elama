@@ -1,5 +1,6 @@
 "use server";
 
+import { backfillInvoiceBank } from "../bank-details";
 import { z } from "zod";
 import { issuesToFieldErrors } from "../schemas";
 import { ActionError, adminAction, must, revalidateAdmin, revalidateSettings } from "../server";
@@ -86,8 +87,14 @@ export async function saveSettings(key: SettingsKey, value: unknown) {
         .from("settings")
         .upsert({ key, value: data, is_public: PUBLIC[key], updated_at: new Date().toISOString() }, { onConflict: "key" }),
     );
+    // proformas issued while the IBAN was empty get the bank details now (re-send is offered in the admin banner)
+    let backfilled = 0;
+    if (key === "company") {
+      const c = parsed.data as { iban?: string; bank_name?: string; swift?: string };
+      backfilled = await backfillInvoiceBank(supabase, { iban: (c.iban ?? "").trim(), bank_name: (c.bank_name ?? "").trim(), swift: (c.swift ?? "").trim() });
+    }
     revalidateSettings();
     revalidateAdmin();
-    return null;
-  }, `${LABEL[key] ?? "Iestatījumi"} saglabāti`);
+    return { backfilled };
+  }, (r) => `${LABEL[key] ?? "Iestatījumi"} saglabāti${r.backfilled ? ` · IBAN pievienots ${r.backfilled} neapmaksātiem rēķiniem` : ""}`);
 }

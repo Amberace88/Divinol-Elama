@@ -79,10 +79,12 @@ export async function notifyOrderPlaced(db: Db, payload: PlaceOrderPayload, rpc:
 /**
  * Order entered by an administrator (phone / e-mail / B2B): order confirmation → customer only, with the
  * issued proforma / invoice attached. The shop is not notified (the admin created it).
+ * With `resendKey` it is a re-send (e.g. the proforma went out before the shop's IBAN was entered).
+ * Returns whether the mail was sent.
  */
-export async function notifyManualOrder(db: Db, orderId: string, invoiceNumber: string | null) {
+export async function notifyManualOrder(db: Db, orderId: string, invoiceNumber: string | null, resendKey?: string) {
   const order = await loadOrderForEmail(db, orderId);
-  if (!order || !isEmail(order.email)) return;
+  if (!order || !isEmail(order.email)) return false;
   const ctx = await emailContext(order.locale);
 
   let attachment: EmailAttachment | null = null;
@@ -105,13 +107,14 @@ export async function notifyManualOrder(db: Db, orderId: string, invoiceNumber: 
     accountUrl: accountOrderUrl(order),
     registerUrl: null,
   });
-  await sendEmail({
+  const res = await sendEmail({
     to: order.email,
     ...mail,
     attachments: attachment ? [attachment] : undefined,
-    tags: { type: "order_confirmation_manual" },
-    idempotencyKey: `order-confirmation/${order.id}`,
+    tags: { type: resendKey ? "payment_details_resend" : "order_confirmation_manual" },
+    idempotencyKey: resendKey ?? `order-confirmation/${order.id}`,
   });
+  return res.ok;
 }
 
 // ───────────────────────── 1b. online payments (Montonio) ─────────────────────────
