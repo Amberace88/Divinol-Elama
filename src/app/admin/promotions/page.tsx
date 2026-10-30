@@ -1,4 +1,5 @@
 import { requireAdmin } from "@/lib/admin/auth";
+import { hiddenProductIds } from "@/lib/admin/handover";
 import { errorMessage } from "@/lib/admin/server";
 import { BASE_VAT } from "@/lib/commerce";
 import { PROMO_TYPES, type PromoType } from "@/lib/promo";
@@ -24,7 +25,8 @@ type Db = {
 };
 
 export default async function PromotionsPage() {
-  const { supabase } = await requireAdmin();
+  const { supabase, user } = await requireAdmin();
+  const hidden = new Set(await hiddenProductIds(supabase, user.email));
   const { data, error } = await supabase
     .from("products")
     .select(
@@ -35,7 +37,7 @@ export default async function PromotionsPage() {
     .limit(2000);
 
   const k = 1 + BASE_VAT / 100;
-  const rows: PromoRow[] = ((data ?? []) as unknown as Db[]).map((p) => {
+  const rows: PromoRow[] = ((data ?? []) as unknown as Db[]).filter((p) => !hidden.has(p.id)).map((p) => {
     const vs = (p.product_variants ?? []).filter((v) => v.is_active);
     const nets = vs.map((v) => Number(v.price_net)).filter((n) => n > 0);
     const minNet = nets.length ? Math.min(...nets) : null;

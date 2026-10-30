@@ -8,6 +8,8 @@ import { NewProductsReview, type ReviewProduct } from "@/components/admin/produc
 import { ImportNewBatch } from "@/components/admin/products/ImportNewBatch";
 import { isDeveloperEmail } from "@/lib/admin/developer";
 import batch from "@/data/zg-2026-10.json";
+import { batchHandedOver, hiddenProductIds } from "@/lib/admin/handover";
+import { HandoverBar } from "@/components/admin/products/HandoverBar";
 import { ErrorNote, PageHeader, Segmented } from "@/components/admin/ui";
 
 export const metadata = { title: "Jaunie produkti" };
@@ -64,10 +66,12 @@ export default async function RecentProductsPage({ searchParams }: { searchParam
     getStoreSettings(),
     developer ? supabase.from("products").select("base_sku").in("base_sku", batchArts) : Promise.resolve({ data: null }),
   ]);
+  const [hiddenIds, handedAt] = await Promise.all([hiddenProductIds(supabase, user.email), developer ? batchHandedOver(supabase) : Promise.resolve(null)]);
+  const hiddenSet = new Set(hiddenIds);
   const batchImported = ((batchRes.data ?? []) as { base_sku: string }[]).length;
   const vat = Number(settings.vat.LV) || 21;
 
-  const all: ReviewProduct[] = ((res.data ?? []) as unknown as Row[]).map((p) => {
+  const all: ReviewProduct[] = ((res.data ?? []) as unknown as Row[]).filter((p) => !hiddenSet.has(p.id)).map((p) => {
     const lv = p.i18n?.lv ?? {};
     const vs = [...p.product_variants].sort((a, b) => a.sort - b.sort || Number(a.size ?? 0) - Number(b.size ?? 0));
     const image = p.images?.[0] ?? vs.find((v) => v.image)?.image ?? null;
@@ -128,6 +132,11 @@ export default async function RecentProductsPage({ searchParams }: { searchParam
         description={`${all.length} produkti pievienoti pēdējās ${days} dienās${drafts ? ` · ${drafts} vēl nav publicēti veikalā` : ""}. Pārbaudiet aprakstu, ievadiet cenas un publicējiet.`}
         actions={<Segmented items={PERIODS.map((p) => ({ href: href({ days: p.v }), label: p.label, active: days === p.v }))} />}
       />
+      {developer && batchImported > 0 && (
+        <div className="mb-5">
+          <HandoverBar handedAt={handedAt} count={batchImported} />
+        </div>
+      )}
       {developer && batchRes.data && batchImported < batchArts.length && (
         <div className="mb-5">
           <ImportNewBatch total={batchArts.length} imported={batchImported} />

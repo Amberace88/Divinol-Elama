@@ -4,6 +4,8 @@ import batch from "@/data/zg-2026-10.json";
 import { ActionError, adminAction, must, revalidateAdmin, revalidateCatalog } from "../server";
 import { isDeveloperEmail } from "../developer";
 
+const BATCH_ID = "zg-2026-10";
+
 /**
  * One-off import of the Divinol products SIA Elama asked for (Oct 2026): product data from zeller-gmelin.de,
  * texts in 5 languages. Products are created as DRAFTS (hidden, price 0 €, badge "Jaunums") and are reviewed and
@@ -107,5 +109,22 @@ export async function importNewProducts() {
       return { created, updated, variants, skipped };
     },
     (d) => `Pievienoti ${d.created} produkti (${d.variants} iepakojumi)${d.updated ? `, papildināti ${d.updated}` : ""}${d.skipped.length ? `, jau bija ${d.skipped.length}` : ""}`,
+  );
+}
+
+/** "Nodot klientam": makes the batch visible to the shop owner's admin (or hides it again with `handed = false`). */
+export async function setBatchHandover(handed: boolean) {
+  return adminAction(
+    async ({ supabase, user }) => {
+      if (!isDeveloperEmail(user.email)) throw new ActionError("To var tikai izstrādātājs.");
+      const { data } = await supabase.from("settings").select("value").eq("key", "handover").maybeSingle<{ value: Record<string, string> | null }>();
+      const value: Record<string, string> = { ...(data?.value ?? {}) };
+      if (handed) value[BATCH_ID] = new Date().toISOString();
+      else delete value[BATCH_ID];
+      must(await supabase.from("settings").upsert({ key: "handover", value, is_public: false }, { onConflict: "key" }));
+      revalidateAdmin();
+      return { handed };
+    },
+    (d) => (d.handed ? "Nodots klientam — Arnis tagad redz jaunos produktus" : "Atkal paslēpts no klienta"),
   );
 }

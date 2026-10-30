@@ -1,5 +1,7 @@
 "use server";
 
+import { hiddenProductIds } from "../handover";
+
 import { deferEmail } from "@/lib/email/send";
 import { notifyInvoiceIssued, notifyManualOrder } from "@/lib/email/notify";
 import { issuesToFieldErrors } from "../schemas";
@@ -106,9 +108,10 @@ const PRODUCT_COLS = "id, sae, base_sku, images, is_active, i18n, product_varian
 
 /** Catalog search for the manual order form (name / SAE / base SKU / variant SKU). */
 export async function searchOrderProducts(query: string) {
-  return adminAction(async ({ supabase }) => {
+  return adminAction(async ({ supabase, user }) => {
     const q = sanitizeSearch(query, 60);
     if (q.length < 2) return [] as OrderProductOption[];
+    const hidden = new Set(await hiddenProductIds(supabase, user.email));
     const [byText, bySku] = await Promise.all([
       supabase.from("products").select(PRODUCT_COLS).or(`i18n->lv->>name.ilike.%${q}%,sae.ilike.%${q}%,base_sku.ilike.%${q}%,slug.ilike.%${q}%`).order("sort").limit(15),
       supabase.from("product_variants").select("product_id").ilike("sku", `%${q}%`).limit(15),
@@ -118,6 +121,7 @@ export async function searchOrderProducts(query: string) {
     const extra = [...new Set(((must(bySku) ?? []) as { product_id: string }[]).map((r) => r.product_id))].filter((id) => !have.has(id));
     if (extra.length) rows.push(...((must(await supabase.from("products").select(PRODUCT_COLS).in("id", extra)) ?? []) as unknown as ProductRow[]));
     return rows
+      .filter((p) => !hidden.has(p.id))
       .map<OrderProductOption>((p) => ({
         product_id: p.id,
         name: p.i18n?.lv?.name || p.base_sku || "—",

@@ -1,4 +1,5 @@
 import { requireAdmin } from "@/lib/admin/auth";
+import { hiddenProductIds } from "@/lib/admin/handover";
 import { errorMessage } from "@/lib/admin/server";
 import { CategoryManager, type CategoryItem } from "@/components/admin/categories/CategoryManager";
 import { ErrorNote, PageHeader } from "@/components/admin/ui";
@@ -6,14 +7,15 @@ import { ErrorNote, PageHeader } from "@/components/admin/ui";
 export const metadata = { title: "Kategorijas" };
 
 export default async function CategoriesPage() {
-  const { supabase } = await requireAdmin();
+  const { supabase, user } = await requireAdmin();
+  const hidden = new Set(await hiddenProductIds(supabase, user.email));
   const [catsRes, prodRes] = await Promise.all([
     supabase.from("categories").select("id, slug, icon, image, sort, is_active, i18n").order("sort").order("slug"),
-    supabase.from("products").select("category_id").limit(5000),
+    supabase.from("products").select("id, category_id").limit(5000),
   ]);
   const counts = new Map<string, number>();
-  for (const p of (prodRes.data ?? []) as { category_id: string | null }[]) {
-    if (p.category_id) counts.set(p.category_id, (counts.get(p.category_id) ?? 0) + 1);
+  for (const p of (prodRes.data ?? []) as { id: string; category_id: string | null }[]) {
+    if (p.category_id && !hidden.has(p.id)) counts.set(p.category_id, (counts.get(p.category_id) ?? 0) + 1);
   }
   const categories: CategoryItem[] = ((catsRes.data ?? []) as Omit<CategoryItem, "products">[]).map((c) => ({
     ...c,

@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { getAdminSession } from "@/lib/admin/auth";
 import { sanitizeSearch } from "@/lib/admin/server";
+import { hiddenProductIds } from "@/lib/admin/handover";
 
 type ProductHit = { id: string; slug: string; base_sku: string | null; images: string[] | null; i18n: Record<string, { name?: string }> | null };
 
@@ -37,9 +38,10 @@ export async function GET(req: NextRequest) {
       .limit(6),
   ]);
 
+  const hidden = new Set(await hiddenProductIds(sb, session.profile.email));
   const productMap = new Map<string, { id: string; name: string; slug: string; sku: string | null; image: string | null }>();
   const addProduct = (p: ProductHit | null | undefined, sku: string | null) => {
-    if (!p || productMap.has(p.id)) return;
+    if (!p || productMap.has(p.id) || hidden.has(p.id)) return;
     productMap.set(p.id, {
       id: p.id,
       slug: p.slug,

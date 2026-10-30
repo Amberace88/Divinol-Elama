@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/admin/auth";
+import { hiddenProductIds } from "@/lib/admin/handover";
 import { fmtDateTime } from "@/lib/admin/format";
 import { dbToForm, PRODUCT_SELECT, type DbProduct } from "@/lib/admin/product-form";
 import { UUID_RE } from "@/lib/admin/server";
@@ -15,7 +16,8 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 export default async function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   if (!UUID_RE.test(id)) notFound();
-  const { supabase } = await requireAdmin();
+  const { supabase, user } = await requireAdmin();
+  if ((await hiddenProductIds(supabase, user.email)).includes(id)) notFound();
   const [{ data: product }, { data: cats }] = await Promise.all([
     supabase.from("products").select(PRODUCT_SELECT).eq("id", id).maybeSingle(),
     supabase.from("categories").select("id, slug, i18n").order("sort"),

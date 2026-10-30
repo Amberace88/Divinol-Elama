@@ -6,6 +6,7 @@ import { requireAdmin } from "@/lib/admin/auth";
 import { PAGE_SIZE, sp, spEnum, spInt, withParams, type SP } from "@/lib/admin/params";
 import { errorMessage, sanitizeSearch, UUID_RE } from "@/lib/admin/server";
 import { getStoreSettings } from "@/lib/settings";
+import { hiddenProductIds, notInList } from "@/lib/admin/handover";
 import { FilterBar } from "@/components/admin/FilterBar";
 import { isAvailability, STOCK_FILTER_LABEL, STOCK_FILTERS, type StockFilter, type StockLevel } from "@/lib/admin/inventory";
 import { cn } from "@/lib/utils";
@@ -69,6 +70,9 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
 
   const { supabase, user } = await requireAdmin();
   const developer = isDeveloperEmail(user.email);
+  const hidden = await hiddenProductIds(supabase, user.email);
+  const hiddenSet = new Set(hidden);
+  const hiddenList = notInList(hidden);
 
   // SKU search goes through the variants table.
   let skuIds: string[] = [];
@@ -87,7 +91,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
   }
   const byLevel = new Map<string, Set<string>>();
   for (const l of levels) {
-    if (!l.is_active) continue;
+    if (!l.is_active || hiddenSet.has(l.product_id)) continue;
     if (!byLevel.has(l.stock_level)) byLevel.set(l.stock_level, new Set());
     byLevel.get(l.stock_level)!.add(l.product_id);
   }
@@ -98,6 +102,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
       "id, slug, base_sku, sae, iso_vg, images, is_active, is_featured, badges, promo_type, promo_percent, promo_starts_at, promo_ends_at, i18n, categories(slug, i18n), product_variants(id, sku, size, unit, price_net, stock, availability, lead_time_days, low_stock_threshold, is_active, image, sort)",
       { count: "exact" },
     );
+  if (hiddenList) query = query.not("id", "in", hiddenList);
   if (stock === "inactive") query = query.eq("is_active", false);
   else if (stock) {
     const ids = [...(byLevel.get(stock) ?? [])];
@@ -121,10 +126,14 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
   const [listRes, catsRes, totalRes, inactiveRes, settings, recentRes] = await Promise.all([
     query.range(from, from + PER - 1),
     supabase.from("categories").select("id, slug, i18n, sort").order("sort"),
-    supabase.from("products").select("id", { count: "exact", head: true }),
-    supabase.from("products").select("id", { count: "exact", head: true }).eq("is_active", false),
+    hiddenList ? supabase.from("products").select("id", { count: "exact", head: true }).not("id", "in", hiddenList) : supabase.from("products").select("id", { count: "exact", head: true }),
+    hiddenList
+      ? supabase.from("products").select("id", { count: "exact", head: true }).eq("is_active", false).not("id", "in", hiddenList)
+      : supabase.from("products").select("id", { count: "exact", head: true }).eq("is_active", false),
     getStoreSettings(),
-    supabase.from("products").select("is_active").gte("created_at", recentSince),
+    hiddenList
+      ? supabase.from("products").select("is_active").gte("created_at", recentSince).not("id", "in", hiddenList)
+      : supabase.from("products").select("is_active").gte("created_at", recentSince),
   ]);
   const recent = (recentRes.data ?? []) as { is_active: boolean }[];
   const recentDrafts = recent.filter((r) => !r.is_active).length;
