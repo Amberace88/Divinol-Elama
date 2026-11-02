@@ -283,3 +283,47 @@ export async function applyInventoryImport(text: string, fileName?: string) {
     (d) => `Importētas izmaiņas: ${d.changed} varianti`,
   );
 }
+
+// ───────────────────────── new products: prices + publish in one step ─────────────────────────
+const packPriceSchema = z.array(z.object({ variant_id: uuid, price_net: z.number().min(0).max(1_000_000).nullable() })).min(1).max(50);
+
+/**
+ * "Jaunie produkti" card: saves the entered pack prices and (optionally) publishes the product.
+ * A pack with a price is shown in the shop; a pack left empty is hidden (is_active = false) so nothing is ever
+ * sold for 0 € — entering a price later shows it again.
+ */
+export async function savePackPrices(productId: string, prices: { variant_id: string; price_net: number | null }[], publish: boolean) {
+  return adminAction(
+    async ({ supabase }) => {
+      uuid.parse(productId);
+      const list = packPriceSchema.parse(prices);
+      const variants = (must(await supabase.from("product_variants").select("id, size, unit, price_net").eq("product_id", productId)) ?? []) as {
+        id: string;
+        size: number | string | null;
+        unit: string;
+        price_net: number | string;
+      }[];
+      const byId = new Map(variants.map((v) => [v.id, v]));
+      if (list.some((p) => !byId.has(p.variant_id))) throw new ActionError("Iepakojums nepieder šim produktam — pārlādējiet lapu.");
+
+      const priced = list.filter((p) => p.price_net != null && p.price_net > 0);
+      const empty = list.filter((p) => !(p.price_net != null && p.price_net > 0));
+      if (publish && !priced.length) throw new ActionError("Ievadiet cenu vismaz vienam iepakojumam.");
+
+      const changes = priced.filter((p) => r4(Number(byId.get(p.variant_id)!.price_net)) !== r4(p.price_net!)).map((p) => ({ variant_id: p.variant_id, price_net: r4(p.price_net!) }));
+      if (changes.length) await apply(supabase, changes, "bulk", "Jaunie produkti: cenas");
+      if (priced.length) must(await supabase.from("product_variants").update({ is_active: true }).in("id", priced.map((p) => p.variant_id)));
+      if (empty.length) must(await supabase.from("product_variants").update({ is_active: false }).in("id", empty.map((p) => p.variant_id)));
+      if (publish) must(await supabase.from("products").update({ is_active: true }).eq("id", productId));
+
+      revalidateCatalog();
+      const hidden = empty.map((p) => {
+        const v = byId.get(p.variant_id)!;
+        return packLabelOf(v.size == null ? null : Number(v.size), v.unit);
+      });
+      return { priced: priced.length, hidden, published: publish };
+    },
+    (d) =>
+      `${d.published ? "Publicēts veikalā" : "Cenas saglabātas"}${d.hidden.length ? ` · bez cenas paslēpti: ${d.hidden.join(", ")}` : ""}`,
+  );
+}

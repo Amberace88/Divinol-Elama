@@ -4,12 +4,12 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Check, ChevronDown, Eye, EyeOff, FileText, ImageOff, Languages, Pencil, Rocket, Save, Search, Tag, X } from "lucide-react";
-import { bulkSaveInventory } from "@/lib/admin/actions/inventory";
+import { savePackPrices } from "@/lib/admin/actions/inventory";
 import { publishProducts, setProductFlag } from "@/lib/admin/actions/products";
 import { packLabelOf } from "@/lib/admin/format";
 import { ProductImage } from "@/components/ui/ProductImage";
 import { cn } from "@/lib/utils";
-import { Spinner, useActionRunner } from "../client-ui";
+import { Spinner, useActionRunner, useConfirm } from "../client-ui";
 import { btn, inputCls } from "../styles";
 
 export type ReviewProduct = {
@@ -114,7 +114,7 @@ export function NewProductsReview({
 
       <div className="rounded-xl border border-brand-200 bg-brand-50/60 px-4 py-3 text-[13px] leading-relaxed text-ink">
         <strong>Kā pārbaudīt:</strong> katrs produkts ir parādīts tāpat kā veikalā — attēls, apraksts, specifikācijas un iepakojumi. Nepublicētie produkti
-        klientiem <strong>nav redzami</strong>. Ievadiet cenas ar PVN {vat}% katram iepakojumam → <em>Saglabāt cenas</em> → <em>Publicēt</em>. Vairāk
+        klientiem <strong>nav redzami</strong>. Ievadiet cenas ar PVN {vat}% → <em>Saglabāt un publicēt</em>. Iepakojums bez cenas veikalā netiek rādīts. Vairāk
         labojumu (attēli, teksti, citas valodas, dokumenti) — <em>Rediģēt</em>.
       </div>
 
@@ -184,9 +184,24 @@ function ReviewCard({ p, vat }: { p: ReviewProduct; vat: number }) {
     return s.trim() !== "" && (parse(s) == null || (parse(s) ?? 0) < 0);
   });
 
-  const savePrices = () => {
-    const changes = dirty.map((v) => ({ variant_id: v.id, price_net: r4((parse(gross[v.id] ?? "") ?? 0) / k) }));
-    run(() => bulkSaveInventory(changes, `Jaunie produkti: cenas ${p.name}`), { loading: "Saglabā cenas…", onSuccess: () => router.refresh() });
+  const confirm = useConfirm();
+  const entered = p.variants.filter((v) => (parse(gross[v.id] ?? "") ?? 0) > 0);
+  const missing = p.variants.filter((v) => !((parse(gross[v.id] ?? "") ?? 0) > 0));
+  const payload = () => p.variants.map((v) => {
+    const g = parse(gross[v.id] ?? "");
+    return { variant_id: v.id, price_net: g != null && g > 0 ? r4(g / k) : null };
+  });
+  const savePrices = () => run(() => savePackPrices(p.id, payload(), false), { loading: "Saglabā cenas…", onSuccess: () => router.refresh() });
+  const publish = async () => {
+    if (missing.length) {
+      const ok = await confirm({
+        title: `Publicēt ${p.name}?`,
+        description: `Bez cenas: ${missing.map((v) => packLabelOf(v.size, v.unit)).join(", ")} — šie iepakojumi veikalā netiks rādīti. Kad ievadīsiet cenu un saglabāsiet, tie parādīsies.`,
+        confirmLabel: "Publicēt",
+      });
+      if (!ok) return;
+    }
+    run(() => savePackPrices(p.id, payload(), true), { loading: "Saglabā un publicē…", onSuccess: () => router.refresh() });
   };
 
   return (
@@ -218,7 +233,7 @@ function ReviewCard({ p, vat }: { p: ReviewProduct; vat: number }) {
           {p.type && <p className="text-[12.5px] font-semibold text-navy-600">{p.type}</p>}
           {p.short && <p className="mt-1 text-[13px] leading-snug text-muted">{p.short}</p>}
           <div className="mt-2 flex flex-wrap gap-1">
-            <Check1 ok={p.checks.price} label="Cenas" hint="Visiem aktīvajiem iepakojumiem jābūt cenai" />
+            <Check1 ok={p.checks.price} label="Cenas" hint="Vismaz vienam iepakojumam jābūt cenai; iepakojumi bez cenas netiek rādīti" />
             <Check1 ok={p.checks.photo} label="Foto" hint="Produkta attēls — pievienojiet sadaļā Rediģēt → Attēli" />
             <Check1 ok={p.checks.text} label="Apraksts" />
             <Check1 ok={p.checks.langs} label={`Valodas ${p.langs.length}/5`} hint={p.langs.join(", ").toUpperCase()} />
@@ -274,11 +289,11 @@ function ReviewCard({ p, vat }: { p: ReviewProduct; vat: number }) {
             <button
               type="button"
               className={btn("primary", "sm")}
-              disabled={pending || !p.checks.price || dirty.length > 0}
-              title={dirty.length ? "Vispirms saglabājiet cenas" : !p.checks.price ? "Ievadiet cenas visiem iepakojumiem" : undefined}
-              onClick={() => run(() => publishProducts([p.id]), { loading: "Publicē…", onSuccess: () => router.refresh() })}
+              disabled={pending || !entered.length || invalid}
+              title={!entered.length ? "Ievadiet cenu vismaz vienam iepakojumam" : "Saglabā cenas un publicē produktu veikalā"}
+              onClick={publish}
             >
-              <Rocket className="h-3.5 w-3.5" /> Publicēt
+              <Rocket className="h-3.5 w-3.5" /> {dirty.length ? "Saglabāt un publicēt" : "Publicēt"}
             </button>
           )}
           <Link href={`/admin/products/${p.id}`} className={btn("ghost", "sm")}>
