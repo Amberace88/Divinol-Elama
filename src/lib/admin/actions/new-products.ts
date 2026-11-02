@@ -1,6 +1,7 @@
 "use server";
 
 import batch from "@/data/zg-2026-10.json";
+import batch11 from "@/data/zg-2026-11.json";
 import { ActionError, adminAction, must, revalidateAdmin, revalidateCatalog } from "../server";
 import { isDeveloperEmail } from "../developer";
 import { BATCH_ID, BATCHES } from "../handover";
@@ -20,24 +21,31 @@ type Row = {
   perf: string[];
   i18n: Record<string, Record<string, string>>;
   packs: number[];
+  unit?: string;
 };
 
-const ROWS = batch as unknown as Row[];
+const ROWS_BY_BATCH: Record<string, Row[]> = {
+  "zg-2026-10": batch as unknown as Row[],
+  "zg-2026-11": batch11 as unknown as Row[],
+};
 /** already in the catalogue without an article number → completed instead of duplicated */
 const UPDATE_EXISTING: Record<string, string> = { "52020": "divinol-synthogear-int-sae-75w-80" };
 
-export async function batchStatus() {
+export async function batchStatus(batchId: string = BATCH_ID) {
   return adminAction(async ({ supabase }) => {
+    const ROWS = ROWS_BY_BATCH[batchId] ?? [];
     const arts = ROWS.map((r) => r.art);
     const have = (must(await supabase.from("products").select("base_sku").in("base_sku", arts)) ?? []) as { base_sku: string }[];
     return { total: ROWS.length, imported: have.length };
   });
 }
 
-export async function importNewProducts() {
+export async function importNewProducts(batchId: string = BATCH_ID) {
   return adminAction(
     async ({ supabase, user }) => {
       if (!isDeveloperEmail(user.email)) throw new ActionError("Importu var veikt tikai izstrādātājs.");
+      const ROWS = ROWS_BY_BATCH[batchId];
+      if (!ROWS) throw new ActionError("Nezināma pakete");
       const cats = (must(await supabase.from("categories").select("id, slug")) ?? []) as { id: string; slug: string }[];
       const catId = new Map(cats.map((c) => [c.slug, c.id]));
       const existing = (must(await supabase.from("products").select("id, slug, base_sku, category_id, sort")) ?? []) as {
@@ -92,7 +100,7 @@ export async function importNewProducts() {
               product_id: p.id,
               sku: `${r.art}-${size}`,
               size,
-              unit: "l",
+              unit: r.unit ?? "l",
               price_net: 0,
               availability: "in_stock",
               is_active: true,

@@ -7,7 +7,7 @@ import { getStoreSettings } from "@/lib/settings";
 import { NewProductsReview, type ReviewProduct } from "@/components/admin/products/NewProductsReview";
 import { ImportNewBatch } from "@/components/admin/products/ImportNewBatch";
 import { isDeveloperEmail } from "@/lib/admin/developer";
-import { BATCHES, BATCH_ARTS, LATEST_BATCH, handoverState, hiddenProductIds } from "@/lib/admin/handover";
+import { BATCHES, LATEST_BATCH, handoverState, hiddenProductIds } from "@/lib/admin/handover";
 import { HandoverBar } from "@/components/admin/products/HandoverBar";
 import { ErrorNote, PageHeader, Segmented } from "@/components/admin/ui";
 
@@ -51,7 +51,6 @@ export default async function RecentProductsPage({ searchParams }: { searchParam
 
   const { supabase, user } = await requireAdmin();
   const developer = isDeveloperEmail(user.email);
-  const batchArts = BATCH_ARTS;
   const allBatchArts = BATCHES.flatMap((b) => b.arts);
   const since = sinceDays(Number(days));
   const [res, settings, batchRes] = await Promise.all([
@@ -69,7 +68,6 @@ export default async function RecentProductsPage({ searchParams }: { searchParam
   const [hiddenIds, handed] = await Promise.all([hiddenProductIds(supabase, user.email), developer ? handoverState(supabase) : Promise.resolve({} as Record<string, string>)]);
   const hiddenSet = new Set(hiddenIds);
   const haveArts = new Set(((batchRes.data ?? []) as { base_sku: string }[]).map((r) => r.base_sku));
-  const batchImported = batchArts.filter((a) => haveArts.has(a)).length;
   const latestArts = new Set(LATEST_BATCH.arts);
   const vat = Number(settings.vat.LV) || 21;
 
@@ -144,11 +142,16 @@ export default async function RecentProductsPage({ searchParams }: { searchParam
             </div>
           ) : null;
         })}
-      {developer && batchRes.data && batchImported < batchArts.length && (
-        <div className="mb-5">
-          <ImportNewBatch total={batchArts.length} imported={batchImported} />
-        </div>
-      )}
+      {developer &&
+        batchRes.data &&
+        BATCHES.map((b) => {
+          const have = b.arts.filter((x) => haveArts.has(x)).length;
+          return have < b.arts.length ? (
+            <div key={b.id} className="mb-5">
+              <ImportNewBatch batchId={b.id} label={`${b.label} · ${b.date}`} total={b.arts.length} imported={have} />
+            </div>
+          ) : null;
+        })}
       {res.error ? (
         <ErrorNote message={errorMessage(res.error)} />
       ) : (
