@@ -3,8 +3,7 @@
 import batch from "@/data/zg-2026-10.json";
 import { ActionError, adminAction, must, revalidateAdmin, revalidateCatalog } from "../server";
 import { isDeveloperEmail } from "../developer";
-
-const BATCH_ID = "zg-2026-10";
+import { BATCH_ID, BATCHES } from "../handover";
 
 /**
  * One-off import of the Divinol products SIA Elama asked for (Oct 2026): product data from zeller-gmelin.de,
@@ -113,14 +112,15 @@ export async function importNewProducts() {
 }
 
 /** "Nodot klientam": makes the batch visible to the shop owner's admin (or hides it again with `handed = false`). */
-export async function setBatchHandover(handed: boolean) {
+export async function setBatchHandover(handed: boolean, batchId: string = BATCH_ID) {
   return adminAction(
     async ({ supabase, user }) => {
       if (!isDeveloperEmail(user.email)) throw new ActionError("To var tikai izstrādātājs.");
+      if (!BATCHES.some((b) => b.id === batchId)) throw new ActionError("Nezināma pakete");
       const { data } = await supabase.from("settings").select("value").eq("key", "handover").maybeSingle<{ value: Record<string, string> | null }>();
       const value: Record<string, string> = { ...(data?.value ?? {}) };
-      if (handed) value[BATCH_ID] = new Date().toISOString();
-      else delete value[BATCH_ID];
+      if (handed) value[batchId] = new Date().toISOString();
+      else delete value[batchId];
       must(await supabase.from("settings").upsert({ key: "handover", value, is_public: false }, { onConflict: "key" }));
       revalidateAdmin();
       return { handed };

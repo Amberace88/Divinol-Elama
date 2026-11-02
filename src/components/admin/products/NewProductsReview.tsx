@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Check, ChevronDown, Eye, EyeOff, FileText, ImageOff, Languages, Pencil, Rocket, Save, Search, Tag, X } from "lucide-react";
+import { Check, ChevronDown, Eye, EyeOff, FileText, ImageOff, Languages, Pencil, Rocket, Save, Search, Sparkles, Tag, X } from "lucide-react";
 import { savePackPrices } from "@/lib/admin/actions/inventory";
 import { publishProducts, setProductFlag } from "@/lib/admin/actions/products";
 import { packLabelOf } from "@/lib/admin/format";
@@ -30,6 +30,8 @@ export type ReviewProduct = {
   tds: boolean;
   langs: string[];
   created_at: string;
+  /** set for products of the newest batch, e.g. "02.11.2026" — shown first and highlighted */
+  latest: string | null;
   variants: { id: string; sku: string | null; size: number | null; unit: string; price_net: number; is_active: boolean }[];
   checks: { price: boolean; photo: boolean; text: boolean; langs: boolean };
 };
@@ -67,7 +69,9 @@ export function NewProductsReview({
       if (!m.has(k)) m.set(k, []);
       m.get(k)!.push(p);
     }
-    return [...m.entries()];
+    // groups with the newest additions first, and inside a group the newest products first
+    const entries = [...m.entries()].map(([k, list]) => [k, [...list].sort((a, b) => Number(Boolean(b.latest)) - Number(Boolean(a.latest)))] as [string, ReviewProduct[]]);
+    return entries.sort((a, b) => Number(b[1].some((p) => p.latest)) - Number(a[1].some((p) => p.latest)));
   }, [products]);
 
   return (
@@ -120,8 +124,13 @@ export function NewProductsReview({
 
       {groups.map(([cat, list]) => (
         <section key={cat}>
-          <h2 className="mb-2 flex items-center gap-2 text-[12px] font-extrabold uppercase tracking-[0.1em] text-muted">
+          <h2 className="mb-2 flex flex-wrap items-center gap-2 text-[12px] font-extrabold uppercase tracking-[0.1em] text-muted">
             {cat} <span className="font-semibold normal-case tracking-normal">· {list.length}</span>
+            {list.some((p) => p.latest) && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-400 px-2.5 py-0.5 text-[10.5px] font-extrabold tracking-[0.08em] text-navy-900 shadow-sm">
+                <Sparkles className="h-3 w-3" aria-hidden /> Jaunākais papildinājums · {list.find((p) => p.latest)?.latest}
+              </span>
+            )}
           </h2>
           <div className="grid gap-4 xl:grid-cols-2">
             {list.map((p) => (
@@ -205,7 +214,12 @@ function ReviewCard({ p, vat }: { p: ReviewProduct; vat: number }) {
   };
 
   return (
-    <article className={cn("flex flex-col overflow-hidden rounded-2xl border bg-white shadow-card", p.is_active ? "border-emerald-200" : "border-line")}>
+    <article
+      className={cn(
+        "flex flex-col overflow-hidden rounded-2xl border bg-white shadow-card",
+        p.is_active ? "border-emerald-200" : p.latest ? "border-amber-300 ring-2 ring-amber-200/70" : "border-line",
+      )}
+    >
       <div className="flex gap-4 p-4">
         <div className="relative h-32 w-28 shrink-0 overflow-hidden rounded-xl border border-line bg-[radial-gradient(120%_90%_at_50%_10%,#ffffff_45%,#eef2f9_100%)]">
           <ProductImage src={p.image} alt={p.name} sizes="112px" className="absolute inset-0 bg-transparent" imgClassName="p-2" />
@@ -226,6 +240,11 @@ function ReviewCard({ p, vat }: { p: ReviewProduct; vat: number }) {
               {p.is_active ? <Eye className="h-3 w-3" aria-hidden /> : <EyeOff className="h-3 w-3" aria-hidden />}
               {p.is_active ? "Veikalā" : "Melnraksts"}
             </span>
+            {p.latest && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-400 px-2 py-0.5 text-[11px] font-extrabold uppercase tracking-wide text-navy-900">
+                <Sparkles className="h-3 w-3" aria-hidden /> Jaunākais · {p.latest.slice(0, 6)}
+              </span>
+            )}
             {p.sku && <span className="rounded-md bg-slate-100 px-1.5 py-0.5 font-mono text-[11.5px] font-bold text-slate-700">Art. {p.sku}</span>}
             {p.sae && <span className="rounded-md bg-brand-100 px-1.5 py-0.5 text-[11.5px] font-extrabold text-brand-800">SAE {p.sae}</span>}
           </div>

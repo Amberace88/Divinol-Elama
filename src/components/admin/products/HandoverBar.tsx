@@ -8,7 +8,7 @@ import { Spinner, useActionRunner, useConfirm } from "../client-ui";
 import { btn } from "../styles";
 
 /** Developer-only: the new-products batch is hidden from the shop owner's admin until "Nodot klientam". */
-export function HandoverBar({ handedAt, count }: { handedAt: string | null; count: number }) {
+export function HandoverBar({ batchId, label, handedAt, count }: { batchId: string; label: string; handedAt: string | null; count: number }) {
   const router = useRouter();
   const confirm = useConfirm();
   const { run, pending } = useActionRunner();
@@ -20,13 +20,13 @@ export function HandoverBar({ handedAt, count }: { handedAt: string | null; coun
           <Send className="h-4 w-4" />
         </span>
         <span className="min-w-0 flex-1">
-          <strong>Nodots klientam</strong> {fmtDateTime(handedAt)} — Arnis redz šos {count} produktus adminā un var tos pārbaudīt un publicēt.
+          <strong>{label}: nodots klientam</strong> {fmtDateTime(handedAt)} — Arnis redz šos {count} produktus adminā un var tos pārbaudīt un publicēt.
         </span>
         <button
           type="button"
           className={btn("ghost", "sm")}
           disabled={pending}
-          onClick={() => run(() => setBatchHandover(false), { onSuccess: () => router.refresh() })}
+          onClick={() => run(() => setBatchHandover(false, batchId), { onSuccess: () => router.refresh() })}
         >
           {pending ? <Spinner /> : <Undo2 className="h-3.5 w-3.5" />} Paslēpt atkal
         </button>
@@ -40,7 +40,7 @@ export function HandoverBar({ handedAt, count }: { handedAt: string | null; coun
         <Lock className="h-4 w-4" />
       </span>
       <span className="min-w-0 flex-1">
-        <strong>Redzams tikai tev.</strong> Šie {count} produkti Arņa adminā un veikalā pagaidām nav redzami
+        <strong>{label} — redzams tikai tev.</strong> Šie {count} produkti Arņa adminā un veikalā pagaidām nav redzami
         <EyeOff className="mx-1 inline h-3.5 w-3.5 align-[-2px]" aria-hidden />. Kad viss pārbaudīts — nodod klientam.
       </span>
       <button
@@ -53,7 +53,7 @@ export function HandoverBar({ handedAt, count }: { handedAt: string | null; coun
             description: `Arnis savā adminā redzēs ${count} jaunos produktus (melnrakstus) un varēs ievadīt cenas un publicēt. Veikalā tie parādīsies tikai pēc publicēšanas.`,
             confirmLabel: "Nodot",
           });
-          if (ok) run(() => setBatchHandover(true), { loading: "Nodod…", onSuccess: () => router.refresh() });
+          if (ok) run(() => setBatchHandover(true, batchId), { loading: "Nodod…", onSuccess: () => router.refresh() });
         }}
       >
         {pending ? <Spinner /> : <Send className="h-4 w-4" />} Nodot klientam

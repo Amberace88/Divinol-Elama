@@ -7,8 +7,7 @@ import { getStoreSettings } from "@/lib/settings";
 import { NewProductsReview, type ReviewProduct } from "@/components/admin/products/NewProductsReview";
 import { ImportNewBatch } from "@/components/admin/products/ImportNewBatch";
 import { isDeveloperEmail } from "@/lib/admin/developer";
-import batch from "@/data/zg-2026-10.json";
-import { batchHandedOver, hiddenProductIds } from "@/lib/admin/handover";
+import { BATCHES, BATCH_ARTS, LATEST_BATCH, handoverState, hiddenProductIds } from "@/lib/admin/handover";
 import { HandoverBar } from "@/components/admin/products/HandoverBar";
 import { ErrorNote, PageHeader, Segmented } from "@/components/admin/ui";
 
@@ -52,7 +51,8 @@ export default async function RecentProductsPage({ searchParams }: { searchParam
 
   const { supabase, user } = await requireAdmin();
   const developer = isDeveloperEmail(user.email);
-  const batchArts = (batch as { art: string }[]).map((r) => r.art);
+  const batchArts = BATCH_ARTS;
+  const allBatchArts = BATCHES.flatMap((b) => b.arts);
   const since = sinceDays(Number(days));
   const [res, settings, batchRes] = await Promise.all([
     supabase
@@ -64,11 +64,13 @@ export default async function RecentProductsPage({ searchParams }: { searchParam
       .order("created_at", { ascending: false })
       .order("slug"),
     getStoreSettings(),
-    developer ? supabase.from("products").select("base_sku").in("base_sku", batchArts) : Promise.resolve({ data: null }),
+    developer ? supabase.from("products").select("base_sku").in("base_sku", allBatchArts) : Promise.resolve({ data: null }),
   ]);
-  const [hiddenIds, handedAt] = await Promise.all([hiddenProductIds(supabase, user.email), developer ? batchHandedOver(supabase) : Promise.resolve(null)]);
+  const [hiddenIds, handed] = await Promise.all([hiddenProductIds(supabase, user.email), developer ? handoverState(supabase) : Promise.resolve({} as Record<string, string>)]);
   const hiddenSet = new Set(hiddenIds);
-  const batchImported = ((batchRes.data ?? []) as { base_sku: string }[]).length;
+  const haveArts = new Set(((batchRes.data ?? []) as { base_sku: string }[]).map((r) => r.base_sku));
+  const batchImported = batchArts.filter((a) => haveArts.has(a)).length;
+  const latestArts = new Set(LATEST_BATCH.arts);
   const vat = Number(settings.vat.LV) || 21;
 
   const all: ReviewProduct[] = ((res.data ?? []) as unknown as Row[]).filter((p) => !hiddenSet.has(p.id)).map((p) => {
@@ -95,6 +97,7 @@ export default async function RecentProductsPage({ searchParams }: { searchParam
       tds: Boolean(p.tds_url),
       langs,
       created_at: p.created_at,
+      latest: p.base_sku && latestArts.has(p.base_sku) ? LATEST_BATCH.date : null,
       variants,
       checks: {
         price: variants.some((v) => v.is_active && v.price_net > 0) && variants.filter((v) => v.is_active).every((v) => v.price_net > 0),
@@ -132,11 +135,15 @@ export default async function RecentProductsPage({ searchParams }: { searchParam
         description={`${all.length} produkti pievienoti pēdējās ${days} dienās${drafts ? ` · ${drafts} vēl nav publicēti veikalā` : ""}. Pārbaudiet aprakstu, ievadiet cenas un publicējiet.`}
         actions={<Segmented items={PERIODS.map((p) => ({ href: href({ days: p.v }), label: p.label, active: days === p.v }))} />}
       />
-      {developer && batchImported > 0 && (
-        <div className="mb-5">
-          <HandoverBar handedAt={handedAt} count={batchImported} />
-        </div>
-      )}
+      {developer &&
+        [...BATCHES].reverse().map((b) => {
+          const n = b.arts.filter((a) => haveArts.has(a) && a !== "52020").length;
+          return n > 0 ? (
+            <div key={b.id} className="mb-3 last:mb-5">
+              <HandoverBar batchId={b.id} label={`${b.label} · ${b.date}`} handedAt={handed[b.id] ?? null} count={n} />
+            </div>
+          ) : null;
+        })}
       {developer && batchRes.data && batchImported < batchArts.length && (
         <div className="mb-5">
           <ImportNewBatch total={batchArts.length} imported={batchImported} />
