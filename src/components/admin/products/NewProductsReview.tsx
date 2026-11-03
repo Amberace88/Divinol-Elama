@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Check, ChevronDown, Eye, EyeOff, FileText, ImageOff, Languages, Pencil, Rocket, Save, Search, Sparkles, Tag, X } from "lucide-react";
+import { CalendarDays, Check, ChevronDown, Eye, EyeOff, FileText, ImageOff, Languages, Pencil, Rocket, Save, Search, Sparkles, Tag, X } from "lucide-react";
 import { savePackPrices } from "@/lib/admin/actions/inventory";
 import { publishProducts, setProductFlag } from "@/lib/admin/actions/products";
 import { packLabelOf } from "@/lib/admin/format";
@@ -32,6 +32,8 @@ export type ReviewProduct = {
   created_at: string;
   /** set for products of the newest batch, e.g. "02.11.2026" — shown first and highlighted */
   latest: string | null;
+  /** when the product was added, e.g. "30.10.2026" (batch date or created_at) */
+  added: string;
   variants: { id: string; sku: string | null; size: number | null; unit: string; price_net: number; is_active: boolean }[];
   checks: { price: boolean; photo: boolean; text: boolean; langs: boolean };
 };
@@ -131,6 +133,12 @@ export function NewProductsReview({
                 <Sparkles className="h-3 w-3" aria-hidden /> Jaunākais papildinājums · {list.find((p) => p.latest)?.latest}
               </span>
             )}
+            {!list.some((p) => p.latest) &&
+              [...new Set(list.map((p) => p.added))].map((d) => (
+                <span key={d} className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-0.5 text-[10.5px] font-bold tracking-[0.06em] text-slate-600 ring-1 ring-inset ring-slate-200">
+                  <CalendarDays className="h-3 w-3" aria-hidden /> Pievienots · {d}
+                </span>
+              ))}
           </h2>
           <div className="grid gap-4 xl:grid-cols-2">
             {list.map((p) => (
@@ -240,9 +248,16 @@ function ReviewCard({ p, vat }: { p: ReviewProduct; vat: number }) {
               {p.is_active ? <Eye className="h-3 w-3" aria-hidden /> : <EyeOff className="h-3 w-3" aria-hidden />}
               {p.is_active ? "Veikalā" : "Melnraksts"}
             </span>
-            {p.latest && (
+            {p.latest ? (
               <span className="inline-flex items-center gap-1 rounded-full bg-amber-400 px-2 py-0.5 text-[11px] font-extrabold uppercase tracking-wide text-navy-900">
                 <Sparkles className="h-3 w-3" aria-hidden /> Jaunākais · {p.latest.slice(0, 6)}
+              </span>
+            ) : (
+              <span
+                title={`Pievienots katalogā ${p.added}`}
+                className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-slate-600 ring-1 ring-inset ring-slate-200"
+              >
+                <CalendarDays className="h-3 w-3" aria-hidden /> Pievienots · {p.added.slice(0, 6)}
               </span>
             )}
             {p.sku && <span className="rounded-md bg-slate-100 px-1.5 py-0.5 font-mono text-[11.5px] font-bold text-slate-700">Art. {p.sku}</span>}

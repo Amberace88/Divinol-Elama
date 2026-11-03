@@ -69,6 +69,8 @@ export default async function RecentProductsPage({ searchParams }: { searchParam
   const hiddenSet = new Set(hiddenIds);
   const haveArts = new Set(((batchRes.data ?? []) as { base_sku: string }[]).map((r) => r.base_sku));
   const latestArts = new Set(LATEST_BATCH.arts);
+  const batchDate = new Map(BATCHES.flatMap((b) => b.arts.filter((a) => a !== "52020").map((a) => [a, b.date] as const)));
+  const fmtDay = (iso: string) => new Intl.DateTimeFormat("lv-LV", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "Europe/Riga" }).format(new Date(iso)).replace(/\.$/, "");
   const vat = Number(settings.vat.LV) || 21;
 
   const all: ReviewProduct[] = ((res.data ?? []) as unknown as Row[]).filter((p) => !hiddenSet.has(p.id)).map((p) => {
@@ -96,6 +98,7 @@ export default async function RecentProductsPage({ searchParams }: { searchParam
       langs,
       created_at: p.created_at,
       latest: p.base_sku && latestArts.has(p.base_sku) ? LATEST_BATCH.date : null,
+      added: (p.base_sku && batchDate.get(p.base_sku)) || fmtDay(p.created_at),
       variants,
       checks: {
         price: variants.some((v) => v.is_active && v.price_net > 0) && variants.filter((v) => v.is_active).every((v) => v.price_net > 0),
