@@ -2,6 +2,7 @@
 
 import batch from "@/data/zg-2026-10.json";
 import batch11 from "@/data/zg-2026-11.json";
+import batch11b from "@/data/zg-2026-11b.json";
 import { ActionError, adminAction, must, revalidateAdmin, revalidateCatalog } from "../server";
 import { isDeveloperEmail } from "../developer";
 import { BATCH_ID, BATCHES } from "../handover";
@@ -27,6 +28,7 @@ type Row = {
 const ROWS_BY_BATCH: Record<string, Row[]> = {
   "zg-2026-10": batch as unknown as Row[],
   "zg-2026-11": batch11 as unknown as Row[],
+  "zg-2026-11b": batch11b as unknown as Row[],
 };
 /** already in the catalogue without an article number → completed instead of duplicated */
 const UPDATE_EXISTING: Record<string, string> = { "52020": "divinol-synthogear-int-sae-75w-80" };

@@ -20,6 +20,7 @@ export const BATCHES: Batch[] = [
     date: "02.11.2026",
     arts: ["28130", "08951", "21120", "23030", "32470", "21140", "85000", "85431", "85550", "28510", "85430", "85750", "85560", "96840", "96480", "85800", "23920", "24710", "24730", "27310"],
   },
+  { id: "zg-2026-11b", label: "Smērvielas — papildinājums", date: "04.11.2026", arts: ["95850", "21990"] },
 ];
 export const LATEST_BATCH = BATCHES[BATCHES.length - 1];
 /** kept for the first batch's import tool */
