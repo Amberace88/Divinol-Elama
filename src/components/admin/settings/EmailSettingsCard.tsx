@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Mail, MailCheck, Send } from "lucide-react";
-import { sendAllTestEmails, sendTestEmail } from "@/lib/admin/actions/email";
+import { sendAllTestEmails, sendShopTestNotification, sendTestEmail } from "@/lib/admin/actions/email";
 import { cn } from "@/lib/utils";
 import { Spinner, useActionRunner } from "../client-ui";
 import { btn } from "../styles";
@@ -99,6 +99,15 @@ export function EmailSettingsCard({ status, developer = false }: { status: Email
               </button>
               <button type="button" className={btn("outline")} disabled={pending} onClick={() => run(() => sendTestEmail(), { loading: "Sūta testa e-pastu…" })}>
                 <Send className="h-4 w-4" /> Tikai vienu sev
+              </button>
+              <button
+                type="button"
+                className={btn("outline")}
+                disabled={pending}
+                title="Viens paziņojums par jaunu pasūtījumu uz veikala adresi (Paziņojumi veikalam)"
+                onClick={() => run(() => sendShopTestNotification(), { loading: "Sūta paziņojumu veikalam…" })}
+              >
+                <Send className="h-4 w-4" /> Paziņojums veikalam
               </button>
             </div>
           </>

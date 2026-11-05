@@ -25,6 +25,21 @@ export async function sendTestEmail() {
   }, (d) => `Testa e-pasts nosūtīts uz ${d.to}`);
 }
 
+/** Iestatījumi → E-pasti: one sample "new order" notification to the shop's notification address (elama@…). */
+export async function sendShopTestNotification() {
+  return adminAction(async () => {
+    if (!isEmailEnabled()) throw new ActionError("E-pastu sūtīšana nav pieslēgta.");
+    const to = await shopNotifyAddress();
+    if (!to) throw new ActionError("Nav norādīta veikala e-pasta adrese.");
+    const lv = await emailContext("lv");
+    const order = sampleOrder({});
+    const mail = renderShopNewOrder(lv, { order, adminUrl: adminUrl("/orders"), invoiceNumber: "PR-2026-00042" });
+    const res = await sendEmail({ to, ...mail, subject: `[TESTS] ${mail.subject}`, tags: { type: "test_shop" } });
+    if (!res.ok) throw new ActionError(`Neizdevās nosūtīt: ${res.error}`);
+    return { to };
+  }, (d) => `Testa paziņojums par jaunu pasūtījumu nosūtīts uz ${d.to}`);
+}
+
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 /**
