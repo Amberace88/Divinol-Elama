@@ -25,7 +25,7 @@ export function sampleOrder(overrides: Partial<OrderEmailData> = {}): OrderEmail
       { name: "Divinol Kühlerfrostschutz KFS 12++", pack_label: "1,5 L", sku: "29190-1.5", qty: 1, unit_price_net: 7.4, line_net: 7.4 },
     ],
     subtotal_net: 85.78,
-    shipping_net: 2.89,
+    shipping_net: 4.2149,
     vat_rate: 21,
     vat_amount: 18.62,
     total_gross: 107.29,

@@ -62,7 +62,7 @@ export const DEFAULT_SETTINGS: StoreSettings = {
     free_threshold: FREE_SHIPPING_THRESHOLD,
     methods: {
       pickup: { price_net: 0, markets: ["LV"], enabled: true },
-      parcel_locker: { price_net: 2.89, markets: ["LV", "EE", "LT"], max_item: 20, free_over: true, enabled: true },
+      parcel_locker: { price_net: 4.1129, surcharge: { LV: 0.102, EE: 0, LT: 0.102 }, markets: ["LV", "EE", "LT"], max_item: 20, free_over: true, enabled: true },
       courier: { price_net: 5.79, surcharge: { LV: 0, EE: 4.13, LT: 4.13 }, markets: ["LV", "EE", "LT"], max_item: 25, free_over: true, enabled: true },
       freight: { price_net: null, markets: ["LV", "EE", "LT"], enabled: true },
     },

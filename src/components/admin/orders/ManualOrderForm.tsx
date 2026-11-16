@@ -321,7 +321,7 @@ export function ManualOrderForm({
       ? 0
       : methodCfg.free_over && lines.length > 0 && r2(preShip.subtotal * (1 + vatRate / 100)) >= threshold
         ? 0
-        : r2(Number(methodCfg.price_net) + Number(methodCfg.surcharge?.[market] ?? 0));
+        : Math.round((Number(methodCfg.price_net) + Number(methodCfg.surcharge?.[market] ?? 0)) * 10000) / 10000;
   const shipValue = shipTouched ? (numOrNull(shipNet) ?? Number.NaN) : suggestedShip;
   const calc = calcManualOrder(calcLines, { discountPercent: discountNum, shippingNet: Number.isFinite(shipValue) ? shipValue : 0, vatRate });
 
@@ -828,7 +828,7 @@ export function ManualOrderForm({
                 id="mo-ship"
                 inputMode="decimal"
                 className={inputCls}
-                value={shipTouched ? shipNet : fmtInput(suggestedShip, 2)}
+                value={shipTouched ? shipNet : fmtInput(suggestedShip, 4)}
                 onChange={(e) => {
                   setShipTouched(true);
                   setShipNet(e.target.value);

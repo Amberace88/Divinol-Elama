@@ -36,12 +36,14 @@ const num = (s: string) => {
 };
 const str = (n: number | null | undefined) => (n == null ? "" : String(n).replace(".", ","));
 const r2 = (n: number) => Math.round((n + Number.EPSILON) * 100) / 100;
+const r4 = (n: number) => Math.round((n + Number.EPSILON) * 10000) / 10000;
 /** Net price (2 decimals) whose gross with `vat` rounds exactly to `gross` when possible (the shop stores net prices). */
 function netForGross(gross: number, vat: number) {
   const k = 1 + vat / 100;
   const n0 = r2(gross / k);
   for (const n of [n0, r2(n0 - 0.01), r2(n0 + 0.01)]) if (n >= 0 && r2(n * k) === r2(gross)) return n;
-  return n0;
+  // No whole-cent net gives this gross (e.g. 5,10 € incl. 21 % VAT) → keep 4 decimals so the customer pays exactly the gross.
+  return r4(gross / k);
 }
 /** Methods whose customer price is entered per country, incl. VAT (stored as price_net + per-market surcharge). */
 const PER_MARKET = new Set(["parcel_locker", "courier"]);
@@ -247,7 +249,7 @@ function ShippingForm({ initial, vat, updated }: { initial: SettingsInit["shippi
             free_over: Boolean(m?.free_over),
             surcharge: { LV: str(m?.surcharge?.LV ?? 0), EE: str(m?.surcharge?.EE ?? 0), LT: str(m?.surcharge?.LT ?? 0) },
             gross: Object.fromEntries(
-              MARKETS.map((mk) => [mk, m?.price_net == null ? "" : str(r2(r2(m.price_net + (m.surcharge?.[mk] ?? 0)) * (1 + (vat[mk] ?? 21) / 100)))]),
+              MARKETS.map((mk) => [mk, m?.price_net == null ? "" : str(r2(r4(m.price_net + (m.surcharge?.[mk] ?? 0)) * (1 + (vat[mk] ?? 21) / 100)))]),
             ) as Record<Market, string>,
             tiered: Boolean(m?.tiers?.length),
             tiers: (m?.tiers ?? []).map((t, i) => ({
@@ -282,7 +284,7 @@ function ShippingForm({ initial, vat, updated }: { initial: SettingsInit["shippi
     ) as Record<Market, number>;
     const used = MARKETS.filter((mk) => Number.isFinite(nets[mk]));
     const base = used.length ? Math.min(...used.map((mk) => nets[mk])) : 0;
-    const surcharge = Object.fromEntries(MARKETS.map((mk) => [mk, Number.isFinite(nets[mk]) ? r2(nets[mk] - base) : 0])) as Record<Market, number>;
+    const surcharge = Object.fromEntries(MARKETS.map((mk) => [mk, Number.isFinite(nets[mk]) ? r4(nets[mk] - base) : 0])) as Record<Market, number>;
     return { base, surcharge, nets };
   }
 
@@ -339,7 +341,7 @@ function ShippingForm({ initial, vat, updated }: { initial: SettingsInit["shippi
               const nets = MARKETS.map((mk) => first[mk]).filter((n): n is number => n != null);
               const base = nets.length ? Math.min(...nets) : 0;
               out.price_net = base;
-              out.surcharge = Object.fromEntries(MARKETS.map((mk) => [mk, first[mk] == null ? 0 : r2(first[mk]! - base)]));
+              out.surcharge = Object.fromEntries(MARKETS.map((mk) => [mk, first[mk] == null ? 0 : r4(first[mk]! - base)]));
               out.tiers = tiers;
             } else {
               const { base, surcharge } = perMarketPrices(m);

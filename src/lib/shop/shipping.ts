@@ -1,4 +1,4 @@
-import { estimateWeightKg, round2 } from "@/lib/commerce";
+import { estimateWeightKg, round4 } from "@/lib/commerce";
 import type { ShippingConfig, ShippingTier } from "@/lib/settings";
 import type { Market } from "@/lib/types";
 
@@ -74,7 +74,7 @@ export function quoteShippingFromSettings(
     if (m.price_net == null) return { id, available, price_net: null, free: false, reason };
     const free = Boolean(m.free_over) && subtotalGross >= threshold;
     const base = tier?.price_net?.[market] ?? m.price_net + (m.surcharge?.[market] ?? 0);
-    const price = free ? 0 : round2(base);
+    const price = free ? 0 : round4(base);
     return { id, available, price_net: price, free, reason, ...(tier ? { tier: { id: tier.id, label: tier.label, max_kg: tier.max_kg } } : {}) };
   });
 }

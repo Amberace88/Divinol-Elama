@@ -31,6 +31,11 @@ export const SHIPPING_METHODS: ShippingMethod[] = [
 
 export const COURIER_SURCHARGE: Record<Market, number> = { LV: 0, EE: 4.13, LT: 4.13 };
 
+/** 4 decimals — shipping nets derived from a gross price (5,10 € incl. 21 % VAT = 4,2149 net), so net × (1 + VAT) rounds back to the exact gross. */
+export function round4(n: number) {
+  return Math.round((n + Number.EPSILON) * 10000) / 10000;
+}
+
 export function round2(n: number) {
   return Math.round((n + Number.EPSILON) * 100) / 100;
 }

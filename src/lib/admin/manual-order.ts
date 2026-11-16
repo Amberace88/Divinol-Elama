@@ -135,10 +135,10 @@ export function calcManualOrder(lines: CalcLine[], opts: { discountPercent: numb
     return { unit, line, vat: r2((line * opts.vatRate) / 100) };
   });
   subtotal = r2(subtotal);
-  const shipping = r2(Math.max(0, opts.shippingNet || 0));
-  const net = r2(subtotal + shipping);
-  const vat = r2((net * opts.vatRate) / 100);
-  return { lines: out, discount: r2(before - subtotal), subtotal, shipping, net, vat, total: r2(net + vat) };
+  // shipping keeps 4 decimals (a gross price like 5,10 € → 4,2149 net) — same as place_order / admin_create_order
+  const shipping = r4(Math.max(0, opts.shippingNet || 0));
+  const vat = r2(((subtotal + shipping) * opts.vatRate) / 100);
+  return { lines: out, discount: r2(before - subtotal), subtotal, shipping, net: r2(subtotal + shipping), vat, total: r2(subtotal + shipping + vat) };
 }
 
 /** Latvian messages for exceptions raised by admin_create_order(). */
