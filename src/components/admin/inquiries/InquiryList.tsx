@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Building2, Mail, Phone, Reply } from "lucide-react";
+import { Ban, Building2, Mail, Phone, Reply, ShieldAlert } from "lucide-react";
 import { setInquiryStatus } from "@/lib/admin/actions/inquiries";
 import { fmtDateTime, fmtRelative } from "@/lib/admin/format";
 import { INQUIRY_STATUS, INQUIRY_TYPE, labelOf } from "@/lib/admin/labels";
 import { cn } from "@/lib/utils";
+import { SPAM_REASON_LABEL } from "@/lib/spam";
 import { Drawer, useActionRunner } from "../client-ui";
 import { btn } from "../styles";
 import { Pill } from "../ui";
@@ -25,6 +26,9 @@ export type Inquiry = {
 };
 
 const PAYLOAD_LABEL: Record<string, string> = {
+  spam_reason: "Surogātpasta iemesls",
+  consent: "Piekrišana",
+  consent_at: "Piekrišana dota",
   vehicle: "Transportlīdzeklis",
   make: "Marka",
   model: "Modelis",
@@ -140,6 +144,11 @@ export function InquiryList({ rows }: { rows: Inquiry[] }) {
                   </option>
                 ))}
               </select>
+              {statusOf(current) !== "spam" && (
+                <button type="button" className={btn("outline")} disabled={pending} onClick={() => change(current, "spam")} title="Atzīmēt kā surogātpastu un bloķēt šo sūtītāju">
+                  <Ban className="h-4 w-4" /> Surogātpasts
+                </button>
+              )}
               <a
                 href={`mailto:${current.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Labdien, ${current.name}!\n\n${quoted}`)}`}
                 className={btn("primary")}
@@ -152,6 +161,18 @@ export function InquiryList({ rows }: { rows: Inquiry[] }) {
       >
         {current && (
           <div className="space-y-5">
+            {statusOf(current) === "spam" && (
+              <div className="flex gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3.5 text-[13px] text-slate-700">
+                <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-slate-500" />
+                <p>
+                  <b>Surogātpasts.</b>{" "}
+                  {typeof current.payload?.spam_reason === "string" && SPAM_REASON_LABEL[current.payload.spam_reason]
+                    ? `${SPAM_REASON_LABEL[current.payload.spam_reason]}. `
+                    : ""}
+                  Paziņojums uz e-pastu netiek sūtīts, un turpmākie pieprasījumi no šī e-pasta vai tālruņa automātiski nonāk surogātpastā.
+                </p>
+              </div>
+            )}
             <div className="grid gap-2 text-[13px]">
               <a href={`mailto:${current.email}`} className="flex items-center gap-2 text-navy-600 hover:underline">
                 <Mail className="h-4 w-4" /> {current.email}
@@ -180,7 +201,7 @@ export function InquiryList({ rows }: { rows: Inquiry[] }) {
                   {Object.entries(current.payload).map(([k, v]) => (
                     <div key={k} className="grid grid-cols-[140px_1fr] gap-3 px-4 py-2.5">
                       <dt className="text-muted">{PAYLOAD_LABEL[k] ?? k}</dt>
-                      <dd className="min-w-0 break-words text-ink">{renderValue(v)}</dd>
+                      <dd className="min-w-0 break-words text-ink">{k === "spam_reason" && typeof v === "string" ? (SPAM_REASON_LABEL[v] ?? v) : renderValue(v)}</dd>
                     </div>
                   ))}
                 </dl>

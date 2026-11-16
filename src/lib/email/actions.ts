@@ -37,7 +37,7 @@ export async function submitInquiryAction(input: z.input<typeof inquirySchema>):
   // honeypot filled → a bot: pretend success, store nothing
   if (trap?.hp) return { ok: true };
   const extraText = d0.extra ? Object.values(d0.extra).filter((v) => typeof v === "string").join(" ") : null;
-  const check = checkInquirySpam({ name: d0.name, message: d0.message, company: d0.company, extraText, elapsedMs: trap?.ms ?? null });
+  const check = checkInquirySpam({ name: d0.name, message: d0.message, company: d0.company, extraText, elapsedMs: trap?.ms ?? null, phone: d0.phone, email: d0.email });
   try {
     const supabase = await createClient();
     const payload = check.spam ? { ...d0, spam: true, extra: { ...(d0.extra ?? {}), spam_reason: check.reason } } : d0;
@@ -46,12 +46,14 @@ export async function submitInquiryAction(input: z.input<typeof inquirySchema>):
       if (/rate_limited/.test(error.message)) return { ok: true }; // flood from one address: silently drop
       return { ok: false, code: /invalid_email/.test(error.message) ? "invalid_email" : "failed" };
     }
+    // submit_inquiry returns { id, spam } (the DB also catches repeat / blocked senders); older versions returned the id
+    const res = (typeof data === "string" ? { id: data, spam: false } : (data ?? {})) as { id?: string; spam?: boolean };
     // spam is kept (status "spam", visible under the admin filter) but the shop is not e-mailed
-    if (check.spam) return { ok: true };
+    if (check.spam || res.spam) return { ok: true };
     const d = d0;
     deferEmail("inquiry", () =>
       notifyInquiry({
-        id: typeof data === "string" ? data : null,
+        id: res.id ?? null,
         type: d.type,
         name: d.name || "—",
         email: d.email,
