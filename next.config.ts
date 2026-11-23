@@ -52,14 +52,6 @@ async function legacyRedirects() {
 
 const nextConfig: NextConfig = {
   trailingSlash: false,
-  // Files read from disk at runtime by the invoice PDF route
-  outputFileTracingIncludes: {
-    "/api/invoices/\\[id\\]/pdf": [
-      "./node_modules/@expo-google-fonts/manrope/**/*.ttf",
-      "./public/media/brand/elama-logo.png",
-    ],
-    "/api/admin/guide": ["./private/docs/*.pdf"],
-  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [{ protocol: "https", hostname: "*.supabase.co" }],

@@ -24,7 +24,6 @@ export type AssistantChatRow = {
 
 export type AssistantStatus = {
   keyConfigured: boolean;
-  serviceRole: boolean;
   settings: { public: boolean; model: string };
   models: { id: string; label: string }[];
   stats: { chats7d: number; turns7d: number; tokens7d: number };
@@ -51,7 +50,7 @@ export function AssistantSettingsCard({ status }: { status: AssistantStatus }) {
   const [pub, setPub] = useState(status.settings.public);
   const [model, setModel] = useState(status.settings.model);
   const [openId, setOpenId] = useState<string | null>(null);
-  const ready = status.keyConfigured && status.serviceRole;
+  const ready = status.keyConfigured;
   const dirty = pub !== status.settings.public || model !== status.settings.model;
 
   return (

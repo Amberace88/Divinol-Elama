@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "divinol",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  "observability": { "enabled": true },
+  // variables / secrets set in the Cloudflare dashboard survive deploys
+  "keep_vars": true,
+  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "divinol" }],
+  "r2_buckets": [{ "binding": "NEXT_INC_CACHE_R2_BUCKET", "bucket_name": "divinol-opennext-cache" }],
+  "d1_databases": [
+    { "binding": "NEXT_TAG_CACHE_D1", "database_name": "divinol-tag-cache", "database_id": "b753a107-a084-48d6-a118-c5b2e5d51383" }
+  ],
+  "durable_objects": { "bindings": [{ "name": "NEXT_CACHE_DO_QUEUE", "class_name": "DOQueueHandler" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["DOQueueHandler"] }],
+  "images": { "binding": "IMAGES" }
+}

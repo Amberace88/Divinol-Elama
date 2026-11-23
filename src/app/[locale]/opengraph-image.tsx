@@ -1,20 +1,16 @@
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { getTranslations } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
+import { readPublicFile } from "@/lib/runtime-files";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const alt = "Divinol — SIA Elama";
 
 async function file(path: string) {
-  try {
-    return await readFile(join(/*turbopackIgnore: true*/ process.cwd(), path));
-  } catch {
-    return null;
-  }
+  const bytes = await readPublicFile(path);
+  return bytes ? (bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer) : null;
 }
 
 export default async function OpenGraphImage({ params }: { params: Promise<{ locale: string }> }) {
@@ -22,9 +18,9 @@ export default async function OpenGraphImage({ params }: { params: Promise<{ loc
   const locale = hasLocale(routing.locales, l) ? l : routing.defaultLocale;
   const t = await getTranslations({ locale, namespace: "meta" });
   const [font, fontBold, logo] = await Promise.all([
-    file("node_modules/@expo-google-fonts/manrope/600SemiBold/Manrope_600SemiBold.ttf"),
-    file("node_modules/@expo-google-fonts/manrope/800ExtraBold/Manrope_800ExtraBold.ttf"),
-    file("public/media/brand/elama-logo.png"),
+    file("fonts/manrope/Manrope_600SemiBold.ttf"),
+    file("fonts/manrope/Manrope_800ExtraBold.ttf"),
+    file("media/brand/elama-logo.png"),
   ]);
   const fonts = [
     ...(font ? [{ name: "Manrope", data: font, weight: 600 as const, style: "normal" as const }] : []),
@@ -62,7 +58,7 @@ export default async function OpenGraphImage({ params }: { params: Promise<{ loc
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "70px 80px", width: 880, height: "100%" }}>
           <div style={{ display: "flex", alignItems: "center" }}>
             {logo ? (
-              <img src={`data:image/png;base64,${logo.toString("base64")}`} width={330} height={62} alt="" />
+              <img src={`data:image/png;base64,${Buffer.from(logo).toString("base64")}`} width={330} height={62} alt="" />
             ) : (
               <div style={{ fontSize: 44, fontWeight: 800, display: "flex" }}>ELAMA</div>
             )}

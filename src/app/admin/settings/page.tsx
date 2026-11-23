@@ -15,7 +15,6 @@ import { ErrorNote, PageHeader } from "@/components/admin/ui";
 import { AssistantSettingsCard, type AssistantChatRow } from "@/components/admin/settings/AssistantSettingsCard";
 import { anthropicConfigured } from "@/lib/assistant/anthropic";
 import { ASSISTANT_MODELS, DEFAULT_MODEL } from "@/lib/assistant/config";
-import { isServiceRoleConfigured } from "@/lib/supabase/service";
 
 export const metadata = { title: "Iestatījumi" };
 
@@ -86,7 +85,6 @@ async function assistantStatus(supabase: Sb) {
   const rows = (week ?? []) as { turns: number; input_tokens: number; output_tokens: number }[];
   return {
     keyConfigured: anthropicConfigured(),
-    serviceRole: isServiceRoleConfigured(),
     settings: { public: Boolean(v.public), model: v.model ?? DEFAULT_MODEL },
     models: ASSISTANT_MODELS,
     stats: {

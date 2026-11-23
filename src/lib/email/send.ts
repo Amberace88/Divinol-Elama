@@ -1,6 +1,6 @@
 import "server-only";
 import { after } from "next/server";
-import nodemailer, { type Transporter } from "nodemailer";
+import type { Transporter } from "nodemailer";
 import { DEFAULT_SETTINGS, getStoreSettings } from "@/lib/settings";
 
 /**
@@ -33,9 +33,10 @@ export function isEmailEnabled() {
 }
 
 let smtp: Transporter | null = null;
-function smtpTransport() {
+async function smtpTransport() {
   if (!smtp) {
     const port = Number(env("SMTP_PORT") || 465);
+    const nodemailer = (await import("nodemailer")).default;
     smtp = nodemailer.createTransport({
       host: env("SMTP_HOST"),
       port,
@@ -132,6 +133,45 @@ function splitAddresses(v: string | string[] | null | undefined) {
   return list.map((s) => s.trim()).filter(Boolean);
 }
 
+/** Cloudflare Workers have no Node sockets for nodemailer — SMTP goes through worker-mailer (cloudflare:sockets). */
+function onWorkers() {
+  return typeof navigator !== "undefined" && navigator.userAgent === "Cloudflare-Workers";
+}
+
+async function sendViaWorkerSmtp(msg: EmailMessage, to: string[], replyTo: string[]): Promise<SendResult> {
+  const { WorkerMailer } = await import("worker-mailer");
+  const port = Number(env("SMTP_PORT") || 465);
+  const mailer = await WorkerMailer.connect({
+    host: env("SMTP_HOST")!,
+    port,
+    secure: port === 465,
+    startTls: port !== 465,
+    credentials: { username: env("SMTP_USER")!, password: env("SMTP_PASSWORD")! },
+    authType: ["plain", "login"],
+    socketTimeoutMs: 20_000,
+    responseTimeoutMs: 20_000,
+  });
+  try {
+    const from = emailFrom();
+    const m = from.match(/^(.*)<([^>]+)>\s*$/);
+    await mailer.send({
+      from: m ? { name: m[1].trim(), email: m[2].trim() } : from,
+      to,
+      ...(replyTo.length ? { reply: replyTo[0] } : {}),
+      subject: msg.subject.replace(/[\r\n]+/g, " ").slice(0, 250),
+      html: msg.html,
+      text: msg.text,
+      ...(msg.idempotencyKey ? { headers: { "X-Entity-Ref-ID": msg.idempotencyKey.slice(0, 200) } } : {}),
+      ...(msg.attachments?.length
+        ? { attachments: msg.attachments.map((a) => ({ filename: a.filename, content: Buffer.from(a.content).toString("base64") })) }
+        : {}),
+    });
+    return { ok: true, id: null };
+  } finally {
+    await mailer.close().catch(() => {});
+  }
+}
+
 export async function sendEmail(msg: EmailMessage): Promise<SendResult> {
   const transport = emailTransport();
   if (!transport) {
@@ -145,7 +185,8 @@ export async function sendEmail(msg: EmailMessage): Promise<SendResult> {
   if (transport === "smtp") {
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
-        const info = await smtpTransport().sendMail({
+        if (onWorkers()) return await sendViaWorkerSmtp(msg, to, replyTo);
+        const info = await (await smtpTransport()).sendMail({
           from: emailFrom(),
           to,
           replyTo: replyTo.length ? replyTo : undefined,

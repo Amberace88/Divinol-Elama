@@ -1,7 +1,7 @@
 import "server-only";
 import { createHash } from "node:crypto";
 import { isDeveloperEmail } from "@/lib/admin/developer";
-import { createServiceClient } from "@/lib/supabase/service";
+import { createPublicClient } from "@/lib/supabase/server";
 import { anthropicConfigured } from "./anthropic";
 
 export type AssistantSettings = { public: boolean; model: string };
@@ -12,10 +12,10 @@ export const ASSISTANT_MODELS: { id: string; label: string }[] = [
   { id: "claude-haiku-4-5-20251001", label: "Claude Haiku 4.5 — ātrākais, lētākais" },
 ];
 
-/** Settings key 'assistant' (not public → read with the service role or by admins). */
+/** Settings key 'assistant' ({public, model} — a public settings row). */
 export async function getAssistantSettings(): Promise<AssistantSettings> {
   try {
-    const client = createServiceClient();
+    const client = createPublicClient();
     const { data } = await client.from("settings").select("value").eq("key", "assistant").maybeSingle();
     const v = (data?.value ?? {}) as Partial<AssistantSettings>;
     return { public: Boolean(v.public), model: process.env.ASSISTANT_MODEL?.trim() || v.model || DEFAULT_MODEL };

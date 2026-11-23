@@ -9,7 +9,6 @@ import { cheapestCombination } from "@/lib/shop/packs";
 import { quoteShippingFromSettings, type ShipMethodId } from "@/lib/shop/shipping";
 import { searchDocs } from "@/lib/shop/search";
 import { createPublicClient } from "@/lib/supabase/server";
-import { createServiceClient, isServiceRoleConfigured } from "@/lib/supabase/service";
 import { notifyInquiry } from "@/lib/email/notify";
 import { deferEmail } from "@/lib/email/send";
 import { checkInquirySpam } from "@/lib/spam";
@@ -20,6 +19,8 @@ import type { ToolDef } from "./anthropic";
 export type ClientCartLine = { slug: string; key: string; qty: number };
 
 export type ToolContext = {
+  /** Supabase client bound to the visitor's session (RLS + the assistant_* SECURITY DEFINER functions) */
+  db: { rpc: (fn: string, args?: Record<string, unknown>) => PromiseLike<{ data: unknown; error: { message: string } | null }> };
   locale: Locale;
   market: Market;
   price: PriceContext;
@@ -465,45 +466,22 @@ export async function runTool(name: string, input: Record<string, unknown>, ctx:
     }
 
     case "order_status": {
-      if (!isServiceRoleConfigured()) return { result: { error: "Order lookup is not available right now — ask the customer to check their account or contact the shop." }, isError: true };
-      const db = createServiceClient();
-      const number = String(input.order_number ?? "").trim().toUpperCase();
-      const email = String(input.email ?? "").trim().toLowerCase();
-      const cols = "id, number, status, payment_status, payment_method, shipping_method, total_gross, created_at, tracking_code, tracking_url, tracking_carrier, email, user_id";
-      let q = db.from("orders").select(cols).order("created_at", { ascending: false }).limit(5);
-      if (number) q = q.eq("number", number);
-      if (ctx.user) {
-        if (!number) q = q.eq("user_id", ctx.user.id);
-      } else if (!number || !email) {
+      const number = String(input.order_number ?? "").trim();
+      const email = String(input.email ?? "").trim();
+      if (!ctx.user && (!number || !email)) {
         return { result: { error: "Guest customers must give both the order number and the e-mail used for the order." }, isError: true };
       }
-      const { data, error } = await q;
+      const { data, error } = await ctx.db.rpc("assistant_order_lookup", { p_number: number || null, p_email: email || null });
       if (error) return { result: { error: "Lookup failed." }, isError: true };
-      const own = (data ?? []).filter(
-        (o) => (ctx.user && o.user_id === ctx.user.id) || (email && String(o.email).toLowerCase() === email) || (ctx.user?.email && String(o.email).toLowerCase() === ctx.user.email.toLowerCase()),
-      );
-      if (!own.length) return { result: { found: false, note: "No order with this number for this customer/e-mail." } };
-      const ids = own.map((o) => o.id);
-      const { data: ships } = await db.from("shipments").select("order_id, carrier, tracking_number, tracking_status, shipped_at, delivered_at").in("order_id", ids);
-      const { data: items } = await db.from("order_items").select("order_id, name, pack_label, qty").in("order_id", ids);
+      const res = (data ?? {}) as { orders?: Record<string, unknown>[]; error?: string };
+      if (res.error) return { result: { error: "Guest customers must give both the order number and the e-mail used for the order." }, isError: true };
+      const orders = res.orders ?? [];
+      if (!orders.length) return { result: { found: false, note: "No order with this number for this customer/e-mail." } };
       return {
         result: {
           found: true,
           account_orders_url: ctx.user ? "/account/orders" : null,
-          orders: own.map((o) => ({
-            number: o.number,
-            date: String(o.created_at).slice(0, 10),
-            status: o.status,
-            payment_status: o.payment_status,
-            payment_method: o.payment_method,
-            delivery: o.shipping_method,
-            total: money(Number(o.total_gross), ctx),
-            items: (items ?? []).filter((i) => i.order_id === o.id).map((i) => `${i.qty} × ${i.name} ${i.pack_label ?? ""}`.trim()),
-            tracking: o.tracking_code ? { code: o.tracking_code, carrier: o.tracking_carrier, url: o.tracking_url } : null,
-            shipments: (ships ?? [])
-              .filter((s) => s.order_id === o.id)
-              .map((s) => ({ carrier: s.carrier, tracking_number: s.tracking_number, status: s.tracking_status, shipped: s.shipped_at, delivered: s.delivered_at })),
-          })),
+          orders: orders.map((o) => ({ ...o, created_at: String(o.created_at ?? "").slice(0, 10), total_gross: money(Number(o.total_gross), ctx) })),
         },
       };
     }
