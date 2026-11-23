@@ -10,6 +10,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { CookieBanner } from "@/components/layout/CookieBanner";
+import { AssistantWidget } from "@/components/assistant/AssistantWidget";
 import { Tracker } from "@/components/analytics/Tracker";
 import { ThemedToaster } from "@/components/layout/ThemeToggle";
 import { InlineScript } from "@/components/layout/InlineScript";
@@ -74,6 +75,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
                 </main>
                 <Footer categories={cats} />
                 <CartDrawer />
+                <AssistantWidget />
                 <CookieBanner />
                 <Tracker />
                 <ThemedToaster />

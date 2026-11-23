@@ -12,6 +12,10 @@ import { stripeAdminStatus } from "@/lib/payments/stripe";
 import { notificationUrl, stripeWebhookUrl } from "@/lib/payments/service";
 import { StripeSettingsCard } from "@/components/admin/settings/StripeSettingsCard";
 import { ErrorNote, PageHeader } from "@/components/admin/ui";
+import { AssistantSettingsCard, type AssistantChatRow } from "@/components/admin/settings/AssistantSettingsCard";
+import { anthropicConfigured } from "@/lib/assistant/anthropic";
+import { ASSISTANT_MODELS, DEFAULT_MODEL } from "@/lib/assistant/config";
+import { isServiceRoleConfigured } from "@/lib/supabase/service";
 
 export const metadata = { title: "Iestatījumi" };
 
@@ -48,6 +52,12 @@ export default async function SettingsPage() {
         <div className="hidden lg:block" />
         <StripeSettingsCard status={{ ...(await stripeAdminStatus()), webhookUrl: stripeWebhookUrl() }} developer={developer} />
       </div>
+      {developer && (
+        <div className="mt-6 grid gap-6 lg:grid-cols-[200px_minmax(0,1fr)]">
+          <div className="hidden lg:block" />
+          <AssistantSettingsCard status={await assistantStatus(supabase)} />
+        </div>
+      )}
       {/* Montonio stays available as a second provider, shown only once it has keys */}
       {isMontonioConfigured() && (
         <div className="mt-6 grid gap-6 lg:grid-cols-[200px_minmax(0,1fr)]">
@@ -57,4 +67,38 @@ export default async function SettingsPage() {
       )}
     </>
   );
+}
+
+type Sb = Awaited<ReturnType<typeof requireAdmin>>["supabase"];
+
+async function assistantStatus(supabase: Sb) {
+  const since = new Date(Date.now() - 7 * 86400_000).toISOString();
+  const [{ data: st }, { data: recent }, { data: week }] = await Promise.all([
+    supabase.from("settings").select("value").eq("key", "assistant").maybeSingle(),
+    supabase
+      .from("assistant_chats")
+      .select("id, created_at, updated_at, locale, market, turns, tools_used, input_tokens, output_tokens, cache_read_tokens, user_id, messages")
+      .order("updated_at", { ascending: false })
+      .limit(15),
+    supabase.from("assistant_chats").select("turns, input_tokens, output_tokens").gte("updated_at", since),
+  ]);
+  const v = (st?.value ?? {}) as { public?: boolean; model?: string };
+  const rows = (week ?? []) as { turns: number; input_tokens: number; output_tokens: number }[];
+  return {
+    keyConfigured: anthropicConfigured(),
+    serviceRole: isServiceRoleConfigured(),
+    settings: { public: Boolean(v.public), model: v.model ?? DEFAULT_MODEL },
+    models: ASSISTANT_MODELS,
+    stats: {
+      chats7d: rows.length,
+      turns7d: rows.reduce((s, r) => s + Number(r.turns ?? 0), 0),
+      tokens7d: rows.reduce((s, r) => s + Number(r.input_tokens ?? 0) + Number(r.output_tokens ?? 0), 0),
+    },
+    chats: ((recent ?? []) as (Omit<AssistantChatRow, "signed_in"> & { user_id: string | null })[]).map(({ user_id, ...c }) => ({
+      ...c,
+      tools_used: c.tools_used ?? [],
+      messages: Array.isArray(c.messages) ? c.messages : [],
+      signed_in: Boolean(user_id),
+    })),
+  };
 }

@@ -326,6 +326,7 @@ export function ProductPurchase({
       <AnimatePresence>
         {showSticky && selected && (
           <motion.div
+            data-buybar
             className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-12px_30px_-12px_rgb(16_24_40/0.25)] backdrop-blur lg:hidden"
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
