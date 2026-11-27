@@ -89,7 +89,7 @@ export async function workersTurn(opts: {
   const noTools = opts.toolChoice?.type === "none";
   const raw = (await ai.run(opts.model, {
     messages: toOpenAi(opts.system, opts.messages),
-    ...(noTools ? {} : { tools: opts.tools.map((t) => ({ type: "function", function: { name: t.name, description: t.description, parameters: t.input_schema } })) }),
+    ...(noTools ? {} : { tools: opts.tools.map((t) => ({ name: t.name, description: t.description, parameters: t.input_schema })) }),
     max_tokens: opts.maxTokens,
     temperature: 0.3,
   })) as Record<string, unknown>;
@@ -98,7 +98,30 @@ export async function workersTurn(opts: {
   const choice = (raw.choices as { message?: { content?: string | null; tool_calls?: RawCall[] }; finish_reason?: string }[] | undefined)?.[0];
   let text = String(choice?.message?.content ?? (typeof raw.response === "string" ? raw.response : "") ?? "");
   text = text.replace(/<think>[\s\S]*?<\/think>/g, "").trim(); // reasoning models
-  const rawCalls: RawCall[] = (choice?.message?.tool_calls ?? (raw.tool_calls as RawCall[] | undefined) ?? []) as RawCall[];
+  const rawCalls: RawCall[] = [... (choice?.message?.tool_calls ?? (raw.tool_calls as RawCall[] | undefined) ?? [])] as RawCall[];
+  if (!noTools && !rawCalls.length) {
+    const known = new Set(opts.tools.map((t) => t.name));
+    const json = text.match(/\{\s*"(?:name|type)"[\s\S]*\}/);
+    if (json) {
+      try {
+        const o = JSON.parse(json[0]) as { name?: string; parameters?: unknown; arguments?: unknown };
+        if (o.name && known.has(o.name)) {
+          rawCalls.push({ name: o.name, arguments: o.parameters ?? o.arguments ?? {} });
+          text = text.replace(json[0], "").trim();
+        }
+      } catch {
+        /* not a call */
+      }
+    }
+    for (const m of text.matchAll(/\[?`?([a-z_]+)\(([^)]*)\)`?\]?/g)) {
+      if (!known.has(m[1])) continue;
+      const args: Record<string, unknown> = {};
+      for (const kv of m[2].matchAll(/(\w+)\s*=\s*("([^"]*)"|[^,\s]+)/g)) args[kv[1]] = kv[3] ?? (kv[2] === "true" ? true : kv[2] === "false" ? false : isNaN(Number(kv[2])) ? kv[2] : Number(kv[2]));
+      rawCalls.push({ name: m[1], arguments: args });
+    }
+    // when the model wrote calls as text, drop that text (it is not meant for the customer)
+    if (rawCalls.length) text = "";
+  }
   const calls: ToolUseBlock[] = noTools
     ? []
     : rawCalls
