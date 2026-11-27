@@ -3,7 +3,7 @@
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useLocale } from "next-intl";
-import { ArrowUp, Bot, Check, Loader2, RotateCcw, ShoppingCart, Sparkles, X } from "lucide-react";
+import { ArrowUp, Check, Headset, Loader2, RotateCcw, ShoppingCart, Sparkles, X } from "lucide-react";
 import { useCart } from "@/components/providers/CartProvider";
 import { usePricing } from "@/components/providers/PriceProvider";
 import { cn } from "@/lib/utils";
@@ -228,6 +228,12 @@ function AssistantPanel({ preview }: { preview: boolean }) {
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
+  // typewriter: text arrives in chunks (or all at once from the free model) and is revealed like someone typing
+  const [typing, setTyping] = useState(false);
+  const pendingRef = useRef("");
+  const cardsRef = useRef<Card[]>([]);
+  const timerRef = useRef<number | null>(null);
+  const streamDoneRef = useRef(true);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const abortRef = useRef<AbortController | null>(null);
@@ -247,18 +253,18 @@ function AssistantPanel({ preview }: { preview: boolean }) {
     }
   }, []);
   useEffect(() => {
-    if (busy) return;
+    if (busy || typing) return;
     try {
       sessionStorage.setItem(STORE_KEY, JSON.stringify({ msgs: msgs.slice(-40), chatId }));
     } catch {
       /* ignore */
     }
-  }, [msgs, chatId, busy]);
+  }, [msgs, chatId, busy, typing]);
 
   useEffect(() => {
     const el = scrollRef.current;
-    if (el) el.scrollTo({ top: el.scrollHeight, behavior: reduce ? "auto" : "smooth" });
-  }, [msgs, status, open, reduce]);
+    if (el) el.scrollTo({ top: el.scrollHeight, behavior: reduce || typing ? "auto" : "smooth" });
+  }, [msgs, status, open, reduce, typing]);
 
   useEffect(() => {
     if (!open) return;
@@ -276,10 +282,64 @@ function AssistantPanel({ preview }: { preview: boolean }) {
     };
   }, [open]);
 
+  const patchLast = useCallback(
+    (fn: (m: Msg) => Msg) =>
+      setMsgs((prev) => {
+        if (!prev.length) return prev;
+        const next = [...prev];
+        next[next.length - 1] = fn(next[next.length - 1]);
+        return next;
+      }),
+    [],
+  );
+
+  const flushCards = useCallback(() => {
+    const cards = cardsRef.current;
+    if (!cards.length) return;
+    cardsRef.current = [];
+    patchLast((m) => {
+      const seen = new Set((m.cards ?? []).map((c) => c.slug));
+      return { ...m, cards: [...(m.cards ?? []), ...cards.filter((c) => !seen.has(c.slug))].slice(0, 8) };
+    });
+  }, [patchLast]);
+
+  const stopTyping = useCallback(() => {
+    if (timerRef.current != null) window.clearInterval(timerRef.current);
+    timerRef.current = null;
+  }, []);
+
+  const pump = useCallback(() => {
+    if (timerRef.current != null) return;
+    setTyping(true);
+    timerRef.current = window.setInterval(() => {
+      const pending = pendingRef.current;
+      if (!pending) {
+        if (streamDoneRef.current) {
+          stopTyping();
+          flushCards();
+          setTyping(false);
+        }
+        return;
+      }
+      // natural pace: ~45 chars/s for short replies, faster when a lot is waiting; break on word boundaries
+      let n = Math.max(1, Math.min(14, Math.ceil(pending.length / 60)));
+      const space = pending.indexOf(" ", n);
+      if (space > -1 && space - n < 6) n = space + 1;
+      const chunk = pending.slice(0, n);
+      pendingRef.current = pending.slice(n);
+      patchLast((m) => ({ ...m, content: m.content + chunk }));
+    }, 22);
+  }, [flushCards, patchLast, stopTyping]);
+
+  useEffect(() => stopTyping, [stopTyping]);
+
   const send = useCallback(
     async (text: string) => {
       const q = text.trim();
-      if (!q || busy) return;
+      if (!q || busy || typing) return;
+      pendingRef.current = "";
+      cardsRef.current = [];
+      streamDoneRef.current = false;
       setInput("");
       const history: Msg[] = [...msgs, { role: "user", content: q }];
       setMsgs([...history, { role: "assistant", content: "" }]);
@@ -287,12 +347,7 @@ function AssistantPanel({ preview }: { preview: boolean }) {
       setStatus(t.thinking);
       const ac = new AbortController();
       abortRef.current = ac;
-      const patch = (fn: (m: Msg) => Msg) =>
-        setMsgs((prev) => {
-          const next = [...prev];
-          next[next.length - 1] = fn(next[next.length - 1]);
-          return next;
-        });
+      const patch = patchLast;
       try {
         const res = await fetch("/api/assistant", {
           method: "POST",
@@ -330,14 +385,14 @@ function AssistantPanel({ preview }: { preview: boolean }) {
             }
             if (ev.t === "text" && ev.d) {
               setStatus(null);
-              patch((m) => ({ ...m, content: m.content + ev.d }));
+              if (reduce) patch((m) => ({ ...m, content: m.content + ev.d }));
+              else {
+                pendingRef.current += ev.d;
+                pump();
+              }
             } else if (ev.t === "status" && ev.d) setStatus(ev.d);
             else if (ev.t === "cards" && ev.items?.length) {
-              const cards = ev.items;
-              patch((m) => {
-                const seen = new Set((m.cards ?? []).map((c) => c.slug));
-                return { ...m, cards: [...(m.cards ?? []), ...cards.filter((c) => !seen.has(c.slug))].slice(0, 8) };
-              });
+              cardsRef.current = [...cardsRef.current, ...ev.items];
             } else if (ev.t === "action" && ev.action?.type === "add_to_cart") {
               const a = ev.action;
               add(a.item, a.qty);
@@ -352,16 +407,23 @@ function AssistantPanel({ preview }: { preview: boolean }) {
       } catch {
         if (!ac.signal.aborted) patch((m) => ({ ...m, content: m.content || t.error, error: !m.content }));
       } finally {
+        streamDoneRef.current = true;
+        // cards appear right after the typed text (or now, when there is no text to type)
+        if (timerRef.current == null) flushCards();
         setBusy(false);
         setStatus(null);
         abortRef.current = null;
       }
     },
-    [busy, msgs, chatId, locale, market, items, add, t],
+    [busy, typing, msgs, chatId, locale, market, items, add, t, patchLast, pump, flushCards, reduce],
   );
 
   const reset = () => {
     abortRef.current?.abort();
+    stopTyping();
+    pendingRef.current = "";
+    cardsRef.current = [];
+    setTyping(false);
     setMsgs([]);
     setChatId(null);
     setInput("");
@@ -409,8 +471,9 @@ function AssistantPanel({ preview }: { preview: boolean }) {
             className="fixed inset-0 z-[95] flex flex-col overflow-hidden bg-surface sm:inset-auto sm:bottom-6 sm:right-6 sm:h-[min(680px,calc(100vh-48px))] sm:w-[410px] sm:rounded-3xl sm:shadow-[0_30px_80px_-20px_rgb(10_17_34/0.55)] sm:ring-1 sm:ring-line"
           >
             <header className="relative flex items-center gap-3 bg-navy-700 px-4 py-3.5 text-white">
-              <span className="grid size-10 shrink-0 place-items-center rounded-2xl bg-brand-400 text-navy-900">
-                <Bot className="size-5" aria-hidden />
+              <span className="relative grid size-10 shrink-0 place-items-center rounded-2xl bg-brand-400 text-navy-900">
+                <Headset className="size-5" aria-hidden />
+                <span className="absolute -bottom-0.5 -right-0.5 size-3 rounded-full bg-emerald-400 ring-2 ring-navy-700" aria-hidden />
               </span>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[15px] font-extrabold tracking-tight">{t.title}</p>
@@ -475,10 +538,22 @@ function AssistantPanel({ preview }: { preview: boolean }) {
                   )}
                 </Fragment>
               ))}
-              {busy && status && (
-                <p className="flex items-center gap-2 pl-1 text-[12.5px] font-semibold text-muted">
-                  <Loader2 className="size-4 animate-spin text-brand-500" /> {status}
-                </p>
+              {busy && !msgs[msgs.length - 1]?.content && (
+                <div className="flex items-end gap-2" aria-label={status ?? t.thinking}>
+                  <div className="rounded-2xl rounded-bl-md bg-slate-100 px-4 py-3 dark:bg-white/[0.06]">
+                    <span className="flex items-center gap-1" aria-hidden>
+                      {[0, 1, 2].map((d) => (
+                        <motion.span
+                          key={d}
+                          className="size-2 rounded-full bg-slate-400 dark:bg-white/50"
+                          animate={reduce ? undefined : { y: [0, -4, 0], opacity: [0.45, 1, 0.45] }}
+                          transition={{ duration: 0.9, repeat: Infinity, delay: d * 0.15, ease: "easeInOut" }}
+                        />
+                      ))}
+                    </span>
+                  </div>
+                  {status && status !== t.thinking && <span className="pb-1 text-[11.5px] font-medium text-muted">{status}</span>}
+                </div>
               )}
             </div>
 
@@ -508,7 +583,7 @@ function AssistantPanel({ preview }: { preview: boolean }) {
                 />
                 <button
                   type="submit"
-                  disabled={busy || !input.trim()}
+                  disabled={busy || typing || !input.trim()}
                   aria-label={t.send}
                   className="grid size-9 shrink-0 place-items-center rounded-xl bg-brand-400 text-navy-900 transition hover:bg-brand-300 disabled:opacity-40"
                 >

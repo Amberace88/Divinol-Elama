@@ -100,7 +100,7 @@ export async function runWorkersChat(opts: {
 ## Facts for this reply (looked up just now by the shop system)
 ${facts.join("\n\n")}
 
-Answer the customer's last message now, following "How you talk". Use product names, links (exactly the "url"), packs, prices and availability ONLY from the facts above. Never mention tools, searches or "the system". You cannot put items in the cart yourself in this chat — if they want to buy, point them to the product link/card ("atveriet produktu un spiediet „Ielikt grozā”").`;
+Answer the customer's last message now, following "How you talk": no greeting, no self-introduction, no mention of bots/AI, no filler closer, 1–4 short sentences. Use product names, links (exactly the "url"), packs, prices and availability ONLY from the facts above. Never mention tools, searches or "the system". You cannot put items in the cart yourself in this chat — if they want to buy, point them to the product link/card ("atveriet produktu un spiediet „Ielikt grozā”").`;
     const res = await workersText(opts.model, [{ role: "system", content: system }, ...convo], LIMITS.maxTokens);
     usage.input += res.input;
     usage.output += res.output;
