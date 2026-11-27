@@ -6,6 +6,8 @@ import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import type { ApiMessage } from "@/lib/assistant/anthropic";
 import { runChat } from "@/lib/assistant/run";
+import { runWorkersChat } from "@/lib/assistant/run-workers";
+import { isWorkersModel } from "@/lib/assistant/workers-ai";
 import { assistantAllowed, getAssistantSettings, ipHash, LIMITS } from "@/lib/assistant/config";
 import { buildSystemPrompt } from "@/lib/assistant/knowledge";
 import type { ToolContext } from "@/lib/assistant/tools";
@@ -109,7 +111,9 @@ export async function POST(req: NextRequest) {
   const stream = new ReadableStream({
     async start(controller) {
       const send = (o: unknown) => controller.enqueue(encoder.encode(JSON.stringify(o) + "\n"));
-      const { answer, usage, toolsUsed } = await runChat({ model: settings.model, system, messages, ctx, locale, signal: req.signal, send });
+      const { answer, usage, toolsUsed } = isWorkersModel(settings.model)
+        ? await runWorkersChat({ model: settings.model, system, messages, ctx, locale, send })
+        : await runChat({ model: settings.model, system, messages, ctx, locale, signal: req.signal, send });
 
       // ── log the conversation (text only) ──
       try {

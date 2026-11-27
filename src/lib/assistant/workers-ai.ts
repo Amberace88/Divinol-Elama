@@ -137,3 +137,14 @@ export async function workersTurn(opts: {
   const u = (raw.usage ?? {}) as { prompt_tokens?: number; completion_tokens?: number };
   return { content, stopReason: calls.length ? "tool_use" : "end_turn", usage: { input: Number(u.prompt_tokens ?? 0), output: Number(u.completion_tokens ?? 0), cacheRead: 0 } };
 }
+
+/** Plain text completion (no tools). */
+export async function workersText(model: string, messages: { role: "system" | "user" | "assistant"; content: string }[], maxTokens: number) {
+  const ai = await binding();
+  if (!ai) throw new Error("Workers AI binding missing");
+  const raw = (await ai.run(model, { messages, max_tokens: maxTokens, temperature: 0.2 })) as Record<string, unknown>;
+  const choice = (raw.choices as { message?: { content?: string | null } }[] | undefined)?.[0];
+  const text = String(choice?.message?.content ?? (typeof raw.response === "string" ? raw.response : typeof raw.response === "object" ? JSON.stringify(raw.response) : ""));
+  const u = (raw.usage ?? {}) as { prompt_tokens?: number; completion_tokens?: number };
+  return { text: text.replace(/<think>[\s\S]*?<\/think>/g, "").trim(), input: Number(u.prompt_tokens ?? 0), output: Number(u.completion_tokens ?? 0) };
+}
