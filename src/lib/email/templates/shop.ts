@@ -134,6 +134,11 @@ const EXTRA_LABEL: Record<string, string> = {
   city: "Pilsēta",
   country: "Valsts",
   industry: "Nozare",
+  pack: "Iepakojums",
+  sku: "Artikuls",
+  qty: "Daudzums",
+  page: "Lapa",
+  source: "Avots",
 };
 
 function extraRows(extra: Record<string, unknown> | null | undefined): [string, string][] {

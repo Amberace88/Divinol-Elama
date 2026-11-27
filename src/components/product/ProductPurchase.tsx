@@ -15,6 +15,7 @@ import { RollingNumber } from "@/components/ui/RollingNumber";
 import { useMoney } from "@/components/ui/useMoney";
 import { defaultVariant, useAddToCart } from "@/components/catalog/useAddToCart";
 import { cn } from "@/lib/utils";
+import { PriceRequestButton } from "./PriceRequest";
 import { ProductGallery, type GalleryImage } from "./ProductGallery";
 
 type V = ProductSummary["variants"][number];
@@ -34,6 +35,8 @@ export function ProductPurchase({
   const tp = useTranslations("promo");
   const ta = useTranslations("actions");
   const tu = useTranslations("units");
+  const tr = useTranslations("priceRequest");
+  const onRequest = product.priceOnRequest;
   const pricing = usePricing();
   const settings = useSettings();
   const money = useMoney();
@@ -123,6 +126,12 @@ export function ProductPurchase({
         <div className="mt-6 rounded-3xl border border-line bg-surface p-5 shadow-card sm:p-6">
           {/* price */}
           <div className="flex flex-wrap items-end justify-between gap-3">
+            {onRequest ? (
+              <div>
+                <p className="text-[26px] font-extrabold leading-tight tracking-tight text-navy-700 dark:text-navy-200">{tr("label")}</p>
+                <p className="mt-1.5 text-[12.5px] text-muted">{tr("intro")}</p>
+              </div>
+            ) : (
             <div>
               {was != null && (
                 <p className="mb-1.5 flex flex-wrap items-center gap-2 text-[14px] font-semibold tabular-nums text-muted">
@@ -173,6 +182,7 @@ export function ProductPurchase({
                 )}
               </p>
             </div>
+            )}
             {selected && (
               <span
                 className={cn(
@@ -213,7 +223,7 @@ export function ProductPurchase({
                         onChange={() => selectVariant(v)}
                         className="sr-only"
                       />
-                      {best && (
+                      {best && !onRequest && (
                         <span className="absolute -top-2.5 right-2 inline-flex -skew-x-12 items-center rounded-md bg-brand-400 px-1.5 py-0.5 text-[10px] font-extrabold uppercase text-navy-900 shadow-sm">
                           <span className="skew-x-12">{t("bestValue")}</span>
                         </span>
@@ -222,11 +232,13 @@ export function ProductPurchase({
                         <span className="text-[16px] font-extrabold tabular-nums text-ink">{packLabel(v) || tu("piece")}</span>
                         {active && <Check className="size-4 text-navy-700" strokeWidth={3} aria-hidden />}
                       </span>
+                      {!onRequest && (
                       <span className="mt-0.5 text-[13px] font-bold tabular-nums text-navy-700">
                         {regularPrice(v, pricing) != null && <s className="mr-1 text-[11px] font-semibold text-muted">{money(regularPrice(v, pricing)!)}</s>}
                         <span className={cn(regularPrice(v, pricing) != null && "text-rose-600")}>{money(displayPrice(v, pricing))}</span>
                       </span>
-                      {perUnit[i] != null && (
+                      )}
+                      {!onRequest && perUnit[i] != null && (
                         <span className="text-[11px] tabular-nums text-muted">
                           {money(perUnit[i]!)}/{unitLabel(v)}
                           {save >= 3 && <span className="ml-1 font-bold text-emerald-600">−{save}%</span>}
@@ -237,7 +249,7 @@ export function ProductPurchase({
                   );
                 })}
               </div>
-              {bestIdx >= 0 && savings(bestIdx) >= 3 && (
+              {!onRequest && bestIdx >= 0 && savings(bestIdx) >= 3 && (
                 <p className="mt-2.5 flex items-center gap-1.5 text-[12.5px] font-semibold text-emerald-700">
                   <BadgePercent className="size-4" aria-hidden />
                   {t("savingsHint", { percent: savings(bestIdx) })}
@@ -254,6 +266,16 @@ export function ProductPurchase({
           )}
 
           {/* qty + add */}
+          {onRequest ? (
+            <div ref={ctaRef} className="mt-5">
+              <PriceRequestButton
+                productName={product.name}
+                slug={product.slug}
+                packs={variants.map((v) => ({ key: v.key, label: packLabel(v) || tu("piece"), sku: v.sku }))}
+                initialPack={selected?.key ?? null}
+              />
+            </div>
+          ) : (
           <div ref={ctaRef} className="mt-5 flex gap-2.5">
             <QtyStepper value={qty} onChange={setQty} size="lg" />
             <button
@@ -282,7 +304,8 @@ export function ProductPurchase({
               </AnimatePresence>
             </button>
           </div>
-          {qty > 1 && (
+          )}
+          {!onRequest && qty > 1 && (
             <p className="mt-2 text-right text-[13px] font-semibold tabular-nums text-muted">
               {t("lineTotal", { amount: money(round2(price * qty)) })}
             </p>
@@ -324,7 +347,7 @@ export function ProductPurchase({
 
       {/* sticky mobile add-to-cart */}
       <AnimatePresence>
-        {showSticky && selected && (
+        {showSticky && selected && !onRequest && (
           <motion.div
             data-buybar
             className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-12px_30px_-12px_rgb(16_24_40/0.25)] backdrop-blur lg:hidden"

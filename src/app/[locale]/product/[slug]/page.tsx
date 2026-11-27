@@ -126,7 +126,7 @@ export default async function ProductPage({ params }: Props) {
     url: absoluteUrl(href, locale),
     seller: { "@id": `${siteUrl(locale)}/#organization` },
   }));
-  const prices = p.variants.map((v) => gross(v.price_net * (1 - (v.promo_percent ?? 0) / 100), BASE_VAT));
+  const prices = p.price_on_request ? [] : p.variants.map((v) => gross(v.price_net * (1 - (v.promo_percent ?? 0) / 100), BASE_VAT));
   const productLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -362,7 +362,7 @@ export default async function ProductPage({ params }: Props) {
           </div>
 
           <aside className="grid content-start gap-5 lg:sticky lg:top-32 lg:col-span-5 xl:col-span-4">
-            <PackCalculator product={s} />
+            {!s.priceOnRequest && <PackCalculator product={s} />}
             <AskExpertForm slug={p.slug} productName={tx.name} />
           </aside>
         </div>

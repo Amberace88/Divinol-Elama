@@ -53,6 +53,8 @@ export type Product = {
   variants: Variant[];
   i18n: Partial<Record<Locale, ProductI18n>>;
   is_featured?: boolean;
+  /** no public price: storefront shows a "request price" form, cannot be bought online */
+  price_on_request?: boolean;
   /** marketing badges (see lib/promo BADGE_KEYS) */
   badges?: string[];
   /** promotion as stored (may be scheduled / ended) */

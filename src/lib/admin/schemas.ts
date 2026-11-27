@@ -93,6 +93,7 @@ export const productSchema = z
     sds_url: nullableText(1000),
     is_active: z.boolean(),
     is_featured: z.boolean(),
+    price_on_request: z.boolean().default(false),
     badges: z.array(z.enum(BADGE_KEYS)).max(BADGE_KEYS.length).default([]),
     promo_type: z.enum(PROMO_TYPES).nullable().default(null),
     promo_percent: z.number().min(1, "Atlaide 1–90%").max(90, "Atlaide 1–90%").nullable().default(null),

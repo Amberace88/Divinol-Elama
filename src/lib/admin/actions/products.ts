@@ -85,6 +85,7 @@ export async function saveProduct(input: ProductPayload) {
         sds_url: p.sds_url,
         is_active: p.is_active,
         is_featured: p.is_featured,
+        price_on_request: p.price_on_request,
         badges: [...new Set(p.badges)],
         promo_type: p.promo_type,
         promo_percent: p.promo_type ? p.promo_percent : null,

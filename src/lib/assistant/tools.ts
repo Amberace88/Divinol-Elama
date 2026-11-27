@@ -200,7 +200,8 @@ function availabilityOf(v: Variant) {
   return v.availability ?? (v.in_stock ? "in_stock" : "on_order");
 }
 
-function packView(v: Variant, ctx: ToolContext) {
+function packView(v: Variant, ctx: ToolContext, onRequest = false) {
+  if (onRequest) return { pack_key: variantKey(v), pack: packLabel(v) || v.unit, sku: v.sku, price: "on request", availability: availabilityOf(v) };
   const price = displayPrice(v, ctx.price);
   const before = regularPrice(v, ctx.price);
   const perUnit = pricePerUnit(v, ctx.price);
@@ -218,7 +219,7 @@ function packView(v: Variant, ctx: ToolContext) {
 
 function cardOf(p: Product, ctx: ToolContext): ProductCard {
   const t = productText(p, ctx.locale);
-  const prices = p.variants.map((v) => displayPrice(v, ctx.price)).filter((n) => n > 0);
+  const prices = p.price_on_request ? [] : p.variants.map((v) => displayPrice(v, ctx.price)).filter((n) => n > 0);
   return {
     slug: p.slug,
     name: t.name,
@@ -243,7 +244,10 @@ function briefOf(p: Product, ctx: ToolContext) {
     specs: p.specs.slice(0, 8),
     url: productUrl(p.slug, ctx.locale),
     ...(p.promo_active?.percent ? { promo_percent: p.promo_active.percent } : {}),
-    packs: p.variants.map((v) => packView(v, ctx)),
+    ...(p.price_on_request
+      ? { price_on_request: true, note: "No public price and not sold online. Never guess a price; tell the customer to press 'Request price' on the product page (they leave name, company, e-mail, phone) or use contact_shop." }
+      : {}),
+    packs: p.variants.map((v) => packView(v, ctx, Boolean(p.price_on_request))),
   };
 }
 
@@ -440,6 +444,7 @@ export async function runTool(name: string, input: Record<string, unknown>, ctx:
       const p = (await getProducts()).find((x) => x.slug === String(input.slug ?? ""));
       const v = p?.variants.find((x) => variantKey(x) === String(input.pack_key ?? ""));
       if (!p || !v) return { result: { error: "Unknown product or pack_key — call get_product first and use pack_key exactly." }, isError: true };
+      if (p.price_on_request) return { result: { error: "Price on request — this product cannot be added to the cart. Send the customer to the product page 'Request price' button or offer contact_shop.", url: productUrl(p.slug, ctx.locale) }, isError: true };
       if (v.availability === "out_of_stock") return { result: { error: "This pack is out of stock and cannot be ordered right now." }, isError: true };
       const qty = Math.max(1, Math.min(99, Math.round(Number(input.qty) || 1)));
       const t = productText(p, ctx.locale);

@@ -16,6 +16,7 @@ export function useAddToCart() {
   const tu = useTranslations("units");
   return useCallback(
     (p: Pick<ProductSummary, "slug" | "name" | "image">, v: V, qty = 1, opts?: { silent?: boolean }) => {
+      if (!(v.price_net > 0)) return; // price on request → not sold online
       const pack = packLabel(v) || tu("piece");
       add(
         {

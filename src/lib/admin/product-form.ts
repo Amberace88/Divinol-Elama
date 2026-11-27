@@ -39,6 +39,7 @@ export type DbProduct = {
   sds_url: string | null;
   is_active: boolean;
   is_featured: boolean;
+  price_on_request?: boolean | null;
   badges: string[] | null;
   promo_type: string | null;
   promo_percent: number | string | null;
@@ -103,6 +104,7 @@ export function dbToForm(p: DbProduct): ProductFormInit {
     sds_url: p.sds_url ?? "",
     is_active: p.is_active,
     is_featured: p.is_featured,
+    price_on_request: Boolean(p.price_on_request),
     badges: p.badges ?? [],
     promo_type: (PROMO_TYPES as readonly string[]).includes(p.promo_type ?? "") ? (p.promo_type as PromoType) : "",
     promo_percent: p.promo_percent == null ? "" : String(Number(p.promo_percent)).replace(".", ","),
@@ -131,6 +133,7 @@ export function emptyForm(): ProductFormInit {
     sds_url: "",
     is_active: true,
     is_featured: false,
+    price_on_request: false,
     badges: [],
     promo_type: "",
     promo_percent: "",
@@ -145,4 +148,4 @@ export function emptyForm(): ProductFormInit {
 }
 
 export const PRODUCT_SELECT =
-  "id, slug, base_sku, category_id, sae, iso_vg, specs, oem_approvals, performance, images, i18n, legacy_slugs, tds_url, sds_url, is_active, is_featured, badges, promo_type, promo_percent, promo_starts_at, promo_ends_at, sort, updated_at, product_variants(id, sku, size, unit, price_net, cost_net, stock, availability, lead_time_days, low_stock_threshold, is_active, image, weight_kg, sort)";
+  "id, slug, base_sku, category_id, sae, iso_vg, specs, oem_approvals, performance, images, i18n, legacy_slugs, tds_url, sds_url, is_active, is_featured, price_on_request, badges, promo_type, promo_percent, promo_starts_at, promo_ends_at, sort, updated_at, product_variants(id, sku, size, unit, price_net, cost_net, stock, availability, lead_time_days, low_stock_threshold, is_active, image, weight_kg, sort)";

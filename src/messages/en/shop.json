@@ -257,5 +257,26 @@
     "homeEyebrow": "Offers",
     "homeTitle": "Better prices right now",
     "homeLink": "All offers"
+  },
+  "priceRequest": {
+    "label": "Price on request",
+    "button": "Request price",
+    "title": "Request a price",
+    "intro": "Leave your details — we'll send the price and availability, usually the same business day.",
+    "name": "Full name",
+    "company": "Company name",
+    "email": "E-mail",
+    "phone": "Phone",
+    "pack": "Pack size",
+    "qty": "Quantity",
+    "message": "Comment (optional)",
+    "send": "Send request",
+    "sending": "Sending…",
+    "done": "Thank you! We've received your request and will be in touch shortly.",
+    "close": "Close",
+    "error": "Could not send. Please try again or e-mail us.",
+    "invalidEmail": "Please check the e-mail address.",
+    "required": "Please fill in name, company, e-mail and phone.",
+    "any": "Any"
   }
 }

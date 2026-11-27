@@ -257,5 +257,26 @@
     "homeEyebrow": "Akcijas",
     "homeTitle": "Šobrīd par izdevīgāku cenu",
     "homeLink": "Visas akcijas"
+  },
+  "priceRequest": {
+    "label": "Cena pēc pieprasījuma",
+    "button": "Pieprasīt cenu",
+    "title": "Pieprasīt cenu",
+    "intro": "Atstājiet kontaktus — atsūtīsim cenu un pieejamību, parasti tās pašas darba dienas laikā.",
+    "name": "Vārds, uzvārds",
+    "company": "Uzņēmuma nosaukums",
+    "email": "E-pasts",
+    "phone": "Tālrunis",
+    "pack": "Iepakojums",
+    "qty": "Daudzums",
+    "message": "Komentārs (nav obligāts)",
+    "send": "Nosūtīt pieprasījumu",
+    "sending": "Sūta…",
+    "done": "Paldies! Pieprasījums saņemts — drīzumā sazināsimies.",
+    "close": "Aizvērt",
+    "error": "Neizdevās nosūtīt. Mēģiniet vēlreiz vai rakstiet mums uz e-pastu.",
+    "invalidEmail": "Pārbaudiet e-pasta adresi.",
+    "required": "Aizpildiet vārdu, uzņēmumu, e-pastu un tālruni.",
+    "any": "Jebkurš"
   }
 }

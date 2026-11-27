@@ -37,7 +37,7 @@ type DbVariant = {
 type DbProduct = {
   id: string; slug: string; base_sku: string | null; sae: string | null; iso_vg: string | null;
   specs: string[]; oem_approvals: string[]; performance: string[]; images: string[];
-  i18n: Partial<Record<Locale, ProductI18n>>; is_featured: boolean; tds_url: string | null; sds_url: string | null;
+  i18n: Partial<Record<Locale, ProductI18n>>; is_featured: boolean; price_on_request?: boolean | null; tds_url: string | null; sds_url: string | null;
   badges: string[] | null; promo_type: string | null; promo_percent: number | string | null; promo_starts_at: string | null; promo_ends_at: string | null;
   sort: number; categories: { slug: string } | null; product_variants: DbVariant[];
 };
@@ -50,7 +50,7 @@ async function loadFromDb(): Promise<{ products: Product[]; categories: Category
       sb.from("categories").select("id, slug, icon, image, sort, i18n").eq("is_active", true).order("sort"),
       sb
         .from("products")
-        .select("id, slug, base_sku, sae, iso_vg, specs, oem_approvals, performance, images, i18n, is_featured, badges, promo_type, promo_percent, promo_starts_at, promo_ends_at, tds_url, sds_url, sort, categories(slug), product_variants(id, sku, size, unit, price_net, in_stock, stock, availability, lead_time_days, image, sort, is_active)")
+        .select("id, slug, base_sku, sae, iso_vg, specs, oem_approvals, performance, images, i18n, is_featured, price_on_request, badges, promo_type, promo_percent, promo_starts_at, promo_ends_at, tds_url, sds_url, sort, categories(slug), product_variants(id, sku, size, unit, price_net, in_stock, stock, availability, lead_time_days, image, sort, is_active)")
         .eq("is_active", true)
         .order("sort")
         .order("slug"),
@@ -73,6 +73,7 @@ async function loadFromDb(): Promise<{ products: Product[]; categories: Category
       images: p.images ?? [],
       i18n: p.i18n ?? {},
       is_featured: p.is_featured,
+      price_on_request: Boolean(p.price_on_request),
       badges: p.badges ?? [],
       promo: p.promo_type
         ? {
@@ -162,6 +163,8 @@ export type ProductSummary = {
   approvals: string[];
   image: string | null;
   featured: boolean;
+  /** shown without a price; visitors send a price request instead of buying */
+  priceOnRequest: boolean;
   badges: string[];
   promo: ActivePromo | null;
   variants: {
@@ -190,6 +193,7 @@ export function summarize(p: Product, locale: Locale): ProductSummary {
     approvals: [...p.oem_approvals, ...p.performance],
     image: p.images[0] ?? p.variants.find((v) => v.image)?.image ?? null,
     featured: Boolean(p.is_featured),
+    priceOnRequest: Boolean(p.price_on_request),
     badges: p.badges ?? [],
     promo: p.promo_active ?? null,
     variants: p.variants.map((v) => ({
@@ -197,8 +201,9 @@ export function summarize(p: Product, locale: Locale): ProductSummary {
       sku: v.sku,
       size: v.size,
       unit: v.unit,
-      price_net: v.price_net,
-      ...(v.promo_percent ? { promo_percent: v.promo_percent } : {}),
+      // price-on-request products never ship their price to the browser
+      price_net: p.price_on_request ? 0 : v.price_net,
+      ...(v.promo_percent && !p.price_on_request ? { promo_percent: v.promo_percent } : {}),
       in_stock: v.in_stock,
       image: v.image,
     })),

@@ -257,5 +257,26 @@
     "homeEyebrow": "Kampaaniad",
     "homeTitle": "Praegu soodsama hinnaga",
     "homeLink": "Kõik kampaaniad"
+  },
+  "priceRequest": {
+    "label": "Hind päringu alusel",
+    "button": "Küsi hinda",
+    "title": "Küsi hinda",
+    "intro": "Jätke kontaktid — saadame hinna ja saadavuse, tavaliselt samal tööpäeval.",
+    "name": "Ees- ja perekonnanimi",
+    "company": "Ettevõtte nimi",
+    "email": "E-post",
+    "phone": "Telefon",
+    "pack": "Pakend",
+    "qty": "Kogus",
+    "message": "Kommentaar (valikuline)",
+    "send": "Saada päring",
+    "sending": "Saadan…",
+    "done": "Aitäh! Päring on kätte saadud — võtame peagi ühendust.",
+    "close": "Sulge",
+    "error": "Saatmine ebaõnnestus. Proovige uuesti või kirjutage meile.",
+    "invalidEmail": "Kontrollige e-posti aadressi.",
+    "required": "Täitke nimi, ettevõte, e-post ja telefon.",
+    "any": "Ükskõik"
   }
 }

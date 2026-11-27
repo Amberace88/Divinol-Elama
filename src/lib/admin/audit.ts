@@ -83,6 +83,7 @@ const FIELD: Record<string, string> = {
   sku: "SKU",
   is_active: "Aktīvs",
   is_featured: "Izcelts sākumlapā",
+  price_on_request: "Cena pēc pieprasījuma",
   sort: "Secība",
   image: "Attēls",
   images: "Attēli",

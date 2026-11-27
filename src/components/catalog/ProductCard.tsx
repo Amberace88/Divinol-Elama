@@ -15,6 +15,7 @@ import { useMoney } from "@/components/ui/useMoney";
 import { cn } from "@/lib/utils";
 import { minPerUnit, minPrice } from "./filters";
 import { defaultVariant, useAddToCart } from "./useAddToCart";
+import { PriceRequestButton } from "@/components/product/PriceRequest";
 
 export function ProductCard({
   product: p,
@@ -29,6 +30,7 @@ export function ProductCard({
   const ta = useTranslations("actions");
   const tp = useTranslations("promo");
   const tu = useTranslations("units");
+  const tr = useTranslations("priceRequest");
   const pricing = usePricing();
   const money = useMoney();
   const addToCart = useAddToCart();
@@ -171,6 +173,18 @@ export function ProductCard({
           </ul>
         )}
 
+        {p.priceOnRequest ? (
+          <div className="mt-auto flex items-end justify-between gap-3 pt-4">
+            <p className="text-[13px] font-extrabold leading-tight text-navy-700 dark:text-navy-200">{tr("label")}</p>
+            <PriceRequestButton
+              size="card"
+              productName={p.name}
+              slug={p.slug}
+              packs={packs.map((v) => ({ key: v.key, label: packLabel(v) || tu("piece"), sku: v.sku }))}
+              initialPack={sel?.key ?? null}
+            />
+          </div>
+        ) : (
         <div className="mt-auto flex items-end justify-between gap-3 pt-4">
           <div className="min-w-0">
             {was != null && Number.isFinite(price) && (
@@ -233,6 +247,7 @@ export function ProductCard({
             </button>
           )}
         </div>
+        )}
       </div>
     </article>
   );

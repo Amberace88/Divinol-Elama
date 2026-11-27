@@ -257,5 +257,26 @@
     "homeEyebrow": "Akcijos",
     "homeTitle": "Dabar pigiau",
     "homeLink": "Visos akcijos"
+  },
+  "priceRequest": {
+    "label": "Kaina pagal užklausą",
+    "button": "Užklausti kainos",
+    "title": "Užklausti kainos",
+    "intro": "Palikite kontaktus — atsiųsime kainą ir prieinamumą, dažniausiai tą pačią darbo dieną.",
+    "name": "Vardas, pavardė",
+    "company": "Įmonės pavadinimas",
+    "email": "El. paštas",
+    "phone": "Telefonas",
+    "pack": "Pakuotė",
+    "qty": "Kiekis",
+    "message": "Komentaras (neprivaloma)",
+    "send": "Siųsti užklausą",
+    "sending": "Siunčiama…",
+    "done": "Ačiū! Užklausą gavome — netrukus susisieksime.",
+    "close": "Uždaryti",
+    "error": "Nepavyko išsiųsti. Bandykite dar kartą arba parašykite mums.",
+    "invalidEmail": "Patikrinkite el. pašto adresą.",
+    "required": "Užpildykite vardą, įmonę, el. paštą ir telefoną.",
+    "any": "Bet kuri"
   }
 }

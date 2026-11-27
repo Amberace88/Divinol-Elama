@@ -35,6 +35,7 @@ export type ProductFormInit = {
   sds_url: string;
   is_active: boolean;
   is_featured: boolean;
+  price_on_request: boolean;
   badges: string[];
   promo_type: "" | PromoType;
   /** % as typed */
@@ -79,6 +80,7 @@ function toPayload(f: ProductFormInit): ProductPayload {
     sds_url: f.sds_url,
     is_active: f.is_active,
     is_featured: f.is_featured,
+    price_on_request: f.price_on_request,
     badges: f.badges as ProductPayload["badges"],
     promo_type: f.promo_type || null,
     promo_percent: f.promo_type ? num(f.promo_percent) : null,
@@ -398,6 +400,7 @@ export function ProductEditor({
             <div className="space-y-3">
               <ToggleRow label="Aktīvs" hint="Redzams veikalā" checked={form.is_active} onChange={(v) => set("is_active", v)} />
               <ToggleRow label="Izcelts" hint="Rādīt sākumlapā" checked={form.is_featured} onChange={(v) => set("is_featured", v)} />
+              <ToggleRow label="Cena pēc pieprasījuma" hint="Rāda bez cenas ar pogu „Pieprasīt cenu”; nav pērkams internetā" checked={form.price_on_request} onChange={(v) => set("price_on_request", v)} />
               <Field label="Secība" htmlFor="p-sort" hint="Mazāks skaitlis = augstāk sarakstā">
                 <input id="p-sort" type="number" className={inputCls} value={form.sort} onChange={(e) => set("sort", Number(e.target.value))} />
               </Field>
