@@ -11,12 +11,13 @@ import { workersText } from "./workers-ai";
  * 3) the model writes the reply using ONLY those results. Product facts can't be invented this way.
  */
 
-type Plan = { searches?: string[]; order_number?: string | null; order_email?: string | null; need_vehicle_info?: boolean };
+type Plan = { searches?: string[]; order_number?: string | null; order_email?: string | null; need_vehicle_info?: boolean; shipping?: boolean };
 
 const PLANNER = `You plan catalogue lookups for an oil shop assistant (Divinol lubricants). Read the conversation and output ONLY a JSON object, no other text:
-{"searches": [..], "order_number": null, "order_email": null, "need_vehicle_info": false}
+{"searches": [..], "order_number": null, "order_email": null, "need_vehicle_info": false, "shipping": false}
 - "searches": 0–4 short catalogue search strings that would find the right products: manufacturer approvals (e.g. "VW 507.00", "MB 229.52", "BMW LL-04", "dexos2", "Ford WSS-M2C 948-B"), viscosities ("5W-30", "10W-40", "75W-90"), product types ("ATF", "grease", "antifreeze G12", "hydraulic HLP 46", "2T") or product names/SKUs the customer mentioned. Use your knowledge of which approval/viscosity a vehicle needs (e.g. VW Golf 7 1.6 TDI 2016 → "VW 507.00", "5W-30 C3"). Empty list for greetings or questions not about products.
 - "need_vehicle_info": true only if the customer wants an oil for a vehicle but did not give enough to know the engine (make+model+engine or year+fuel).
+- "shipping": true if the customer asks about delivery, parcel lockers, courier, pickup or delivery prices/times.
 - order_number / order_email: fill only if the customer asks about an order and gave them.`;
 
 function parsePlan(text: string): Plan {
@@ -79,6 +80,12 @@ export async function runWorkersChat(opts: {
           ? `CATALOGUE RESULTS for ${JSON.stringify(searches)} — the ONLY products, links, packs and prices you may mention:\n${JSON.stringify(products.slice(0, 8))}`
           : `CATALOGUE RESULTS for ${JSON.stringify(searches)}: nothing found. Do not name any product; say we could not find a match and offer to ask a colleague.`,
       );
+    }
+    if (p.shipping) {
+      toolsUsed.add("shipping_options");
+      send({ t: "status", d: TOOL_STATUS.shipping_options?.[opts.locale] ?? "…" });
+      const out = await runTool("shipping_options", { market: ctx.market }, ctx);
+      facts.push(`DELIVERY OPTIONS for ${ctx.market} (customer's current cart; prices incl. VAT unless B2B):\n${JSON.stringify(out.result)}`);
     }
     if (p.order_number || p.order_email) {
       toolsUsed.add("order_status");
