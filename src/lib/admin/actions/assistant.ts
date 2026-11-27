@@ -10,7 +10,7 @@ export async function saveAssistantSettings(input: { public: boolean; model: str
   return adminAction(async ({ supabase, user }) => {
     if (!isDeveloperEmail(user.email)) throw new ActionError("Tikai izstrādātājam");
     const v = z.object({ public: z.boolean(), model: z.string().refine((m) => ASSISTANT_MODELS.some((x) => x.id === m), "Nederīgs modelis") }).parse(input);
-    must(await supabase.from("settings").upsert({ key: "assistant", value: v, is_public: false }, { onConflict: "key" }));
+    must(await supabase.from("settings").upsert({ key: "assistant", value: v, is_public: true }, { onConflict: "key" }));
     revalidateAdmin();
     return v;
   }, (v) => (v.public ? "AI palīgs redzams visiem apmeklētājiem" : "AI palīgs redzams tikai izstrādātājam"));
