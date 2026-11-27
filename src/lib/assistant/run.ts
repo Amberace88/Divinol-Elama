@@ -2,6 +2,7 @@ import "server-only";
 import type { Locale } from "@/i18n/routing";
 import { streamTurn, type ApiMessage, type ContentBlock, type ToolResultBlock } from "./anthropic";
 import { LIMITS } from "./config";
+import { isWorkersModel, workersTurn } from "./workers-ai";
 import { runTool, TOOL_DEFS, TOOL_STATUS, type ToolContext } from "./tools";
 
 type SystemBlocks = Parameters<typeof streamTurn>[0]["system"];
@@ -27,7 +28,7 @@ export async function runChat(opts: {
     for (let round = 0; ; round++) {
       // last allowed round: the model must answer with what it has
       const final = round >= LIMITS.maxToolRounds;
-      const turn = await streamTurn({
+      const turn = await (isWorkersModel(opts.model) ? workersTurn : streamTurn)({
         model: opts.model,
         system: opts.system,
         messages,

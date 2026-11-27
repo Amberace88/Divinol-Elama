@@ -79,7 +79,7 @@ export function AssistantSettingsCard({ status }: { status: AssistantStatus }) {
       <div className="space-y-4 px-5 py-4 text-[13px]">
         {!status.keyConfigured && (
           <p className="rounded-xl bg-orange-50 p-3 text-orange-800">
-            Netlify → divinol-elama → Project configuration → Environment variables jāpievieno <code className="font-bold">ANTHROPIC_API_KEY</code> (Anthropic Console → API keys) un jāpublicē lapa vēlreiz.
+            Izvēlētais modelis šeit nav pieejams. Bezmaksas Cloudflare modeļi strādā tikai, kad lapa darbojas uz Cloudflare (Worker ar <code className="font-bold">AI</code> sasaisti); Claude modeļiem vajag <code className="font-bold">ANTHROPIC_API_KEY</code>.
           </p>
         )}
         <div className="flex flex-wrap items-center justify-between gap-3">

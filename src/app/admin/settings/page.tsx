@@ -13,8 +13,7 @@ import { notificationUrl, stripeWebhookUrl } from "@/lib/payments/service";
 import { StripeSettingsCard } from "@/components/admin/settings/StripeSettingsCard";
 import { ErrorNote, PageHeader } from "@/components/admin/ui";
 import { AssistantSettingsCard, type AssistantChatRow } from "@/components/admin/settings/AssistantSettingsCard";
-import { anthropicConfigured } from "@/lib/assistant/anthropic";
-import { ASSISTANT_MODELS, DEFAULT_MODEL } from "@/lib/assistant/config";
+import { ASSISTANT_MODELS, DEFAULT_MODEL, modelAvailable } from "@/lib/assistant/config";
 
 export const metadata = { title: "Iestatījumi" };
 
@@ -84,8 +83,8 @@ async function assistantStatus(supabase: Sb) {
   const v = (st?.value ?? {}) as { public?: boolean; model?: string };
   const rows = (week ?? []) as { turns: number; input_tokens: number; output_tokens: number }[];
   return {
-    keyConfigured: anthropicConfigured(),
-    settings: { public: Boolean(v.public), model: v.model ?? DEFAULT_MODEL },
+    keyConfigured: await modelAvailable(ASSISTANT_MODELS.some((m) => m.id === v.model) ? v.model! : DEFAULT_MODEL),
+    settings: { public: Boolean(v.public), model: ASSISTANT_MODELS.some((m) => m.id === v.model) ? v.model! : DEFAULT_MODEL },
     models: ASSISTANT_MODELS,
     stats: {
       chats7d: rows.length,

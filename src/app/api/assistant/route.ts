@@ -34,7 +34,7 @@ async function viewer(sb: Awaited<ReturnType<typeof createClient>>): Promise<Vie
 export async function GET() {
   const sb = await createClient();
   const [settings, v] = await Promise.all([getAssistantSettings(), viewer(sb)]);
-  const enabled = assistantAllowed(settings, v?.email);
+  const enabled = await assistantAllowed(settings, v?.email);
   return Response.json({ enabled, preview: enabled && !settings.public }, { headers: { "Cache-Control": "private, no-store" } });
 }
 
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
   if (!isSupabaseConfigured) return Response.json({ error: "unavailable" }, { status: 503 });
   const db = await createClient();
   const [settings, v] = await Promise.all([getAssistantSettings(), viewer(db)]);
-  if (!assistantAllowed(settings, v?.email)) return Response.json({ error: "disabled" }, { status: 403 });
+  if (!(await assistantAllowed(settings, v?.email))) return Response.json({ error: "disabled" }, { status: 403 });
 
   const last = body.messages[body.messages.length - 1];
   if (last.role !== "user" || !last.content.trim() || last.content.length > LIMITS.maxUserChars) {
@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
   }
 
   // ── limits per IP / chat ──
-  const ip = req.headers.get("x-nf-client-connection-ip") ?? req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? null;
+  const ip = req.headers.get("cf-connecting-ip") ?? req.headers.get("x-nf-client-connection-ip") ?? req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? null;
   const hash = ipHash(ip);
   if (hash) {
     const { data: turns } = await db.rpc("assistant_recent_turns", { p_ip_hash: hash });
