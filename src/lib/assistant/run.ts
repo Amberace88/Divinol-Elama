@@ -24,6 +24,8 @@ export async function runChat(opts: {
   const usage = { input: 0, output: 0, cacheRead: 0 };
   const toolsUsed = new Set<string>();
   let answer = "";
+  const workers = isWorkersModel(opts.model);
+  let nudged = false;
   try {
     for (let round = 0; ; round++) {
       // last allowed round: the model must answer with what it has
@@ -37,10 +39,26 @@ export async function runChat(opts: {
         maxTokens: LIMITS.maxTokens,
         signal: opts.signal,
         onText: (d) => {
+          if (workers) return; // emitted below after the check
           answer += d;
           send({ t: "text", d });
         },
       });
+      if (workers) {
+        const text = turn.content.filter((b) => b.type === "text").map((b) => (b as { text: string }).text).join("");
+        const hasCalls = turn.content.some((b) => b.type === "tool_use");
+        // smaller models sometimes "answer from memory": a price, a product link or a product name without having looked anything up
+        if (!final && !nudged && !hasCalls && toolsUsed.size === 0 && /€|\/produkt|\]\(\/|Divinol\s+[A-Z]/.test(text)) {
+          nudged = true;
+          messages.push({ role: "assistant", content: text || "…" });
+          messages.push({ role: "user", content: "[system] You named a product, link or price without checking the catalogue. Call recommend_oil or search_products (or get_product) now and answer only with what the tools return." });
+          continue;
+        }
+        if (text) {
+          answer += text;
+          send({ t: "text", d: text });
+        }
+      }
       usage.input += turn.usage.input;
       usage.output += turn.usage.output;
       usage.cacheRead += turn.usage.cacheRead;
